@@ -7,7 +7,7 @@ main:
     pdf: https://arxiv.org/pdf/2306.00988.pdf
     # code: https://github.com/MrGiovanni/ContinualLearning
     # bibtex: https://bib.yliu.me/MICCAI23.txt
-    image: ./assets/img/teaser_example_2.png
+    image: ./assets/img/cvpr2023_tta.png
     # notes: Early Accept
 
   - title: "Neuro-Modulated Hebbian Learning for Fully Test-Time Adaptation"
@@ -19,7 +19,7 @@ main:
     # page: https://class-il.mpi-inf.mpg.de/mnemonics/
     bibtex: https://scholar.googleusercontent.com/scholar.bib?q=info:xeeiKHNJ2MsJ:scholar.google.com/&output=citation&scisdr=ClHceJzZEPO4oU4lwMU:AFWwaeYAAAAAZOgj2MWrTQrbpqjDCXWAdukrvlk&scisig=AFWwaeYAAAAAZOgj2EJXLVxNyoosxJJ7i846aYg&scisf=4&ct=citation&cd=-1&hl=en
     # notes: Oral Presentation
-    image: ./assets/img/teaser_example.png
+    image: ./assets/img/cvpr2023_tta.png
 
   - title: "Self-Correctable and Adaptable Inference for Generalizable Human Pose Estimation"
     authors: Zhehan Kan, Shuoshuo Chen, <strong>Ce Zhang</strong>, Yushun Tang, Zhihai He
@@ -30,4 +30,4 @@ main:
     # page: https://class-il.mpi-inf.mpg.de/mnemonics/
     bibtex: https://scholar.googleusercontent.com/scholar.bib?q=info:grP-K7IJIrUJ:scholar.google.com/&output=citation&scisdr=ClHceJzZEPO4oU4iVd8:AFWwaeYAAAAAZOgkTd9PfeJ0k9YxLkyPZsRgXJ0&scisig=AFWwaeYAAAAAZOgkTf-WuIgs-cKakq9mB-F06Ac&scisf=4&ct=citation&cd=-1&hl=en
     # notes: Oral Presentation
-    image: ./assets/img/teaser_example.png
+    image: ./assets/img/cvpr2023_pose.png
