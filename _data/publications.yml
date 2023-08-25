@@ -10,7 +10,7 @@ main:
     image: ./assets/img/teaser_example_2.png
     # notes: Early Accept
 
-  - title:" Neuro-Modulated Hebbian Learning for Fully Test-Time Adaptation"
+  - title: "Neuro-Modulated Hebbian Learning for Fully Test-Time Adaptation"
     authors: Yushun Tang, <strong>Ce Zhang</strong>, Heng Xu, Shuoshuo Chen, Jie Cheng, Luziwei Leng, Qinghai Guo, Zhihai He
     conference_short: CVPR
     conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2023.
