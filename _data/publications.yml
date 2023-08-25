@@ -7,12 +7,12 @@ main:
     pdf: https://arxiv.org/pdf/2306.00988.pdf
     # code: https://github.com/MrGiovanni/ContinualLearning
     # bibtex: https://bib.yliu.me/MICCAI23.txt
-    image: ./assets/img/cvpr2023_tta.png
+    image: ./assets/img/bmvc2023_clip.png
     # notes: Early Accept
 
   - title: "Neuro-Modulated Hebbian Learning for Fully Test-Time Adaptation"
     authors: Yushun Tang, <strong>Ce Zhang</strong>, Heng Xu, Shuoshuo Chen, Jie Cheng, Luziwei Leng, Qinghai Guo, Zhihai He
-    conference_short: CVPR
+    conference_short: CVPR 2023
     conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2023.
     pdf: https://openaccess.thecvf.com/content/CVPR2023/papers/Tang_Neuro-Modulated_Hebbian_Learning_for_Fully_Test-Time_Adaptation_CVPR_2023_paper.pdf
     # code: https://github.com/yaoyao-liu/class-incremental-learning/tree/main/mnemonics-training
@@ -23,7 +23,7 @@ main:
 
   - title: "Self-Correctable and Adaptable Inference for Generalizable Human Pose Estimation"
     authors: Zhehan Kan, Shuoshuo Chen, <strong>Ce Zhang</strong>, Yushun Tang, Zhihai He
-    conference_short: CVPR
+    conference_short: CVPR 2023
     conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2023.
     pdf: https://openaccess.thecvf.com/content/CVPR2023/papers/Kan_Self-Correctable_and_Adaptable_Inference_for_Generalizable_Human_Pose_Estimation_CVPR_2023_paper.pdf
     # code: https://github.com/yaoyao-liu/class-incremental-learning/tree/main/mnemonics-training
