@@ -20,4 +20,4 @@ Hi there! I’m Ce Zhang and I’m currently pursuing my Master's degree in Mach
 
 {% include_relative _includes/publications.md %}
 
-{% include_relative _includes/services.md %}
+{% include_relative _includes/honors.md %}
