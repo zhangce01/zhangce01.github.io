@@ -32,7 +32,7 @@ auto_dark_mode: true
 
 # Font
 # You can use this option to choose between Serif or Sans Serif fonts.
-font: "Sans Serif" #"Serif" 
+font: "Serif" #"Sans Serif" 
 
 # Google Analytics ID
 # Please remove this if you don't use Google Analytics
