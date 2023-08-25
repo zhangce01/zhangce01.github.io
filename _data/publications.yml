@@ -15,6 +15,7 @@ main:
     conference_short: CVPR 2023
     conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2023.
     pdf: https://openaccess.thecvf.com/content/CVPR2023/papers/Tang_Neuro-Modulated_Hebbian_Learning_for_Fully_Test-Time_Adaptation_CVPR_2023_paper.pdf
+    supp: https://openaccess.thecvf.com/content/CVPR2023/supplemental/Tang_Neuro-Modulated_Hebbian_Learning_CVPR_2023_supplemental.pdf
     # code: https://github.com/yaoyao-liu/class-incremental-learning/tree/main/mnemonics-training
     # page: https://class-il.mpi-inf.mpg.de/mnemonics/
     # bibtex: https://scholar.googleusercontent.com/scholar.bib?q=info:xeeiKHNJ2MsJ:scholar.google.com/&output=citation&scisdr=ClHceJzZEPO4oU4lwMU:AFWwaeYAAAAAZOgj2MWrTQrbpqjDCXWAdukrvlk&scisig=AFWwaeYAAAAAZOgj2EJXLVxNyoosxJJ7i846aYg&scisf=4&ct=citation&cd=-1&hl=en
@@ -26,6 +27,7 @@ main:
     conference_short: CVPR 2023
     conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2023.
     pdf: https://openaccess.thecvf.com/content/CVPR2023/papers/Kan_Self-Correctable_and_Adaptable_Inference_for_Generalizable_Human_Pose_Estimation_CVPR_2023_paper.pdf
+    supp: https://openaccess.thecvf.com/content/CVPR2023/supplemental/Kan_Self-Correctable_and_Adaptable_CVPR_2023_supplemental.pdf
     # code: https://github.com/yaoyao-liu/class-incremental-learning/tree/main/mnemonics-training
     # page: https://class-il.mpi-inf.mpg.de/mnemonics/
     # bibtex: https://scholar.googleusercontent.com/scholar.bib?q=info:grP-K7IJIrUJ:scholar.google.com/&output=citation&scisdr=ClHceJzZEPO4oU4iVd8:AFWwaeYAAAAAZOgkTd9PfeJ0k9YxLkyPZsRgXJ0&scisig=AFWwaeYAAAAAZOgkTf-WuIgs-cKakq9mB-F06Ac&scisf=4&ct=citation&cd=-1&hl=en
