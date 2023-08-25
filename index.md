@@ -4,19 +4,19 @@ layout: homepage
 
 ## About Me
 
-I am a Ph.D. student at ...
+Hi there! I’m Ce Zhang and I’m currently pursuing my Master's degree in Machine Learning at CMU and looking forward to graduating in December 2024. Before this, I earned my B.Eng. in Communication Engineering from Southern University of Science and Technology (SUSTech). My current research interest lie in vision-language models.
 
 ## Research Interests
 
-- **Computer Vision:** image recognition, image generation, video captioning
-- **Machine Learning:** meta-learning, incremental learning, transfer learning
+- **Computer Vision:** vision-language models
+- **Machine Learning:** transfer learning
 
 ## News
 
-- **[Feb. 2020]** Our paper about incremental learning is accepted to CVPR 2020.
-- **[Feb. 2020]** We will host the ACM Multimedia Asia 2020 conference in Singapore!
-- **[Sept. 2019]** Our paper about few-shot learning is accepted to NeurIPS 2019.
-- **[Mar. 2019]** Our paper about few-shot learning is accepted to CVPR 2019.
+- **[Aug. 2023]** Our paper "BDC-Adapter: Brownian Distance Covariance for Better Vision-Language Reasoning" is accepted to BMVC 2023.
+- **[Aug. 2023]** Our paper "Unsupervised Prototype Adapter for Vision-Language Models" is accepted to PRCV 2023.
+- **[Mar. 2023]** Our paper "Neuro-Modulated Hebbian Learning for Fully Test-Time Adaptation" is accepted to CVPR 2023.
+- **[Mar. 2023]** Our paper "Self-Correctable and Adaptable Inference for Generalizable Human Pose Estimation" is accepted to CVPR 2023.
 
 {% include_relative _includes/publications.md %}
 
