@@ -20,3 +20,14 @@ main:
     bibtex: https://scholar.googleusercontent.com/scholar.bib?q=info:xeeiKHNJ2MsJ:scholar.google.com/&output=citation&scisdr=ClHceJzZEPO4oU4lwMU:AFWwaeYAAAAAZOgj2MWrTQrbpqjDCXWAdukrvlk&scisig=AFWwaeYAAAAAZOgj2EJXLVxNyoosxJJ7i846aYg&scisf=4&ct=citation&cd=-1&hl=en
     # notes: Oral Presentation
     image: ./assets/img/teaser_example.png
+
+  - title: Self-Correctable and Adaptable Inference for Generalizable Human Pose Estimation
+    authors: Zhehan Kan, Shuoshuo Chen, <strong>Ce Zhang</strong>, Yushun Tang, Zhihai He
+    conference_short: CVPR
+    conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2023.
+    pdf: https://openaccess.thecvf.com/content/CVPR2023/papers/Kan_Self-Correctable_and_Adaptable_Inference_for_Generalizable_Human_Pose_Estimation_CVPR_2023_paper.pdf
+    # code: https://github.com/yaoyao-liu/class-incremental-learning/tree/main/mnemonics-training
+    # page: https://class-il.mpi-inf.mpg.de/mnemonics/
+    bibtex: https://scholar.googleusercontent.com/scholar.bib?q=info:grP-K7IJIrUJ:scholar.google.com/&output=citation&scisdr=ClHceJzZEPO4oU4iVd8:AFWwaeYAAAAAZOgkTd9PfeJ0k9YxLkyPZsRgXJ0&scisig=AFWwaeYAAAAAZOgkTf-WuIgs-cKakq9mB-F06Ac&scisf=4&ct=citation&cd=-1&hl=en
+    # notes: Oral Presentation
+    image: ./assets/img/teaser_example.png
