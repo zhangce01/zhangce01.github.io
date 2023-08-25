@@ -18,7 +18,7 @@ Hi there! I’m Ce Zhang and I’m currently pursuing my Master's degree in Mach
 - **[Jun. 2023]** I am awarded the Top 10 Summa Cum Laude Graduates by Southern University of Science and Technology. 
 - **[Mar. 2023]** Our paper "Neuro-Modulated Hebbian Learning for Fully Test-Time Adaptation" is accepted to CVPR 2023.
 - **[Mar. 2023]** Our paper "Self-Correctable and Adaptable Inference for Generalizable Human Pose Estimation" is accepted to CVPR 2023.
-- **[Nov. 2023]** I am awarded the National Scholarship by Ministry of Education of the People's Republic of China. 
+- **[Nov. 2022]** I am awarded the National Scholarship by Ministry of Education of the People's Republic of China. 
 
 {% include_relative _includes/publications.md %}
 
