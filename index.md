@@ -9,7 +9,7 @@ Hi there! I’m Ce Zhang and I’m currently pursuing my Master's degree in Mach
 ## Research Interests
 
 - **Computer Vision:** vision-language models
-- **Machine Learning:** transfer learning
+- **Machine Learning:** multi-modal machine learning, transfer learning
 
 ## News
 
