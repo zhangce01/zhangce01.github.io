@@ -18,8 +18,8 @@ main:
     pdf: https://arxiv.org/pdf/2304.07485.pdf
     # code: https://github.com/MrGiovanni/ContinualLearning
     # bibtex: https://bib.yliu.me/MICCAI23.txt
-    image: ./assets/img/bmvc2023_clip.png
-    notes: Under review
+    image: ./assets/img/tai_critical.png
+    notes: Preprint, under review
 
   - title: "Neuro-Modulated Hebbian Learning for Fully Test-Time Adaptation"
     authors: Yushun Tang, <strong>Ce Zhang</strong>, Heng Xu, Shuoshuo Chen, Jie Cheng, Luziwei Leng, Qinghai Guo, Zhihai He
