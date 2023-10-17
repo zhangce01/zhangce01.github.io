@@ -1,5 +1,15 @@
 main:
 
+  - title: "HiKER-SGG: Hierarchical Knowledge Enhanced Robust Scene Graph Generation"
+    authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Joseph Campbell, Katia Sycara, Yaqi Xie
+    conference_short: In submission.
+    conference: In submission.
+    # pdf: https://arxiv.org/pdf/2309.01256.pdf
+    # code: https://github.com/MrGiovanni/ContinualLearning
+    # bibtex: https://bib.yliu.me/MICCAI23.txt
+    image: ./assets/img/bmvc2023_clip.png
+    # notes: Camera-ready edition coming soon...
+
   - title: "BDC-Adapter: Brownian Distance Covariance for Better Vision-Language Reasoning"
     authors: Yi Zhang*, <strong>Ce Zhang*</strong>, Zihan Liao, Yushun Tang, Zhihai He (*Equal contribution)
     conference_short: BMVC 2023
