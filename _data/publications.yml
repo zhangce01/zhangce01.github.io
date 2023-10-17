@@ -14,8 +14,7 @@ main:
   - title: "Critical Sampling for Robust Evolution Operator Learning of Unknown Dynamical Systems"
     authors: <strong>Ce Zhang</strong>, Kailiang Wu, Zhihai He
     conference_short: IEEE TAI
-    conference: (Full Version) Submitted to IEEE Transactions on Artificial Intelligence, 2023.  
-    (Short Version) First Workshop on Out-of-Distribution Generalization in Robotics at CoRL 2023.
+    conference: (Full Version) Submitted to IEEE Transactions on Artificial Intelligence, 2023; (Short Version) First Workshop on Out-of-Distribution Generalization in Robotics at CoRL 2023.
 
     pdf: https://arxiv.org/pdf/2304.07485.pdf
     # code: https://github.com/MrGiovanni/ContinualLearning
