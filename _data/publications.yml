@@ -66,7 +66,7 @@ main:
     # page: https://class-il.mpi-inf.mpg.de/mnemonics/
     # bibtex: https://scholar.googleusercontent.com/scholar.bib?q=info:grP-K7IJIrUJ:scholar.google.com/&output=citation&scisdr=ClHceJzZEPO4oU4iVd8:AFWwaeYAAAAAZOgkTd9PfeJ0k9YxLkyPZsRgXJ0&scisig=AFWwaeYAAAAAZOgkTf-WuIgs-cKakq9mB-F06Ac&scisf=4&ct=citation&cd=-1&hl=en
     # notes: Oral Presentation
-    image: ./assets/img/depth.png
+    image: ./assets/img/wacv2024_depth.png
     
   - title: "Unsupervised Prototype Adapter for Vision-Languange Models"
     authors: Yi Zhang, <strong>Ce Zhang</strong>, Xueting Hu, Zhihai He
