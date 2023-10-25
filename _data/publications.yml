@@ -57,6 +57,17 @@ main:
     # notes: Oral Presentation
     image: ./assets/img/cvpr2023_pose.png
 
+  - title: "Learning to Adapt CLIP for Few-Shot Monocular Depth Estimation"
+    authors: Xueting Hu, <strong>Ce Zhang</strong>, Yi Zhang, Bowen Hai, Ke Yu, Zhihai He
+    conference_short: WACV 2024
+    conference: IEEE/CVF Winter Conference on Applications of Computer Vision <strong>(WACV)</strong>, 2024.
+    pdf: https://arxiv.org/abs/2308.11507
+    # code: https://github.com/yaoyao-liu/class-incremental-learning/tree/main/mnemonics-training
+    # page: https://class-il.mpi-inf.mpg.de/mnemonics/
+    # bibtex: https://scholar.googleusercontent.com/scholar.bib?q=info:grP-K7IJIrUJ:scholar.google.com/&output=citation&scisdr=ClHceJzZEPO4oU4iVd8:AFWwaeYAAAAAZOgkTd9PfeJ0k9YxLkyPZsRgXJ0&scisig=AFWwaeYAAAAAZOgkTf-WuIgs-cKakq9mB-F06Ac&scisf=4&ct=citation&cd=-1&hl=en
+    # notes: Oral Presentation
+    image: ./assets/img/prcv2023_clip.png
+    
   - title: "Unsupervised Prototype Adapter for Vision-Languange Models"
     authors: Yi Zhang, <strong>Ce Zhang</strong>, Xueting Hu, Zhihai He
     conference_short: PRCV 2023
