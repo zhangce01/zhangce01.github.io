@@ -2,13 +2,12 @@ main:
 
   - title: "HiKER-SGG: Hierarchical Knowledge Enhanced Robust Scene Graph Generation"
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Joseph Campbell, Katia Sycara, Yaqi Xie
-    conference_short: In submission
-    conference: Submitted to NeurIPS 2023 New Frontiers in Graph Learning Workshop.
+    conference_short: NeurIPS 2023 Workshop
+    conference: NeurIPS 2023 Workshop: New Frontiers in Graph Learning.
     # pdf: https://arxiv.org/pdf/2309.01256.pdf
     # code: https://github.com/MrGiovanni/ContinualLearning
     # bibtex: https://bib.yliu.me/MICCAI23.txt
     image: ./assets/img/hiker.png
-    notes: Under review
 
   - title: "Critical Sampling for Robust Evolution Operator Learning of Unknown Dynamical Systems"
     authors: <strong>Ce Zhang</strong>, Kailiang Wu, Zhihai He
