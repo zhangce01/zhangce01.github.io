@@ -28,7 +28,7 @@
       <a href="{{ link.supp }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">Supplemental</a>
       {% endif %}
       {% if link.website %} 
-      <a href="{{ link.supp }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">Website</a>
+      <a href="{{ link.website }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">Website</a>
       {% endif %}
       {% if link.video %} 
       <a href="{{ link.video }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">Video</a>
