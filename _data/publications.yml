@@ -4,10 +4,11 @@ main:
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Joseph Campbell, Katia Sycara, Yaqi Xie
     conference_short: NeurIPS 2023 Workshop
     conference: NeurIPS 2023 New Frontiers in Graph Learning Workshop.
-    pdf: https://arxiv.org/pdf/2309.01256.pdf
+    # pdf: https://arxiv.org/pdf/2309.01256.pdf
     # code: https://github.com/MrGiovanni/ContinualLearning
     # bibtex: https://bib.yliu.me/MICCAI23.txt
     image: ./assets/img/hiker.png
+    notes: In submission
 
   - title: "Critical Sampling for Robust Evolution Operator Learning of Unknown Dynamical Systems"
     authors: <strong>Ce Zhang</strong>, Kailiang Wu, Zhihai He
@@ -59,7 +60,7 @@ main:
     authors: Xueting Hu, <strong>Ce Zhang</strong>, Yi Zhang, Bowen Hai, Ke Yu, Zhihai He
     conference_short: WACV 2024
     conference: IEEE/CVF Winter Conference on Applications of Computer Vision <strong>(WACV)</strong>, 2024.
-    pdf: https://arxiv.org/abs/2308.11507
+    pdf: https://arxiv.org/pdf/2311.01034.pdf
     # code: https://github.com/yaoyao-liu/class-incremental-learning/tree/main/mnemonics-training
     # page: https://class-il.mpi-inf.mpg.de/mnemonics/
     # bibtex: https://scholar.googleusercontent.com/scholar.bib?q=info:grP-K7IJIrUJ:scholar.google.com/&output=citation&scisdr=ClHceJzZEPO4oU4iVd8:AFWwaeYAAAAAZOgkTd9PfeJ0k9YxLkyPZsRgXJ0&scisig=AFWwaeYAAAAAZOgkTf-WuIgs-cKakq9mB-F06Ac&scisf=4&ct=citation&cd=-1&hl=en
@@ -70,7 +71,7 @@ main:
     authors: Yi Zhang, <strong>Ce Zhang</strong>, Xueting Hu, Zhihai He
     conference_short: PRCV 2023
     conference: Chinese Conference on Pattern Recognition and Computer Vision <strong>(PRCV)</strong>, 2023.
-    pdf: https://arxiv.org/abs/2308.11507
+    pdf: https://arxiv.org/pdf/2308.11507.pdf
     # code: https://github.com/yaoyao-liu/class-incremental-learning/tree/main/mnemonics-training
     # page: https://class-il.mpi-inf.mpg.de/mnemonics/
     # bibtex: https://scholar.googleusercontent.com/scholar.bib?q=info:grP-K7IJIrUJ:scholar.google.com/&output=citation&scisdr=ClHceJzZEPO4oU4iVd8:AFWwaeYAAAAAZOgkTd9PfeJ0k9YxLkyPZsRgXJ0&scisig=AFWwaeYAAAAAZOgkTf-WuIgs-cKakq9mB-F06Ac&scisf=4&ct=citation&cd=-1&hl=en
