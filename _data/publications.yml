@@ -25,6 +25,7 @@ main:
     conference_short: BMVC 2023
     conference: British Machine Vision Conference <strong>(BMVC)</strong>, 2023.
     pdf: https://arxiv.org/pdf/2309.01256.pdf
+    website: https://zhangce01.github.io/BDC-Adapter/
     # code: https://github.com/MrGiovanni/ContinualLearning
     # bibtex: https://bib.yliu.me/MICCAI23.txt
     image: ./assets/img/bmvc2023_clip.png
