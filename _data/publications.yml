@@ -8,7 +8,7 @@ main:
     # code: https://github.com/MrGiovanni/ContinualLearning
     # bibtex: https://bib.yliu.me/MICCAI23.txt
     image: ./assets/img/hike_intro.png
-    notes: Submitted to CVPR 2023
+    notes: Submitted to CVPR 2024
 
   - title: "Critical Sampling for Robust Evolution Operator Learning of Unknown Dynamical Systems"
     authors: <strong>Ce Zhang</strong>, Kailiang Wu, Zhihai He
