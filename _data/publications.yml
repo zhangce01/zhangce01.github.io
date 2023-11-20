@@ -7,7 +7,7 @@ main:
     # pdf: https://arxiv.org/pdf/2309.01256.pdf
     # code: https://github.com/MrGiovanni/ContinualLearning
     # bibtex: https://bib.yliu.me/MICCAI23.txt
-    image: ./assets/img/hike_intro.png
+    image: ./assets/img/hiker_intro.png
     notes: Submitted to CVPR 2024
 
   - title: "Critical Sampling for Robust Evolution Operator Learning of Unknown Dynamical Systems"
