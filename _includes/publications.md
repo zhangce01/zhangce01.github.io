@@ -19,6 +19,9 @@
       <div class="title"><a href="{{ link.pdf }}">{{ link.title }}</a></div>
       <div class="author">{{ link.authors }}</div>
       <div class="periodical"><em>{{ link.conference }}</em></div>
+      {% if link.conference2 %} 
+      <div class="periodical"> Also at <em>{{ link.conference2 }}</em></div>
+      {% endif %}
       {% if link.place %} 
       <div class="place">{{ link.place }}</div>
       {% endif %}
