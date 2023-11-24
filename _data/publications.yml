@@ -4,9 +4,6 @@ main:
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Joseph Campbell, Katia Sycara, Yaqi Xie
     conference_short: NeurIPS 2023 Workshop
     conference: NeurIPS 2023 New Frontiers in Graph Learning Workshop.
-    # pdf: https://arxiv.org/pdf/2309.01256.pdf
-    # code: https://github.com/MrGiovanni/ContinualLearning
-    # bibtex: https://bib.yliu.me/MICCAI23.txt
     image: ./assets/img/hiker_intro.png
     notes: Submitted to CVPR 2024
 
@@ -15,10 +12,7 @@ main:
     conference_short: IEEE TAI
     conference: (Full Version) IEEE Transactions on Artificial Intelligence, 2023; (Short Version) First Workshop on Out-of-Distribution Generalization in Robotics at CoRL 2023.
     pdf: https://arxiv.org/pdf/2304.07485.pdf
-    # code: https://github.com/MrGiovanni/ContinualLearning
-    # bibtex: https://bib.yliu.me/MICCAI23.txt
     image: ./assets/img/tai_critical.png
-    # notes: Preprint, under review
     
   - title: "BDC-Adapter: Brownian Distance Covariance for Better Vision-Language Reasoning"
     authors: Yi Zhang*, <strong>Ce Zhang*</strong>, Zihan Liao, Yushun Tang, Zhihai He (*Equal contribution)
@@ -29,55 +23,40 @@ main:
     supp: https://bmvc2022.mpi-inf.mpg.de/BMVC2023/0182_supp.pdf
     video: https://bmvc2022.mpi-inf.mpg.de/BMVC2023/0182_video.mp4
     website: https://zhangce01.github.io/BDC-Adapter
-    # code: https://github.com/MrGiovanni/ContinualLearning
-    # bibtex: https://bib.yliu.me/MICCAI23.txt
     image: ./assets/img/bmvc2023_clip.png
-    # notes: Camera-ready edition coming soon...
 
   - title: "Neuro-Modulated Hebbian Learning for Fully Test-Time Adaptation"
     authors: Yushun Tang, <strong>Ce Zhang</strong>, Heng Xu, Shuoshuo Chen, Jie Cheng, Luziwei Leng, Qinghai Guo, Zhihai He
     conference_short: CVPR 2023
     conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2023.
+    place: Vancouver, Canada, June 18-22, 2023
     pdf: https://openaccess.thecvf.com/content/CVPR2023/papers/Tang_Neuro-Modulated_Hebbian_Learning_for_Fully_Test-Time_Adaptation_CVPR_2023_paper.pdf
     supp: https://openaccess.thecvf.com/content/CVPR2023/supplemental/Tang_Neuro-Modulated_Hebbian_Learning_CVPR_2023_supplemental.pdf
     video: https://www.youtube.com/watch?v=d1f4UDmAadk&t=142s
-    # code: https://github.com/yaoyao-liu/class-incremental-learning/tree/main/mnemonics-training
-    # page: https://class-il.mpi-inf.mpg.de/mnemonics/
-    # bibtex: https://scholar.googleusercontent.com/scholar.bib?q=info:xeeiKHNJ2MsJ:scholar.google.com/&output=citation&scisdr=ClHceJzZEPO4oU4lwMU:AFWwaeYAAAAAZOgj2MWrTQrbpqjDCXWAdukrvlk&scisig=AFWwaeYAAAAAZOgj2EJXLVxNyoosxJJ7i846aYg&scisf=4&ct=citation&cd=-1&hl=en
-    # notes: Oral Presentation
     image: ./assets/img/cvpr2023_tta.png
 
   - title: "Self-Correctable and Adaptable Inference for Generalizable Human Pose Estimation"
     authors: Zhehan Kan, Shuoshuo Chen, <strong>Ce Zhang</strong>, Yushun Tang, Zhihai He
     conference_short: CVPR 2023
     conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2023.
+    place: Vancouver, Canada, June 18-22, 2023
     pdf: https://openaccess.thecvf.com/content/CVPR2023/papers/Kan_Self-Correctable_and_Adaptable_Inference_for_Generalizable_Human_Pose_Estimation_CVPR_2023_paper.pdf
     supp: https://openaccess.thecvf.com/content/CVPR2023/supplemental/Kan_Self-Correctable_and_Adaptable_CVPR_2023_supplemental.pdf
     video: https://www.youtube.com/watch?v=W5cn4W1hBOg&t=255s
-    # code: https://github.com/yaoyao-liu/class-incremental-learning/tree/main/mnemonics-training
-    # page: https://class-il.mpi-inf.mpg.de/mnemonics/
-    # bibtex: https://scholar.googleusercontent.com/scholar.bib?q=info:grP-K7IJIrUJ:scholar.google.com/&output=citation&scisdr=ClHceJzZEPO4oU4iVd8:AFWwaeYAAAAAZOgkTd9PfeJ0k9YxLkyPZsRgXJ0&scisig=AFWwaeYAAAAAZOgkTf-WuIgs-cKakq9mB-F06Ac&scisf=4&ct=citation&cd=-1&hl=en
-    # notes: Oral Presentation
     image: ./assets/img/cvpr2023_pose.png
 
   - title: "Learning to Adapt CLIP for Few-Shot Monocular Depth Estimation"
     authors: Xueting Hu, <strong>Ce Zhang</strong>, Yi Zhang, Bowen Hai, Ke Yu, Zhihai He
     conference_short: WACV 2024
     conference: IEEE/CVF Winter Conference on Applications of Computer Vision <strong>(WACV)</strong>, 2024.
+    place: Waikoloa, HI, US, January 4-8, 2024
     pdf: https://arxiv.org/pdf/2311.01034.pdf
-    # code: https://github.com/yaoyao-liu/class-incremental-learning/tree/main/mnemonics-training
-    # page: https://class-il.mpi-inf.mpg.de/mnemonics/
-    # bibtex: https://scholar.googleusercontent.com/scholar.bib?q=info:grP-K7IJIrUJ:scholar.google.com/&output=citation&scisdr=ClHceJzZEPO4oU4iVd8:AFWwaeYAAAAAZOgkTd9PfeJ0k9YxLkyPZsRgXJ0&scisig=AFWwaeYAAAAAZOgkTf-WuIgs-cKakq9mB-F06Ac&scisf=4&ct=citation&cd=-1&hl=en
-    # notes: Oral Presentation
     image: ./assets/img/wacv2024_depth.png
     
   - title: "Unsupervised Prototype Adapter for Vision-Languange Models"
     authors: Yi Zhang, <strong>Ce Zhang</strong>, Xueting Hu, Zhihai He
     conference_short: PRCV 2023
     conference: Chinese Conference on Pattern Recognition and Computer Vision <strong>(PRCV)</strong>, 2023.
+    place: Xiamen, China, October 13–15, 2023
     pdf: https://arxiv.org/pdf/2308.11507.pdf
-    # code: https://github.com/yaoyao-liu/class-incremental-learning/tree/main/mnemonics-training
-    # page: https://class-il.mpi-inf.mpg.de/mnemonics/
-    # bibtex: https://scholar.googleusercontent.com/scholar.bib?q=info:grP-K7IJIrUJ:scholar.google.com/&output=citation&scisdr=ClHceJzZEPO4oU4iVd8:AFWwaeYAAAAAZOgkTd9PfeJ0k9YxLkyPZsRgXJ0&scisig=AFWwaeYAAAAAZOgkTf-WuIgs-cKakq9mB-F06Ac&scisf=4&ct=citation&cd=-1&hl=en
-    # notes: Oral Presentation
     image: ./assets/img/prcv2023_clip.png
