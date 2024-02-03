@@ -5,7 +5,8 @@ main:
     conference_short: NeurIPS 2023 Workshop
     conference: NeurIPS 2023 New Frontiers in Graph Learning Workshop.
     image: ./assets/img/hiker_intro.png
-    notes: Submitted to CVPR 2024
+    pdf: https://openreview.net/pdf?id=0oY0LPPH4e
+    notes: Preprint
 
   - title: "Critical Sampling for Robust Evolution Operator Learning of Unknown Dynamical Systems"
     authors: <strong>Ce Zhang</strong>, Kailiang Wu, Zhihai He
