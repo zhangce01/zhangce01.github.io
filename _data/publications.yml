@@ -62,7 +62,6 @@ main:
     conference: IEEE/CVF Winter Conference on Applications of Computer Vision <strong>(WACV)</strong>, 2024.
     place: Waikoloa, HI, US, January 4-8, 2024
     pdf: https://arxiv.org/pdf/2311.01034.pdf
-    image: ./assets/img/wacv2024_depth.png
     
   - title: "Unsupervised Prototype Adapter for Vision-Languange Models"
     authors: Yi Zhang, <strong>Ce Zhang</strong>, Xueting Hu, Zhihai He
@@ -70,4 +69,3 @@ main:
     conference: Chinese Conference on Pattern Recognition and Computer Vision <strong>(PRCV)</strong>, 2023.
     place: Xiamen, China, October 13-15, 2023
     pdf: https://arxiv.org/pdf/2308.11507.pdf
-    image: ./assets/img/prcv2023_clip.png
