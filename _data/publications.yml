@@ -54,7 +54,7 @@ main:
     conference: AAAI Conference on Artificial Intelligence <strong>(AAAI)</strong>, 2024.
     place: Vancouver, Canada, February 22-25, 2024
     pdf: https://arxiv.org/pdf/2401.07457.pdf
-    image: ./assets/img/cvpr2023_pose.png
+    image: ./assets/img/aaai24.png
 
   - title: "Learning to Adapt CLIP for Few-Shot Monocular Depth Estimation"
     authors: Xueting Hu, <strong>Ce Zhang</strong>, Yi Zhang, Bowen Hai, Ke Yu, Zhihai He
