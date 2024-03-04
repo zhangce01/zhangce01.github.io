@@ -4,7 +4,7 @@ main:
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Katia Sycara, Yaqi Xie
     conference_short: Preprint
     conference: ICLR 2024 Workshop on Mathematical and Empirical Understanding of Foundation Models.
-    image: ./assets/img/hiker_intro.png
+    image: ./assets/img/eccv24_overview.png
     
   - title: "HiKER-SGG: Hierarchical Knowledge Enhanced Robust Scene Graph Generation"
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Joseph Campbell, Katia Sycara, Yaqi Xie
