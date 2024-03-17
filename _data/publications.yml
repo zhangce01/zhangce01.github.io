@@ -15,6 +15,7 @@ main:
     place: Seattle, WA, US, June 17-21, 2024
     image: ./assets/img/hiker_intro.png
     code: https://github.com/zhangce01/HiKER-SGG
+    website: https://zhangce01.github.io/HiKER-SGG
     pdf: https://openreview.net/pdf?id=0oY0LPPH4e
 
   - title: "Critical Sampling for Robust Evolution Operator Learning of Unknown Dynamical Systems"
