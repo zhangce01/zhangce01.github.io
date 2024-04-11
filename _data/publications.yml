@@ -57,27 +57,3 @@ main:
     supp: https://openaccess.thecvf.com/content/CVPR2023/supplemental/Kan_Self-Correctable_and_Adaptable_CVPR_2023_supplemental.pdf
     video: https://www.youtube.com/watch?v=W5cn4W1hBOg&t=255s
     image: ./assets/img/cvpr2023_pose.png
-
-  - title: "Concept-Guided Prompt Learning for Generalization in Vision-Language Models"
-    authors: Yi Zhang, <strong>Ce Zhang</strong>, Ke Yu, Yushun Tang, Zhihai He
-    conference_short: AAAI 2024
-    conference: AAAI Conference on Artificial Intelligence <strong>(AAAI)</strong>, 2024.
-    place: Vancouver, Canada, February 22-25, 2024
-    pdf: https://arxiv.org/pdf/2401.07457.pdf
-    image: ./assets/img/aaai24.png
-
-  - title: "Learning to Adapt CLIP for Few-Shot Monocular Depth Estimation"
-    authors: Xueting Hu, <strong>Ce Zhang</strong>, Yi Zhang, Bowen Hai, Ke Yu, Zhihai He
-    conference_short: WACV 2024
-    conference: IEEE/CVF Winter Conference on Applications of Computer Vision <strong>(WACV)</strong>, 2024.
-    place: Waikoloa, HI, US, January 4-8, 2024
-    pdf: https://arxiv.org/pdf/2311.01034.pdf
-    image: ./assets/img/wacv2024_depth.png
-    
-  - title: "Unsupervised Prototype Adapter for Vision-Languange Models"
-    authors: Yi Zhang, <strong>Ce Zhang</strong>, Xueting Hu, Zhihai He
-    conference_short: PRCV 2023
-    conference: Chinese Conference on Pattern Recognition and Computer Vision <strong>(PRCV)</strong>, 2023.
-    place: Xiamen, China, October 13-15, 2023
-    pdf: https://arxiv.org/pdf/2308.11507.pdf
-    image: ./assets/img/prcv2023_clip.png
