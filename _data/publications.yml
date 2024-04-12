@@ -68,7 +68,7 @@ main:
     conference: IEEE/CVF Winter Conference on Applications of Computer Vision <strong>(WACV)</strong>, 2024.
     pdf: https://arxiv.org/pdf/2311.01034.pdf
 
-  - title: "Unsupervised Prototype Adapter for Vision-Languange Models"
-    authors: Yi Zhang, <strong>Ce Zhang</strong>, Xueting Hu, Zhihai He
-    conference: Chinese Conference on Pattern Recognition and Computer Vision <strong>(PRCV)</strong>, 2023.
-    pdf: https://arxiv.org/pdf/2308.11507.pdf
+  # - title: "Unsupervised Prototype Adapter for Vision-Languange Models"
+  #   authors: Yi Zhang, <strong>Ce Zhang</strong>, Xueting Hu, Zhihai He
+  #   conference: Chinese Conference on Pattern Recognition and Computer Vision <strong>(PRCV)</strong>, 2023.
+  #   pdf: https://arxiv.org/pdf/2308.11507.pdf
