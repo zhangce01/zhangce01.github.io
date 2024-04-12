@@ -20,6 +20,7 @@ Hi there! I’m Ce Zhang and I’m currently pursuing my Master's degree in Mach
 - **[Jun. 2023]** I am awarded the Top 10 Summa Cum Laude Graduates by Southern University of Science and Technology. 
 
 {% include_relative _includes/publications.md %}
+{% include_relative _includes/publications2.md %}
 
 {% include_relative _includes/honors.md %}
 
