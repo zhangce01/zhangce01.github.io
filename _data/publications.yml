@@ -60,19 +60,13 @@ main:
 
   - title: "Concept-Guided Prompt Learning for Generalization in Vision-Language Models"
     authors: Yi Zhang, <strong>Ce Zhang</strong>, Ke Yu, Yushun Tang, Zhihai He
-    conference_short: AAAI 2024
     conference: AAAI Conference on Artificial Intelligence <strong>(AAAI)</strong>, 2024.
-    place: Vancouver, Canada, February 22-25, 2024
     pdf: https://arxiv.org/pdf/2401.07457.pdf
-    image: ./assets/img/aaai24.png
 
   - title: "Learning to Adapt CLIP for Few-Shot Monocular Depth Estimation"
     authors: Xueting Hu, <strong>Ce Zhang</strong>, Yi Zhang, Bowen Hai, Ke Yu, Zhihai He
-    conference_short: WACV 2024
     conference: IEEE/CVF Winter Conference on Applications of Computer Vision <strong>(WACV)</strong>, 2024.
-    place: Waikoloa, HI, US, January 4-8, 2024
     pdf: https://arxiv.org/pdf/2311.01034.pdf
-    image: ./assets/img/wacv2024_depth.png
 
   - title: "Unsupervised Prototype Adapter for Vision-Languange Models"
     authors: Yi Zhang, <strong>Ce Zhang</strong>, Xueting Hu, Zhihai He
