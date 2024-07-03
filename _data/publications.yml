@@ -65,7 +65,7 @@ main:
     video: https://www.youtube.com/watch?v=W5cn4W1hBOg&t=255s
     image: ./assets/img/cvpr2023_pose.png
 
- - title: "Concept-Guided Prompt Learning for Generalization in Vision-Language Models"
+  - title: "Concept-Guided Prompt Learning for Generalization in Vision-Language Models"
     authors: Yi Zhang, <strong>Ce Zhang</strong>, Ke Yu, Yushun Tang, Zhihai He
     conference_short: AAAI 2024
     conference: AAAI Conference on Artificial Intelligence <strong>(AAAI)</strong>, 2024.
