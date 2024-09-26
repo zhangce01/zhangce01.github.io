@@ -1,18 +1,18 @@
 main:
-
-  - title: "Test-Time Prototype Evolving for Generalizable Vision-Language Models"
-    authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Katia Sycara, Yaqi Xie
-    conference_short: Preprint
-    conference: ICML 2024 Workshop on Foundation Models in the Wild.
-    image: ./assets/img/icmlw_teasor.png
-    notes: Preprint, under review.
-    
   - title: "Few-Shot Dual-Path Adaptation of Vision-Language Foundation Models"
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Katia Sycara, Yaqi Xie
     conference_short: Preprint
     conference: ICLR 2024 Workshop on Mathematical and Empirical Understanding of Foundation Models.
     image: ./assets/img/iclrw_teasor.png
     notes: Preprint, under review.
+
+  - title: "Dual Prototype Evolving for Test-Time Generalization of Vision-Language Models"
+    authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Katia Sycara, Yaqi Xie
+    conference_short: NeurIPS 2024
+    conference: Annual Conference on Neural Information Processing Systems <strong>(NeurIPS)</strong>, 2024.
+    conference2: ICML 2024 Workshop on Foundation Models in the Wild.
+    place: Vancouver, Canada, December 9-15, 2024
+    image: ./assets/img/icmlw_teasor.png
     
   - title: "HiKER-SGG: Hierarchical Knowledge Enhanced Robust Scene Graph Generation"
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Joseph Campbell, Katia Sycara, Yaqi Xie
