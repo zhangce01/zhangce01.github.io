@@ -9,7 +9,7 @@ main:
   - title: "Dual Prototype Evolving for Test-Time Generalization of Vision-Language Models"
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Katia Sycara, Yaqi Xie
     conference_short: NeurIPS 2024
-    conference: Annual Conference on Neural Information Processing Systems <strong>(NeurIPS)</strong>, 2024.
+    conference: Conference on Neural Information Processing Systems <strong>(NeurIPS)</strong>, 2024.
     conference2: ICML 2024 Workshop on Foundation Models in the Wild.
     place: Vancouver, Canada, December 9-15, 2024
     image: ./assets/img/icmlw_teasor.png
