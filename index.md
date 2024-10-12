@@ -4,7 +4,7 @@ layout: homepage
 
 ## About Me
 
-Hi there! I’m Ce Zhang and I’m currently pursuing my Master's degree in Machine Learning at CMU and looking forward to graduating in December 2024. Before this, I earned my B.Eng. in Communication Engineering from Southern University of Science and Technology (SUSTech). My current research interest lie in vision-language models and scene understanding.
+Hi there! I’m Ce Zhang, a master’s student in the Machine Learning Department at Carnegie Mellon University (CMU), advised by [Prof. Katia Sycara](https://www.cs.cmu.edu/~sycara/). Prior to this, I received my B.Eng. in Communication Engineering from Southern University of Science and Technology (SUSTech), where I worked under the supervision of [Prof. Zhihai He](https://www.sustech.edu.cn/en/faculties/zhihaihe.html). My current research interest lie in vision-language models and scene understanding.
 
 ## Research Interests
 
