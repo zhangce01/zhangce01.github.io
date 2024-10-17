@@ -21,7 +21,8 @@ main:
     conference2: ICML 2024 Workshop on Foundation Models in the Wild.
     place: Vancouver, Canada, December 9-15, 2024
     image: ./assets/img/icmlw_teasor.png
-    code: [![](https://img.shields.io/github/stars/zhangce01/DPE-CLIP?style=social&label=Code+Stars)](https://github.com/zhangce01/DPE-CLIP)
+    code: https://github.com/zhangce01/DPE-CLIP
+    badge: https://img.shields.io/github/stars/zhangce01/DPE-CLIP?style=social&label=Code+Stars
     website: https://zhangce01.github.io/DPE-CLIP
     pdf: http://arxiv.org/pdf/2410.12790.pdf
     
@@ -33,6 +34,7 @@ main:
     place: Seattle, WA, US, June 17-21, 2024
     image: ./assets/img/hiker_intro.png
     code: https://github.com/zhangce01/HiKER-SGG
+    badge: https://img.shields.io/github/stars/zhangce01/HiKER-SGG?style=social&label=Code+Stars
     website: https://zhangce01.github.io/HiKER-SGG
     pdf: https://openaccess.thecvf.com/content/CVPR2024/papers/Zhang_HiKER-SGG_Hierarchical_Knowledge_Enhanced_Robust_Scene_Graph_Generation_CVPR_2024_paper.pdf
     video: https://www.youtube.com/watch?v=GLCagI1XDdg
