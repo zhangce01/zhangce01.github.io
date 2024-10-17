@@ -39,8 +39,8 @@
       <a href="{{ link.video }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">Video</a>
       {% endif %}
       {% if link.code %}
-      <a href="{{ link.code }}"  style="margin-top: -5px; display: inline-block;" target="_blank">
-      <img src="{{ link.badge }}" alt="GitHub Stars" style="height: 18px; vertical-align: middle;">
+      <a href="{{ link.code }}" target="_blank">
+      <img src="{{ link.badge }}" alt="GitHub Stars" style="height: 18px; vertical-align: middle; margin-top: -2px">
       </a>
       {% endif %}
       {% if link.page %} 
