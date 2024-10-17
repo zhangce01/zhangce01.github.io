@@ -21,7 +21,7 @@ main:
     conference2: ICML 2024 Workshop on Foundation Models in the Wild.
     place: Vancouver, Canada, December 9-15, 2024
     image: ./assets/img/icmlw_teasor.png
-    code: https://github.com/zhangce01/DPE-CLIP
+    code: [![](https://img.shields.io/github/stars/zhangce01/DPE-CLIP?style=social&label=Code+Stars)](https://github.com/zhangce01/DPE-CLIP)
     website: https://zhangce01.github.io/DPE-CLIP
     pdf: http://arxiv.org/pdf/2410.12790.pdf
     
