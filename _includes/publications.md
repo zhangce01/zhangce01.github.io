@@ -40,7 +40,7 @@
       {% endif %}
       {% if link.code %}
       <a href="{{ link.code }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">
-      <img src="{{ link.badge }}" alt="GitHub Stars">
+      <img src="{{ link.badge }}" alt="GitHub Stars" style="vertical-align: middle;">
       </a>
       {% endif %}
       {% if link.page %} 
