@@ -39,6 +39,9 @@
       <a href="{{ link.video }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">Video</a>
       {% endif %}
       {% if link.code %} 
+      <a href="{{ link.code }}">
+      <img src="{{ link.badge }}" alt="GitHub Stars">
+      </a>
       [![GitHub Stars](https://img.shields.io/github/stars/linzhiqiu/visual_gpt_score?style=social&label=Code+Stars)](https://github.com/linzhiqiu/visual_gpt_score)
       {% endif %}
       {% if link.page %} 
