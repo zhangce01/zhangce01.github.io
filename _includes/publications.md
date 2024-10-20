@@ -40,7 +40,7 @@
       {% endif %}
       {% if link.code %}
       <a href="{{ link.code }}" target="_blank">
-      <img src="{{ link.badge }}" alt="GitHub Stars" style="height: 18px; vertical-align: middle; margin-top: -2px">
+      <img src="{{ link.badge }}" alt="GitHub Stars" style="height: 19px; vertical-align: middle; margin-top: -2.5px">
       </a>
       {% endif %}
       {% if link.page %} 
