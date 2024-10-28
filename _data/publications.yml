@@ -6,13 +6,14 @@ main:
     image: ./assets/img/iclr2025.png
     notes: Preprint, under review.
 
-  - title: "Few-Shot Dual-Path Adaptation of Vision-Language Foundation Models"
+  - title: "Enhancing Vision-Language Few-Shot Adaptation with Negative Learning"
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Katia Sycara, Yaqi Xie
-    conference_short: Preprint
-    conference: ICLR 2024 Workshop on Mathematical and Empirical Understanding of Foundation Models.
+    conference_short: WACV 2025
+    conference: IEEE/CVF Winter Conference on Applications of Computer Vision, 2025.
+    conference2: ICLR 2024 Workshop on Mathematical and Empirical Understanding of Foundation Models.
+    place: Tucson, AZ, US, February 28 - March 4, 2025
     image: ./assets/img/iclrw_teasor.png
     pdf: https://openreview.net/pdf?id=V1y84mlYHd
-    notes: Preprint, under review.
 
   - title: "Dual Prototype Evolving for Test-Time Generalization of Vision-Language Models"
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Katia Sycara, Yaqi Xie
