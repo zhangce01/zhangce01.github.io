@@ -14,7 +14,9 @@ main:
     conference2: ICLR 2024 Workshop on Mathematical and Empirical Understanding of Foundation Models.
     place: Tucson, AZ, US, February 28 - March 4, 2025
     image: ./assets/img/iclrw_teasor.png
-    pdf: https://openreview.net/pdf?id=V1y84mlYHd
+    code: https://github.com/zhangce01/SimNL
+    badge: https://img.shields.io/github/stars/zhangce01/SimNL?style=social&label=Code+Stars
+    pdf: https://arxiv.org/pdf/2403.12964
 
   - title: "Dual Prototype Evolving for Test-Time Generalization of Vision-Language Models"
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Katia Sycara, Yaqi Xie
