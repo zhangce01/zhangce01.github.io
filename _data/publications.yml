@@ -4,6 +4,7 @@ main:
     conference_short: Preprint
     conference: NeurIPS 2024 Workshop on Responsibly Building the Next Generation of Multimodal Foundational Models.
     image: ./assets/img/iclr2025.png
+    pdf: https://openreview.net/pdf?id=1fpjV6xQ6Q
     notes: Preprint, under review.
 
   - title: "Enhancing Vision-Language Few-Shot Adaptation with Negative Learning"
