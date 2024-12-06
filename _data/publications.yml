@@ -13,7 +13,7 @@ main:
     conference: IEEE/CVF Winter Conference on Applications of Computer Vision <strong>(WACV)</strong>, 2025.
     conference2: ICLR 2024 Workshop on Mathematical and Empirical Understanding of Foundation Models.
     place: Tucson, AZ, US, February 28 - March 4, 2025
-    image: ./assets/img/iclrw_teasor.png
+    image: ./assets/img/wacv2025.png
     code: https://github.com/zhangce01/SimNL
     badge: https://img.shields.io/github/stars/zhangce01/SimNL?style=social&label=Code+Stars
     pdf: https://arxiv.org/pdf/2403.12964
@@ -91,7 +91,7 @@ main:
     place: Vancouver, Canada, February 22-25, 2024
     pdf: https://arxiv.org/pdf/2401.07457.pdf
     video: https://underline.io/lecture/93595-concept-guided-prompt-learning-for-generalization-in-vision-language-models
-    image: ./assets/img/aaai24.png
+    image: ./assets/img/aaai2024.png
 
   - title: "Learning to Adapt CLIP for Few-Shot Monocular Depth Estimation"
     authors: Xueting Hu, <strong>Ce Zhang</strong>, Yi Zhang, Bowen Hai, Ke Yu, Zhihai He
@@ -100,4 +100,4 @@ main:
     place: Waikoloa, HI, US, January 4-8, 2024
     pdf: https://arxiv.org/pdf/2311.01034.pdf
     video: https://www.youtube.com/watch?v=EA4M1vgQkFk
-    image: ./assets/img/wacv2024_depth.png
+    image: ./assets/img/wacv2024.png
