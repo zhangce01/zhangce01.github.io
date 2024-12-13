@@ -8,8 +8,10 @@ Hi there! I’m Ce Zhang, a master’s student in the Machine Learning Departmen
 
 ## Research Interests
 
-- **Computer Vision:** vision-language models, scene understanding
-- **Machine Learning:** multi-modal machine learning, transfer learning
+I aim to enhance the adaptability and reliability of multi-modal models, pushing the boundaries of what they can achieve in real-world applications. My vision focuses on tackling pivotal challenges, including:
+- **How can we responsibly deploy multi-modal models while mitigating real-world societal concerns**, such as mitigating misinformation and hallucinations, promoting fairness, and overcoming challenges with compositional reasoning?
+- **How can we enable a broader adaptability of these models to diverse real-world domains**, such as robotics and healthcare, by leveraging resource-efficient fine-tuning, test-time adaptation, and continual learning?
+- *How can these models seamlessly interact with humans and their environments*, such as advancing capabilities in human-object interaction detection, 3D visual reasoning, and video understanding?
 
 ## News
 
