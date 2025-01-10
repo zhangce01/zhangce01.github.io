@@ -29,6 +29,7 @@ main:
     badge: https://img.shields.io/github/stars/zhangce01/DPE-CLIP?style=social&label=Code+Stars
     website: https://zhangce01.github.io/DPE-CLIP
     pdf: http://arxiv.org/pdf/2410.12790.pdf
+    video: https://recorder-v3.slideslive.com/?share=93928&s=87e833ec-ef60-48d5-a04f-5efd4d0d2ee9
     
   - title: "HiKER-SGG: Hierarchical Knowledge Enhanced Robust Scene Graph Generation"
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Joseph Campbell, Katia Sycara, Yaqi Xie
