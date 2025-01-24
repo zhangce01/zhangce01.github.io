@@ -18,7 +18,8 @@ main:
     code: https://github.com/zhangce01/SimNL
     badge: https://img.shields.io/github/stars/zhangce01/SimNL?style=social&label=Code+Stars
     pdf: https://arxiv.org/pdf/2403.12964
-
+    video: https://www.youtube.com/watch?v=cFVpbSrCtOo
+    
   - title: "Dual Prototype Evolving for Test-Time Generalization of Vision-Language Models"
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Katia Sycara, Yaqi Xie
     conference_short: NeurIPS 2024
