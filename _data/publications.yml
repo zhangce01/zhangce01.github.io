@@ -5,6 +5,9 @@ main:
     conference: International Conference on Learning Representations <strong>(ICLR)</strong>, 2025.
     conference2: NeurIPS 2024 Workshop on Responsibly Building the Next Generation of Multimodal Foundational Models.
     place: Singapore, April 24-28, 2025
+    code: https://github.com/zhangce01/DeGF
+    badge: https://img.shields.io/github/stars/zhangce01/DeGF?style=social&label=Code+Stars
+    website: https://zhangce01.github.io/DeGF
     image: ./assets/img/iclr2025.png
     pdf: https://openreview.net/pdf?id=tTBXePRKSx
 
