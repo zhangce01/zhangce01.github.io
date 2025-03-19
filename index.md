@@ -4,7 +4,9 @@ layout: homepage
 
 ## About Me
 
-Hi there! I’m Ce Zhang, a master’s student in the Machine Learning Department at Carnegie Mellon University (CMU), advised by [Prof. Katia Sycara](https://www.cs.cmu.edu/~sycara/). Prior to this, I received my B.Eng. in Communication Engineering from Southern University of Science and Technology (SUSTech), where I worked under the supervision of [Prof. Zhihai He](https://www.sustech.edu.cn/en/faculties/zhihaihe.html). My current research interest lie in vision-language models and scene understanding.
+Hi there! I'm Ce Zhang, currently a research intern at Tencent AI Lab. I will be joining the Ph.D. program in Robotics at Carnegie Mellon University (CMU) in Fall 2025.
+
+Previously, I obtained my M.Sc. in Machine Learning in the Machine Learning Department at Carnegie Mellon University (CMU), advised by [Prof. Katia Sycara](https://www.cs.cmu.edu/~sycara/). Prior to this, I received my B.Eng. in Communication Engineering from Southern University of Science and Technology (SUSTech), where I worked under the supervision of [Prof. Zhihai He](https://www.sustech.edu.cn/en/faculties/zhihaihe.html). My current research interest lie in vision-language models and scene understanding.
 
 ## Research Interests
 
@@ -15,6 +17,7 @@ I aim to enhance the adaptability and reliability of multi-modal models, pushing
 
 ## News
 
+- **[Mar. 2025]** I will be joining the Ph.D. program in Robotics at Carnegie Mellon University (CMU) in Fall 2025.
 - **[Jan. 2025]** Our paper "Self-Correcting Decoding with Generative Feedback for Mitigating Hallucinations in Large Vision-Language Models" is accepted to ICLR 2025.
 - **[Oct. 2024]** Our paper "Enhancing Vision-Language Few-Shot Adaptation with Negative Learning" is accepted to WACV 2025.
 - **[Sep. 2024]** Our paper "Dual Prototype Evolving for Test-Time Generalization of Vision-Language Models" is accepted to NeurIPS 2024.
