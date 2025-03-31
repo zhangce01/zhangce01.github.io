@@ -10,6 +10,7 @@ main:
     website: https://zhangce01.github.io/DeGF
     image: ./assets/img/iclr2025.png
     pdf: https://openreview.net/pdf?id=tTBXePRKSx
+    video: https://www.youtube.com/watch?v=p1Od3Khu6uM
 
   - title: "Enhancing Vision-Language Few-Shot Adaptation with Negative Learning"
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Katia Sycara, Yaqi Xie
