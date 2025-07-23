@@ -7,7 +7,7 @@ main:
     code: https://github.com/zifuwan/ONLY
     badge: https://img.shields.io/github/stars/zifuwan/ONLY?style=social&label=Code+Stars
     website: https://zifuwan.github.io/ONLY/
-    image: ./assets/img/iclr2025.png
+    image: ./assets/img/iccv2025.png
     pdf: https://arxiv.org/pdf/2507.00898
 
   - title: "InstructPart: Task-Oriented Part Segmentation with Instruction Reasoning"
@@ -19,7 +19,7 @@ main:
     code: https://github.com/zifuwan/InstructPart
     badge: https://img.shields.io/github/stars/zifuwan/InstructPart?style=social&label=Code+Stars
     website: https://zifuwan.github.io/InstructPart/
-    image: ./assets/img/iclr2025.png
+    image: ./assets/img/acl2025.png
     pdf: https://arxiv.org/pdf/2505.18291
     
   - title: "Spectral-Aware Global Fusion for RGB-Thermal Semantic Segmentation"
@@ -27,7 +27,7 @@ main:
     conference_short: ICIP 2025
     conference: International Conference on Image Processing <strong>(ICIP)</strong>, 2025.
     place: Anchorage, AK, US, September 14–17, 2025
-    image: ./assets/img/iclr2025.png
+    image: ./assets/img/icip2025.png
     pdf: https://arxiv.org/pdf/2505.15491
     
   - title: "Self-Correcting Decoding with Generative Feedback for Mitigating Hallucinations in Large Vision-Language Models"
