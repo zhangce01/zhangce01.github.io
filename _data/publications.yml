@@ -9,6 +9,18 @@ main:
     website: https://zifuwan.github.io/ONLY/
     image: ./assets/img/iclr2025.png
     pdf: https://arxiv.org/pdf/2507.00898
+
+  - title: "InstructPart: Task-Oriented Part Segmentation with Instruction Reasoning"
+    authors: Zifu Wan, Yaqi Xie, <strong>Ce Zhang</strong>, Zhiqiu Lin, Zihan Wang, Simon Stepputtis, Deva Ramanan, Katia Sycara
+    conference_short: ACL 2025 (Main)
+    conference: Annual Meeting of the Association for Computational Linguistics <strong>(ACL)</strong>, 2025.
+    conference2: AAAI 2024 Workshop on Public Sector LLMs Algorithmic and Sociotechnical Design.
+    place: Vienna, Austria, July 27 - August 1, 2025
+    code: https://github.com/zifuwan/InstructPart
+    badge: https://img.shields.io/github/stars/zifuwan/InstructPart?style=social&label=Code+Stars
+    website: https://zifuwan.github.io/InstructPart/
+    image: ./assets/img/iclr2025.png
+    pdf: https://arxiv.org/pdf/2505.18291
     
   - title: "Spectral-Aware Global Fusion for RGB-Thermal Semantic Segmentation"
     authors: <strong>Ce Zhang</strong>, Zifu Wan, Simon Stepputtis, Katia Sycara, Yaqi Xie
