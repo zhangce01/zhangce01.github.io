@@ -4,7 +4,7 @@ main:
     conference_short: ICCV 2025
     conference: IEEE/CVF International Conference on Computer Vision <strong>(ICCV)</strong>, 2025.
     place: Honolulu, HI, US, October 19–23, 2025
-    code: https://zifuwan.github.io/ONLY/
+    code: https://github.com/zifuwan/ONLY
     badge: https://img.shields.io/github/stars/zifuwan/ONLY?style=social&label=Code+Stars
     website: https://zifuwan.github.io/ONLY/
     image: ./assets/img/iclr2025.png
