@@ -7,7 +7,7 @@ main:
     badge: https://img.shields.io/github/stars/Tencent/SelfEvolvingAgent?style=social&label=Code+Stars
     image: ./assets/img/vscan.png
     pdf: https://arxiv.org/pdf/2505.22654
-    note: Preprint. Under review.
+    notes: Preprint. Under review.
     
   - title: "ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models"
     authors: Zifu Wan*, <strong>Ce Zhang*</strong>, Silong Yong, Martin Ma, Simon Stepputtis, Louis-Philippe Morency, Deva Ramanan, Katia Sycara, Yaqi Xie (*Equal contribution)
@@ -24,7 +24,7 @@ main:
     authors: Zifu Wan, Yaqi Xie, <strong>Ce Zhang</strong>, Zhiqiu Lin, Zihan Wang, Simon Stepputtis, Deva Ramanan, Katia Sycara
     conference_short: ACL 2025 (Main)
     conference: Annual Meeting of the Association for Computational Linguistics <strong>(ACL)</strong>, 2025.
-    conference2: AAAI 2024 Workshop on Public Sector LLMs Algorithmic and Sociotechnical Design.
+    conference2: "AAAI 2024 Workshop on Public Sector LLMs: Algorithmic and Sociotechnical Design."
     place: Vienna, Austria, July 27 - August 1, 2025
     code: https://github.com/zifuwan/InstructPart
     badge: https://img.shields.io/github/stars/zifuwan/InstructPart?style=social&label=Code+Stars
