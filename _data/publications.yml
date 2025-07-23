@@ -1,5 +1,5 @@
 main:
- - title: "ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models"
+ - title: "VScan: Rethinking Visual Token Reduction for Efficient Large Vision-Language Models"
     authors: <strong>Ce Zhang</strong>, Kaixin Ma, Tianqing Fang, Wenhao Yu, Hongming Zhang, Zhisong Zhang, Yaqi Xie, Katia Sycara, Haitao Mi, Dong Yu
     conference_short: Preprint
     conference:  ICML 2025 Workshop on Efficient Systems for Foundation Models (ES-FoMo III).
