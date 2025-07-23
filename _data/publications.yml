@@ -2,7 +2,7 @@ main:
  - title: "ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models"
     authors: <strong>Ce Zhang</strong>, Kaixin Ma, Tianqing Fang, Wenhao Yu, Hongming Zhang, Zhisong Zhang, Yaqi Xie, Katia Sycara, Haitao Mi, Dong Yu
     conference_short: Preprint
-    conference: ES-FoMo III: 3rd Workshop on Efficient Systems for Foundation Models.
+    conference:  ICML 2025 Workshop on Efficient Systems for Foundation Models (ES-FoMo III).
     code: https://github.com/Tencent/SelfEvolvingAgent/tree/main/VScan
     badge: https://img.shields.io/github/stars/Tencent/SelfEvolvingAgent?style=social&label=Code+Stars
     image: ./assets/img/vscan.png
