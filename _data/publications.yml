@@ -39,6 +39,8 @@ main:
     place: Anchorage, AK, US, September 14–17, 2025
     image: ./assets/img/icip2025.png
     pdf: https://arxiv.org/pdf/2505.15491
+    video: https://www.youtube.com/watch?v=tIHjgR4hsRA
+    notes: Selected for a Lecture presentation.
     
   - title: "Self-Correcting Decoding with Generative Feedback for Mitigating Hallucinations in Large Vision-Language Models"
     authors: <strong>Ce Zhang*</strong>, Zifu Wan*, Zhehan Kan, Martin Ma, Simon Stepputtis, Deva Ramanan, Russ Salakhutdinov, Louis-Philippe Morency, Katia Sycara, Yaqi Xie (*Equal contribution)
