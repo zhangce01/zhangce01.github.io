@@ -43,7 +43,35 @@
         <a class="image avatar"><img src="{{ site.avatar }}" alt="avatar" /></a>
         {% endif %}
 
-        <h1>{{ site.title }}</h1>
+        <h1 class="switch">
+          <span class="en">{{ site.title }}</span>
+          <span class="cn">{{ site.title_cn }}</span>
+        </h1>
+
+        <style>
+        .switch {
+          position: relative;
+          display: inline-block;
+          height: 1.2em;   /* 依字号调 */
+          overflow: hidden;
+        }
+
+        .switch span {
+          position: absolute;
+          inset: 0;
+          text-align: center;
+          opacity: 0;
+        }
+
+        /* 总周期 10s：前 5s 显示英文，后 5s 显示中文 */
+        .en { animation: showHide 10s infinite; }
+        .cn { animation: showHide 10s infinite; animation-delay: 5s; }
+
+        @keyframes showHide {
+          0%, 49.999% { opacity: 1; }  /* 显示 5s */
+          50%, 100%   { opacity: 0; }  /* 隐藏 5s */
+        }
+        </style>
 
         {% if site.position %}
         <position style="font-size:1.10rem;">{{ site.position }}</position>
