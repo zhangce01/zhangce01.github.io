@@ -70,11 +70,12 @@
         {% endif %}
 
         <h1 class="switch{% if site.title_cn %} has-cn{% endif %}">
-          <span class="en">{{ site.title }}</span>
+          <span class="en" style="animation: nameSwapCe 10s infinite both">{{ site.title }}</span>
           {% if site.title_cn %}
-          <span class="cn">{{ site.title_cn }}</span>
+          <span class="cn" style="animation: nameSwapCe 10s infinite 5s both">{{ site.title_cn }}</span>
           {% endif %}
         </h1>
+
 
         {% if site.position %}
           <position style="font-size:1.10rem;">{{ site.position }}</position><br>
