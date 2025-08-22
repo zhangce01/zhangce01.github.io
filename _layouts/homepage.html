@@ -34,6 +34,30 @@
     <link rel="stylesheet" href="./assets/css/publications-no-dark-mode.css">
     {% endif %}
 
+    <style>
+      .switch {
+        position: relative;
+        display: inline-block;
+        line-height: 1.2;
+        min-height: 1.2em;
+        overflow: hidden;
+      }
+      .switch span {
+        position: absolute;
+        inset: 0;
+        text-align: center;
+        opacity: 0;
+      }
+      .en { animation: showHide 10s infinite both; }
+      .cn { animation: showHide 10s infinite 5s both; }
+
+      @keyframes showHide {
+        0%,49.999% { opacity: 1; }
+        50%,100%   { opacity: 0; }
+      }
+    </style>
+  </head>
+
   </head>
   <body>
     <div class="wrapper">
