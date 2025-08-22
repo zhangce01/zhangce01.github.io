@@ -34,18 +34,21 @@
       .name {
         position: relative;
         display: inline-block;
-        cursor: default; /* 可改为 pointer 若你想显示手型 */
+        cursor: default;
         line-height: 1.2;
         min-height: 1.2em;
+        width: 100%;           /* 让容器足够宽 */
+        text-align: center;    /* 保证居中 */
       }
+      
       .name span {
         position: absolute;
-        top: 0; right: 0; bottom: 0; left: 0;
+        top: 0; left: 0; right: 0; bottom: 0;
         display: flex;
         align-items: center;
         justify-content: center;
+        white-space: nowrap;   /* 关键：禁止换行 */
         transition: opacity .25s ease;
-        text-align: center;
       }
       /* 默认英文显示，中文隐藏 */
       .name .en { opacity: 1; }
