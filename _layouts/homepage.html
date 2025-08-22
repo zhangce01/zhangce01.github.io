@@ -28,6 +28,36 @@
       <link rel="stylesheet" href="./assets/css/style-no-dark-mode.css">
       <link rel="stylesheet" href="./assets/css/publications-no-dark-mode.css">
     {% endif %}
+
+    <!-- Hover to show Chinese name -->
+    <style>
+      .name {
+        position: relative;
+        display: inline-block;
+        cursor: default; /* 可改为 pointer 若你想显示手型 */
+        line-height: 1.2;
+        min-height: 1.2em;
+      }
+      .name span {
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: opacity .25s ease;
+        text-align: center;
+      }
+      /* 默认英文显示，中文隐藏 */
+      .name .en { opacity: 1; }
+      .name .cn { opacity: 0; }
+
+      /* 悬停时反转（仅当存在中文名时才应用） */
+      .name.has-cn:hover .en { opacity: 0; }
+      .name.has-cn:hover .cn { opacity: 1; }
+
+      /* 无中文名时不做叠层布局，避免不必要的定位 */
+      .name.no-cn span { position: static; }
+    </style>
   </head>
 
   <body>
@@ -37,7 +67,16 @@
           <a class="image avatar"><img src="{{ site.avatar }}" alt="avatar" /></a>
         {% endif %}
 
-        <h1>{{ site.title }}</h1>
+        {% if site.title_cn %}
+        <h1 class="name has-cn">
+          <span class="en">{{ site.title }}</span>
+          <span class="cn">{{ site.title_cn }}</span>
+        </h1>
+        {% else %}
+        <h1 class="name no-cn">
+          <span class="en">{{ site.title }}</span>
+        </h1>
+        {% endif %}
 
         {% if site.position %}
           <position style="font-size:1.10rem;">{{ site.position }}</position><br>
