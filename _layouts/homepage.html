@@ -52,7 +52,7 @@
       }
       /* 默认英文显示，中文隐藏 */
       .name .en { opacity: 1; }
-      .name .cn { opacity: 0; }
+      .name .cn { opacity: 0; font-family: "KaiTi","KaiTi_GB2312","Kaiti SC","STKaiti", "DFKai-SB","BiauKai","AR PL KaitiM GB","AR PL UKai CN", serif; }
 
       /* 悬停时反转（仅当存在中文名时才应用） */
       .name.has-cn:hover .en { opacity: 0; }
@@ -73,7 +73,7 @@
         {% if site.title_cn %}
         <h1 class="name has-cn">
           <span class="en">{{ site.title }}</span>
-          <span class="cn-kai">{{ site.title_cn }}</span>
+          <span class="cn">{{ site.title_cn }}</span>
         </h1>
         {% else %}
         <h1 class="name no-cn">
