@@ -4,9 +4,9 @@ layout: homepage
 
 ## About Me
 
-Hi there! I'm Ce Zhang. I am currently a first-year PhD student in the Robotics Institute at Carnegie Mellon University (CMU).
+Hi there! I'm Ce Zhang. I am currently a first-year PhD student in the Robotics Institute at Carnegie Mellon University (CMU), advised by [Prof. Katia Sycara](https://www.cs.cmu.edu/~sycara/).
 
-Previously, I obtained my M.Sc. in Machine Learning in the Machine Learning Department at CMU, advised by [Prof. Katia Sycara](https://www.cs.cmu.edu/~sycara/). Prior to this, I received my B.Eng. in Communication Engineering from Southern University of Science and Technology (SUSTech), where I worked under the supervision of [Prof. Zhihai He](https://www.sustech.edu.cn/en/faculties/zhihaihe.html). My current research interest lie in vision-language models and scene understanding.
+Previously, I obtained my M.Sc. in Machine Learning in the Machine Learning Department at CMU, also advised by [Prof. Katia Sycara](https://www.cs.cmu.edu/~sycara/). Prior to this, I received my B.Eng. in Communication Engineering from Southern University of Science and Technology (SUSTech), where I worked under the supervision of [Prof. Zhihai He](https://www.sustech.edu.cn/en/faculties/zhihaihe.html).
 
 ## Research Interests
 
@@ -25,6 +25,9 @@ I aim to enhance the adaptability and reliability of multi-modal models, pushing
 - **[Sep. 2023]** Our paper "Learning to Adapt CLIP for Few-Shot Monocular Depth Estimation" is accepted tco WACV 2024.
 
 {% include_relative _includes/publications.md %}
+
+## Experiences
+- 2025.02 - 2025.07, Research Intern at Tencent AI Lab, Advisor: [Dr. Kaixin Ma](https://mayer123.github.io/).
 
 {% include_relative _includes/honors.md %}
 
