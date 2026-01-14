@@ -1,13 +1,13 @@
 main:
   - title: "VScan: Rethinking Visual Token Reduction for Efficient Large Vision-Language Models"
-    authors: <strong>Ce Zhang</strong>, Kaixin Ma, Tianqing Fang, Wenhao Yu, Hongming Zhang, Zhisong Zhang, Yaqi Xie, Katia Sycara, Haitao Mi, Dong Yu
-    conference_short: Preprint
-    conference: ICML 2025 Workshop on Efficient Systems for Foundation Models (ES-FoMo III).
+    authors: <strong>Ce Zhang</strong>, Kaixin Ma, Tianqing Fang, Wenhao Yu, Hongming Zhang, Zhisong Zhang, Haitao Mi, Dong Yu
+    conference_short: TMLR 2026
+    conference: Transactions on Machine Learning Research <strong>(TMLR)</strong>, 2026.
+    conference2: ICML 2025 Workshop on Efficient Systems for Foundation Models (ES-FoMo III).
     code: https://github.com/Tencent/SelfEvolvingAgent/tree/main/VScan
     badge: https://img.shields.io/github/stars/Tencent/SelfEvolvingAgent?style=social&label=Code+Stars
     image: ./assets/img/vscan.png
     pdf: https://arxiv.org/pdf/2505.22654
-    notes: Preprint. Under review.
     
   - title: "ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models"
     authors: Zifu Wan*, <strong>Ce Zhang*</strong>, Silong Yong, Martin Ma, Simon Stepputtis, Louis-Philippe Morency, Deva Ramanan, Katia Sycara, Yaqi Xie (*Equal contribution)
