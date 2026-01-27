@@ -17,6 +17,7 @@ I aim to enhance the adaptability and reliability of multi-modal models, pushing
 
 ## News
 
+- **[Jan. 2026]** Our paper "pySpatial: Generating 3D Visual Programs for Zero-Shot Spatial Reasoning" is accepted to ICLR 2026.
 - **[Jan. 2026]** Our paper "VScan: Rethinking Visual Token Reduction for Efficient Large Vision-Language Models" is accepted to TMLR.
 - **[Mar. 2025]** I will be joining the Ph.D. in Robotics program at Carnegie Mellon University (CMU) in Fall 2025.
 - **[Jan. 2025]** Our paper "Self-Correcting Decoding with Generative Feedback for Mitigating Hallucinations in Large Vision-Language Models" is accepted to ICLR 2025.
