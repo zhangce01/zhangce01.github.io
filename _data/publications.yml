@@ -1,4 +1,15 @@
 main:
+  - title: "pySpatial: Generating 3D Visual Programs for Zero-Shot Spatial Reasoning"
+    authors: Zhanpeng Luo*, <strong>Ce Zhang*</strong>, Silong Yong, Cunxi Dai, Qianwei Wang, Haoxi Ran, Guanya Shi, Katia P. Sycara, Yaqi Xie (*Equal contribution)
+    conference_short: ICLR 2026
+    conference: International Conference on Learning Representations <strong>(ICLR)</strong>, 2026.
+    place: Rio de Janeiro, Brazil, April 23-27, 2026
+    code: https://github.com/Zhanpeng1202/pySpatial
+    website: https://pyspatial.github.io/
+    badge: https://img.shields.io/github/stars/Zhanpeng1202/pySpatial?style=social&label=Code+Stars
+    image: ./assets/img/pyspatial.png
+    pdf: https://openreview.net/pdf?id=yv15C8ql24
+  
   - title: "VScan: Rethinking Visual Token Reduction for Efficient Large Vision-Language Models"
     authors: <strong>Ce Zhang</strong>, Kaixin Ma, Tianqing Fang, Wenhao Yu, Hongming Zhang, Zhisong Zhang, Haitao Mi, Dong Yu
     conference_short: TMLR 2026
