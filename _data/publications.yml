@@ -17,6 +17,7 @@ main:
     conference2: ICML 2025 Workshop on Efficient Systems for Foundation Models (ES-FoMo III).
     code: https://github.com/Tencent/SelfEvolvingAgent/tree/main/VScan
     badge: https://img.shields.io/github/stars/Tencent/SelfEvolvingAgent?style=social&label=Code+Stars
+    website: https://zhangce01.github.io/VScan/
     image: ./assets/img/vscan.png
     pdf: https://arxiv.org/pdf/2505.22654
     
