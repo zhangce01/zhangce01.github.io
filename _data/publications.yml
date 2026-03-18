@@ -8,7 +8,7 @@ main:
     code: https://github.com/EchoSafe-MLLM/EchoSafe
     website: https://echosafe-mllm.github.io/
     badge: https://img.shields.io/github/stars/EchoSafe-MLLM/EchoSafe?style=social&label=Code+Stars
-    image: ./assets/img/echosafe.png
+    image: ./assets/img/echosafe1.png
     pdf: https://arxiv.org/pdf/2603.15800
 
   - title: "pySpatial: Generating 3D Visual Programs for Zero-Shot Spatial Reasoning"
