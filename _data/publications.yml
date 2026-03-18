@@ -1,6 +1,18 @@
 main:
+  - title: "Evolving Contextual Safety in Multi-Modal Large Language Models via Inference-Time Self-Reflective Memory"
+    authors: <strong>Ce Zhang</strong>, Jinxi He, Junyi He, Katia P. Sycara, Yaqi Xie (*Equal contribution)
+    conference_short: CVPR 2026
+    conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2026.
+    conference2: ICLR 2026 Workshop on Lifelong Agents: Learning, Aligning, Evolving.
+    place: Denver, CO, US, June 3-7, 2026
+    code: https://github.com/EchoSafe-MLLM/EchoSafe
+    website: https://echosafe-mllm.github.io/
+    badge: https://img.shields.io/github/stars/EchoSafe-MLLM/EchoSafe?style=social&label=Code+Stars
+    image: ./assets/img/echosafe.png
+    pdf: https://arxiv.org/pdf/2603.15800
+
   - title: "pySpatial: Generating 3D Visual Programs for Zero-Shot Spatial Reasoning"
-    authors: Zhanpeng Luo*, <strong>Ce Zhang*</strong>, Silong Yong, Cunxi Dai, Qianwei Wang, Haoxi Ran, Guanya Shi, Katia P. Sycara, Yaqi Xie (*Equal contribution)
+    authors: Zhanpeng Luo*, <strong>Ce Zhang*</strong>, Silong Yong, Cunxi Dai, Qianwei Wang, Haoxi Ran, Guanya Shi, Katia Sycara, Yaqi Xie (*Equal contribution)
     conference_short: ICLR 2026
     conference: International Conference on Learning Representations <strong>(ICLR)</strong>, 2026.
     place: Rio de Janeiro, Brazil, April 23-27, 2026
