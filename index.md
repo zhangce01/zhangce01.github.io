@@ -4,7 +4,7 @@ layout: homepage
 
 ## About Me
 
-Hi there! I'm Ce Zhang. I am currently a first-year PhD student in the Robotics Institute at Carnegie Mellon University (CMU), advised by [Prof. Katia Sycara](https://www.cs.cmu.edu/~sycara/).
+Hi there! I'm Ce Zhang. I am currently a third-year PhD candidate in the Robotics Institute at Carnegie Mellon University (CMU), advised by [Prof. Katia Sycara](https://www.cs.cmu.edu/~sycara/).
 
 Previously, I obtained my M.Sc. in Machine Learning in the Machine Learning Department at CMU, also advised by [Prof. Katia Sycara](https://www.cs.cmu.edu/~sycara/). Prior to this, I received my B.Eng. in Communication Engineering from Southern University of Science and Technology (SUSTech), where I worked under the supervision of [Prof. Zhihai He](https://www.sustech.edu.cn/en/faculties/zhihaihe.html).
 
@@ -28,7 +28,8 @@ I aim to enhance the adaptability and reliability of multi-modal models, pushing
 {% include_relative _includes/publications.md %}
 
 ## Experiences
-- 2025.02 - 2025.07, Research Intern at Tencent AI Lab, Advisor: [Dr. Kaixin Ma](https://mayer123.github.io/).
+- 2026.05 - 2026.08, Research Scientist Intern at Tiktok, San Jose, Mentor: Ming Zhou.
+- 2025.02 - 2025.07, Research Intern at Tencent AI Lab, Shenzhen, Mentor: [Dr. Kaixin Ma](https://mayer123.github.io/).
 
 {% include_relative _includes/honors.md %}
 
