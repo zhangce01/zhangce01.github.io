@@ -3,6 +3,12 @@
 
 @import "minimal-light";
 
+/* Content bullet lists: smaller gap above, and remove the right indent */
+.wrapper section ul {
+  margin-top: -0.25rem;  /* tighten the gap to the element above */
+  padding-left: 1.2em;   /* cancel the deep indent; bullets align near the left edge */
+}
+
 /* Collapsible "Show more" for the News list */
 details.news-more {
   margin-top: -1rem;     /* sit closer to the news list above */
