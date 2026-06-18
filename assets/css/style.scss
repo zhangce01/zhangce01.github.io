@@ -2,3 +2,42 @@
 ---
 
 @import "minimal-light";
+
+/* Section heading icons */
+h2 .sec-icon {
+  color: var(--global-theme-color, #002D72);
+  margin-right: 0.5rem;
+  font-size: 0.85em;
+  vertical-align: baseline;
+}
+
+/* Collapsible "Show more" for the News list */
+details.news-more {
+  margin-top: 0.25rem;
+}
+
+details.news-more > summary {
+  cursor: pointer;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--global-theme-color, #002D72);
+  list-style: none;
+}
+
+details.news-more > summary::-webkit-details-marker {
+  display: none;
+}
+
+details.news-more > summary::before {
+  content: "\25B8"; /* ▸ */
+  margin-right: 0.4rem;
+}
+
+details.news-more[open] > summary::before {
+  content: "\25BE"; /* ▾ */
+}
+
+details.news-more > summary:hover {
+  color: var(--global-hover-color, #ffb81c);
+}
