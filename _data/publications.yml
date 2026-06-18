@@ -4,6 +4,7 @@ main:
     authors: <strong>Ce Zhang</strong>, Jinxi He, Yaqi Xie, Katia Sycara
     conference_short: ECCV 2026
     conference: European Conference on Computer Vision <strong>(ECCV)</strong>, 2026.
+    place: Malmö, Sweden
     image: ./assets/img/ECCV26.png
     notes: Code and paper coming soon.
 
