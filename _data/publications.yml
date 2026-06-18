@@ -45,6 +45,17 @@ main:
     image: ./assets/img/vscan.png
     pdf: https://arxiv.org/pdf/2505.22654
 
+  - title: "WebAggregator: Enhancing Compositional Reasoning Capabilities of Deep Research Agent Foundation Models"
+    year: 2026
+    authors: Rui Wang, <strong>Ce Zhang</strong>, Jun-Yu Ma, Jianshu Zhang, Hongru Wang, Yi Chen, Boyang Xue, Tianqing Fang, Zhisong Zhang, Hongming Zhang, Haitao Mi, Dong Yu, Kam-Fai Wong
+    conference_short: ACL 2026 (Main)
+    conference: Annual Meeting of the Association for Computational Linguistics <strong>(ACL)</strong>, 2026.
+    place: San Diego, CA, US, July 2-7, 2026
+    code: https://github.com/Tencent/WebAggregator
+    badge: https://img.shields.io/github/stars/Tencent/WebAggregator?style=social&label=Code+Stars
+    image: ./assets/img/ACL26.png
+    pdf: https://arxiv.org/pdf/2510.14438
+
   - title: "ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models"
     year: 2025
     authors: Zifu Wan*, <strong>Ce Zhang*</strong>, Silong Yong, Martin Ma, Simon Stepputtis, Louis-Philippe Morency, Deva Ramanan, Katia Sycara, Yaqi Xie (*Equal contribution)
