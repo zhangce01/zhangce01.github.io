@@ -19,17 +19,17 @@ I build multi-modal AI systems that are *efficient* and *reliable* enough for re
 
 ## News
 
-- **[Jun. 2026]** Our paper "LENS: Adaptive Spatio-Temporal Zooming for Keyframe Sampling in Long-Form Videos" is accepted to ECCV 2026.
+- **[Jun 2026]** Our paper "LENS: Adaptive Spatio-Temporal Zooming for Keyframe Sampling in Long-Form Videos" is accepted to ECCV 2026.
 - **[May 2026]** I joined TikTok as a research scientist intern, working on streaming video understanding.
-- **[Feb. 2026]** Our paper "Evolving Contextual Safety in Multi-Modal Large Language Models via Inference-Time Self-Reflective Memory" is accepted to CVPR 2026.
-- **[Jan. 2026]** Our paper "pySpatial: Generating 3D Visual Programs for Zero-Shot Spatial Reasoning" is accepted to ICLR 2026.
+- **[Feb 2026]** Our paper "Evolving Contextual Safety in Multi-Modal Large Language Models via Inference-Time Self-Reflective Memory" is accepted to CVPR 2026.
+- **[Jan 2026]** Our paper "pySpatial: Generating 3D Visual Programs for Zero-Shot Spatial Reasoning" is accepted to ICLR 2026.
 
 <details class="news-more" markdown="0">
 <summary>Show more</summary>
 <ul>
-<li><strong>[Jan. 2026]</strong> Our paper "VScan: Rethinking Visual Token Reduction for Efficient Large Vision-Language Models" is accepted to TMLR.</li>
-<li><strong>[Mar. 2025]</strong> I will be joining the Ph.D. in Robotics program at Carnegie Mellon University (CMU) in Fall 2025.</li>
-<li><strong>[Jan. 2025]</strong> Our paper "Self-Correcting Decoding with Generative Feedback for Mitigating Hallucinations in Large Vision-Language Models" is accepted to ICLR 2025.</li>
+<li><strong>[Jan 2026]</strong> Our paper "VScan: Rethinking Visual Token Reduction for Efficient Large Vision-Language Models" is accepted to TMLR.</li>
+<li><strong>[Mar 2025]</strong> I will be joining the Ph.D. in Robotics program at Carnegie Mellon University (CMU) in Fall 2025.</li>
+<li><strong>[Jan 2025]</strong> Our paper "Self-Correcting Decoding with Generative Feedback for Mitigating Hallucinations in Large Vision-Language Models" is accepted to ICLR 2025.</li>
 </ul>
 </details>
 
