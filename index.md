@@ -2,7 +2,7 @@
 layout: homepage
 ---
 
-## <i class="fas fa-user sec-icon"></i>About Me
+## About Me
 
 Hi there! I'm Ce Zhang. I am currently a third-year PhD candidate in the Robotics Institute at Carnegie Mellon University (CMU), advised by [Prof. Katia Sycara](https://www.cs.cmu.edu/~sycara/), with an expected graduation of 2028.
 
@@ -10,14 +10,14 @@ Previously, I obtained my M.Sc. in Machine Learning in the Machine Learning Depa
 
 Feel free to reach out if you're interested in my work or would like to discuss potential collaborations!
 
-## <i class="fas fa-lightbulb sec-icon"></i>Research Interests
+## Research Interests
 
 I build multi-modal AI systems that are *efficient* and *reliable* enough for real-world use. My research focuses on:
 - How can these models seamlessly interact with humans and their environments—advancing capabilities in long-form/streaming video understanding and spatial reasoning?
 - How can we responsibly deploy these models while addressing real-world concerns—mitigating misinformation and hallucinations, and promoting efficiency and safety?
 
 
-## <i class="fas fa-bullhorn sec-icon"></i>News
+## News
 
 - **[Jun. 2026]** Our paper "LENS: Adaptive Spatio-Temporal Zooming for Keyframe Sampling in Long-Form Videos" is accepted to ECCV 2026.
 - **[May 2026]** I joined TikTok as a research scientist intern, working on streaming video understanding.
@@ -35,7 +35,7 @@ I build multi-modal AI systems that are *efficient* and *reliable* enough for re
 
 {% include_relative _includes/publications.md %}
 
-## <i class="fas fa-briefcase sec-icon"></i>Experiences
+## Experiences
 - 2026.05 - 2026.08, Research Scientist Intern at Tiktok, San Jose, Mentor: Ming Zhou.
 - 2025.02 - 2025.07, Research Intern at Tencent AI Lab, Shenzhen, Mentor: [Dr. Kaixin Ma](https://mayer123.github.io/).
 
