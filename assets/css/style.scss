@@ -9,6 +9,29 @@
   padding-left: 1.2em;   /* cancel the deep indent; bullets align near the left edge */
 }
 
+/* Sticky sidebar anchor navigation */
+.site-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+.site-nav a {
+  color: inherit;
+  text-decoration: none;
+  padding-left: 0.6rem;
+  border-left: 2px solid transparent;
+  transition: color .15s ease, border-color .15s ease;
+}
+
+.site-nav a:hover {
+  color: var(--global-hover-color, #ffb81c);
+  border-left-color: var(--global-hover-color, #ffb81c);
+  text-decoration: none;
+}
+
 /* Year dividers in the publication list: make the year readable
    (theme default #e8e8e8 is nearly invisible on white) */
 .wrapper .publications h2.year {
