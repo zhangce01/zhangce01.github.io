@@ -19,6 +19,7 @@ I build multi-modal AI systems that are *efficient* and *reliable* enough for re
 
 ## News
 
+- **[Jun. 2026]** Our paper "LENS: Adaptive Spatio-Temporal Zooming for Keyframe Sampling in Long-Form Videos" is accepted to ECCV 2026.
 - **[May 2026]** I joined TikTok as a research scientist intern, working on streaming video understanding.
 - **[Feb. 2026]** Our paper "Evolving Contextual Safety in Multi-Modal Large Language Models via Inference-Time Self-Reflective Memory" is accepted to CVPR 2026.
 - **[Jan. 2026]** Our paper "pySpatial: Generating 3D Visual Programs for Zero-Shot Spatial Reasoning" is accepted to ICLR 2026.

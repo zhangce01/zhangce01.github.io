@@ -1,4 +1,11 @@
 main:
+  - title: "LENS: Adaptive Spatio-Temporal Zooming for Keyframe Sampling in Long-Form Videos"
+    authors: <strong>Ce Zhang</strong>, Jinxi He, Yaqi Xie, Katia Sycara
+    conference_short: ECCV 2026
+    conference: European Conference on Computer Vision <strong>(ECCV)</strong>, 2026.
+    image: ./assets/img/ECCV26.png
+    notes: Code and paper coming soon.
+
   - title: "Evolving Contextual Safety in Multi-Modal Large Language Models via Inference-Time Self-Reflective Memory"
     authors: <strong>Ce Zhang*</strong>, Jinxi He*, Junyi He, Katia Sycara, Yaqi Xie (*Equal contribution)
     conference_short: CVPR 2026
