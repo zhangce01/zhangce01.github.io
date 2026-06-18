@@ -9,6 +9,12 @@
   padding-left: 1.2em;   /* cancel the deep indent; bullets align near the left edge */
 }
 
+/* Year dividers in the publication list: make the year readable
+   (theme default #e8e8e8 is nearly invisible on white) */
+.wrapper .publications h2.year {
+  color: var(--global-text-color-light, #828282);
+}
+
 /* Collapsible "Show more" for the News list */
 details.news-more {
   margin-top: -1rem;     /* sit closer to the news list above */

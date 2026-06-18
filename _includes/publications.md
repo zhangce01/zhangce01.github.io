@@ -3,13 +3,19 @@
 <div class="publications">
 <ol class="bibliography">
 
+{% assign last_year = "" %}
 {% for link in site.data.publications.main %}
+
+{% if link.year and link.year != last_year %}
+<h2 class="year">{{ link.year }}</h2>
+{% assign last_year = link.year %}
+{% endif %}
 
 <li>
 <div class="pub-row">
   <div class="col-sm-3 abbr" style="position: relative;padding-right: 15px;padding-left: 15px;">
     {% if link.image %} 
-    <img src="{{ link.image }}" class="teaser img-fluid z-depth-1" style="width: 100; height: 60; object-fit: contain;">
+    <img src="{{ link.image }}" alt="{{ link.title }}" class="teaser img-fluid z-depth-1" style="width: 100px; height: 60px; object-fit: contain;">
     {% endif %}
     {% if link.conference_short %} 
     <abbr class="badge">{{ link.conference_short }}</abbr>

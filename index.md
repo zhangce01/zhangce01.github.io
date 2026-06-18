@@ -36,7 +36,7 @@ I build multi-modal AI systems that are *efficient* and *reliable* enough for re
 {% include_relative _includes/publications.md %}
 
 ## Experiences
-- 2026.05 - 2026.08, Research Scientist Intern at Tiktok, San Jose, Mentor: Ming Zhou.
+- 2026.05 - 2026.08, Research Scientist Intern at TikTok, San Jose, Mentor: Ming Zhou.
 - 2025.02 - 2025.07, Research Intern at Tencent AI Lab, Shenzhen, Mentor: [Dr. Kaixin Ma](https://mayer123.github.io/).
 
 {% include_relative _includes/honors.md %}

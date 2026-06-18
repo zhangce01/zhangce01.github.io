@@ -1,5 +1,6 @@
 main:
   - title: "LENS: Adaptive Spatio-Temporal Zooming for Keyframe Sampling in Long-Form Videos"
+    year: 2026
     authors: <strong>Ce Zhang</strong>, Jinxi He, Yaqi Xie, Katia Sycara
     conference_short: ECCV 2026
     conference: European Conference on Computer Vision <strong>(ECCV)</strong>, 2026.
@@ -7,6 +8,7 @@ main:
     notes: Code and paper coming soon.
 
   - title: "Evolving Contextual Safety in Multi-Modal Large Language Models via Inference-Time Self-Reflective Memory"
+    year: 2026
     authors: <strong>Ce Zhang*</strong>, Jinxi He*, Junyi He, Katia Sycara, Yaqi Xie (*Equal contribution)
     conference_short: CVPR 2026
     conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2026.
@@ -19,6 +21,7 @@ main:
     pdf: https://arxiv.org/pdf/2603.15800
 
   - title: "pySpatial: Generating 3D Visual Programs for Zero-Shot Spatial Reasoning"
+    year: 2026
     authors: Zhanpeng Luo*, <strong>Ce Zhang*</strong>, Silong Yong, Cunxi Dai, Qianwei Wang, Haoxi Ran, Guanya Shi, Katia Sycara, Yaqi Xie (*Equal contribution)
     conference_short: ICLR 2026
     conference: International Conference on Learning Representations <strong>(ICLR)</strong>, 2026.
@@ -28,8 +31,9 @@ main:
     badge: https://img.shields.io/github/stars/Zhanpeng1202/pySpatial?style=social&label=Code+Stars
     image: ./assets/img/pyspatial.png
     pdf: https://openreview.net/pdf?id=yv15C8ql24
-  
+
   - title: "VScan: Rethinking Visual Token Reduction for Efficient Large Vision-Language Models"
+    year: 2026
     authors: <strong>Ce Zhang</strong>, Kaixin Ma, Tianqing Fang, Wenhao Yu, Hongming Zhang, Zhisong Zhang, Haitao Mi, Dong Yu
     conference_short: TMLR 2026
     conference: Transactions on Machine Learning Research <strong>(TMLR)</strong>, 2026.
@@ -39,8 +43,9 @@ main:
     website: https://zhangce01.github.io/VScan/
     image: ./assets/img/vscan.png
     pdf: https://arxiv.org/pdf/2505.22654
-    
+
   - title: "ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models"
+    year: 2025
     authors: Zifu Wan*, <strong>Ce Zhang*</strong>, Silong Yong, Martin Ma, Simon Stepputtis, Louis-Philippe Morency, Deva Ramanan, Katia Sycara, Yaqi Xie (*Equal contribution)
     conference_short: ICCV 2025
     conference: IEEE/CVF International Conference on Computer Vision <strong>(ICCV)</strong>, 2025.
@@ -52,6 +57,7 @@ main:
     pdf: https://arxiv.org/pdf/2507.00898
 
   - title: "InstructPart: Task-Oriented Part Segmentation with Instruction Reasoning"
+    year: 2025
     authors: Zifu Wan, Yaqi Xie, <strong>Ce Zhang</strong>, Zhiqiu Lin, Zihan Wang, Simon Stepputtis, Deva Ramanan, Katia Sycara
     conference_short: ACL 2025 (Main)
     conference: Annual Meeting of the Association for Computational Linguistics <strong>(ACL)</strong>, 2025.
@@ -62,8 +68,9 @@ main:
     website: https://zifuwan.github.io/InstructPart/
     image: ./assets/img/acl2025.png
     pdf: https://arxiv.org/pdf/2505.18291
-    
+
   - title: "Spectral-Aware Global Fusion for RGB-Thermal Semantic Segmentation"
+    year: 2025
     authors: <strong>Ce Zhang</strong>, Zifu Wan, Simon Stepputtis, Katia Sycara, Yaqi Xie
     conference_short: ICIP 2025
     conference: International Conference on Image Processing <strong>(ICIP)</strong>, 2025.
@@ -72,8 +79,9 @@ main:
     pdf: https://arxiv.org/pdf/2505.15491
     video: https://www.youtube.com/watch?v=tIHjgR4hsRA
     notes: Selected for a Lecture presentation.
-    
+
   - title: "Self-Correcting Decoding with Generative Feedback for Mitigating Hallucinations in Large Vision-Language Models"
+    year: 2025
     authors: <strong>Ce Zhang*</strong>, Zifu Wan*, Zhehan Kan, Martin Ma, Simon Stepputtis, Deva Ramanan, Russ Salakhutdinov, Louis-Philippe Morency, Katia Sycara, Yaqi Xie (*Equal contribution)
     conference_short: ICLR 2025
     conference: International Conference on Learning Representations <strong>(ICLR)</strong>, 2025.
@@ -87,6 +95,7 @@ main:
     video: https://www.youtube.com/watch?v=p1Od3Khu6uM
 
   - title: "Enhancing Vision-Language Few-Shot Adaptation with Negative Learning"
+    year: 2025
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Katia Sycara, Yaqi Xie
     conference_short: WACV 2025
     conference: IEEE/CVF Winter Conference on Applications of Computer Vision <strong>(WACV)</strong>, 2025.
@@ -97,8 +106,9 @@ main:
     badge: https://img.shields.io/github/stars/zhangce01/SimNL?style=social&label=Code+Stars
     pdf: https://arxiv.org/pdf/2403.12964
     video: https://www.youtube.com/watch?v=cFVpbSrCtOo
-    
+
   - title: "Dual Prototype Evolving for Test-Time Generalization of Vision-Language Models"
+    year: 2024
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Katia Sycara, Yaqi Xie
     conference_short: NeurIPS 2024
     conference: Conference on Neural Information Processing Systems <strong>(NeurIPS)</strong>, 2024.
@@ -110,8 +120,9 @@ main:
     website: https://zhangce01.github.io/DPE-CLIP
     pdf: http://arxiv.org/pdf/2410.12790.pdf
     video: https://www.youtube.com/watch?v=_kI1sGfEMSw
-    
+
   - title: "HiKER-SGG: Hierarchical Knowledge Enhanced Robust Scene Graph Generation"
+    year: 2024
     authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Joseph Campbell, Katia Sycara, Yaqi Xie
     conference_short: CVPR 2024
     conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2024.
@@ -125,16 +136,38 @@ main:
     video: https://www.youtube.com/watch?v=GLCagI1XDdg
     supp: https://openaccess.thecvf.com/content/CVPR2024/supplemental/Zhang_HiKER-SGG_Hierarchical_Knowledge_CVPR_2024_supplemental.pdf
 
+  - title: "Concept-Guided Prompt Learning for Generalization in Vision-Language Models"
+    year: 2024
+    authors: Yi Zhang, <strong>Ce Zhang</strong>, Ke Yu, Yushun Tang, Zhihai He
+    conference_short: AAAI 2024
+    conference: AAAI Conference on Artificial Intelligence <strong>(AAAI)</strong>, 2024.
+    place: Vancouver, Canada, February 22-25, 2024
+    pdf: https://arxiv.org/pdf/2401.07457.pdf
+    video: https://underline.io/lecture/93595-concept-guided-prompt-learning-for-generalization-in-vision-language-models
+    image: ./assets/img/aaai2024.png
+
+  - title: "Learning to Adapt CLIP for Few-Shot Monocular Depth Estimation"
+    year: 2024
+    authors: Xueting Hu, <strong>Ce Zhang</strong>, Yi Zhang, Bowen Hai, Ke Yu, Zhihai He
+    conference_short: WACV 2024
+    conference: IEEE/CVF Winter Conference on Applications of Computer Vision <strong>(WACV)</strong>, 2024.
+    place: Waikoloa, HI, US, January 4-8, 2024
+    pdf: https://arxiv.org/pdf/2311.01034.pdf
+    video: https://www.youtube.com/watch?v=EA4M1vgQkFk
+    image: ./assets/img/wacv2024.png
+
   - title: "Critical Sampling for Robust Evolution Operator Learning of Unknown Dynamical Systems"
+    year: 2023
     authors: <strong>Ce Zhang</strong>, Kailiang Wu, Zhihai He
     conference_short: IEEE TAI
-    conference: IEEE Transactions on Artificial Intelligence, 2023; 
+    conference: IEEE Transactions on Artificial Intelligence, 2023;
     conference2: First Workshop on Out-of-Distribution Generalization in Robotics at CoRL 2023.
     place: Atlanta, GA, US, November 6-9, 2023
     pdf: https://arxiv.org/pdf/2304.07485.pdf
     image: ./assets/img/tai_critical.png
-    
+
   - title: "BDC-Adapter: Brownian Distance Covariance for Better Vision-Language Reasoning"
+    year: 2023
     authors: Yi Zhang*, <strong>Ce Zhang*</strong>, Zihan Liao, Yushun Tang, Zhihai He (*Equal contribution)
     conference_short: BMVC 2023
     conference: British Machine Vision Conference <strong>(BMVC)</strong>, 2023.
@@ -146,6 +179,7 @@ main:
     image: ./assets/img/bmvc2023_clip.png
 
   - title: "Neuro-Modulated Hebbian Learning for Fully Test-Time Adaptation"
+    year: 2023
     authors: Yushun Tang, <strong>Ce Zhang</strong>, Heng Xu, Shuoshuo Chen, Jie Cheng, Luziwei Leng, Qinghai Guo, Zhihai He
     conference_short: CVPR 2023
     conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2023.
@@ -156,6 +190,7 @@ main:
     image: ./assets/img/cvpr2023_tta.png
 
   - title: "Self-Correctable and Adaptable Inference for Generalizable Human Pose Estimation"
+    year: 2023
     authors: Zhehan Kan, Shuoshuo Chen, <strong>Ce Zhang</strong>, Yushun Tang, Zhihai He
     conference_short: CVPR 2023
     conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2023.
@@ -164,21 +199,3 @@ main:
     supp: https://openaccess.thecvf.com/content/CVPR2023/supplemental/Kan_Self-Correctable_and_Adaptable_CVPR_2023_supplemental.pdf
     video: https://www.youtube.com/watch?v=W5cn4W1hBOg
     image: ./assets/img/cvpr2023_pose.png
-
-  - title: "Concept-Guided Prompt Learning for Generalization in Vision-Language Models"
-    authors: Yi Zhang, <strong>Ce Zhang</strong>, Ke Yu, Yushun Tang, Zhihai He
-    conference_short: AAAI 2024
-    conference: AAAI Conference on Artificial Intelligence <strong>(AAAI)</strong>, 2024.
-    place: Vancouver, Canada, February 22-25, 2024
-    pdf: https://arxiv.org/pdf/2401.07457.pdf
-    video: https://underline.io/lecture/93595-concept-guided-prompt-learning-for-generalization-in-vision-language-models
-    image: ./assets/img/aaai2024.png
-
-  - title: "Learning to Adapt CLIP for Few-Shot Monocular Depth Estimation"
-    authors: Xueting Hu, <strong>Ce Zhang</strong>, Yi Zhang, Bowen Hai, Ke Yu, Zhihai He
-    conference_short: WACV 2024
-    conference: IEEE/CVF Winter Conference on Applications of Computer Vision <strong>(WACV)</strong>, 2024.
-    place: Waikoloa, HI, US, January 4-8, 2024
-    pdf: https://arxiv.org/pdf/2311.01034.pdf
-    video: https://www.youtube.com/watch?v=EA4M1vgQkFk
-    image: ./assets/img/wacv2024.png
