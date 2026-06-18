@@ -32,6 +32,27 @@
   text-decoration: none;
 }
 
+/* On mobile/tablet the sidebar collapses to the top, so lay the nav
+   out as a centered horizontal row instead of a left-aligned column. */
+@media print, screen and (max-width: 960px) {
+  .site-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem 1.1rem;
+    margin: 0.75rem 0 0.25rem;
+  }
+
+  .site-nav a {
+    padding-left: 0;
+    border-left: none;
+  }
+
+  .site-nav a:hover {
+    border-left-color: transparent;
+  }
+}
+
 /* Year dividers in the publication list: make the year readable
    (theme default #e8e8e8 is nearly invisible on white) */
 .wrapper .publications h2.year {
