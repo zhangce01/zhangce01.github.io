@@ -3,6 +3,11 @@
 
 @import "minimal-light";
 
+/* Smooth-scroll for in-page anchor jumps (sidebar nav, year index) */
+html {
+  scroll-behavior: smooth;
+}
+
 /* Content bullet lists: smaller gap above, and remove the right indent */
 .wrapper section ul {
   margin-top: -0.25rem;  /* tighten the gap to the element above */
@@ -30,6 +35,12 @@
   color: var(--global-hover-color, #ffb81c);
   border-left-color: var(--global-hover-color, #ffb81c);
   text-decoration: none;
+}
+
+/* Section currently in view (set by scrollspy.js) */
+.site-nav a.active {
+  border-left-color: var(--global-theme-color, #002D72);
+  font-weight: 600;
 }
 
 /* On mobile/tablet the sidebar collapses to the top, where the
