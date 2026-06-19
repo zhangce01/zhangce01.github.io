@@ -51,6 +51,58 @@ html {
   }
 }
 
+/* Expandable BibTeX block + copy button */
+.publications ol.bibliography li .bibtex {
+  position: relative;
+  margin-top: 0.4rem;
+}
+
+.publications ol.bibliography li .bibtex pre {
+  background: #f6f8fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 5px;
+  padding: 12px 12px 12px 14px;
+  margin: 6px 0 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.publications ol.bibliography li .copy-bib {
+  position: absolute;
+  top: 13px;
+  right: 10px;
+  z-index: 1;
+  font-size: 0.68rem;
+  padding: 2px 9px;
+  border: 1px solid var(--global-theme-color, #002D72);
+  border-radius: 3px;
+  background: #f6f8fa;
+  color: var(--global-theme-color, #002D72);
+  cursor: pointer;
+}
+
+.publications ol.bibliography li .copy-bib:hover {
+  color: #fff;
+  background: var(--global-theme-color, #002D72);
+}
+
+.publications ol.bibliography li .abstract p {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  text-align: justify;
+  margin: 8px 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .publications ol.bibliography li .bibtex pre,
+  .publications ol.bibliography li .copy-bib {
+    background: #1e1e1e;
+    border-color: #444;
+  }
+}
+
 /* Year jump index at the top of the publication list */
 .year-index {
   display: flex;

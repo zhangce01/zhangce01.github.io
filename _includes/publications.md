@@ -60,13 +60,22 @@
       {% if link.page %} 
       <a href="{{ link.page }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">Project Page</a>
       {% endif %}
-      {% if link.bibtex %} 
-      <a href="{{ link.bibtex }}" class="btn btn-sm z-depth-0" role="button" target="_blank" style="font-size:12px;">BibTex</a>
+      {% if link.abstract %}
+      <a class="btn btn-sm z-depth-0 toggle-pub" role="button" data-target="abs-{{ forloop.index }}" style="font-size:12px;cursor:pointer;">Abstract</a>
+      {% endif %}
+      {% if link.bibtex %}
+      <a class="btn btn-sm z-depth-0 toggle-pub" role="button" data-target="bib-{{ forloop.index }}" style="font-size:12px;cursor:pointer;">BibTeX</a>
       {% endif %}
       {% if link.others %} 
       {{ link.others }}
       {% endif %}
     </div>
+    {% if link.abstract %}
+    <div id="abs-{{ forloop.index }}" class="abstract hidden"><p>{{ link.abstract }}</p></div>
+    {% endif %}
+    {% if link.bibtex %}
+    <div id="bib-{{ forloop.index }}" class="bibtex hidden"><button class="copy-bib" type="button">Copy</button><pre>{{ link.bibtex | xml_escape }}</pre></div>
+    {% endif %}
   </div>
 </div>
 </li>
