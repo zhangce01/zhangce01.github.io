@@ -44,20 +44,26 @@
 .year-index {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem 1.1rem;
-  margin: 1.6rem 0 0.5rem;
-  font-size: 0.95rem;
+  gap: 0.5rem;
+  margin: 2.8rem 0 0.6rem;
+  font-size: 0.9rem;
 }
 
 .year-index a {
+  display: inline-block;
+  padding: 0.15rem 0.65rem;
+  border: 1px solid var(--global-theme-color, #002D72);
+  border-radius: 0.25rem;
   color: var(--global-theme-color, #002D72);
   text-decoration: none;
   white-space: nowrap;
-  transition: color .15s ease;
+  transition: color .15s ease, background-color .15s ease, border-color .15s ease;
 }
 
 .year-index a:hover {
-  color: var(--global-hover-color, #ffb81c);
+  color: #fff;
+  background-color: var(--global-theme-color, #002D72);
+  border-color: var(--global-theme-color, #002D72);
   text-decoration: none;
 }
 
