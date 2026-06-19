@@ -1,5 +1,10 @@
 <h2 id="publications" style="margin: 2px 0px -15px;">Publications</h2>
 
+{% assign pubs_by_year = site.data.publications.main | group_by: "year" %}
+<div class="year-index">
+{% for group in pubs_by_year %}<a href="#year-{{ group.name }}">{{ group.name }} ({{ group.items | size }})</a>{% endfor %}
+</div>
+
 <div class="publications">
 <ol class="bibliography">
 
@@ -7,7 +12,7 @@
 {% for link in site.data.publications.main %}
 
 {% if link.year and link.year != last_year %}
-<h2 class="year">{{ link.year }}</h2>
+<h2 class="year" id="year-{{ link.year }}">{{ link.year }}</h2>
 {% assign last_year = link.year %}
 {% endif %}
 

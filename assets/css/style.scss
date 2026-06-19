@@ -40,6 +40,27 @@
   }
 }
 
+/* Year jump index at the top of the publication list */
+.year-index {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.1rem;
+  margin: 1.6rem 0 0.5rem;
+  font-size: 0.95rem;
+}
+
+.year-index a {
+  color: var(--global-theme-color, #002D72);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .15s ease;
+}
+
+.year-index a:hover {
+  color: var(--global-hover-color, #ffb81c);
+  text-decoration: none;
+}
+
 /* Year dividers in the publication list: make the year readable
    (theme default #e8e8e8 is nearly invisible on white) */
 .wrapper .publications h2.year {
