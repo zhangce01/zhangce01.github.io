@@ -95,6 +95,13 @@ html {
   margin: 8px 4px;
 }
 
+/* Remove the theme's dashed frame around the (collapsed) abstract box,
+   which otherwise shows as a thin white dashed line under each paper. */
+.wrapper .publications ol.bibliography li div.abstract.hidden,
+.wrapper .publications ol.bibliography li div.abstract.hidden.open {
+  border: none;
+}
+
 @media (prefers-color-scheme: dark) {
   .publications ol.bibliography li .bibtex pre,
   .publications ol.bibliography li .copy-bib {
