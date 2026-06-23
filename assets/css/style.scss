@@ -59,6 +59,13 @@ html {
   flex: 0 0 auto;
 }
 
+/* Let the text column shrink and wrap instead of overflowing. Flex items
+   default to min-width:auto, so long titles / author lists / an expanded
+   BibTeX block would otherwise push past the column edge. */
+.wrapper .publications ol.bibliography li .pub-row .col-sm-9 {
+  min-width: 0;
+}
+
 /* Expandable BibTeX block + copy button */
 .publications ol.bibliography li .bibtex {
   position: relative;
