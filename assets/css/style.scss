@@ -51,6 +51,14 @@ html {
   }
 }
 
+/* Pin the teaser column so the thumbnail keeps its full 270px width.
+   Without this, the flex row lets the text/buttons column squeeze the
+   image (it has max-width:100%), so papers with more buttons — e.g. the
+   new Abstract/BibTeX ones — end up with a much narrower thumbnail. */
+.wrapper .publications ol.bibliography li .pub-row .abbr {
+  flex: 0 0 auto;
+}
+
 /* Expandable BibTeX block + copy button */
 .publications ol.bibliography li .bibtex {
   position: relative;
