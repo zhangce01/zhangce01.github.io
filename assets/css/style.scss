@@ -274,10 +274,17 @@ details.news-more strong {
 }
 
 .ri-typed {
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  /* solid accent fallback for browsers without background-clip: text */
+  color: var(--acc);
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .ri-typed {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }
 
 .ri-cursor {
