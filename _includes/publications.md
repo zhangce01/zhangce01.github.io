@@ -1,4 +1,4 @@
-<h2 id="publications" style="margin: 2px 0px -15px;">Publications</h2>
+<h2 id="publications" style="margin: 2px 0 0;">Publications</h2>
 
 {% assign pubs_by_year = site.data.publications.main | group_by: "year" %}
 <div class="year-index">
@@ -19,11 +19,11 @@
 <li>
 <div class="pub-row">
   <div class="col-sm-3 abbr" style="position: relative;padding-right: 15px;padding-left: 15px;">
-    {% if link.image %} 
-    <img src="{{ link.image }}" alt="{{ link.title }}" class="teaser img-fluid z-depth-1">
-    {% endif %}
     {% if link.conference_short %} 
     <abbr class="badge">{{ link.conference_short }}</abbr>
+    {% endif %}
+    {% if link.image %} 
+    <img src="{{ link.image }}" alt="{{ link.title }}" class="teaser img-fluid z-depth-1">
     {% endif %}
   </div>
   <div class="col-sm-9" style="position: relative;padding-right: 15px;padding-left: 20px;">
