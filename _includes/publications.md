@@ -1,8 +1,14 @@
 <h2 id="publications" style="margin: 2px 0 0;">Publications</h2>
 
 {% assign pubs_by_year = site.data.publications.main | group_by: "year" %}
-<div class="year-index">
-{% for group in pubs_by_year %}<a href="#year-{{ group.name }}">{{ group.name }} ({{ group.items | size }})</a>{% endfor %}
+<div class="year-timeline">
+{% for group in pubs_by_year %}
+  <a href="#year-{{ group.name }}" class="yt-node">
+    <span class="yt-dot"></span>
+    <span class="yt-year">{{ group.name }}</span>
+    <span class="yt-count">{{ group.items | size }} papers</span>
+  </a>
+{% endfor %}
 </div>
 
 <div class="publications">
@@ -19,11 +25,11 @@
 <li>
 <div class="pub-row">
   <div class="col-sm-3 abbr" style="position: relative;padding-right: 15px;padding-left: 15px;">
-    {% if link.conference_short %} 
-    <abbr class="badge">{{ link.conference_short }}</abbr>
-    {% endif %}
     {% if link.image %} 
     <img src="{{ link.image }}" alt="{{ link.title }}" class="teaser img-fluid z-depth-1">
+    {% endif %}
+    {% if link.conference_short %} 
+    <abbr class="badge">{{ link.conference_short }}</abbr>
     {% endif %}
   </div>
   <div class="col-sm-9" style="position: relative;padding-right: 15px;padding-left: 20px;">

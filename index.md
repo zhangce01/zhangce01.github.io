@@ -36,8 +36,33 @@ I build multi-modal AI systems that are *efficient* and *reliable* enough for re
 {% include_relative _includes/publications.md %}
 
 ## Experiences
-- 2026.05 - 2026.08, Research Scientist Intern at TikTok, San Jose, Mentor: Ming Zhou.
-- 2025.02 - 2025.07, Research Intern at Tencent AI Lab, Shenzhen, Mentor: [Dr. Kaixin Ma](https://mayer123.github.io/).
+
+<div class="exp-timeline">
+  <div class="exp-item">
+    <span class="exp-dot"></span>
+    <div class="exp-card">
+      <div class="exp-info">
+        <div class="exp-role">Research Scientist Intern</div>
+        <div class="exp-org">TikTok, San Jose, CA</div>
+        <div class="exp-meta">Mentor: Ming Zhou</div>
+        <div class="exp-date">May 2026 – Aug 2026</div>
+      </div>
+      <span class="exp-logo-chip"><img src="./assets/img/logo_tiktok.svg" alt="TikTok"></span>
+    </div>
+  </div>
+  <div class="exp-item">
+    <span class="exp-dot"></span>
+    <div class="exp-card">
+      <div class="exp-info">
+        <div class="exp-role">Research Intern</div>
+        <div class="exp-org">Tencent AI Lab, Shenzhen</div>
+        <div class="exp-meta">Mentor: <a href="https://mayer123.github.io/" target="_blank" rel="noopener">Dr. Kaixin Ma</a></div>
+        <div class="exp-date">Feb 2025 – Jul 2025</div>
+      </div>
+      <span class="exp-logo-chip"><img src="./assets/img/logo_tencent.svg" alt="Tencent AI Lab"></span>
+    </div>
+  </div>
+</div>
 
 {% include_relative _includes/honors.md %}
 

@@ -23,7 +23,7 @@ main:
 
   - title: "Evolving Contextual Safety in Multi-Modal Large Language Models via Inference-Time Self-Reflective Memory"
     year: 2026
-    authors: <strong>Ce Zhang*</strong>, Jinxi He*, Junyi He, Katia Sycara, Yaqi Xie (*Equal contribution)
+    authors: <strong>Ce Zhang<sup>*</sup></strong>, Jinxi He<sup>*</sup>, Junyi He, Katia Sycara, Yaqi Xie <span class="eq-contrib">(<sup>*</sup>Equal contribution)</span>
     conference_short: CVPR 2026
     conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2026.
     conference2: "ICLR 2026 Workshop on Lifelong Agents: Learning, Aligning, Evolving."
@@ -46,7 +46,7 @@ main:
 
   - title: "pySpatial: Generating 3D Visual Programs for Zero-Shot Spatial Reasoning"
     year: 2026
-    authors: Zhanpeng Luo*, <strong>Ce Zhang*</strong>, Silong Yong, Cunxi Dai, Qianwei Wang, Haoxi Ran, Guanya Shi, Katia Sycara, Yaqi Xie (*Equal contribution)
+    authors: Zhanpeng Luo<sup>*</sup>, <strong>Ce Zhang<sup>*</sup></strong>, Silong Yong, Cunxi Dai, Qianwei Wang, Haoxi Ran, Guanya Shi, Katia Sycara, Yaqi Xie <span class="eq-contrib">(<sup>*</sup>Equal contribution)</span>
     conference_short: ICLR 2026
     conference: International Conference on Learning Representations <strong>(ICLR)</strong>, 2026.
     place: Rio de Janeiro, Brazil, April 23-27, 2026
@@ -102,7 +102,7 @@ main:
 
   - title: "ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models"
     year: 2025
-    authors: Zifu Wan*, <strong>Ce Zhang*</strong>, Silong Yong, Martin Ma, Simon Stepputtis, Louis-Philippe Morency, Deva Ramanan, Katia Sycara, Yaqi Xie (*Equal contribution)
+    authors: Zifu Wan<sup>*</sup>, <strong>Ce Zhang<sup>*</sup></strong>, Silong Yong, Martin Ma, Simon Stepputtis, Louis-Philippe Morency, Deva Ramanan, Katia Sycara, Yaqi Xie <span class="eq-contrib">(<sup>*</sup>Equal contribution)</span>
     conference_short: ICCV 2025
     conference: IEEE/CVF International Conference on Computer Vision <strong>(ICCV)</strong>, 2025.
     place: Honolulu, HI, US, October 19–23, 2025
@@ -162,7 +162,7 @@ main:
 
   - title: "Self-Correcting Decoding with Generative Feedback for Mitigating Hallucinations in Large Vision-Language Models"
     year: 2025
-    authors: <strong>Ce Zhang*</strong>, Zifu Wan*, Zhehan Kan, Martin Ma, Simon Stepputtis, Deva Ramanan, Russ Salakhutdinov, Louis-Philippe Morency, Katia Sycara, Yaqi Xie (*Equal contribution)
+    authors: <strong>Ce Zhang<sup>*</sup></strong>, Zifu Wan<sup>*</sup>, Zhehan Kan, Martin Ma, Simon Stepputtis, Deva Ramanan, Russ Salakhutdinov, Louis-Philippe Morency, Katia Sycara, Yaqi Xie <span class="eq-contrib">(<sup>*</sup>Equal contribution)</span>
     conference_short: ICLR 2025
     conference: International Conference on Learning Representations <strong>(ICLR)</strong>, 2025.
     conference2: NeurIPS 2024 Workshop on Responsibly Building the Next Generation of Multimodal Foundational Models.
@@ -328,7 +328,7 @@ main:
 
   - title: "BDC-Adapter: Brownian Distance Covariance for Better Vision-Language Reasoning"
     year: 2023
-    authors: Yi Zhang*, <strong>Ce Zhang*</strong>, Zihan Liao, Yushun Tang, Zhihai He (*Equal contribution)
+    authors: Yi Zhang<sup>*</sup>, <strong>Ce Zhang<sup>*</sup></strong>, Zihan Liao, Yushun Tang, Zhihai He <span class="eq-contrib">(<sup>*</sup>Equal contribution)</span>
     conference_short: BMVC 2023
     conference: British Machine Vision Conference <strong>(BMVC)</strong>, 2023.
     place: Aberdeen, UK, November 20-24, 2023
