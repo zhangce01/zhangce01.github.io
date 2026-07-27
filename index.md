@@ -12,7 +12,11 @@ Feel free to reach out if you're interested in my work or would like to discuss 
 
 ## Research Interests
 
-I build multi-modal AI systems that are *efficient* and *reliable* enough for real-world use. My research focuses on:
+I build multi-modal AI systems that are *efficient* and *reliable* enough for real-world use.
+
+<div class="ri-typing" aria-label="Currently working on">Currently working on&nbsp;<span class="ri-typed" id="ri-typed"></span><span class="ri-cursor" aria-hidden="true"></span></div>
+
+My research focuses on:
 - How can these models seamlessly interact with humans and their environments—advancing capabilities in long-form/streaming video understanding and spatial reasoning?
 - How can we responsibly deploy these models while addressing real-world concerns—mitigating misinformation and hallucinations, and promoting efficiency and safety?
 

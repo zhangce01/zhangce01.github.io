@@ -99,6 +99,15 @@ main:
     badge: https://img.shields.io/github/stars/Tencent/WebAggregator?style=social&label=Code+Stars
     image: ./assets/img/ACL26.png
     pdf: https://arxiv.org/pdf/2510.14438
+    abstract: |
+      Deep research web agents not only retrieve information from diverse sources such as web environments, files, and multimodal inputs, but more importantly, they need to rigorously analyze and aggregate knowledge for insightful research. However, existing open-source deep research agents predominantly focus on enhancing information-seeking capabilities of web agents to locate specific information, while overlooking the essential need for information aggregation, which would limit their ability to support in-depth research. We propose an Explore to Evolve paradigm to scalably construct verifiable training data for web agents. Begins with proactive online exploration, an agent sources grounded information by exploring the real web. Using the collected evidence, the agent then self-evolves an aggregation program by selecting, composing, and refining operations from 12 high-level logical types to synthesize a verifiable QA pair. This evolution from high-level guidance to concrete operations allowed us to scalably produce WebAggregatorQA, a dataset of 10K samples across 50K websites and 11 domains. Based on an open-source agent framework, SmolAgents, we collect supervised fine-tuning trajectories to develop a series of foundation models, WebAggregator. WebAggregator-8B matches the performance of GPT-4.1, while the 32B variant surpasses GPT-4.1 by more than 10% on GAIA-text and closely approaches Claude-3.7-sonnet. Moreover, given the limited availability of benchmarks that evaluate web agents' information aggregation abilities, we construct a human-annotated evaluation split of WebAggregatorQA as a challenging test set. On this benchmark, Claude-3.7-sonnet only achieves 28%, and GPT-4.1 scores 25.8%. Even when agents manage to retrieve all references, they still struggle on WebAggregatorQA, highlighting the need to strengthen the information aggregation capabilities of web agent foundations.
+    bibtex: |
+      @inproceedings{wang2026webaggregator,
+          title     = {WebAggregator: Enhancing Compositional Reasoning Capabilities of Deep Research Agent Foundation Models},
+          author    = {Rui Wang and Ce Zhang and Jun-Yu Ma and Jianshu Zhang and Hongru Wang and Yi Chen and Boyang Xue and Tianqing Fang and Zhisong Zhang and Hongming Zhang and Haitao Mi and Dong Yu and Kam-Fai Wong},
+          booktitle = {Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics},
+          year      = {2026}
+      }
 
   - title: "ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models"
     year: 2025
@@ -159,6 +168,16 @@ main:
     pdf: https://arxiv.org/pdf/2505.15491
     video: https://www.youtube.com/watch?v=tIHjgR4hsRA
     notes: Selected for a Lecture presentation.
+    abstract: |
+      Semantic segmentation relying solely on RGB data often struggles in challenging conditions such as low illumination and obscured views, limiting its reliability in critical applications like autonomous driving. To address this, integrating additional thermal radiation data with RGB images demonstrates enhanced performance and robustness. However, how to effectively reconcile the modality discrepancies and fuse the RGB and thermal features remains a well-known challenge. In this work, we address this challenge from a novel spectral perspective. We observe that the multi-modal features can be categorized into two spectral components: low-frequency features that provide broad scene context, including color variations and smooth areas, and high-frequency features that capture modality-specific details such as edges and textures. Inspired by this, we propose the Spectral-aware Global Fusion Network (SGFNet) to effectively enhance and fuse the multi-modal features by explicitly modeling the interactions between the high-frequency, modality-specific features. Our experimental results demonstrate that SGFNet outperforms the state-of-the-art methods on the MFNet and PST900 datasets.
+    bibtex: |
+      @inproceedings{zhang2025spectral,
+          title     = {Spectral-Aware Global Fusion for RGB-Thermal Semantic Segmentation},
+          author    = {Zhang, Ce and Wan, Zifu and Stepputtis, Simon and Sycara, Katia and Xie, Yaqi},
+          booktitle = {IEEE International Conference on Image Processing (ICIP)},
+          publisher = {IEEE},
+          year      = {2025}
+      }
 
   - title: "Self-Correcting Decoding with Generative Feedback for Mitigating Hallucinations in Large Vision-Language Models"
     year: 2025

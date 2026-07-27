@@ -262,6 +262,39 @@ details.news-more strong {
   font-weight: 600;
 }
 
+/* ---------- research interests: typewriter line ---------- */
+
+.ri-typing {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: -4px 0 18px;
+  min-height: 1.6em;   /* avoid layout shift while typing */
+}
+
+.ri-typed {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.ri-cursor {
+  display: inline-block;
+  width: 3px;
+  height: 1.05em;
+  margin-left: 3px;
+  vertical-align: -0.16em;
+  background: var(--acc);
+  border-radius: 2px;
+  animation: cursor-blink 1s steps(2, start) infinite;
+}
+
+@keyframes cursor-blink {
+  to { visibility: hidden; }
+}
+
 /* ---------- publications: glass cards ---------- */
 
 .wrapper .publications ol.bibliography li {
