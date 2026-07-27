@@ -665,6 +665,40 @@ details.news-more[open] > summary::before {
 
 details.news-more > summary:hover { color: var(--spa); }
 
+/* ---------- colored scrollbar ---------- */
+
+/* Firefox (no gradient support: solid accent) */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #6366f1 #eef1f6;
+}
+
+/* WebKit / Blink */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #eef1f6;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #f59e0b 0%, #ef6a3d 30%, #6366f1 68%, #3b82f6 100%);
+  border-radius: 999px;
+  border: 2px solid #eef1f6;   /* inset look against the track */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border-width: 1px;           /* thumb appears thicker on hover */
+}
+
+@media (prefers-color-scheme: dark) {
+  html { scrollbar-color: #818cf8 #1a1d28; }
+  ::-webkit-scrollbar-track { background: #1a1d28; }
+  ::-webkit-scrollbar-thumb { border-color: #1a1d28; }
+}
+
 /* ---------- responsive ---------- */
 
 @media print, screen and (max-width: 1120px) {
