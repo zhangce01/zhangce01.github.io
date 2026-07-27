@@ -262,6 +262,53 @@ details.news-more strong {
   font-weight: 600;
 }
 
+/* ---------- about me: education cards + callout ---------- */
+
+.edu-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 4px 0 18px;
+}
+
+@media (max-width: 760px) {
+  .edu-cards { grid-template-columns: 1fr; }
+}
+
+.edu-card {
+  background: var(--card);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 14px 16px;
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.edu-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.edu-icon { font-size: 1.25rem; }
+.edu-degree { color: var(--ink); font-weight: 600; font-size: 0.93rem; margin-top: 7px; line-height: 1.35; }
+.edu-school { color: var(--acc); font-weight: 500; font-size: 0.86rem; margin-top: 2px; }
+.edu-note { color: var(--ink-faint); font-size: 0.78rem; margin-top: 5px; line-height: 1.5; }
+
+.about-callout {
+  display: flex;
+  align-items: flex-start;
+  background: linear-gradient(100deg, rgba(245, 158, 11, 0.09), rgba(99, 102, 241, 0.09));
+  border: 1px solid var(--glass-border);
+  border-left: 3px solid var(--acc);
+  border-radius: 12px;
+  padding: 12px 16px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  margin: 0 0 22px;
+}
+
 /* ---------- research interests: typewriter line ---------- */
 
 .ri-typing {
@@ -611,12 +658,30 @@ details.news-more strong {
 
 .exp-role { color: var(--ink); font-weight: 600; }
 .exp-org { color: var(--acc); font-size: 0.92rem; font-weight: 500; margin-top: 1px; }
-.exp-meta { color: var(--ink-faint); font-size: 0.86rem; margin-top: 3px; }
-.exp-date {
-  color: var(--ink-faint);
+
+.exp-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 9px;
+}
+
+.exp-chips .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(148, 163, 184, 0.13);
+  border-radius: 999px;
+  padding: 2.5px 11px;
   font-size: 0.78rem;
-  font-family: 'JetBrains Mono', monospace;
-  margin-top: 3px;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.exp-chips .chip a { color: var(--acc); }
+
+@media (prefers-color-scheme: dark) {
+  .exp-chips .chip { background: rgba(148, 163, 184, 0.18); }
 }
 
 .exp-logo-chip {

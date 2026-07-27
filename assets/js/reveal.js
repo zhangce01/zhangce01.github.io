@@ -8,6 +8,8 @@
     'section > h2',
     'section > p',
     'section > ul > li',
+    '.edu-card',
+    '.about-callout',
     '.ri-typing',
     '.year-timeline .yt-node',
     '.publications h2.year',

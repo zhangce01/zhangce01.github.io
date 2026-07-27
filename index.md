@@ -4,11 +4,30 @@ layout: homepage
 
 ## About Me
 
-Hi there! I'm Ce Zhang. I am currently a third-year PhD candidate in the Robotics Institute at Carnegie Mellon University (CMU), advised by [Prof. Katia Sycara](https://www.cs.cmu.edu/~sycara/), with an expected graduation of 2028.
+Hi there! I'm **Ce Zhang** 👋 I am currently a third-year PhD candidate in the Robotics Institute at Carnegie Mellon University (CMU), with an expected graduation of 2028.
 
-Previously, I obtained my M.Sc. in Machine Learning in the Machine Learning Department at CMU, also advised by [Prof. Katia Sycara](https://www.cs.cmu.edu/~sycara/). Prior to this, I received my B.Eng. in Communication Engineering from Southern University of Science and Technology (SUSTech), where I worked under the supervision of [Prof. Zhihai He](https://www.sustech.edu.cn/en/faculties/zhihaihe.html).
+<div class="edu-cards">
+  <div class="edu-card">
+    <span class="edu-icon">🎓</span>
+    <div class="edu-degree">Ph.D. in Robotics</div>
+    <div class="edu-school">Carnegie Mellon University</div>
+    <div class="edu-note">2025 – 2028 (expected)<br>Advisor: <a href="https://www.cs.cmu.edu/~sycara/" target="_blank" rel="noopener">Prof. Katia Sycara</a></div>
+  </div>
+  <div class="edu-card">
+    <span class="edu-icon">🎓</span>
+    <div class="edu-degree">M.Sc. in Machine Learning</div>
+    <div class="edu-school">Carnegie Mellon University</div>
+    <div class="edu-note">Machine Learning Department<br>Advisor: <a href="https://www.cs.cmu.edu/~sycara/" target="_blank" rel="noopener">Prof. Katia Sycara</a></div>
+  </div>
+  <div class="edu-card">
+    <span class="edu-icon">🎓</span>
+    <div class="edu-degree">B.Eng. in Communication Engineering</div>
+    <div class="edu-school">SUSTech</div>
+    <div class="edu-note">Southern University of Science and Technology<br>Advisor: <a href="https://www.sustech.edu.cn/en/faculties/zhihaihe.html" target="_blank" rel="noopener">Prof. Zhihai He</a></div>
+  </div>
+</div>
 
-Feel free to reach out if you're interested in my work or would like to discuss potential collaborations!
+<div class="about-callout">💬&nbsp; Feel free to reach out if you're interested in my work or would like to discuss potential collaborations!</div>
 
 ## Research Interests
 
@@ -51,9 +70,12 @@ My research focuses on:
     <div class="exp-card">
       <div class="exp-info">
         <div class="exp-role">Research Scientist Intern</div>
-        <div class="exp-org">TikTok, San Jose, CA</div>
-        <div class="exp-meta">Mentor: Ming Zhou</div>
-        <div class="exp-date">May 2026 – Aug 2026</div>
+        <div class="exp-org">TikTok</div>
+        <div class="exp-chips">
+          <span class="chip">📍 San Jose, CA, USA</span>
+          <span class="chip">🗓️ May – Aug 2026</span>
+          <span class="chip">🤝 Mentor: Ming Zhou</span>
+        </div>
       </div>
       <span class="exp-logo-chip"><img src="./assets/img/logo_tiktok.svg" alt="TikTok"></span>
     </div>
@@ -63,9 +85,12 @@ My research focuses on:
     <div class="exp-card">
       <div class="exp-info">
         <div class="exp-role">Research Intern</div>
-        <div class="exp-org">Tencent AI Lab, Shenzhen</div>
-        <div class="exp-meta">Mentor: <a href="https://mayer123.github.io/" target="_blank" rel="noopener">Dr. Kaixin Ma</a></div>
-        <div class="exp-date">Feb 2025 – Jul 2025</div>
+        <div class="exp-org">Tencent AI Lab</div>
+        <div class="exp-chips">
+          <span class="chip">📍 Shenzhen, China</span>
+          <span class="chip">🗓️ Feb – Jul 2025</span>
+          <span class="chip">🤝 Mentor: <a href="https://mayer123.github.io/" target="_blank" rel="noopener">Dr. Kaixin Ma</a></span>
+        </div>
       </div>
       <span class="exp-logo-chip"><img src="./assets/img/logo_tencent.svg" alt="Tencent AI Lab"></span>
     </div>
