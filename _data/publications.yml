@@ -106,6 +106,7 @@ main:
           title     = {WebAggregator: Enhancing Compositional Reasoning Capabilities of Deep Research Agent Foundation Models},
           author    = {Rui Wang and Ce Zhang and Jun-Yu Ma and Jianshu Zhang and Hongru Wang and Yi Chen and Boyang Xue and Tianqing Fang and Zhisong Zhang and Hongming Zhang and Haitao Mi and Dong Yu and Kam-Fai Wong},
           booktitle = {Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics},
+          pages     = {24486--24517},
           year      = {2026}
       }
 
@@ -175,6 +176,7 @@ main:
           title     = {Spectral-Aware Global Fusion for RGB-Thermal Semantic Segmentation},
           author    = {Zhang, Ce and Wan, Zifu and Stepputtis, Simon and Sycara, Katia and Xie, Yaqi},
           booktitle = {IEEE International Conference on Image Processing (ICIP)},
+          pages     = {43--48},
           publisher = {IEEE},
           year      = {2025}
       }
