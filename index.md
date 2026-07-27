@@ -29,7 +29,11 @@ My research focuses on:
 - **[Jan 2026]** Our paper "pySpatial: Generating 3D Visual Programs for Zero-Shot Spatial Reasoning" is accepted to ICLR 2026.
 
 <details class="news-more" markdown="0">
-<summary>Show more</summary>
+<summary>
+  <span class="nm-more">Show more</span>
+  <span class="nm-less">Show less</span>
+  <span class="nm-chevron" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M3 6l5 5 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+</summary>
 <ul>
 <li><strong>[Jan 2026]</strong> Our paper "VScan: Rethinking Visual Token Reduction for Efficient Large Vision-Language Models" is accepted to TMLR.</li>
 <li><strong>[Mar 2025]</strong> I will be joining the Ph.D. in Robotics program at Carnegie Mellon University (CMU) in Fall 2025.</li>

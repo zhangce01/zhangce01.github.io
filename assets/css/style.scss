@@ -645,25 +645,60 @@ details.news-more {
 
 details.news-more > summary {
   cursor: pointer;
-  display: inline-block;
-  margin-bottom: 0.5rem;
-  font-size: 0.95rem;
-  color: var(--ink-faint);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0.6rem;
+  padding: 7px 18px;
+  border-radius: 999px;
+  background: var(--card);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink-soft);
   list-style: none;
+  user-select: none;
+  transition: all .25s ease;
 }
 
 details.news-more > summary::-webkit-details-marker { display: none; }
+details.news-more > summary::before { content: none; }
 
-details.news-more > summary::before {
-  content: "\25B8";
-  margin-right: 0.4rem;
+details.news-more > summary:hover {
+  color: #fff;
+  background: linear-gradient(120deg, #6366f1, #3b82f6);
+  border-color: transparent;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px -8px rgba(99, 102, 241, 0.55);
 }
 
-details.news-more[open] > summary::before {
-  content: "\25BE";
+details.news-more .nm-chevron {
+  display: inline-flex;
+  transition: transform .3s ease;
 }
 
-details.news-more > summary:hover { color: var(--spa); }
+details.news-more[open] .nm-chevron { transform: rotate(180deg); }
+
+details.news-more .nm-less { display: none; }
+details.news-more[open] .nm-more { display: none; }
+details.news-more[open] .nm-less { display: inline; }
+
+/* expanded items slide in one by one */
+@keyframes nm-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+details.news-more[open] > ul > li {
+  animation: nm-in .45s cubic-bezier(.2, .7, .3, 1) both;
+}
+
+details.news-more[open] > ul > li:nth-child(1) { animation-delay: .03s; }
+details.news-more[open] > ul > li:nth-child(2) { animation-delay: .12s; }
+details.news-more[open] > ul > li:nth-child(3) { animation-delay: .21s; }
+details.news-more[open] > ul > li:nth-child(4) { animation-delay: .30s; }
+details.news-more[open] > ul > li:nth-child(5) { animation-delay: .39s; }
 
 /* ---------- colored scrollbar ---------- */
 
