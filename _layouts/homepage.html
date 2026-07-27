@@ -13,6 +13,10 @@
     <link rel="icon" media="(prefers-color-scheme:light)" href="{{ site.favicon }}" type="image/png" />
     <script src="./assets/js/favicon-switcher.js" type="application/javascript"></script>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css" integrity="sha256-+N4/V/SbAFiW1MPBCXnfnP9QSN3+Keu+NlB+0ev/YKQ=" crossorigin="anonymous">
 
@@ -63,7 +67,29 @@
     </style>
   </head>
 
-  <body>
+  <body id="top">
+    <!-- Decorative gradient blobs (fixed, behind all content) -->
+    <div class="bg-blobs" aria-hidden="true">
+      <div class="blob b1"></div>
+      <div class="blob b2"></div>
+      <div class="blob b3"></div>
+    </div>
+
+    <!-- Glassy fixed top bar with section tabs -->
+    <div class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="#top">{{ site.title }}<span class="brand-dot">.</span></a>
+        <nav class="site-nav">
+          <a href="#about-me">About</a>
+          <a href="#news">News</a>
+          <a href="#publications">Publications</a>
+          <a href="#experiences">Experiences</a>
+          <a href="#honors-and-awards">Honors</a>
+          <a href="#services">Services</a>
+        </nav>
+      </div>
+    </div>
+
     <div class="wrapper">
       <header>
         {% if site.avatar %}
@@ -111,16 +137,6 @@
             <a style="margin: 0 0 0 0" href="{{ site.twitter }}"><i class="fab fa-twitter"></i></a>
           {% endif %}
         </div>
-        <br>
-
-        <nav class="site-nav">
-          <a href="#about-me">About</a>
-          <a href="#news">News</a>
-          <a href="#publications">Publications</a>
-          <a href="#experiences">Experiences</a>
-          <a href="#honors-and-awards">Honors</a>
-          <a href="#services">Services</a>
-        </nav>
       </header>
   
       <section>
