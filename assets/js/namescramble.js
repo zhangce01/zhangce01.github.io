@@ -12,7 +12,6 @@
   if (!CN) return;
 
   var SYM = '!<>-_\\/[]{}=+*^?#';
-  var CJK = '张策智能视觉学习机器';
   var reduced =
     window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -20,9 +19,8 @@
   var frame = 0;
   var raf = null;
 
-  function randChar(toCJK) {
-    var pool = toCJK && Math.random() < 0.5 ? CJK : SYM;
-    return pool.charAt(Math.floor(Math.random() * pool.length));
+  function randChar() {
+    return SYM.charAt(Math.floor(Math.random() * SYM.length));
   }
 
   function setText(t, zh) {
@@ -39,7 +37,7 @@
         done++;
         out += q.to;
       } else if (frame >= q.start) {
-        if (!q.ch || Math.random() < 0.35) q.ch = randChar(zh);
+        if (!q.ch || Math.random() < 0.35) q.ch = randChar();
         out += q.ch;
       } else {
         out += q.from;

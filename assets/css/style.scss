@@ -54,22 +54,36 @@ html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
-  /* static viewport-anchored tints under the animated blobs — guarantees
-     no corner of the page ever renders as plain white */
-  background:
-    radial-gradient(640px 420px at 88% 100%, rgba(147, 197, 253, 0.22), transparent 70%),
-    radial-gradient(620px 400px at 8% 100%, rgba(253, 230, 138, 0.22), transparent 70%),
-    radial-gradient(700px 400px at 50% 0%, rgba(199, 210, 254, 0.18), transparent 70%),
-    #f8fafc;
-  background-attachment: fixed;
+  background: #f8fafc;
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
 }
 
+/* static viewport-anchored tints under the animated blobs — guarantees no
+   corner of the page ever renders as plain white. A fixed overlay instead of
+   background-attachment: fixed, which Safari paints over the whole document
+   (iOS) and fails to repaint when the theme class flips (macOS) */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    radial-gradient(640px 420px at 88% 100%, rgba(147, 197, 253, 0.22), transparent 70%),
+    radial-gradient(620px 400px at 8% 100%, rgba(253, 230, 138, 0.22), transparent 70%),
+    radial-gradient(700px 400px at 50% 0%, rgba(199, 210, 254, 0.18), transparent 70%);
+}
+
 @media (prefers-color-scheme: dark) {
   html:not(.theme-light) body { background: #12141c; color: var(--ink); }
+  html:not(.theme-light) body::before { display: none; }
 }
 html.theme-dark body { background: #12141c; color: var(--ink); }
+html.theme-dark body::before { display: none; }
 
 
 h1, h2, h3, .brand, .name { font-family: 'Space Grotesk', 'Inter', sans-serif; }
@@ -113,7 +127,10 @@ strong { color: var(--ink); font-weight: 600; }
   position: fixed;
   /* fixed-pixel bleed on all sides: the scroll drift (±90 / ±45 px)
      can never expose an edge, on any viewport size */
-  inset: -220px -120px;
+  top: -220px;
+  right: -120px;
+  bottom: -220px;
+  left: -120px;
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
@@ -799,7 +816,10 @@ html.theme-dark .edu-logo { border-color: #3a3f52; }
 .yt-dot::after {
   content: '';
   position: absolute;
-  inset: -5px;
+  top: -5px;
+  right: -5px;
+  bottom: -5px;
+  left: -5px;
   border-radius: 50%;
   border: 2px solid rgba(99, 102, 241, 0.55);
   opacity: 0;
@@ -976,7 +996,10 @@ html.theme-dark .publications ol.bibliography li .copy-bib { color: #a5b4fc; }
 .exp-dot::after {
   content: '';
   position: absolute;
-  inset: -5px;
+  top: -5px;
+  right: -5px;
+  bottom: -5px;
+  left: -5px;
   border-radius: 50%;
   border: 2px solid rgba(99, 102, 241, 0.55);
   opacity: 0;

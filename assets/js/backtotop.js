@@ -17,7 +17,12 @@
   }, { passive: true });
 
   btn.addEventListener('click', function () {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // older Safari ignores the options-object form of scrollTo
+    if ('scrollBehavior' in document.documentElement.style) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      window.scrollTo(0, 0);
+    }
   });
 
   update();

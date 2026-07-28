@@ -135,7 +135,12 @@
       else if (i === svcIdx) dest = maxScroll();
       if (dest !== null) {
         e.preventDefault();
-        window.scrollTo({ top: Math.max(0, dest), behavior: 'smooth' });
+        // older Safari ignores the options-object form of scrollTo
+        if ('scrollBehavior' in document.documentElement.style) {
+          window.scrollTo({ top: Math.max(0, dest), behavior: 'smooth' });
+        } else {
+          window.scrollTo(0, Math.max(0, dest));
+        }
       }
       lockOn(i);
     });
