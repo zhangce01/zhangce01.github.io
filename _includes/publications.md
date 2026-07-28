@@ -8,6 +8,13 @@
     <span class="yt-year">{{ group.name }}</span>
     <span class="yt-count">{{ group.items | size }} papers</span>
   </a>
+  <span class="yt-seg">
+    {% for paper in group.items %}
+    <a class="yt-pip" href="#pub-{{ paper.title | slugify }}" aria-label="{{ paper.title }}">
+      <span class="yt-tip"><strong>{{ paper.conference_short }}</strong>{{ paper.title }}</span>
+    </a>
+    {% endfor %}
+  </span>
 {% endfor %}
 </div>
 
@@ -22,7 +29,7 @@
 {% assign last_year = link.year %}
 {% endif %}
 
-<li>
+<li id="pub-{{ link.title | slugify }}">
 <div class="pub-row">
   <div class="col-sm-3 abbr" style="position: relative;padding-right: 15px;padding-left: 15px;">
     {% if link.image %} 
