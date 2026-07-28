@@ -834,6 +834,10 @@ html.theme-dark .exp-chips .chip { background: rgba(148, 163, 184, 0.18); }
 
 .exp-logo-chip img { height: 24px; width: auto; display: block; }
 
+/* the TikTok lockup is squatter than Tencent's wide wordmark —
+   render it taller so the two logos feel the same visual size */
+.exp-logo-chip img[alt="TikTok"] { height: 32px; }
+
 @media (prefers-color-scheme: dark) {
   html:not(.theme-light) .exp-dot { border-color: #12141c; }
   html:not(.theme-light) .exp-logo-chip { border-color: #3a3f52; }
