@@ -138,8 +138,8 @@ strong { color: var(--ink); font-weight: 600; }
 /* wandering loop with a range large enough to read as flowing motion */
 @keyframes blob-drift {
   0%   { transform: translate(0, 0) scale(1); }
-  33%  { transform: translate(100px, -70px) scale(1.15); }
-  66%  { transform: translate(-80px, 80px) scale(0.92); }
+  33%  { transform: translate(160px, -110px) scale(1.22); }
+  66%  { transform: translate(-130px, 120px) scale(0.88); }
   100% { transform: translate(0, 0) scale(1); }
 }
 
