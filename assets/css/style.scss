@@ -353,6 +353,37 @@ section ul > li::before {
   transform: rotate(45deg);
   background: var(--grad);
   box-shadow: 0 0 0 2.5px rgba(99, 102, 241, 0.13);
+  transition: box-shadow .25s ease;
+}
+
+/* hovering a list row makes its diamond spin, breathe and cycle hues */
+section ul > li:hover::before {
+  animation: bullet-spin 1.1s linear infinite, dot-hue 1.6s linear infinite;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.2);
+}
+
+@keyframes bullet-spin {
+  from { transform: rotate(45deg) scale(1.3); }
+  to   { transform: rotate(405deg) scale(1.3); }
+}
+
+@keyframes dot-hue {
+  to { filter: hue-rotate(360deg); }
+}
+
+@keyframes dot-ping {
+  0%   { transform: scale(0.5); opacity: 0.85; }
+  100% { transform: scale(2.1); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  section ul > li:hover::before,
+  .yt-node:hover .yt-dot,
+  .yt-node:hover .yt-dot::after,
+  .exp-item:hover .exp-dot,
+  .exp-item:hover .exp-dot::after {
+    animation: none;
+  }
 }
 
 /* News dates as small rounded chips */
@@ -673,6 +704,7 @@ html.theme-dark .edu-logo { border-color: #3a3f52; }
 }
 
 .yt-dot {
+  position: relative;
   width: 13px;
   height: 13px;
   border-radius: 50%;
@@ -682,9 +714,24 @@ html.theme-dark .edu-logo { border-color: #3a3f52; }
   transition: transform .22s ease, box-shadow .22s ease;
 }
 
+.yt-dot::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 2px solid rgba(99, 102, 241, 0.55);
+  opacity: 0;
+  pointer-events: none;
+}
+
 .yt-node:hover .yt-dot {
   transform: scale(1.35);
   box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.45), 0 6px 14px -2px rgba(99, 102, 241, 0.65);
+  animation: dot-hue 1.6s linear infinite;
+}
+
+.yt-node:hover .yt-dot::after {
+  animation: dot-ping 1.1s ease-out infinite;
 }
 
 .yt-year {
@@ -841,6 +888,27 @@ html.theme-dark .publications ol.bibliography li .copy-bib { color: #a5b4fc; }
   background: var(--grad);
   border: 3px solid #f8fafc;
   box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.35);
+  transition: transform .22s ease, box-shadow .22s ease;
+}
+
+.exp-dot::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 2px solid rgba(99, 102, 241, 0.55);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.exp-item:hover .exp-dot {
+  transform: scale(1.35);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.45);
+  animation: dot-hue 1.6s linear infinite;
+}
+
+.exp-item:hover .exp-dot::after {
+  animation: dot-ping 1.1s ease-out infinite;
 }
 
 .exp-card {
