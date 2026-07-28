@@ -21,6 +21,27 @@ main:
           year      = {2026}
       }
 
+  - title: "WebAggregator: Enhancing Compositional Reasoning Capabilities of Deep Research Agent Foundation Models"
+    year: 2026
+    authors: Rui Wang, <strong>Ce Zhang</strong>, Jun-Yu Ma, Jianshu Zhang, Hongru Wang, Yi Chen, Boyang Xue, Tianqing Fang, Zhisong Zhang, Hongming Zhang, Haitao Mi, Dong Yu, Kam-Fai Wong
+    conference_short: ACL 2026 (Main)
+    conference: Annual Meeting of the Association for Computational Linguistics <strong>(ACL)</strong>, 2026.
+    place: San Diego, CA, US, July 2-7, 2026
+    code: https://github.com/Tencent/WebAggregator
+    badge: https://img.shields.io/github/stars/Tencent/WebAggregator?style=social&label=Code+Stars
+    image: ./assets/img/ACL26.png
+    pdf: https://arxiv.org/pdf/2510.14438
+    abstract: |
+      Deep research web agents not only retrieve information from diverse sources such as web environments, files, and multimodal inputs, but more importantly, they need to rigorously analyze and aggregate knowledge for insightful research. However, existing open-source deep research agents predominantly focus on enhancing information-seeking capabilities of web agents to locate specific information, while overlooking the essential need for information aggregation, which would limit their ability to support in-depth research. We propose an Explore to Evolve paradigm to scalably construct verifiable training data for web agents. Begins with proactive online exploration, an agent sources grounded information by exploring the real web. Using the collected evidence, the agent then self-evolves an aggregation program by selecting, composing, and refining operations from 12 high-level logical types to synthesize a verifiable QA pair. This evolution from high-level guidance to concrete operations allowed us to scalably produce WebAggregatorQA, a dataset of 10K samples across 50K websites and 11 domains. Based on an open-source agent framework, SmolAgents, we collect supervised fine-tuning trajectories to develop a series of foundation models, WebAggregator. WebAggregator-8B matches the performance of GPT-4.1, while the 32B variant surpasses GPT-4.1 by more than 10% on GAIA-text and closely approaches Claude-3.7-sonnet. Moreover, given the limited availability of benchmarks that evaluate web agents' information aggregation abilities, we construct a human-annotated evaluation split of WebAggregatorQA as a challenging test set. On this benchmark, Claude-3.7-sonnet only achieves 28%, and GPT-4.1 scores 25.8%. Even when agents manage to retrieve all references, they still struggle on WebAggregatorQA, highlighting the need to strengthen the information aggregation capabilities of web agent foundations.
+    bibtex: |
+      @inproceedings{wang2026webaggregator,
+          title     = {WebAggregator: Enhancing Compositional Reasoning Capabilities of Deep Research Agent Foundation Models},
+          author    = {Rui Wang and Ce Zhang and Jun-Yu Ma and Jianshu Zhang and Hongru Wang and Yi Chen and Boyang Xue and Tianqing Fang and Zhisong Zhang and Hongming Zhang and Haitao Mi and Dong Yu and Kam-Fai Wong},
+          booktitle = {Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics},
+          pages     = {24486--24517},
+          year      = {2026}
+      }
+
   - title: "Evolving Contextual Safety in Multi-Modal Large Language Models via Inference-Time Self-Reflective Memory"
     year: 2026
     authors: <strong>Ce Zhang<sup>*</sup></strong>, Jinxi He<sup>*</sup>, Junyi He, Katia Sycara, Yaqi Xie <span class="eq-contrib">(<sup>*</sup>Equal contribution)</span>
@@ -89,27 +110,6 @@ main:
       }
     pdf: https://arxiv.org/pdf/2505.22654
 
-  - title: "WebAggregator: Enhancing Compositional Reasoning Capabilities of Deep Research Agent Foundation Models"
-    year: 2026
-    authors: Rui Wang, <strong>Ce Zhang</strong>, Jun-Yu Ma, Jianshu Zhang, Hongru Wang, Yi Chen, Boyang Xue, Tianqing Fang, Zhisong Zhang, Hongming Zhang, Haitao Mi, Dong Yu, Kam-Fai Wong
-    conference_short: ACL 2026 (Main)
-    conference: Annual Meeting of the Association for Computational Linguistics <strong>(ACL)</strong>, 2026.
-    place: San Diego, CA, US, July 2-7, 2026
-    code: https://github.com/Tencent/WebAggregator
-    badge: https://img.shields.io/github/stars/Tencent/WebAggregator?style=social&label=Code+Stars
-    image: ./assets/img/ACL26.png
-    pdf: https://arxiv.org/pdf/2510.14438
-    abstract: |
-      Deep research web agents not only retrieve information from diverse sources such as web environments, files, and multimodal inputs, but more importantly, they need to rigorously analyze and aggregate knowledge for insightful research. However, existing open-source deep research agents predominantly focus on enhancing information-seeking capabilities of web agents to locate specific information, while overlooking the essential need for information aggregation, which would limit their ability to support in-depth research. We propose an Explore to Evolve paradigm to scalably construct verifiable training data for web agents. Begins with proactive online exploration, an agent sources grounded information by exploring the real web. Using the collected evidence, the agent then self-evolves an aggregation program by selecting, composing, and refining operations from 12 high-level logical types to synthesize a verifiable QA pair. This evolution from high-level guidance to concrete operations allowed us to scalably produce WebAggregatorQA, a dataset of 10K samples across 50K websites and 11 domains. Based on an open-source agent framework, SmolAgents, we collect supervised fine-tuning trajectories to develop a series of foundation models, WebAggregator. WebAggregator-8B matches the performance of GPT-4.1, while the 32B variant surpasses GPT-4.1 by more than 10% on GAIA-text and closely approaches Claude-3.7-sonnet. Moreover, given the limited availability of benchmarks that evaluate web agents' information aggregation abilities, we construct a human-annotated evaluation split of WebAggregatorQA as a challenging test set. On this benchmark, Claude-3.7-sonnet only achieves 28%, and GPT-4.1 scores 25.8%. Even when agents manage to retrieve all references, they still struggle on WebAggregatorQA, highlighting the need to strengthen the information aggregation capabilities of web agent foundations.
-    bibtex: |
-      @inproceedings{wang2026webaggregator,
-          title     = {WebAggregator: Enhancing Compositional Reasoning Capabilities of Deep Research Agent Foundation Models},
-          author    = {Rui Wang and Ce Zhang and Jun-Yu Ma and Jianshu Zhang and Hongru Wang and Yi Chen and Boyang Xue and Tianqing Fang and Zhisong Zhang and Hongming Zhang and Haitao Mi and Dong Yu and Kam-Fai Wong},
-          booktitle = {Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics},
-          pages     = {24486--24517},
-          year      = {2026}
-      }
-
   - title: "ONLY: One-Layer Intervention Sufficiently Mitigates Hallucinations in Large Vision-Language Models"
     year: 2025
     authors: Zifu Wan<sup>*</sup>, <strong>Ce Zhang<sup>*</sup></strong>, Silong Yong, Martin Ma, Simon Stepputtis, Louis-Philippe Morency, Deva Ramanan, Katia Sycara, Yaqi Xie <span class="eq-contrib">(<sup>*</sup>Equal contribution)</span>
@@ -131,6 +131,28 @@ main:
           year      = {2025}
       }
     pdf: https://arxiv.org/pdf/2507.00898
+
+  - title: "Spectral-Aware Global Fusion for RGB-Thermal Semantic Segmentation"
+    year: 2025
+    authors: <strong>Ce Zhang</strong>, Zifu Wan, Simon Stepputtis, Katia Sycara, Yaqi Xie
+    conference_short: ICIP 2025
+    conference: International Conference on Image Processing <strong>(ICIP)</strong>, 2025.
+    place: Anchorage, AK, US, September 14–17, 2025
+    image: ./assets/img/icip2025.png
+    pdf: https://arxiv.org/pdf/2505.15491
+    video: https://www.youtube.com/watch?v=tIHjgR4hsRA
+    notes: Selected for a Lecture presentation.
+    abstract: |
+      Semantic segmentation relying solely on RGB data often struggles in challenging conditions such as low illumination and obscured views, limiting its reliability in critical applications like autonomous driving. To address this, integrating additional thermal radiation data with RGB images demonstrates enhanced performance and robustness. However, how to effectively reconcile the modality discrepancies and fuse the RGB and thermal features remains a well-known challenge. In this work, we address this challenge from a novel spectral perspective. We observe that the multi-modal features can be categorized into two spectral components: low-frequency features that provide broad scene context, including color variations and smooth areas, and high-frequency features that capture modality-specific details such as edges and textures. Inspired by this, we propose the Spectral-aware Global Fusion Network (SGFNet) to effectively enhance and fuse the multi-modal features by explicitly modeling the interactions between the high-frequency, modality-specific features. Our experimental results demonstrate that SGFNet outperforms the state-of-the-art methods on the MFNet and PST900 datasets.
+    bibtex: |
+      @inproceedings{zhang2025spectral,
+          title     = {Spectral-Aware Global Fusion for RGB-Thermal Semantic Segmentation},
+          author    = {Zhang, Ce and Wan, Zifu and Stepputtis, Simon and Sycara, Katia and Xie, Yaqi},
+          booktitle = {IEEE International Conference on Image Processing (ICIP)},
+          pages     = {43--48},
+          publisher = {IEEE},
+          year      = {2025}
+      }
 
   - title: "InstructPart: Task-Oriented Part Segmentation with Instruction Reasoning"
     year: 2025
@@ -158,28 +180,6 @@ main:
           doi       = {10.18653/v1/2025.acl-long.1179}
       }
     pdf: https://arxiv.org/pdf/2505.18291
-
-  - title: "Spectral-Aware Global Fusion for RGB-Thermal Semantic Segmentation"
-    year: 2025
-    authors: <strong>Ce Zhang</strong>, Zifu Wan, Simon Stepputtis, Katia Sycara, Yaqi Xie
-    conference_short: ICIP 2025
-    conference: International Conference on Image Processing <strong>(ICIP)</strong>, 2025.
-    place: Anchorage, AK, US, September 14–17, 2025
-    image: ./assets/img/icip2025.png
-    pdf: https://arxiv.org/pdf/2505.15491
-    video: https://www.youtube.com/watch?v=tIHjgR4hsRA
-    notes: Selected for a Lecture presentation.
-    abstract: |
-      Semantic segmentation relying solely on RGB data often struggles in challenging conditions such as low illumination and obscured views, limiting its reliability in critical applications like autonomous driving. To address this, integrating additional thermal radiation data with RGB images demonstrates enhanced performance and robustness. However, how to effectively reconcile the modality discrepancies and fuse the RGB and thermal features remains a well-known challenge. In this work, we address this challenge from a novel spectral perspective. We observe that the multi-modal features can be categorized into two spectral components: low-frequency features that provide broad scene context, including color variations and smooth areas, and high-frequency features that capture modality-specific details such as edges and textures. Inspired by this, we propose the Spectral-aware Global Fusion Network (SGFNet) to effectively enhance and fuse the multi-modal features by explicitly modeling the interactions between the high-frequency, modality-specific features. Our experimental results demonstrate that SGFNet outperforms the state-of-the-art methods on the MFNet and PST900 datasets.
-    bibtex: |
-      @inproceedings{zhang2025spectral,
-          title     = {Spectral-Aware Global Fusion for RGB-Thermal Semantic Segmentation},
-          author    = {Zhang, Ce and Wan, Zifu and Stepputtis, Simon and Sycara, Katia and Xie, Yaqi},
-          booktitle = {IEEE International Conference on Image Processing (ICIP)},
-          pages     = {43--48},
-          publisher = {IEEE},
-          year      = {2025}
-      }
 
   - title: "Self-Correcting Decoding with Generative Feedback for Mitigating Hallucinations in Large Vision-Language Models"
     year: 2025
@@ -324,29 +324,6 @@ main:
           doi       = {10.1109/WACV57701.2024.00550}
       }
 
-  - title: "Critical Sampling for Robust Evolution Operator Learning of Unknown Dynamical Systems"
-    year: 2023
-    authors: <strong>Ce Zhang</strong>, Kailiang Wu, Zhihai He
-    conference_short: IEEE TAI
-    conference: IEEE Transactions on Artificial Intelligence, 2023.
-    conference2: First Workshop on Out-of-Distribution Generalization in Robotics at CoRL 2023.
-    place: Atlanta, GA, US, November 6-9, 2023
-    pdf: https://arxiv.org/pdf/2304.07485.pdf
-    image: ./assets/img/tai_critical.png
-    abstract: |
-      Given an unknown dynamical system, what is the minimum number of samples needed for effective learning of its governing laws and accurate prediction of its future evolution behavior, and how to select these critical samples? In this work, we propose to explore this problem based on a design approach. Starting from a small initial set of samples, we adaptively discover critical samples to achieve increasingly accurate learning of the system evolution. One central challenge here is that we do not know the network modeling error since the ground-truth system state is unknown, which is, however, needed for critical sampling. To address this challenge, we introduce a multistep reciprocal prediction network where forward and backward evolution networks are designed to learn the temporal evolution behavior in the forward and backward time directions, respectively. Very interestingly, we find that the desired network modeling error is highly correlated with the multistep reciprocal prediction error, which can be directly computed from the current system state. This allows us to perform a dynamic selection of critical samples from regions with high network modeling errors for dynamical systems. In addition, a joint spatial-temporal evolution network is introduced, which incorporates spatial dynamics modeling into the temporal evolution prediction for robust learning of the system evolution operator with few samples. Our extensive experimental results demonstrate that our proposed method is able to dramatically reduce the number of samples needed for effective learning and accurate prediction of evolution behaviors of unknown dynamical systems by up to hundreds of times.
-    bibtex: |
-      @article{zhang2024critical,
-          author  = {Ce Zhang and Kailiang Wu and Zhihai He},
-          title   = {Critical Sampling for Robust Evolution Operator Learning of Unknown Dynamical Systems},
-          journal = {IEEE Transactions on Artificial Intelligence},
-          volume  = {5},
-          number  = {6},
-          pages   = {2856--2871},
-          year    = {2024},
-          doi     = {10.1109/TAI.2023.3327676}
-      }
-
   - title: "BDC-Adapter: Brownian Distance Covariance for Better Vision-Language Reasoning"
     year: 2023
     authors: Yi Zhang<sup>*</sup>, <strong>Ce Zhang<sup>*</sup></strong>, Zihan Liao, Yushun Tang, Zhihai He <span class="eq-contrib">(<sup>*</sup>Equal contribution)</span>
@@ -410,3 +387,26 @@ main:
           pages     = {5537--5546},
           year      = {2023}
       }
+  - title: "Critical Sampling for Robust Evolution Operator Learning of Unknown Dynamical Systems"
+    year: 2023
+    authors: <strong>Ce Zhang</strong>, Kailiang Wu, Zhihai He
+    conference_short: IEEE TAI
+    conference: IEEE Transactions on Artificial Intelligence, 2023.
+    conference2: First Workshop on Out-of-Distribution Generalization in Robotics at CoRL 2023.
+    place: Atlanta, GA, US, November 6-9, 2023
+    pdf: https://arxiv.org/pdf/2304.07485.pdf
+    image: ./assets/img/tai_critical.png
+    abstract: |
+      Given an unknown dynamical system, what is the minimum number of samples needed for effective learning of its governing laws and accurate prediction of its future evolution behavior, and how to select these critical samples? In this work, we propose to explore this problem based on a design approach. Starting from a small initial set of samples, we adaptively discover critical samples to achieve increasingly accurate learning of the system evolution. One central challenge here is that we do not know the network modeling error since the ground-truth system state is unknown, which is, however, needed for critical sampling. To address this challenge, we introduce a multistep reciprocal prediction network where forward and backward evolution networks are designed to learn the temporal evolution behavior in the forward and backward time directions, respectively. Very interestingly, we find that the desired network modeling error is highly correlated with the multistep reciprocal prediction error, which can be directly computed from the current system state. This allows us to perform a dynamic selection of critical samples from regions with high network modeling errors for dynamical systems. In addition, a joint spatial-temporal evolution network is introduced, which incorporates spatial dynamics modeling into the temporal evolution prediction for robust learning of the system evolution operator with few samples. Our extensive experimental results demonstrate that our proposed method is able to dramatically reduce the number of samples needed for effective learning and accurate prediction of evolution behaviors of unknown dynamical systems by up to hundreds of times.
+    bibtex: |
+      @article{zhang2024critical,
+          author  = {Ce Zhang and Kailiang Wu and Zhihai He},
+          title   = {Critical Sampling for Robust Evolution Operator Learning of Unknown Dynamical Systems},
+          journal = {IEEE Transactions on Artificial Intelligence},
+          volume  = {5},
+          number  = {6},
+          pages   = {2856--2871},
+          year    = {2024},
+          doi     = {10.1109/TAI.2023.3327676}
+      }
+
