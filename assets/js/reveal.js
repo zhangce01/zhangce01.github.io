@@ -9,7 +9,7 @@
     'section > p',
     'section > ul > li',
     '.edu-card',
-    '.about-callout',
+    '.about-contact',
     '.ri-typing',
     '.year-timeline .yt-node',
     '.publications h2.year',
