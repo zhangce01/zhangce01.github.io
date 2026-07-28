@@ -8,22 +8,43 @@ Hi there! I'm **Ce Zhang** 👋 I am currently a third-year PhD candidate in the
 
 <div class="edu-cards">
   <div class="edu-card">
-    <span class="edu-icon">🎓</span>
-    <div class="edu-degree">Ph.D. in Robotics</div>
-    <div class="edu-school">Carnegie Mellon University</div>
-    <div class="edu-note">2025 – 2028 (expected)<br>Advisor: <a href="https://www.cs.cmu.edu/~sycara/" target="_blank" rel="noopener">Prof. Katia Sycara</a></div>
+    <div class="edu-head">
+      <span class="edu-logo"><img src="./assets/img/logo_cmu.svg" alt="Carnegie Mellon University"></span>
+      <div class="edu-head-text">
+        <div class="edu-degree">Ph.D. in Robotics</div>
+        <a class="edu-school" href="https://www.cmu.edu/" target="_blank" rel="noopener">Carnegie Mellon University</a>
+      </div>
+    </div>
+    <div class="edu-note">
+      <div class="edu-line">🗓️ 2025 – 2028 (expected)</div>
+      <div class="edu-line">🤝 Advisor: <a href="https://www.cs.cmu.edu/~sycara/" target="_blank" rel="noopener">Prof. Katia Sycara</a></div>
+    </div>
   </div>
   <div class="edu-card">
-    <span class="edu-icon">🎓</span>
-    <div class="edu-degree">M.Sc. in Machine Learning</div>
-    <div class="edu-school">Carnegie Mellon University</div>
-    <div class="edu-note">Machine Learning Department<br>Advisor: <a href="https://www.cs.cmu.edu/~sycara/" target="_blank" rel="noopener">Prof. Katia Sycara</a></div>
+    <div class="edu-head">
+      <span class="edu-logo"><img src="./assets/img/logo_cmu.svg" alt="Carnegie Mellon University"></span>
+      <div class="edu-head-text">
+        <div class="edu-degree">M.Sc. in Machine Learning</div>
+        <a class="edu-school" href="https://www.cmu.edu/" target="_blank" rel="noopener">Carnegie Mellon University</a>
+      </div>
+    </div>
+    <div class="edu-note">
+      <div class="edu-line">🗓️ 2023 – 2024</div>
+      <div class="edu-line">🤝 Advisor: <a href="https://www.cs.cmu.edu/~sycara/" target="_blank" rel="noopener">Prof. Katia Sycara</a></div>
+    </div>
   </div>
   <div class="edu-card">
-    <span class="edu-icon">🎓</span>
-    <div class="edu-degree">B.Eng. in Communication Engineering</div>
-    <div class="edu-school">SUSTech</div>
-    <div class="edu-note">Southern University of Science and Technology<br>Advisor: <a href="https://www.sustech.edu.cn/en/faculties/zhihaihe.html" target="_blank" rel="noopener">Prof. Zhihai He</a></div>
+    <div class="edu-head">
+      <span class="edu-logo"><img src="./assets/img/logo_sustech.png" alt="SUSTech"></span>
+      <div class="edu-head-text">
+        <div class="edu-degree">B.Eng. in Communication Engineering</div>
+        <a class="edu-school" href="https://www.sustech.edu.cn/en/" target="_blank" rel="noopener">SUSTech</a>
+      </div>
+    </div>
+    <div class="edu-note">
+      <div class="edu-line">🗓️ 2019 – 2023</div>
+      <div class="edu-line">🤝 Advisor: <a href="https://www.sustech.edu.cn/en/faculties/zhihaihe.html" target="_blank" rel="noopener">Prof. Zhihai He</a></div>
+    </div>
   </div>
 </div>
 
