@@ -988,19 +988,10 @@ details.news-more[open] > ul > li:nth-child(5) { animation-delay: .39s; }
 
 /* ---------- colored scrollbar ---------- */
 
-/* Standard scrollbar properties ONLY for browsers without ::-webkit-scrollbar
-   (i.e. Firefox). Chromium honors scrollbar-color when set and then IGNORES
-   all ::-webkit-scrollbar styling, which would kill the gradient thumb. */
-@supports not selector(::-webkit-scrollbar) {
-  html {
-    scrollbar-width: thin;
-    scrollbar-color: #a5b4fc #f1f4f9;
-  }
-  @media (prefers-color-scheme: dark) {
-    html:not(.theme-light) { scrollbar-color: #818cf8 #1a1d28; }
-  }
-  html.theme-dark { scrollbar-color: #818cf8 #1a1d28; }
-}
+/* Firefox fallback (scrollbar-width/scrollbar-color) lives in
+   publications.css: the @supports selector() syntax it needs is not
+   parseable by the old Ruby Sass used by GitHub Pages, so it must stay
+   in a plain .css file that Jekyll copies verbatim. */
 
 /* WebKit / Blink */
 ::-webkit-scrollbar {

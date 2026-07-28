@@ -85,3 +85,21 @@ html.theme-dark .publications ol.bibliography li .links a.btn { color: #FFFFFF; 
 .publications ol.bibliography li div.abstract.hidden.open { border-color: var(--global-text-color); }
 
 .publications ol.bibliography li .teaser { border-radius: 8px; box-shadow: 3px 3px 6px #888; width: 200px; min-width: 200px; height: auto; margin-top: 5px; margin-left: 5px; margin-bottom: 5px; }
+
+/* Standard scrollbar properties ONLY for browsers without ::-webkit-scrollbar
+   (i.e. Firefox). Chromium honors scrollbar-color when set and then IGNORES
+   all ::-webkit-scrollbar styling, which would kill the gradient thumb.
+   (Kept in this plain .css file: GitHub Pages' Ruby Sass cannot parse the
+   selector() condition.) */
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: #a5b4fc #f1f4f9;
+  }
+  html.theme-dark { scrollbar-color: #818cf8 #1a1d28; }
+}
+@media (prefers-color-scheme: dark) {
+  @supports not selector(::-webkit-scrollbar) {
+    html:not(.theme-light) { scrollbar-color: #818cf8 #1a1d28; }
+  }
+}
