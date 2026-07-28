@@ -43,37 +43,21 @@
       <link rel="stylesheet" href="./assets/css/publications-no-dark-mode.css">
     {% endif %}
 
-    <!-- Hover to show Chinese name -->
+    <!-- Hover: decode the English name into the Chinese one (namescramble.js) -->
     <style>
       .name {
-        position: relative;
-        display: inline-block;
+        display: block;
         cursor: default;
         line-height: 1.2;
         min-height: 1.2em;
-        width: 100%;           /* 让容器足够宽 */
-        text-align: center;    /* 保证居中 */
+        width: 100%;
+        text-align: center;
+        white-space: nowrap;
       }
-      
-      .name span {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        white-space: nowrap;   /* 关键：禁止换行 */
-        transition: opacity .25s ease;
-      }
-      /* 默认英文显示，中文隐藏 */
-      .name .en { opacity: 1; }
-      .name .cn { opacity: 0; font-family: "KaiTi","KaiTi_GB2312","Kaiti SC","STKaiti", "DFKai-SB","BiauKai","AR PL KaitiM GB","AR PL UKai CN", serif; }
-
-      /* 悬停时反转（仅当存在中文名时才应用） */
-      .name.has-cn:hover .en { opacity: 0; }
-      .name.has-cn:hover .cn { opacity: 1; }
-
-      /* 无中文名时不做叠层布局，避免不必要的定位 */
-      .name.no-cn span { position: static; }
+      /* the .cn span only carries the target text for the scramble script */
+      .name.has-cn .cn { display: none; }
+      .name .en { display: inline-block; min-height: 1.2em; }
+      .name .en.zh { font-family: "KaiTi","KaiTi_GB2312","Kaiti SC","STKaiti","DFKai-SB","BiauKai","AR PL KaitiM GB","AR PL UKai CN", serif; }
     </style>
   </head>
 
@@ -180,6 +164,7 @@
     <script src="{{ "/assets/js/theme.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/parallax.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/backtotop.js" | relative_url }}"></script>
+    <script src="{{ "/assets/js/namescramble.js" | relative_url }}"></script>
     {% if site.google_analytics %}
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-G349HWYEX6"></script>
