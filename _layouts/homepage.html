@@ -36,8 +36,8 @@
       <link rel="stylesheet" href="./assets/css/font.css">
     {% endif %}
     {% if site.auto_dark_mode %}
-      <link rel="stylesheet" href="./assets/css/style.css?v=23">
-      <link rel="stylesheet" href="./assets/css/publications.css?v=23">
+      <link rel="stylesheet" href="./assets/css/style.css?v=24">
+      <link rel="stylesheet" href="./assets/css/publications.css?v=24">
     {% else %}
       <link rel="stylesheet" href="./assets/css/style-no-dark-mode.css">
       <link rel="stylesheet" href="./assets/css/publications-no-dark-mode.css">
@@ -162,13 +162,15 @@
         &nbsp;visitors since Sep 2023.
         </p>
         {% if site.enable_footnote %}
-          <p style="margin-bottom:0;"><small>Powered by Jekyll and <a href="https://github.com/yaoyao-liu/minimal-light" target="_blank" rel="noopener">Minimal Light</a> theme. Thanks to <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude</a> <span class="crab">🦀</span> for polishing this site.</small></p>
+          <p style="margin-bottom:0;"><small>Powered by Jekyll and <a href="https://github.com/yaoyao-liu/minimal-light" target="_blank" rel="noopener">Minimal Light</a> theme. Thanks to <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude</a> <span class="crab" title="Clawd"><svg width="17" height="13" viewBox="0 0 24 18" shape-rendering="crispEdges" role="img" aria-label="Clawd the crab"><g fill="#D97757"><rect x="2" y="0" width="4" height="2"/><rect x="18" y="0" width="4" height="2"/><rect x="0" y="2" width="4" height="2"/><rect x="20" y="2" width="4" height="2"/><rect x="4" y="4" width="2" height="2"/><rect x="18" y="4" width="2" height="2"/><rect x="6" y="6" width="12" height="2"/><rect x="4" y="8" width="4" height="2"/><rect x="10" y="8" width="4" height="2"/><rect x="16" y="8" width="4" height="2"/><rect x="4" y="10" width="16" height="2"/><rect x="6" y="12" width="12" height="2"/><rect x="4" y="14" width="2" height="2"/><rect x="8" y="14" width="2" height="2"/><rect x="14" y="14" width="2" height="2"/><rect x="18" y="14" width="2" height="2"/><rect x="2" y="16" width="2" height="2"/><rect x="8" y="16" width="2" height="2"/><rect x="14" y="16" width="2" height="2"/><rect x="20" y="16" width="2" height="2"/></g><g fill="#262624"><rect x="8" y="8" width="2" height="2"/><rect x="14" y="8" width="2" height="2"/></g></svg></span> for polishing this site.</small></p>
         {% endif %}
         <p class="site-copyright"><small>&copy; 2026 &middot; Ce Zhang &middot; Robotics Institute, Carnegie Mellon University &middot; Last Edited: {{ site.time | date: "%B %d, %Y" }}</small></p>
       </section>
 
       <footer></footer>
     </div>
+
+    <button id="back-to-top" class="back-to-top" type="button" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
 
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/scrollspy.js" | relative_url }}?v=3"></script>
@@ -177,6 +179,7 @@
     <script src="{{ "/assets/js/reveal.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/theme.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/parallax.js" | relative_url }}"></script>
+    <script src="{{ "/assets/js/backtotop.js" | relative_url }}"></script>
     {% if site.google_analytics %}
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-G349HWYEX6"></script>
