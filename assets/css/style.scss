@@ -219,29 +219,32 @@ html.theme-dark .bg-blobs .blob { opacity: .14; }
 html.theme-dark .site-nav a.active { background: rgba(60, 65, 85, 0.9); }
 
 
-/* Day / night toggle button */
+/* Day / night toggle: minimal borderless line icon */
 .theme-toggle {
   flex: 0 0 auto;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0;
-  line-height: 1;
-  font-size: 1rem;
-  border: 1px solid var(--glass-border);
-  border-radius: 999px;
-  background: var(--card);
-  box-shadow: var(--shadow);
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  box-shadow: none;
+  color: var(--ink-soft);
   cursor: pointer;
-  transition: transform .2s ease, box-shadow .2s ease;
+  transition: color .2s ease;
 }
 
-.theme-toggle:hover {
-  transform: scale(1.12) rotate(12deg);
-  box-shadow: var(--shadow-lg);
+.theme-toggle:hover { color: var(--ink); }
+
+.theme-toggle svg {
+  display: block;
+  transition: transform .3s ease;
 }
+
+.theme-toggle:hover svg { transform: rotate(20deg); }
 
 /* Clear the fixed top bar */
 section { padding-top: 5.4em; }
@@ -885,7 +888,7 @@ details.news-more[open] > ul > li:nth-child(5) { animation-delay: .39s; }
 /* Firefox (no gradient support: solid accent) */
 html {
   scrollbar-width: thin;
-  scrollbar-color: #6366f1 #eef1f6;
+  scrollbar-color: #a5b4fc #f1f4f9;
 }
 
 /* WebKit / Blink */
@@ -895,13 +898,13 @@ html {
 }
 
 ::-webkit-scrollbar-track {
-  background: #eef1f6;
+  background: #f1f4f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #f59e0b 0%, #ef6a3d 30%, #6366f1 68%, #3b82f6 100%);
+  background: linear-gradient(180deg, #fcd34d 0%, #fdba74 30%, #a5b4fc 68%, #93c5fd 100%);
   border-radius: 999px;
-  border: 2px solid #eef1f6;   /* inset look against the track */
+  border: 2px solid #f1f4f9;   /* inset look against the track */
 }
 
 ::-webkit-scrollbar-thumb:hover {

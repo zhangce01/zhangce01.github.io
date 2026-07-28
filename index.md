@@ -48,7 +48,7 @@ Hi there! I'm **Ce Zhang** 👋 I am currently a third-year PhD candidate in the
   </div>
 </div>
 
-<div class="about-callout">💬&nbsp; Feel free to reach out if you're interested in my work or would like to discuss potential collaborations!</div>
+<div class="about-callout">Feel free to reach out if you're interested in my work or would like to discuss potential collaborations!</div>
 
 ## Research Interests
 
