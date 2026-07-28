@@ -36,8 +36,8 @@
       <link rel="stylesheet" href="./assets/css/font.css">
     {% endif %}
     {% if site.auto_dark_mode %}
-      <link rel="stylesheet" href="./assets/css/style.css?v=10">
-      <link rel="stylesheet" href="./assets/css/publications.css?v=10">
+      <link rel="stylesheet" href="./assets/css/style.css?v=11">
+      <link rel="stylesheet" href="./assets/css/publications.css?v=11">
     {% else %}
       <link rel="stylesheet" href="./assets/css/style-no-dark-mode.css">
       <link rel="stylesheet" href="./assets/css/publications-no-dark-mode.css">
@@ -88,8 +88,9 @@
     <!-- Glassy fixed top bar with section tabs -->
     <div class="topbar">
       <div class="topbar-inner">
-        <a class="brand" href="#top">{{ site.title }}<span class="brand-dot">.</span></a>
+        <a class="brand" href="#top">{{ site.title }}</a>
         <nav class="site-nav">
+          <span class="nav-pill" aria-hidden="true"></span>
           <a href="#about-me">About</a>
           <a href="#news">News</a>
           <a href="#publications">Publications</a>

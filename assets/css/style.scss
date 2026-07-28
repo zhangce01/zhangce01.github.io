@@ -174,8 +174,9 @@ html.theme-dark .bg-blobs .blob { opacity: .14; }
   color: transparent;
 }
 
-/* Horizontal tabs (scrollspy toggles .active) */
+/* Horizontal tabs (scrollspy toggles .active + slides the pill) */
 .site-nav {
+  position: relative;
   display: flex;
   flex-direction: row;
   gap: 4px;
@@ -185,9 +186,26 @@ html.theme-dark .bg-blobs .blob { opacity: .14; }
   scrollbar-width: none;
 }
 
+/* sliding indicator behind the active tab */
+.site-nav .nav-pill {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transition: left .35s cubic-bezier(.3, .7, .3, 1),
+              width .35s cubic-bezier(.3, .7, .3, 1),
+              opacity .25s ease;
+  pointer-events: none;
+}
+
 .site-nav::-webkit-scrollbar { display: none; }
 
 .site-nav a {
+  position: relative;
+  z-index: 1;
   color: var(--ink-soft);
   font-size: .9rem;
   font-weight: 500;
@@ -196,7 +214,7 @@ html.theme-dark .bg-blobs .blob { opacity: .14; }
   border-left: none;
   border-radius: 999px;
   white-space: nowrap;
-  transition: color .2s ease, background-color .2s ease, box-shadow .2s ease;
+  transition: color .2s ease, background-color .2s ease, transform .25s ease;
 }
 
 .site-nav a:hover {
@@ -208,15 +226,14 @@ html.theme-dark .bg-blobs .blob { opacity: .14; }
 .site-nav a.active {
   color: var(--ink);
   font-weight: 600;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: var(--shadow);
+  transform: scale(1.05);
   border-left: none;
 }
 
 @media (prefers-color-scheme: dark) {
-  html:not(.theme-light) .site-nav a.active { background: rgba(60, 65, 85, 0.9); }
+  html:not(.theme-light) .site-nav .nav-pill { background: rgba(60, 65, 85, 0.9); }
 }
-html.theme-dark .site-nav a.active { background: rgba(60, 65, 85, 0.9); }
+html.theme-dark .site-nav .nav-pill { background: rgba(60, 65, 85, 0.9); }
 
 
 /* Day / night toggle: minimal borderless line icon */
@@ -228,16 +245,20 @@ html.theme-dark .site-nav a.active { background: rgba(60, 65, 85, 0.9); }
   align-items: center;
   justify-content: center;
   padding: 0;
-  border: none;
-  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
   background: transparent;
   box-shadow: none;
   color: var(--ink-soft);
   cursor: pointer;
-  transition: color .2s ease;
+  transition: color .2s ease, border-color .2s ease, background-color .2s ease;
 }
 
-.theme-toggle:hover { color: var(--ink); }
+.theme-toggle:hover {
+  color: var(--ink);
+  border-color: var(--ink-faint);
+  background: rgba(148, 163, 184, 0.1);
+}
 
 .theme-toggle svg {
   display: block;
