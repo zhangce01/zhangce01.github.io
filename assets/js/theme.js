@@ -19,12 +19,39 @@
     btn.setAttribute('aria-label', isDark() ? 'Switch to light mode' : 'Switch to dark mode');
   }
 
+  // Safari sometimes leaves fixed / composited layers (blobs, glass bars,
+  // body::before) painted with the old theme until the next scroll. Hiding
+  // the root for one synchronous layout pass rebuilds every layer.
+  function forceRepaint() {
+    var y = window.pageYOffset;
+    var x = window.pageXOffset;
+    root.style.display = 'none';
+    void root.offsetHeight;
+    root.style.display = '';
+    if (window.pageYOffset !== y || window.pageXOffset !== x) {
+      // restore instantly — html has scroll-behavior: smooth in CSS
+      root.style.scrollBehavior = 'auto';
+      window.scrollTo(x, y);
+      root.style.scrollBehavior = '';
+    }
+  }
+
+  function apply(mode) {
+    root.classList.remove('theme-dark', 'theme-light');
+    if (mode === 'dark' || mode === 'light') root.classList.add('theme-' + mode);
+    refresh();
+    forceRepaint();
+  }
+
   btn.addEventListener('click', function () {
     var next = isDark() ? 'light' : 'dark';
-    root.classList.remove('theme-dark', 'theme-light');
-    root.classList.add('theme-' + next);
     try { localStorage.setItem('theme', next); } catch (e) {}
-    refresh();
+    apply(next);
+  });
+
+  // theme changed in another tab / page of the site
+  window.addEventListener('storage', function (ev) {
+    if (ev.key === 'theme') apply(ev.newValue);
   });
 
   refresh();

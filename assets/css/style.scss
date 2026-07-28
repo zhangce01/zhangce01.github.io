@@ -50,7 +50,15 @@ html.theme-dark { --ink: #e2e8f0;
 
 /* ---------- base ---------- */
 
-html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; color-scheme: light; }
+
+/* keep Safari's native UI (scrollbars, form controls) in sync with the
+   manual theme toggle, not just the OS setting */
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light) { color-scheme: dark; }
+}
+html.theme-dark { color-scheme: dark; }
+html.theme-light { color-scheme: light; }
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
