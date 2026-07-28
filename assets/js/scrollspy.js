@@ -1,5 +1,11 @@
 // Highlight the topbar nav link for the section currently in view,
 // and slide the pill indicator behind it.
+//
+// The reference line starts 130px below the viewport top and moves down
+// proportionally with scroll progress, reaching the viewport bottom when
+// the page is scrolled to the end — so short sections near the bottom
+// (Honors, Services) still get their turn even though they can never
+// reach the top of the viewport.
 (function () {
   var navLinks = Array.prototype.slice.call(
     document.querySelectorAll('.site-nav a')
@@ -14,6 +20,8 @@
   });
 
   var lastCurrent = -2;
+  var clickLock = false;   // while true, scrollspy leaves the clicked tab lit
+  var lockTimer = null;
 
   function movePill(i) {
     if (!pill) return;
@@ -27,12 +35,7 @@
     pill.style.width = a.offsetWidth + 'px';
   }
 
-  function onScroll() {
-    var pos = window.pageYOffset + 130;
-    var current = -1;
-    for (var i = 0; i < targets.length; i++) {
-      if (targets[i] && targets[i].offsetTop <= pos) current = i;
-    }
+  function setActive(current) {
     for (var j = 0; j < navLinks.length; j++) {
       navLinks[j].classList.toggle('active', j === current);
     }
@@ -42,6 +45,37 @@
       requestAnimationFrame(function () { movePill(current); });
     }
   }
+
+  function onScroll() {
+    if (clickLock) {
+      // keep refreshing the release timer while the smooth scroll runs
+      clearTimeout(lockTimer);
+      lockTimer = setTimeout(function () { clickLock = false; onScroll(); }, 140);
+      return;
+    }
+    var scrollY = window.pageYOffset;
+    var maxScroll = Math.max(
+      1,
+      document.documentElement.scrollHeight - window.innerHeight
+    );
+    var progress = Math.min(1, scrollY / maxScroll);
+    // reference line: 130px from the top at progress 0, viewport bottom at 1
+    var refY = scrollY + 130 + progress * (window.innerHeight - 130);
+    var current = -1;
+    for (var i = 0; i < targets.length; i++) {
+      if (targets[i] && targets[i].offsetTop <= refY) current = i;
+    }
+    setActive(current);
+  }
+
+  navLinks.forEach(function (a, i) {
+    a.addEventListener('click', function () {
+      clickLock = true;
+      setActive(i);
+      clearTimeout(lockTimer);
+      lockTimer = setTimeout(function () { clickLock = false; onScroll(); }, 700);
+    });
+  });
 
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', function () {
