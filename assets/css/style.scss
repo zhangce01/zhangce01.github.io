@@ -825,63 +825,47 @@ html.theme-dark .edu-logo { border-color: #3a3f52; }
 .yt-pip {
   position: relative;
   display: block;
-  width: 14px;
-  height: 24px;
-  margin-top: 6px;
+  width: 16px;
+  height: 20px;
   text-decoration: none;
   flex: none;
 }
 
-/* stem down from the axis */
-.yt-pip::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 1px;
-  margin-left: -0.75px;
-  width: 1.5px;
-  height: 13px;
-  border-radius: 999px;
-  background: linear-gradient(to bottom, rgba(99, 102, 241, 0.45), rgba(99, 102, 241, 0.1));
-  transition: background .2s ease;
-}
-
-/* the pip itself */
+/* a small pearl threaded onto the axis, echoing the larger year dots */
 .yt-pip::after {
   content: '';
   position: absolute;
   left: 50%;
-  top: 14px;
-  margin-left: -4px;
-  width: 8px;
-  height: 8px;
+  top: 4px;
+  margin-left: -3.5px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: rgba(99, 102, 241, 0.38);
-  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+  background: #f8fafc;
+  border: 1.5px solid rgba(99, 102, 241, 0.55);
+  box-sizing: content-box;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease,
+    box-shadow .2s ease;
 }
 
 .yt-pip:hover::after,
 .yt-pip:focus::after {
   background: var(--grad);
-  transform: scale(1.7);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.16);
-}
-
-.yt-pip:hover::before,
-.yt-pip:focus::before {
-  background: linear-gradient(to bottom, rgba(99, 102, 241, 0.8), rgba(99, 102, 241, 0.3));
+  border-color: transparent;
+  transform: scale(1.5);
+  box-shadow: 0 3px 10px -2px rgba(99, 102, 241, 0.6);
 }
 
 /* hovering a year lights up that year's papers */
 .yt-node:hover + .yt-seg .yt-pip::after {
-  background: rgba(99, 102, 241, 0.7);
-  transform: scale(1.25);
+  border-color: var(--acc);
+  transform: scale(1.2);
 }
 
 .yt-tip {
   position: absolute;
   left: 50%;
-  top: 30px;
+  top: 22px;
   transform: translate(-50%, 5px);
   width: max-content;
   max-width: 230px;
@@ -929,11 +913,15 @@ html.theme-dark .edu-logo { border-color: #3a3f52; }
 }
 
 @media (prefers-color-scheme: dark) {
-  html:not(.theme-light) .yt-pip::after { background: rgba(129, 140, 248, 0.5); }
-  html:not(.theme-light) .yt-node:hover + .yt-seg .yt-pip::after { background: rgba(129, 140, 248, 0.85); }
+  html:not(.theme-light) .yt-pip::after { background: #12141c; border-color: rgba(129, 140, 248, 0.65); }
+  html:not(.theme-light) .yt-pip:hover::after,
+  html:not(.theme-light) .yt-pip:focus::after { background: var(--grad); border-color: transparent; }
+  html:not(.theme-light) .yt-node:hover + .yt-seg .yt-pip::after { border-color: #818cf8; }
 }
-html.theme-dark .yt-pip::after { background: rgba(129, 140, 248, 0.5); }
-html.theme-dark .yt-node:hover + .yt-seg .yt-pip::after { background: rgba(129, 140, 248, 0.85); }
+html.theme-dark .yt-pip::after { background: #12141c; border-color: rgba(129, 140, 248, 0.65); }
+html.theme-dark .yt-pip:hover::after,
+html.theme-dark .yt-pip:focus::after { background: var(--grad); border-color: transparent; }
+html.theme-dark .yt-node:hover + .yt-seg .yt-pip::after { border-color: #818cf8; }
 
 .yt-dot {
   position: relative;
