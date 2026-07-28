@@ -317,7 +317,27 @@ section {
 
 section p, section li { color: var(--ink-soft); }
 
-section ul li::marker { color: var(--acc); }
+/* custom gradient-diamond bullets (echoes the timeline dots) */
+section ul { list-style: none; }
+
+section ul > li {
+  position: relative;
+  padding-left: 1.3em;
+  margin-bottom: 0.35em;
+}
+
+section ul > li::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  transform: rotate(45deg);
+  background: var(--grad);
+  box-shadow: 0 0 0 2.5px rgba(99, 102, 241, 0.13);
+}
 
 /* News dates pop with the accent color */
 #news + ul li strong,
@@ -638,7 +658,7 @@ html.theme-dark .yt-dot { border-color: #12141c; }
 
 .wrapper section ul {
   margin-top: -0.25rem;
-  padding-left: 1.2em;
+  padding-left: 0.1em;
 }
 
 .wrapper .publications ol.bibliography li .pub-row .abbr {
