@@ -54,7 +54,14 @@ html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
-  background: #f8fafc;
+  /* static viewport-anchored tints under the animated blobs — guarantees
+     no corner of the page ever renders as plain white */
+  background:
+    radial-gradient(640px 420px at 88% 100%, rgba(147, 197, 253, 0.22), transparent 70%),
+    radial-gradient(620px 400px at 8% 100%, rgba(253, 230, 138, 0.22), transparent 70%),
+    radial-gradient(700px 400px at 50% 0%, rgba(199, 210, 254, 0.18), transparent 70%),
+    #f8fafc;
+  background-attachment: fixed;
   color: var(--ink);
   -webkit-font-smoothing: antialiased;
 }
@@ -125,8 +132,8 @@ strong { color: var(--ink); font-weight: 600; }
    visually: b1 top-left, b2 top-right, b3 bottom-center, b4 bottom-left */
 .bg-blobs .b1 { width: 460px; height: 460px; background: #fcd34d; top: 60px;  left: 0;   animation-duration: 18s; }
 .bg-blobs .b2 { width: 520px; height: 520px; background: #93c5fd; top: 100px; right: 0;  animation-delay: -9s;  animation-duration: 26s; }
-.bg-blobs .b3 { width: 420px; height: 420px; background: #c7d2fe; bottom: 40px; left: 38%; animation-delay: -14s; animation-duration: 34s; }
-.bg-blobs .b4 { width: 380px; height: 380px; background: #fde68a; bottom: 60px; left: 4%;  animation-delay: -5s;  animation-duration: 22s; }
+.bg-blobs .b3 { width: 420px; height: 420px; background: #c7d2fe; bottom: 190px; left: 38%; animation-delay: -14s; animation-duration: 34s; }
+.bg-blobs .b4 { width: 380px; height: 380px; background: #fde68a; bottom: 170px; left: 4%;  animation-delay: -5s;  animation-duration: 22s; }
 
 /* wandering loop with a range large enough to read as flowing motion */
 @keyframes blob-drift {
