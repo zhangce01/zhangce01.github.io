@@ -186,14 +186,14 @@ html.theme-dark .bg-blobs .blob { opacity: .14; }
   scrollbar-width: none;
 }
 
-/* sliding indicator behind the active tab */
+/* sliding indicator behind the active tab (tinted so it stands out
+   against the glassy topbar in light mode) */
 .site-nav .nav-pill {
   position: absolute;
   top: 0;
   height: 100%;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: var(--shadow);
+  background: linear-gradient(120deg, rgba(245, 158, 11, 0.16), rgba(99, 102, 241, 0.16));
   opacity: 0;
   transition: left .35s cubic-bezier(.3, .7, .3, 1),
               width .35s cubic-bezier(.3, .7, .3, 1),
@@ -224,7 +224,7 @@ html.theme-dark .bg-blobs .blob { opacity: .14; }
 }
 
 .site-nav a.active {
-  color: var(--ink);
+  color: var(--acc);
   font-weight: 600;
   transform: scale(1.05);
   border-left: none;

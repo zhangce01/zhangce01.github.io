@@ -113,7 +113,7 @@ My research focuses on:
           <span class="chip">🤝 Mentor: <a href="https://mayer123.github.io/" target="_blank" rel="noopener">Dr. Kaixin Ma</a></span>
         </div>
       </div>
-      <span class="exp-logo-chip"><img src="./assets/img/logo_tencent.svg" alt="Tencent AI Lab"></span>
+      <span class="exp-logo-chip"><img src="./assets/img/logo_tencent_ailab.png" alt="Tencent AI Lab"></span>
     </div>
   </div>
 </div>
