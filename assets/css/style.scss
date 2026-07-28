@@ -434,7 +434,12 @@ section ul > li:hover::before {
   cursor: default;
 }
 
-.crab svg { display: inline-block; vertical-align: -2px; }
+.crab img {
+  height: 32px;
+  width: auto;
+  display: inline-block;
+  vertical-align: -11px;
+}
 
 .crab:hover {
   animation: crab-scuttle 0.7s ease-in-out infinite;
