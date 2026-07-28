@@ -5,6 +5,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>
+      /* apply the saved theme before first paint to avoid a flash */
+      (function () {
+        try {
+          var t = localStorage.getItem('theme');
+          if (t === 'dark') document.documentElement.classList.add('theme-dark');
+          else if (t === 'light') document.documentElement.classList.add('theme-light');
+        } catch (e) {}
+      })();
+    </script>
     <meta name="description" content="{{ site.description }}">
     {% if site.keywords %}<meta name="keywords" content="{{ site.keywords }}">{% endif %}
     {% if site.canonical %}<link rel="canonical" href="{{ site.canonical }}"/>{% endif %}
@@ -26,8 +36,8 @@
       <link rel="stylesheet" href="./assets/css/font.css">
     {% endif %}
     {% if site.auto_dark_mode %}
-      <link rel="stylesheet" href="./assets/css/style.css?v=8">
-      <link rel="stylesheet" href="./assets/css/publications.css?v=8">
+      <link rel="stylesheet" href="./assets/css/style.css?v=9">
+      <link rel="stylesheet" href="./assets/css/publications.css?v=9">
     {% else %}
       <link rel="stylesheet" href="./assets/css/style-no-dark-mode.css">
       <link rel="stylesheet" href="./assets/css/publications-no-dark-mode.css">
@@ -87,6 +97,7 @@
           <a href="#honors-and-awards">Honors</a>
           <a href="#services">Services</a>
         </nav>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle color mode">🌙</button>
       </div>
     </div>
 
@@ -161,6 +172,7 @@
     <script src="{{ "/assets/js/publications.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/typewriter.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/reveal.js" | relative_url }}"></script>
+    <script src="{{ "/assets/js/theme.js" | relative_url }}"></script>
     {% if site.google_analytics %}
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-G349HWYEX6"></script>

@@ -27,8 +27,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --ink: #e2e8f0;
+  html:not(.theme-light) { --ink: #e2e8f0;
     --ink-soft: #b6c0d0;
     --ink-faint: #7b8798;
     --line: #2c3140;
@@ -36,9 +35,18 @@
     --glass-border: rgba(70, 76, 92, 0.55);
     --card: rgba(30, 33, 45, 0.72);
     --shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 12px 32px -12px rgba(0, 0, 0, .5);
-    --shadow-lg: 0 2px 4px rgba(0, 0, 0, .3), 0 24px 48px -16px rgba(0, 0, 0, .6);
-  }
+    --shadow-lg: 0 2px 4px rgba(0, 0, 0, .3), 0 24px 48px -16px rgba(0, 0, 0, .6); }
 }
+html.theme-dark { --ink: #e2e8f0;
+    --ink-soft: #b6c0d0;
+    --ink-faint: #7b8798;
+    --line: #2c3140;
+    --glass: rgba(23, 25, 35, 0.72);
+    --glass-border: rgba(70, 76, 92, 0.55);
+    --card: rgba(30, 33, 45, 0.72);
+    --shadow: 0 1px 2px rgba(0, 0, 0, .25), 0 12px 32px -12px rgba(0, 0, 0, .5);
+    --shadow-lg: 0 2px 4px rgba(0, 0, 0, .3), 0 24px 48px -16px rgba(0, 0, 0, .6); }
+
 
 /* ---------- base ---------- */
 
@@ -52,8 +60,10 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
-  body { background: #12141c; color: var(--ink); }
+  html:not(.theme-light) body { background: #12141c; color: var(--ink); }
 }
+html.theme-dark body { background: #12141c; color: var(--ink); }
+
 
 h1, h2, h3, .brand, .name { font-family: 'Space Grotesk', 'Inter', sans-serif; }
 
@@ -80,8 +90,10 @@ section h2::after {
 }
 
 @media (prefers-color-scheme: dark) {
-  section h2, h1, h3, h4, h5, h6 { color: var(--ink); }
+  html:not(.theme-light) section h2, html:not(.theme-light) h1, html:not(.theme-light) h3, html:not(.theme-light) h4, html:not(.theme-light) h5, html:not(.theme-light) h6 { color: var(--ink); }
 }
+html.theme-dark section h2, html.theme-dark h1, html.theme-dark h3, html.theme-dark h4, html.theme-dark h5, html.theme-dark h6 { color: var(--ink); }
+
 
 a { color: var(--acc); transition: color .15s ease; }
 a:hover { color: var(--acc-2); }
@@ -116,8 +128,10 @@ strong { color: var(--ink); font-weight: 600; }
 }
 
 @media (prefers-color-scheme: dark) {
-  .bg-blobs .blob { opacity: .14; }
+  html:not(.theme-light) .bg-blobs .blob { opacity: .14; }
 }
+html.theme-dark .bg-blobs .blob { opacity: .14; }
+
 
 /* ---------- glassy fixed top bar with tabs ---------- */
 
@@ -200,7 +214,33 @@ strong { color: var(--ink); font-weight: 600; }
 }
 
 @media (prefers-color-scheme: dark) {
-  .site-nav a.active { background: rgba(60, 65, 85, 0.9); }
+  html:not(.theme-light) .site-nav a.active { background: rgba(60, 65, 85, 0.9); }
+}
+html.theme-dark .site-nav a.active { background: rgba(60, 65, 85, 0.9); }
+
+
+/* Day / night toggle button */
+.theme-toggle {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  font-size: 1rem;
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.12) rotate(12deg);
+  box-shadow: var(--shadow-lg);
 }
 
 /* Clear the fixed top bar */
@@ -276,6 +316,8 @@ details.news-more strong {
 }
 
 .edu-card {
+  display: flex;
+  flex-direction: column;
   background: var(--card);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -291,7 +333,10 @@ details.news-more strong {
   box-shadow: var(--shadow-lg);
 }
 
+/* grid stretches cards to equal height; the head grows and centers its
+   content vertically, so the date/advisor rows bottom-align across cards */
 .edu-head {
+  flex: 1;
   display: flex;
   align-items: center;
   gap: 11px;
@@ -331,12 +376,14 @@ a.edu-school {
 
 a.edu-school:hover { text-decoration: underline; }
 
-.edu-note { color: var(--ink-faint); font-size: 0.79rem; margin-top: 10px; line-height: 1.55; }
+.edu-note { color: var(--ink-faint); font-size: 0.79rem; margin-top: 12px; line-height: 1.55; }
 .edu-note .edu-line { margin-top: 2px; }
 
 @media (prefers-color-scheme: dark) {
-  .edu-logo { border-color: #3a3f52; }
+  html:not(.theme-light) .edu-logo { border-color: #3a3f52; }
 }
+html.theme-dark .edu-logo { border-color: #3a3f52; }
+
 
 .about-callout {
   display: flex;
@@ -549,8 +596,10 @@ a.edu-school:hover { text-decoration: underline; }
 }
 
 @media (prefers-color-scheme: dark) {
-  .yt-dot { border-color: #12141c; }
+  html:not(.theme-light) .yt-dot { border-color: #12141c; }
 }
+html.theme-dark .yt-dot { border-color: #12141c; }
+
 
 /* Year divider */
 .wrapper .publications h2.year {
@@ -630,13 +679,14 @@ a.edu-school:hover { text-decoration: underline; }
 }
 
 @media (prefers-color-scheme: dark) {
-  .publications ol.bibliography li .bibtex pre,
-  .publications ol.bibliography li .copy-bib {
-    background: #1e1e2a;
-    border-color: #3a3f52;
-  }
-  .publications ol.bibliography li .copy-bib { color: #a5b4fc; }
+  html:not(.theme-light) .publications ol.bibliography li .bibtex pre, html:not(.theme-light) .publications ol.bibliography li .copy-bib { background: #1e1e2a;
+    border-color: #3a3f52; }
+  html:not(.theme-light) .publications ol.bibliography li .copy-bib { color: #a5b4fc; }
 }
+html.theme-dark .publications ol.bibliography li .bibtex pre, html.theme-dark .publications ol.bibliography li .copy-bib { background: #1e1e2a;
+    border-color: #3a3f52; }
+html.theme-dark .publications ol.bibliography li .copy-bib { color: #a5b4fc; }
+
 
 /* ---------- experiences: vertical timeline with company logos ---------- */
 
@@ -723,8 +773,10 @@ a.edu-school:hover { text-decoration: underline; }
 .exp-chips .chip a { color: var(--acc); }
 
 @media (prefers-color-scheme: dark) {
-  .exp-chips .chip { background: rgba(148, 163, 184, 0.18); }
+  html:not(.theme-light) .exp-chips .chip { background: rgba(148, 163, 184, 0.18); }
 }
+html.theme-dark .exp-chips .chip { background: rgba(148, 163, 184, 0.18); }
+
 
 .exp-logo-chip {
   flex: 0 0 auto;
@@ -739,9 +791,12 @@ a.edu-school:hover { text-decoration: underline; }
 .exp-logo-chip img { height: 24px; width: auto; display: block; }
 
 @media (prefers-color-scheme: dark) {
-  .exp-dot { border-color: #12141c; }
-  .exp-logo-chip { border-color: #3a3f52; }
+  html:not(.theme-light) .exp-dot { border-color: #12141c; }
+  html:not(.theme-light) .exp-logo-chip { border-color: #3a3f52; }
 }
+html.theme-dark .exp-dot { border-color: #12141c; }
+html.theme-dark .exp-logo-chip { border-color: #3a3f52; }
+
 
 /* ---------- news "show more" ---------- */
 
@@ -854,10 +909,14 @@ html {
 }
 
 @media (prefers-color-scheme: dark) {
-  html { scrollbar-color: #818cf8 #1a1d28; }
-  ::-webkit-scrollbar-track { background: #1a1d28; }
-  ::-webkit-scrollbar-thumb { border-color: #1a1d28; }
+  html:not(.theme-light) { scrollbar-color: #818cf8 #1a1d28; }
+  html:not(.theme-light)::-webkit-scrollbar-track, html:not(.theme-light) ::-webkit-scrollbar-track { background: #1a1d28; }
+  html:not(.theme-light)::-webkit-scrollbar-thumb, html:not(.theme-light) ::-webkit-scrollbar-thumb { border-color: #1a1d28; }
 }
+html.theme-dark { scrollbar-color: #818cf8 #1a1d28; }
+html.theme-dark::-webkit-scrollbar-track, html.theme-dark ::-webkit-scrollbar-track { background: #1a1d28; }
+html.theme-dark::-webkit-scrollbar-thumb, html.theme-dark ::-webkit-scrollbar-thumb { border-color: #1a1d28; }
+
 
 /* ---------- responsive ---------- */
 
