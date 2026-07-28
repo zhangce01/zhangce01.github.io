@@ -104,10 +104,12 @@ strong { color: var(--ink); font-weight: 600; }
 
 .bg-blobs {
   position: fixed;
-  inset: 0;
+  /* extra vertical bleed so the scroll parallax never exposes an edge */
+  inset: -18% 0;
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
+  will-change: transform;
 }
 
 .bg-blobs .blob {
@@ -701,7 +703,11 @@ html.theme-dark .yt-dot { border-color: #12141c; }
 .wrapper .publications h2.year {
   color: var(--ink-faint);
   border-top: 1px dashed var(--line);
+  padding-top: 0.35rem;
   padding-bottom: 0;
+  margin-top: 0.5rem;
+  margin-bottom: 0.3rem;
+  font-size: 1.15rem;
 }
 
 .wrapper .publications h2.year::after { display: none; }
@@ -1004,8 +1010,10 @@ html {
   border: 2px solid #f1f4f9;   /* inset look against the track */
 }
 
-::-webkit-scrollbar-thumb:hover {
-  border-width: 1px;           /* thumb appears thicker on hover */
+::-webkit-scrollbar-thumb:hover,
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(180deg, #a78bfa 0%, #818cf8 50%, #6366f1 100%);
+  border-width: 1px;           /* thumb appears thicker while engaged */
 }
 
 @media (prefers-color-scheme: dark) {
