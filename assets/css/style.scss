@@ -227,14 +227,13 @@ html.theme-dark .bg-blobs .blob { opacity: .14; }
   scrollbar-width: none;
 }
 
-/* sliding indicator behind the active tab (tinted so it stands out
-   against the glassy topbar in light mode) */
+/* sliding indicator behind the active tab: a plain neutral tint */
 .site-nav .nav-pill {
   position: absolute;
   top: 0;
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(120deg, rgba(245, 158, 11, 0.16), rgba(99, 102, 241, 0.16));
+  background: rgba(148, 163, 184, 0.22);
   opacity: 0;
   transition: left .35s cubic-bezier(.3, .7, .3, 1),
               width .35s cubic-bezier(.3, .7, .3, 1),
@@ -251,11 +250,12 @@ html.theme-dark .bg-blobs .blob { opacity: .14; }
   font-size: .9rem;
   font-weight: 500;
   text-decoration: none;
-  padding: 6px 14px;
+  /* balanced padding so the pill has similar breathing room on all sides */
+  padding: 9px 13px;
   border-left: none;
   border-radius: 999px;
   white-space: nowrap;
-  transition: color .2s ease, background-color .2s ease, transform .25s ease;
+  transition: color .2s ease, background-color .2s ease;
 }
 
 .site-nav a:hover {
@@ -265,9 +265,8 @@ html.theme-dark .bg-blobs .blob { opacity: .14; }
 }
 
 .site-nav a.active {
-  color: var(--acc);
+  color: var(--ink);
   font-weight: 600;
-  transform: scale(1.05);
   border-left: none;
 }
 
