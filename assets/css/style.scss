@@ -104,8 +104,8 @@ strong { color: var(--ink); font-weight: 600; }
 
 .bg-blobs {
   position: fixed;
-  /* extra vertical bleed so the scroll parallax never exposes an edge */
-  inset: -18% 0;
+  /* bleed on all sides so the scroll drift never exposes an edge */
+  inset: -18% -6%;
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
@@ -120,13 +120,13 @@ strong { color: var(--ink); font-weight: 600; }
   animation: blob-drift 16s ease-in-out infinite alternate;
 }
 
-.bg-blobs .b1 { width: 460px; height: 460px; background: #fcd34d; top: -160px; left: -120px; }
-.bg-blobs .b2 { width: 520px; height: 520px; background: #93c5fd; top: -120px; right: -150px; animation-delay: -8s; }
-.bg-blobs .b3 { width: 400px; height: 400px; background: #c7d2fe; bottom: -200px; left: 34%; animation-delay: -4s; }
+.bg-blobs .b1 { width: 460px; height: 460px; background: #fcd34d; top: -100px; left: -120px; animation-duration: 13s; }
+.bg-blobs .b2 { width: 520px; height: 520px; background: #93c5fd; top: -60px; right: -150px; animation-delay: -8s; animation-duration: 19s; }
+.bg-blobs .b3 { width: 400px; height: 400px; background: #c7d2fe; bottom: -140px; left: 34%; animation-delay: -4s; animation-duration: 24s; }
 
 @keyframes blob-drift {
   from { transform: translate(0, 0) scale(1); }
-  to   { transform: translate(40px, 28px) scale(1.08); }
+  to   { transform: translate(60px, 42px) scale(1.12); }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -892,9 +892,9 @@ html.theme-dark .exp-chips .chip { background: rgba(148, 163, 184, 0.18); }
 
 .exp-logo-chip img { height: 24px; width: auto; display: block; }
 
-/* the TikTok lockup is squatter than Tencent's wide wordmark —
-   render it taller so the two logos feel the same visual size */
+/* per-logo sizing so both lockups feel the same visual weight */
 .exp-logo-chip img[alt="TikTok"] { height: 32px; }
+.exp-logo-chip img[alt="Tencent AI Lab"] { height: 36px; }
 
 @media (prefers-color-scheme: dark) {
   html:not(.theme-light) .exp-dot { border-color: #12141c; }
@@ -988,10 +988,18 @@ details.news-more[open] > ul > li:nth-child(5) { animation-delay: .39s; }
 
 /* ---------- colored scrollbar ---------- */
 
-/* Firefox (no gradient support: solid accent) */
-html {
-  scrollbar-width: thin;
-  scrollbar-color: #a5b4fc #f1f4f9;
+/* Standard scrollbar properties ONLY for browsers without ::-webkit-scrollbar
+   (i.e. Firefox). Chromium honors scrollbar-color when set and then IGNORES
+   all ::-webkit-scrollbar styling, which would kill the gradient thumb. */
+@supports not selector(::-webkit-scrollbar) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: #a5b4fc #f1f4f9;
+  }
+  @media (prefers-color-scheme: dark) {
+    html:not(.theme-light) { scrollbar-color: #818cf8 #1a1d28; }
+  }
+  html.theme-dark { scrollbar-color: #818cf8 #1a1d28; }
 }
 
 /* WebKit / Blink */
@@ -1017,11 +1025,9 @@ html {
 }
 
 @media (prefers-color-scheme: dark) {
-  html:not(.theme-light) { scrollbar-color: #818cf8 #1a1d28; }
   html:not(.theme-light)::-webkit-scrollbar-track, html:not(.theme-light) ::-webkit-scrollbar-track { background: #1a1d28; }
   html:not(.theme-light)::-webkit-scrollbar-thumb, html:not(.theme-light) ::-webkit-scrollbar-thumb { border-color: #1a1d28; }
 }
-html.theme-dark { scrollbar-color: #818cf8 #1a1d28; }
 html.theme-dark::-webkit-scrollbar-track, html.theme-dark ::-webkit-scrollbar-track { background: #1a1d28; }
 html.theme-dark::-webkit-scrollbar-thumb, html.theme-dark ::-webkit-scrollbar-thumb { border-color: #1a1d28; }
 
