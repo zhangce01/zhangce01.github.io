@@ -36,8 +36,8 @@
       <link rel="stylesheet" href="./assets/css/font.css">
     {% endif %}
     {% if site.auto_dark_mode %}
-      <link rel="stylesheet" href="./assets/css/style.css?v=22">
-      <link rel="stylesheet" href="./assets/css/publications.css?v=22">
+      <link rel="stylesheet" href="./assets/css/style.css?v=23">
+      <link rel="stylesheet" href="./assets/css/publications.css?v=23">
     {% else %}
       <link rel="stylesheet" href="./assets/css/style-no-dark-mode.css">
       <link rel="stylesheet" href="./assets/css/publications-no-dark-mode.css">
@@ -162,8 +162,9 @@
         &nbsp;visitors since Sep 2023.
         </p>
         {% if site.enable_footnote %}
-          <p><small>Powered by Jekyll and <a href="https://github.com/yaoyao-liu/minimal-light" target="_blank" rel="noopener">Minimal Light</a> theme.</small></p>
+          <p style="margin-bottom:0;"><small>Powered by Jekyll and <a href="https://github.com/yaoyao-liu/minimal-light" target="_blank" rel="noopener">Minimal Light</a> theme. Thanks to <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude</a> <span class="crab">🦀</span> for polishing this site.</small></p>
         {% endif %}
+        <p class="site-copyright"><small>&copy; 2026 &middot; Ce Zhang &middot; Robotics Institute, Carnegie Mellon University &middot; Last Edited: {{ site.time | date: "%B %d, %Y" }}</small></p>
       </section>
 
       <footer></footer>

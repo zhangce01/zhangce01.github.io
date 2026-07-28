@@ -376,6 +376,29 @@ section ul > li:hover::before {
   100% { transform: scale(2.1); opacity: 0; }
 }
 
+/* footer: crab + copyright line */
+.crab {
+  display: inline-block;
+  cursor: default;
+}
+
+.crab:hover {
+  animation: crab-scuttle 0.7s ease-in-out infinite;
+}
+
+@keyframes crab-scuttle {
+  0%, 100% { transform: translateX(0); }
+  25%      { transform: translateX(-4px) rotate(-6deg); }
+  75%      { transform: translateX(4px) rotate(6deg); }
+}
+
+.site-copyright {
+  margin-top: 2px;
+  color: var(--ink-faint);
+}
+
+.site-copyright small { font-size: 0.78rem; }
+
 @media (prefers-reduced-motion: reduce) {
   section ul > li:hover::before,
   .yt-node:hover .yt-dot,
