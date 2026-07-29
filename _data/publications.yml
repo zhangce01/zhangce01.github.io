@@ -6,11 +6,10 @@ main:
     conference: European Conference on Computer Vision <strong>(ECCV)</strong>, 2026.
     place: Malmö, Sweden, September 8–12, 2026
     image: ./assets/img/ECCV26.png
-    pdf: "#"  # TODO: replace with the arXiv link once available
+    pdf: https://arxiv.org/pdf/2607.25125
     code: https://github.com/zhangce01/LENS
     website: https://zhangce01.github.io/LENS/
     badge: https://img.shields.io/github/stars/zhangce01/LENS?style=social&label=Code+Stars
-    notes: arXiv paper coming soon.
     abstract: |
       Despite rapid progress in Multi-modal Large Language Models (MLLMs), understanding long-form videos is still bottlenecked by limited context windows. While recent keyframe sampling methods attempt to mitigate this by distilling video inputs into a compact set of query-relevant frames, navigating the vast spatio-temporal search space remains challenging, as spatial detail and temporal coverage often conflict. To address this, we introduce LENS, a training-free keyframe sampling framework that dynamically decides when to zoom in for fine-grained details and when to zoom out for broader context based on the text query. Concretely, LENS adaptively allocates a limited frame budget between spatial zoom-ins, which highlight query-relevant regions within individual frames, and temporal zoom-outs, which expand the temporal scope through multi-frame aggregation, enabling the model to reason across multiple granularities while capturing both high-fidelity details and long-range context. Across diverse long-form video benchmarks, LENS consistently outperforms prior state-of-the-art keyframe sampling methods and delivers substantial gains over uniform sampling, improving Video-MME accuracy from 53.3% to 60.7% with Qwen2.5-VL. Code is available at https://github.com/zhangce01/LENS.
     bibtex: |
