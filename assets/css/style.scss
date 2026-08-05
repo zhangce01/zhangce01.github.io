@@ -751,8 +751,9 @@ html.theme-dark .edu-logo { border-color: #3a3f52; }
 
 .ri-axis-body { min-width: 0; flex: 1; }
 
+/* Inter like the other card titles (exp-role, edu-degree, pub titles);
+   only headings and the big numerals carry Space Grotesk */
 .ri-axis-title {
-  font-family: 'Space Grotesk', 'Inter', sans-serif;
   color: var(--ink);
   font-weight: 600;
   font-size: 1.02rem;
@@ -933,7 +934,7 @@ html.theme-dark a.ri-paper:hover {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
-  margin: 1.1rem 0 1.5rem;
+  margin: 1.1rem 0 0.55rem;
 }
 
 .year-jump a {
@@ -979,6 +980,9 @@ html.theme-dark .year-jump a:hover {
   margin-bottom: 0.3rem;
   font-size: 1.15rem;
 }
+
+/* the first divider sits right under the year pills — no extra gap */
+.wrapper .publications ol.bibliography > h2.year:first-child { margin-top: 0; }
 
 .wrapper .publications h2.year::after { display: none; }
 
