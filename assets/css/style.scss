@@ -98,12 +98,24 @@ h1, h2, h3, .brand, .name { font-family: 'Space Grotesk', 'Inter', sans-serif; }
 
 email { font-family: 'JetBrains Mono', 'Ubuntu Mono', monospace; }
 
-/* Section headings: plain ink, no underline ornament */
+/* Section headings: ink + short gradient underline */
 section h2 {
   color: var(--ink);
   font-weight: 700;
   letter-spacing: -0.01em;
   padding-bottom: 10px;
+  position: relative;
+}
+
+section h2::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 44px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--grad);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -674,10 +686,20 @@ html.theme-dark .edu-logo { border-color: #3a3f52; }
   to { visibility: hidden; }
 }
 
-/* inline emphasis that carries weight without the italic slant */
+/* inline emphasis: the same gradient ink as the "reach out" link */
 .hl {
+  /* solid accent fallback for browsers without background-clip: text */
   color: var(--acc);
   font-weight: 600;
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .hl {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }
 
 /* ---------- research interests: three axes ---------- */
@@ -925,46 +947,27 @@ html.theme-dark a.ri-paper:hover {
   margin: 1.1rem 0 0.55rem;
 }
 
-/* same recipe as the ri-paper pills — the one look for clickable pills */
+/* same glass-pill button as the News "Show more" toggle */
 .year-jump a {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.86rem;
+  font-size: 0.88rem;
   font-weight: 600;
-  color: var(--acc);
+  color: var(--ink-soft);
   text-decoration: none;
-  background: rgba(99, 102, 241, 0.09);
-  border: 1px solid rgba(99, 102, 241, 0.18);
+  background: var(--card);
+  border: 1px solid var(--glass-border);
   border-radius: 999px;
-  padding: 3px 13px;
-  transition: color .18s ease, border-color .18s ease, background-color .18s ease, transform .18s ease;
+  box-shadow: var(--shadow);
+  padding: 5px 16px;
+  transition: all .25s ease;
 }
 
 .year-jump a:hover {
-  background: rgba(99, 102, 241, 0.17);
-  border-color: rgba(99, 102, 241, 0.42);
+  color: #fff;
+  background: linear-gradient(120deg, #6366f1, #3b82f6);
+  border-color: transparent;
   transform: translateY(-1px);
+  box-shadow: 0 10px 24px -8px rgba(99, 102, 241, 0.55);
   text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-  html:not(.theme-light) .year-jump a {
-    background: rgba(129, 140, 248, 0.14);
-    border-color: rgba(129, 140, 248, 0.26);
-    color: #a5b4fc;
-  }
-  html:not(.theme-light) .year-jump a:hover {
-    background: rgba(129, 140, 248, 0.24);
-    border-color: rgba(129, 140, 248, 0.5);
-  }
-}
-html.theme-dark .year-jump a {
-  background: rgba(129, 140, 248, 0.14);
-  border-color: rgba(129, 140, 248, 0.26);
-  color: #a5b4fc;
-}
-html.theme-dark .year-jump a:hover {
-  background: rgba(129, 140, 248, 0.24);
-  border-color: rgba(129, 140, 248, 0.5);
 }
 
 
@@ -978,6 +981,8 @@ html.theme-dark .year-jump a:hover {
   margin-bottom: 0.3rem;
   font-size: 1.15rem;
 }
+
+.wrapper .publications h2.year::after { display: none; }
 
 /* the first divider sits right under the year pills — no extra gap */
 .wrapper .publications ol.bibliography > h2.year:first-child { margin-top: 0; }
