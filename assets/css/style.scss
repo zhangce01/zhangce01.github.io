@@ -937,36 +937,46 @@ html.theme-dark a.ri-paper:hover {
   margin: 1.1rem 0 0.55rem;
 }
 
+/* same recipe as the ri-paper pills — the one look for clickable pills */
 .year-jump a {
   font-family: 'Space Grotesk', sans-serif;
   font-size: 0.86rem;
   font-weight: 600;
-  color: var(--ink-soft);
+  color: var(--acc);
   text-decoration: none;
-  border: 1px solid var(--line);
+  background: rgba(99, 102, 241, 0.09);
+  border: 1px solid rgba(99, 102, 241, 0.18);
   border-radius: 999px;
   padding: 3px 13px;
-  transition: color .18s ease, border-color .18s ease, background-color .18s ease;
+  transition: color .18s ease, border-color .18s ease, background-color .18s ease, transform .18s ease;
 }
 
 .year-jump a:hover {
-  color: var(--acc);
-  border-color: rgba(99, 102, 241, 0.45);
-  background: rgba(99, 102, 241, 0.09);
+  background: rgba(99, 102, 241, 0.17);
+  border-color: rgba(99, 102, 241, 0.42);
+  transform: translateY(-1px);
   text-decoration: none;
 }
 
 @media (prefers-color-scheme: dark) {
-  html:not(.theme-light) .year-jump a:hover {
+  html:not(.theme-light) .year-jump a {
+    background: rgba(129, 140, 248, 0.14);
+    border-color: rgba(129, 140, 248, 0.26);
     color: #a5b4fc;
+  }
+  html:not(.theme-light) .year-jump a:hover {
+    background: rgba(129, 140, 248, 0.24);
     border-color: rgba(129, 140, 248, 0.5);
-    background: rgba(129, 140, 248, 0.16);
   }
 }
-html.theme-dark .year-jump a:hover {
+html.theme-dark .year-jump a {
+  background: rgba(129, 140, 248, 0.14);
+  border-color: rgba(129, 140, 248, 0.26);
   color: #a5b4fc;
+}
+html.theme-dark .year-jump a:hover {
+  background: rgba(129, 140, 248, 0.24);
   border-color: rgba(129, 140, 248, 0.5);
-  background: rgba(129, 140, 248, 0.16);
 }
 
 
