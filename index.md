@@ -52,11 +52,11 @@ Hi there! I'm **Ce Zhang** <span class="wave" aria-hidden="true">👋</span> I a
 
 ## Research Interests
 
-I build multi-modal AI systems that are *efficient* and *reliable* enough for real-world use.
+I build multi-modal AI systems that are <span class="hl">efficient</span> and <span class="hl">reliable</span> enough for real-world use.
 
 <div class="ri-typing" aria-label="Currently working on">Currently working on&nbsp;<span class="ri-typed" id="ri-typed"></span><span class="ri-cursor" aria-hidden="true"></span></div>
 
-<p class="ri-lead">Video is the most demanding domain for MLLMs, exposing long-context efficiency, faithful grounding, and structured reasoning as bottlenecks all at once. My work addresses these along three directions:</p>
+<p class="ri-lead">Video is a demanding real-world testbed for MLLMs, exposing bottlenecks in long-context efficiency, grounded and context-aware generation, and structured reasoning. These challenges motivate three broader directions in my work:</p>
 
 {% assign p_lens = site.data.publications.main | where_exp: "p", "p.title contains 'LENS:'" | first %}
 {% assign p_vscan = site.data.publications.main | where_exp: "p", "p.title contains 'VScan:'" | first %}

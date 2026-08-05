@@ -6,7 +6,7 @@
   var phrases = [
     'long-form video understanding',
     'streaming video perception',
-    'spatial reasoning in the 3D world',
+    '3D spatial reasoning',
     'hallucination mitigation',
     'efficient & trustworthy deployment'
   ];

@@ -688,6 +688,12 @@ html.theme-dark .edu-logo { border-color: #3a3f52; }
   to { visibility: hidden; }
 }
 
+/* inline emphasis that carries weight without the italic slant */
+.hl {
+  color: var(--acc);
+  font-weight: 600;
+}
+
 /* ---------- research interests: three axes ---------- */
 
 .ri-lead {
