@@ -98,24 +98,12 @@ h1, h2, h3, .brand, .name { font-family: 'Space Grotesk', 'Inter', sans-serif; }
 
 email { font-family: 'JetBrains Mono', 'Ubuntu Mono', monospace; }
 
-/* Section headings: ink + short gradient underline */
+/* Section headings: plain ink, no underline ornament */
 section h2 {
   color: var(--ink);
   font-weight: 700;
   letter-spacing: -0.01em;
   padding-bottom: 10px;
-  position: relative;
-}
-
-section h2::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 44px;
-  height: 4px;
-  border-radius: 999px;
-  background: var(--grad);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -993,8 +981,6 @@ html.theme-dark .year-jump a:hover {
 
 /* the first divider sits right under the year pills — no extra gap */
 .wrapper .publications ol.bibliography > h2.year:first-child { margin-top: 0; }
-
-.wrapper .publications h2.year::after { display: none; }
 
 /* ---------- legacy pinning / wrapping fixes (unchanged) ---------- */
 
