@@ -8,7 +8,7 @@
     'streaming video perception',
     '3D spatial reasoning',
     'hallucination mitigation',
-    'efficient & trustworthy deployment'
+    'efficient and trustworthy MLLMs'
   ];
 
   var pi = 0;       // phrase index
