@@ -154,17 +154,20 @@
 
   navLinks.forEach(function (a, i) {
     a.addEventListener('click', function (e) {
-      if (!targets[i]) return;
-      e.preventDefault();
-      var dest = destFor(i);
-      // older Safari ignores the options-object form of scrollTo
-      if ('scrollBehavior' in document.documentElement.style) {
-        window.scrollTo({ top: dest, behavior: 'smooth' });
-      } else {
-        window.scrollTo(0, dest);
-      }
-      if (window.history && history.replaceState) {
-        history.replaceState(null, '', a.getAttribute('href'));
+      if (targets[i]) {
+        var dest = destFor(i);
+        // When the band leaves room for the browser's own anchor jump, let it
+        // run: it animates and updates the hash for free. Only take over when
+        // that jump would overshoot into the next section's band.
+        if (Math.abs(dest - (docTop(targets[i]) - HEAD)) > 1) {
+          e.preventDefault();
+          // older Safari ignores the options-object form of scrollTo
+          if ('scrollBehavior' in document.documentElement.style) {
+            window.scrollTo({ top: dest, behavior: 'smooth' });
+          } else {
+            window.scrollTo(0, dest);
+          }
+        }
       }
       lockOn(i);
     });
