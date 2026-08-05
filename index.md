@@ -56,9 +56,54 @@ I build multi-modal AI systems that are *efficient* and *reliable* enough for re
 
 <div class="ri-typing" aria-label="Currently working on">Currently working on&nbsp;<span class="ri-typed" id="ri-typed"></span><span class="ri-cursor" aria-hidden="true"></span></div>
 
-My research focuses on:
-- How can these models seamlessly interact with humans and their environments—advancing capabilities in long-form/streaming video understanding and spatial reasoning?
-- How can we responsibly deploy these models while addressing real-world concerns—mitigating misinformation and hallucinations, and promoting efficiency and safety?
+<p class="ri-lead">Video is where every weakness of current MLLMs surfaces at once: a few minutes of footage blows past the context window and the inference budget; temporal grounding is weak enough that models describe events that never happened; and streaming settings force answers before the input has finished arriving. Making video work therefore means making the underlying model better along three axes, which is how my work is organized:</p>
+
+{% assign p_lens = site.data.publications.main | where_exp: "p", "p.title contains 'LENS:'" | first %}
+{% assign p_vscan = site.data.publications.main | where_exp: "p", "p.title contains 'VScan:'" | first %}
+{% assign p_degf = site.data.publications.main | where_exp: "p", "p.title contains 'Self-Correcting Decoding'" | first %}
+{% assign p_only = site.data.publications.main | where_exp: "p", "p.title contains 'ONLY:'" | first %}
+{% assign p_echosafe = site.data.publications.main | where_exp: "p", "p.title contains 'Evolving Contextual Safety'" | first %}
+{% assign p_pyspatial = site.data.publications.main | where_exp: "p", "p.title contains 'pySpatial:'" | first %}
+{% assign p_hiker = site.data.publications.main | where_exp: "p", "p.title contains 'HiKER-SGG:'" | first %}
+{% assign p_webagg = site.data.publications.main | where_exp: "p", "p.title contains 'WebAggregator:'" | first %}
+
+<div class="ri-axes">
+  <div class="ri-axis">
+    <span class="ri-num">01</span>
+    <div class="ri-axis-body">
+      <div class="ri-axis-title">Seeing more with less</div>
+      <div class="ri-axis-text">Which frames, regions, and tokens actually matter for a given query, and how cheaply can we get the answer?</div>
+      <div class="ri-papers">
+        <a class="ri-paper" href="#pub-{{ p_lens.title | slugify }}">LENS<span class="ri-venue">ECCV'26</span></a>
+        <a class="ri-paper" href="#pub-{{ p_vscan.title | slugify }}">VScan<span class="ri-venue">TMLR'26</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="ri-axis">
+    <span class="ri-num">02</span>
+    <div class="ri-axis-body">
+      <div class="ri-axis-title">Saying only what's grounded</div>
+      <div class="ri-axis-text">Keeping outputs faithful to the input and appropriate to the context, rather than fluent and wrong.</div>
+      <div class="ri-papers">
+        <a class="ri-paper" href="#pub-{{ p_degf.title | slugify }}">DeGF<span class="ri-venue">ICLR'25</span></a>
+        <a class="ri-paper" href="#pub-{{ p_only.title | slugify }}">ONLY<span class="ri-venue">ICCV'25</span></a>
+        <a class="ri-paper" href="#pub-{{ p_echosafe.title | slugify }}">EchoSafe<span class="ri-venue">CVPR'26</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="ri-axis">
+    <span class="ri-num">03</span>
+    <div class="ri-axis-body">
+      <div class="ri-axis-title">Reasoning beyond the pixels</div>
+      <div class="ri-axis-text">Giving MLLMs explicit structure to reason over: 3D scenes, tools, knowledge graphs, aggregated evidence.</div>
+      <div class="ri-papers">
+        <a class="ri-paper" href="#pub-{{ p_pyspatial.title | slugify }}">pySpatial<span class="ri-venue">ICLR'26</span></a>
+        <a class="ri-paper" href="#pub-{{ p_hiker.title | slugify }}">HiKER-SGG<span class="ri-venue">CVPR'24</span></a>
+        <a class="ri-paper" href="#pub-{{ p_webagg.title | slugify }}">WebAggregator<span class="ri-venue">ACL'26</span></a>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 ## News

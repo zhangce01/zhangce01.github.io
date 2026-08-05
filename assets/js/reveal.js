@@ -11,6 +11,7 @@
     '.edu-card',
     '.about-contact',
     '.ri-typing',
+    '.ri-axis',
     '.year-timeline .yt-node',
     '.publications h2.year',
     '.publications ol.bibliography > li',
