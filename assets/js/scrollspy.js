@@ -4,11 +4,11 @@
 // Every section owns a band of scroll offsets. A band normally opens when the
 // section heading reaches a reference line REF px below the viewport top.
 // The trailing sections (Honors, Services) are too short for that to ever
-// happen on a tall screen — the bottom of the page arrives first — so
-// whatever scroll range is left after the last reachable heading is split
-// evenly among them. The bands are therefore strictly increasing on every
-// screen size, and clicking a tab always scrolls inside that tab's own band
-// instead of overshooting into a neighbour's.
+// happen on a tall screen — the bottom of the page arrives first — so they
+// open when their heading reaches the bottom of the viewport instead. Either
+// way a band opens somewhere between the heading above it and the heading
+// below it, on every screen size, so clicking a tab always scrolls inside
+// that tab's own band instead of overshooting into a neighbour's.
 (function () {
   var REF = 130;   // reference line below the viewport top
   var HEAD = 72;   // fixed topbar height (matches html scroll-padding-top)
@@ -66,15 +66,18 @@
     for (i = 0; i < n; i++) {
       if (t[i] <= m) lastFit = i;
     }
+    if (lastFit === n - 1) return t;
 
-    // share the remaining scroll range among the headings that cannot, so each
-    // still gets a band of its own between the section above and the one below
-    if (lastFit < n - 1) {
-      var lo = lastFit >= 0 ? t[lastFit] : 0;
-      var slots = n - lastFit;
-      for (i = lastFit + 1; i < n; i++) {
-        t[i] = lo + (m - lo) * (i - lastFit) / slots;
-      }
+    // The rest sit in the final screenful, so the bottom of the page arrives
+    // before they ever reach that line. They open when they reach the bottom
+    // of the viewport instead — which is still after the section above them
+    // has scrolled through — squeezed proportionally if the scroll left over
+    // is too short to give each one a band that way.
+    var end = Math.max(1, document.documentElement.scrollHeight - REF - m);
+    var room = Math.max(0, m - (lastFit >= 0 ? t[lastFit] : 0));
+    var squeeze = Math.min(1, room / (end + 1));
+    for (i = lastFit + 1; i < n; i++) {
+      t[i] = m - (end - (t[i] - m)) * squeeze;
     }
     return t;
   }
@@ -121,8 +124,9 @@
   }
 
   // Where clicking tab i should scroll to: the heading tucked under the
-  // topbar when that fits inside the tab's own band, otherwise the middle of
-  // the band, which is the safest spot to land on.
+  // topbar when that fits inside the tab's own band, otherwise as far down as
+  // the band allows, which brings the section as far up the screen as it can
+  // go without handing the highlight to the next tab.
   function destFor(i) {
     var m = maxScroll();
     var t = bands();
@@ -130,9 +134,15 @@
 
     var lo = t[i];
     var hi = t[i + 1];
-    var ideal = targets[i] ? docTop(targets[i]) - HEAD : lo;
-    if (ideal < lo || ideal > hi - 8) ideal = (lo + hi) / 2;
-    return Math.max(0, Math.min(ideal, m));
+    var pad = Math.min(24, (hi - lo) / 3);
+    var low = lo + pad;
+    var high = hi - pad;
+    if (low > high) low = high = (lo + hi) / 2;
+
+    var dest = targets[i] ? docTop(targets[i]) - HEAD : low;
+    if (dest > high) dest = high;
+    else if (dest < low) dest = low;
+    return Math.max(0, Math.min(dest, m));
   }
 
   function lockOn(i) {
