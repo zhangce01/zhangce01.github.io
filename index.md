@@ -56,7 +56,7 @@ I build multi-modal AI systems that are *efficient* and *reliable* enough for re
 
 <div class="ri-typing" aria-label="Currently working on">Currently working on&nbsp;<span class="ri-typed" id="ri-typed"></span><span class="ri-cursor" aria-hidden="true"></span></div>
 
-<p class="ri-lead">Video is where every weakness of current MLLMs surfaces at once: a few minutes of footage blows past the context window and the inference budget; temporal grounding is weak enough that models describe events that never happened; and streaming settings force answers before the input has finished arriving. Making video work therefore means making the underlying model better along three axes, which is how my work is organized:</p>
+<p class="ri-lead">Video is the most demanding domain for MLLMs, exposing long-context efficiency, faithful grounding, and structured reasoning as bottlenecks all at once. My work addresses these along three directions:</p>
 
 {% assign p_lens = site.data.publications.main | where_exp: "p", "p.title contains 'LENS:'" | first %}
 {% assign p_vscan = site.data.publications.main | where_exp: "p", "p.title contains 'VScan:'" | first %}
