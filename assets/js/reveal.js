@@ -12,7 +12,7 @@
     '.about-contact',
     '.ri-typing',
     '.ri-axis',
-    '.year-timeline .yt-node',
+    '.year-jump',
     '.publications h2.year',
     '.publications ol.bibliography > li',
     '.exp-item',

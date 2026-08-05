@@ -1,20 +1,9 @@
 <h2 id="publications" style="margin: 2px 0 0;">Publications</h2>
 
 {% assign pubs_by_year = site.data.publications.main | group_by: "year" %}
-<div class="year-timeline">
+<div class="year-jump">
 {% for group in pubs_by_year %}
-  <a href="#year-{{ group.name }}" class="yt-node">
-    <span class="yt-dot"></span>
-    <span class="yt-year">{{ group.name }}</span>
-    <span class="yt-count">{{ group.items | size }} papers</span>
-  </a>
-  <span class="yt-seg">
-    {% for paper in group.items %}
-    <a class="yt-pip" href="#pub-{{ paper.title | slugify }}" aria-label="{{ paper.title }}">
-      <span class="yt-tip"><strong>{{ paper.conference_short }}</strong>{{ paper.title }}</span>
-    </a>
-    {% endfor %}
-  </span>
+  <a href="#year-{{ group.name }}">{{ group.name }}</a>
 {% endfor %}
 </div>
 
