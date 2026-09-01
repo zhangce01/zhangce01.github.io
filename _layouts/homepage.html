@@ -36,8 +36,8 @@
       <link rel="stylesheet" href="./assets/css/font.css">
     {% endif %}
     {% if site.auto_dark_mode %}
-      <link rel="stylesheet" href="./assets/css/style.css?v=42">
-      <link rel="stylesheet" href="./assets/css/publications.css?v=42">
+      <link rel="stylesheet" href="./assets/css/style.css?v=46">
+      <link rel="stylesheet" href="./assets/css/publications.css?v=46">
     {% else %}
       <link rel="stylesheet" href="./assets/css/style-no-dark-mode.css">
       <link rel="stylesheet" href="./assets/css/publications-no-dark-mode.css">
@@ -69,6 +69,7 @@
       <div class="blob b3"></div>
       <div class="blob b4"></div>
     </div>
+    <div class="cursor-light" aria-hidden="true"></div>
 
     <!-- Glassy fixed top bar with section tabs -->
     <div class="topbar">
@@ -163,7 +164,7 @@
     <script src="{{ "/assets/js/typewriter.js" | relative_url }}?v=3"></script>
     <script src="{{ "/assets/js/reveal.js" | relative_url }}?v=3"></script>
     <script src="{{ "/assets/js/theme.js" | relative_url }}?v=2"></script>
-    <script src="{{ "/assets/js/parallax.js" | relative_url }}"></script>
+    <script src="{{ "/assets/js/cursorlight.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/backtotop.js" | relative_url }}?v=2"></script>
     <script src="{{ "/assets/js/namescramble.js" | relative_url }}?v=2"></script>
     {% if site.google_analytics %}

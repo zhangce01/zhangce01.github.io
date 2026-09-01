@@ -113,9 +113,71 @@ a:hover { color: var(--acc-2); }
 
 strong { color: var(--ink); font-weight: 600; }
 
-/* decorative blobs removed for a quiet academic look; the markup and its
-   drift JS are inert with the container hidden */
+/* ---------- quiet ambient background (light mode only) ---------- */
+
+/* the old blob markup stays in the layout but is inert */
 .bg-blobs { display: none; }
+
+/* Graph-paper dot grid: quiet but clearly visible, completely static */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(17, 24, 39, 0.10) 1px, transparent 1.4px);
+  background-size: 24px 24px;
+}
+
+/* Static warm wash above the top edge — depth without any motion */
+body::after {
+  content: '';
+  position: fixed;
+  left: 50%;
+  top: -340px;
+  z-index: -2;
+  width: 1200px;
+  height: 620px;
+  margin-left: -600px;
+  pointer-events: none;
+  background: radial-gradient(closest-side, rgba(154, 91, 60, 0.06), rgba(233, 226, 212, 0.30) 55%, transparent 100%);
+}
+
+/* Cursor spotlight (cursorlight.js drives --mx/--my): inside a soft circle
+   around the pointer the grid dots re-render in the terracotta accent with
+   a faint warm halo. Idle page = zero motion. */
+.cursor-light {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  --cl-dot: rgba(154, 91, 60, 0.42);
+  --cl-halo: rgba(154, 91, 60, 0.05);
+  background:
+    radial-gradient(300px circle at var(--mx, 50%) var(--my, -20%), var(--cl-halo), transparent 70%),
+    radial-gradient(var(--cl-dot) 1px, transparent 1.4px) 0 0 / 24px 24px;
+  -webkit-mask-image: radial-gradient(240px circle at var(--mx, 50%) var(--my, -20%), #000 20%, transparent 100%);
+  mask-image: radial-gradient(240px circle at var(--mx, 50%) var(--my, -20%), #000 20%, transparent 100%);
+  opacity: 0;
+  transition: opacity .6s ease;
+}
+
+/* dark mode: no grid or wash (clean black), but the spotlight stays —
+   warm dots surfacing out of the dark */
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light) body::before,
+  html:not(.theme-light) body::after { display: none; }
+  html:not(.theme-light) .cursor-light {
+    --cl-dot: rgba(200, 148, 114, 0.30);
+    --cl-halo: rgba(200, 148, 114, 0.04);
+  }
+}
+html.theme-dark body::before,
+html.theme-dark body::after { display: none; }
+html.theme-dark .cursor-light {
+  --cl-dot: rgba(200, 148, 114, 0.30);
+  --cl-halo: rgba(200, 148, 114, 0.04);
+}
 
 
 /* ---------- glassy fixed top bar with tabs ---------- */
