@@ -111,6 +111,23 @@ html.theme-dark section h2, html.theme-dark h1, html.theme-dark h3, html.theme-d
 a { color: var(--acc); transition: color .15s ease; }
 a:hover { color: var(--acc-2); }
 
+/* content links: a thin underline slides in from the left on hover */
+section p a:not(.btn),
+section li a:not(.btn) {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: color .15s ease, background-size .25s ease;
+}
+
+section p a:not(.btn):hover,
+section li a:not(.btn):hover {
+  background-size: 100% 1px;
+  text-decoration: none;
+}
+
 strong { color: var(--ink); font-weight: 600; }
 
 /* ---------- quiet ambient background (light mode only) ---------- */
@@ -428,10 +445,72 @@ section ul > li:hover::before {
   box-shadow: 0 10px 24px -8px rgba(154, 91, 60, 0.45);
 }
 
+/* reading progress line at the very top of the viewport (progress.js) */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 70;
+  background: var(--acc);
+  transform: scaleX(0);
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+
 /* footer: crab + copyright line */
 .crab {
+  position: relative;
   display: inline-block;
   cursor: default;
+}
+
+/* little speech bubble on hover */
+.crab::after {
+  content: 'Clawd says hi!';
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 7px);
+  transform: translateX(-50%) translateY(4px);
+  background: var(--ink);
+  color: var(--card);
+  font-size: 0.72rem;
+  font-weight: 500;
+  line-height: 1;
+  padding: 6px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.crab:hover::after {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Konami code easter egg: Clawd scuttles across the screen (konami.js) */
+.konami-crab {
+  position: fixed;
+  left: -90px;
+  bottom: 12px;
+  height: 56px;
+  z-index: 80;
+  pointer-events: none;
+  animation: crab-cross 7s linear forwards,
+             crab-bob .3s ease-in-out infinite alternate;
+}
+
+@keyframes crab-cross {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(100vw + 180px)); }
+}
+
+@keyframes crab-bob {
+  from { margin-bottom: 0; }
+  to   { margin-bottom: 7px; }
 }
 
 .crab img {
@@ -451,7 +530,35 @@ section ul > li:hover::before {
   75%      { transform: translateX(4px) rotate(6deg); }
 }
 
+/* visitor count: same chip language as the news dates, inline with the
+   copyright line */
+.visitor-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(154, 91, 60, 0.08);
+  color: var(--acc);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 3px 12px;
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.visitor-pill svg { flex: 0 0 auto; }
+
+.visitor-count { font-variant-numeric: tabular-nums; }
+
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light) .visitor-pill { background: rgba(200, 148, 114, 0.14); color: #c89472; }
+}
+html.theme-dark .visitor-pill { background: rgba(200, 148, 114, 0.14); color: #c89472; }
+
 .site-copyright {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-top: 2px;
   color: var(--ink-faint);
 }
@@ -836,6 +943,12 @@ html.theme-dark a.ri-paper:hover {
 .wrapper .publications ol.bibliography li .teaser {
   border-radius: 12px;
   box-shadow: 0 8px 22px -10px rgba(15, 23, 42, 0.35);
+  transition: transform .3s ease;
+}
+
+/* gentle zoom on the figure when the card is hovered */
+.wrapper .publications ol.bibliography li:hover .teaser {
+  transform: scale(1.025);
 }
 
 /* Conference badge: quiet accent pill on the teaser image */
@@ -1294,8 +1407,42 @@ html.theme-dark::-webkit-scrollbar-thumb, html.theme-dark ::-webkit-scrollbar-th
   .site-nav { margin-left: 0; }
 }
 
+/* ---------- print: clean paper output ---------- */
+
 @media print {
-  .topbar, .bg-blobs { display: none; }
+  /* force the light palette even if the dark class is set */
+  html.theme-dark {
+    --ink: #111827;
+    --ink-soft: #4b5563;
+    --ink-faint: #9ca3af;
+    --line: #e5e7eb;
+    --acc: #9a5b3c;
+    --acc-2: #7c4527;
+    --grad: #9a5b3c;
+    --glass: #ffffff;
+    --glass-border: #e5e7eb;
+    --card: #ffffff;
+  }
+
+  .topbar, .bg-blobs, .cursor-light, .back-to-top,
+  .scroll-progress, .year-jump { display: none !important; }
+
+  body, html.theme-dark body { background: #fff; }
+  body::before, body::after { display: none; }
+
+  section { padding-top: 1.2em; }
+  header { margin-top: 1.2em; box-shadow: none; }
+
+  /* flat cards, and keep each entry on one page */
+  .edu-card, .ri-axis, .exp-card,
+  .wrapper .publications ol.bibliography li {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+  .exp-item, .edu-card { page-break-inside: avoid; }
+
+  a { color: var(--ink); }
+  .wrapper .publications ol.bibliography li .teaser { box-shadow: none; }
 }
 
 /* Sidebar name */
