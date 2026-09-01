@@ -18,12 +18,12 @@
     box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }
 
-:root { --global-bg-color: #ffffff; --global-code-bg-color: rgba(181, 9, 172, 0.05); --global-text-color: #000000; --global-text-color-light: #828282; --global-theme-color: #6366f1; --global-hover-color: #f59e0b; --global-footer-bg-color: #1c1c1c; --global-footer-text-color: #e8e8e8; --global-footer-link-color: #ffffff; --global-distill-app-color: #828282; }
+:root { --global-bg-color: #ffffff; --global-code-bg-color: rgba(17, 24, 39, 0.04); --global-text-color: #111827; --global-text-color-light: #828282; --global-theme-color: #9a5b3c; --global-hover-color: #7c4527; --global-footer-bg-color: #1c1c1c; --global-footer-text-color: #e8e8e8; --global-footer-link-color: #ffffff; --global-distill-app-color: #828282; }
 
 @media (prefers-color-scheme: dark) {
-  html:not(.theme-light) { --global-theme-color: rgb(129, 140, 248); }
+  html:not(.theme-light) { --global-theme-color: #c89472; --global-hover-color: #d8a888; }
 }
-html.theme-dark { --global-theme-color: rgb(129, 140, 248); }
+html.theme-dark { --global-theme-color: #c89472; --global-hover-color: #d8a888; }
 
 
 blockquote { background: var(--global-bg-color); border-left: 2px solid var(--global-theme-color); margin: 1.5em 10px; padding: 0.5em 10px; font-size: 1.2rem; }
@@ -88,18 +88,18 @@ html.theme-dark .publications ol.bibliography li .links a.btn { color: #FFFFFF; 
 
 /* Standard scrollbar properties ONLY for browsers without ::-webkit-scrollbar
    (i.e. Firefox). Chromium honors scrollbar-color when set and then IGNORES
-   all ::-webkit-scrollbar styling, which would kill the gradient thumb.
+   all ::-webkit-scrollbar styling, which would override the custom thumb.
    (Kept in this plain .css file: GitHub Pages' Ruby Sass cannot parse the
    selector() condition.) */
 @supports not selector(::-webkit-scrollbar) {
   html {
     scrollbar-width: thin;
-    scrollbar-color: #a5b4fc #f1f4f9;
+    scrollbar-color: #d1d5db #f3f4f6;
   }
-  html.theme-dark { scrollbar-color: #818cf8 #1a1d28; }
+  html.theme-dark { scrollbar-color: #45413c #1c1a18; }
 }
 @media (prefers-color-scheme: dark) {
   @supports not selector(::-webkit-scrollbar) {
-    html:not(.theme-light) { scrollbar-color: #818cf8 #1a1d28; }
+    html:not(.theme-light) { scrollbar-color: #45413c #1c1a18; }
   }
 }
