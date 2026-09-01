@@ -4,7 +4,7 @@ layout: homepage
 
 ## About Me
 
-Hi there! I'm **Ce Zhang** <span class="wave" aria-hidden="true">👋</span> I am currently a third-year PhD candidate in the Robotics Institute at Carnegie Mellon University (CMU), with an expected graduation of 2028.
+Hi there! I'm **Ce Zhang** <span class="wave" aria-hidden="true">👋</span> I am currently a fourth-year PhD candidate in the Robotics Institute at Carnegie Mellon University (CMU), with an expected graduation of 2028.
 
 <div class="edu-cards">
   <div class="edu-card">
@@ -108,8 +108,8 @@ I build multi-modal AI systems that are <span class="hl">efficient</span> and <s
 
 ## News
 
+- <span class="news-date">Aug 2026</span> Wrapped up my summer internship at TikTok as a research scientist intern, where I worked on streaming video understanding.
 - <span class="news-date">Jun 2026</span> Our paper "LENS: Adaptive Spatio-Temporal Zooming for Keyframe Sampling in Long-Form Videos" is accepted to ECCV 2026.
-- <span class="news-date">May 2026</span> I joined TikTok as a research scientist intern, working on streaming video understanding.
 - <span class="news-date">Feb 2026</span> Our paper "Evolving Contextual Safety in Multi-Modal Large Language Models via Inference-Time Self-Reflective Memory" is accepted to CVPR 2026.
 - <span class="news-date">Jan 2026</span> Our paper "pySpatial: Generating 3D Visual Programs for Zero-Shot Spatial Reasoning" is accepted to ICLR 2026.
 
@@ -158,7 +158,7 @@ I build multi-modal AI systems that are <span class="hl">efficient</span> and <s
           <span class="chip">🤝 Mentor: <a href="https://mayer123.github.io/" target="_blank" rel="noopener">Dr. Kaixin Ma</a></span>
         </div>
       </div>
-      <span class="exp-logo-chip"><img src="./assets/img/logo_tencent_ailab.png" alt="Tencent AI Lab"></span>
+      <span class="exp-logo-chip"><img src="./assets/img/logo_tencent_ailab.webp" alt="Tencent AI Lab"></span>
     </div>
   </div>
 </div>

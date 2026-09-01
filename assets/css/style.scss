@@ -347,6 +347,7 @@ header {
 
 /* Avatar with a quiet hairline ring */
 .wrapper header .image.avatar img {
+  height: auto;   /* keep the intrinsic width/height attrs from forcing 600px */
   padding: 3px;
   background: var(--card);
   border: 1px solid var(--line);

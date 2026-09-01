@@ -19,6 +19,43 @@
     {% if site.keywords %}<meta name="keywords" content="{{ site.keywords }}">{% endif %}
     {% if site.canonical %}<link rel="canonical" href="{{ site.canonical }}"/>{% endif %}
 
+    <!-- Link previews (X / LinkedIn / Slack / WeChat) -->
+    <meta property="og:type" content="profile">
+    <meta property="og:title" content="{{ site.title }} | {{ site.affiliation }}">
+    <meta property="og:description" content="{{ site.description }}">
+    <meta property="og:url" content="{{ site.canonical }}">
+    <meta property="og:image" content="{{ site.canonical }}assets/img/avatar.jpg">
+    <meta property="og:image:width" content="600">
+    <meta property="og:image:height" content="600">
+    <meta property="og:site_name" content="{{ site.title }}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="{{ site.title }} | {{ site.affiliation }}">
+    <meta name="twitter:description" content="{{ site.description }}">
+    <meta name="twitter:image" content="{{ site.canonical }}assets/img/avatar.jpg">
+
+    <!-- Structured data for search engines -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "{{ site.title }}",
+      "alternateName": "{{ site.title_cn }}",
+      "url": "{{ site.canonical }}",
+      "image": "{{ site.canonical }}assets/img/avatar.jpg",
+      "jobTitle": "{{ site.position }}",
+      "affiliation": {
+        "@type": "CollegeOrUniversity",
+        "name": "{{ site.affiliation }}",
+        "url": "https://www.cmu.edu/"
+      },
+      "sameAs": [
+        "{{ site.google_scholar }}",
+        "{{ site.github_link }}",
+        "{{ site.linkedin }}"
+      ]
+    }
+    </script>
+
     <link rel="icon" media="(prefers-color-scheme:dark)" href="{{ site.favicon_dark }}" type="image/png" />
     <link rel="icon" media="(prefers-color-scheme:light)" href="{{ site.favicon }}" type="image/png" />
     <script src="./assets/js/favicon-switcher.js" type="application/javascript"></script>
@@ -36,8 +73,8 @@
       <link rel="stylesheet" href="./assets/css/font.css">
     {% endif %}
     {% if site.auto_dark_mode %}
-      <link rel="stylesheet" href="./assets/css/style.css?v=47">
-      <link rel="stylesheet" href="./assets/css/publications.css?v=47">
+      <link rel="stylesheet" href="./assets/css/style.css?v=48">
+      <link rel="stylesheet" href="./assets/css/publications.css?v=48">
     {% else %}
       <link rel="stylesheet" href="./assets/css/style-no-dark-mode.css">
       <link rel="stylesheet" href="./assets/css/publications-no-dark-mode.css">
@@ -91,7 +128,7 @@
     <div class="wrapper">
       <header>
         {% if site.avatar %}
-          <a class="image avatar"><img src="{{ site.avatar }}" alt="avatar" /></a>
+          <a class="image avatar"><img src="{{ site.avatar }}" alt="Portrait of {{ site.title }}" width="600" height="600" fetchpriority="high" /></a>
         {% endif %}
 
         {% if site.title_cn %}
