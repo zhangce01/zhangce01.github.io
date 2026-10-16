@@ -1,0 +1,241 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>DeGF teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* question card, top right (the venue badge owns the top-left corner) */
+  #q { left: 206px; top: 10px; width: 258px; height: 42px; }
+  #q .qmark { position: absolute; left: 9px; top: 11px; width: 19px; height: 19px; border-radius: 6px;
+              background: var(--ink); color: var(--bg); font: 700 11px/19px "Space Grotesk"; text-align: center; }
+  .qt { position: absolute; left: 36px; top: 14px; width: 214px; font: 600 11.5px/14px Inter; color: var(--ink); }
+
+  /* the two pictures */
+  #v  { left: 16px;  top: 60px; width: 128px; height: 128px; }
+  #vp { left: 336px; top: 60px; width: 128px; height: 128px; }
+  #slot { left: 336px; top: 60px; width: 128px; height: 128px; border-radius: 6px; border: 1.5px dashed var(--line); }
+  #vpFrame { left: 333px; top: 57px; width: 134px; height: 134px; border-radius: 8px; border: 2px solid var(--gold); }
+  #noise { position: absolute; left: 336px; top: 60px; width: 128px; height: 128px; border-radius: 6px; }
+  .itag { position: absolute; height: 20px; padding: 0 7px; border-radius: 5px; background: var(--panel);
+          border: 1px solid var(--line); color: var(--ink-soft); font: 600 11.5px/18px Inter; white-space: nowrap; }
+  .itag em { font-family: "Space Grotesk"; font-weight: 700; color: var(--ink); }
+  #tagV  { left: 21px;  top: 163px; }
+  #tagVp { left: 341px; top: 163px; color: var(--gold); border-color: var(--gold); }
+  #tagVp em { color: var(--gold); }
+
+  /* diffusion step */
+  #sd { left: 174px; top: 72px; height: 26px; padding: 0 9px; gap: 6px;
+        background: var(--gold-soft); border-color: var(--gold); color: var(--gold); }
+  #sdArrow { left: 312px; top: 77px; color: var(--gold); }
+  #ghost { position: absolute; font: 500 13px/16px Inter; color: var(--bad); white-space: nowrap; }
+
+  /* per-token rule */
+  #rule { left: 152px; top: 112px; width: 176px; height: 68px; }
+  .rrow { position: absolute; left: 9px; width: 158px; height: 20px; border-radius: 5px; background: var(--panel-2); }
+  .rrow .glow { position: absolute; inset: 0; border-radius: 5px; background: var(--acc-soft); box-shadow: inset 0 0 0 1px var(--acc-line); }
+  .rrow .rt { position: absolute; left: 0; top: 0; height: 20px; width: 100%; display: flex; align-items: center; gap: 5px;
+              padding: 0 7px; font: 600 11.5px/1 Inter; color: var(--ink); white-space: nowrap; }
+  .rrow .rk { color: var(--ink-soft); width: 38px; }
+  .rrow .sym { margin-left: auto; font: 700 14px/1 "Space Grotesk"; color: var(--acc); }
+
+  /* response card */
+  #resp { left: 16px; top: 195px; width: 448px; height: 59px; }
+  .who { position: absolute; left: 12px; top: 9px; font: 600 9.5px/1 Inter; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap; }
+  .who.us { color: var(--acc); }
+  .rtext { position: absolute; left: 12px; top: 23px; width: 392px; font: 500 13px/16px Inter; color: var(--ink); }
+  .rtext .bad { color: var(--bad); font-weight: 600; }
+  .rtext .good { color: var(--good); font-weight: 600; }
+  .mark { position: absolute; left: 416px; top: 8px; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; }
+  #mx { background: var(--bad-soft); color: var(--bad); box-shadow: inset 0 0 0 1px var(--bad-line); }
+  #mc { background: var(--good-soft); color: var(--good); box-shadow: inset 0 0 0 1px var(--good-line); }
+  .vb { border-width: 1.75px; }
+  .sline { position: absolute; height: 1.6px; background: var(--bad); transform-origin: 0 50%; }
+
+  /* result */
+  #res { left: 16px; top: 70px; width: 448px; height: 170px; }
+  .rname { position: absolute; left: 16px; width: 70px; font: 600 12.5px/22px Inter; color: var(--ink-soft); }
+  .rtrack { position: absolute; left: 88px; height: 22px; width: 300px; border-radius: 5px; background: var(--panel-2); }
+  .rbar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; transform-origin: 0 50%; }
+  .rval { position: absolute; font: 700 17px/22px "Space Grotesk"; }
+  #gain { top: 102px; height: 22px; font-size: 12px; }
+  .note { position: absolute; left: 16px; top: 138px; font: 500 11.5px/1.2 Inter; color: var(--ink-soft); white-space: nowrap; }
+
+  .cap-half { display: inline-block; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <div class="panel" id="q">
+    <div class="qmark">Q</div>
+    <div class="qt">Describe this image in detail.</div>
+  </div>
+
+  <div class="img" id="v"><img src="../assets/degf/bear_cat_rabbit_v.jpg"></div>
+  <div class="itag" id="tagV">original <em>v</em></div>
+
+  <div class="abs" id="slot"></div>
+  <div class="img" id="vp"><img src="../assets/degf/bear_cat_rabbit_vprime.jpg"></div>
+  <canvas id="noise" width="256" height="256"></canvas>
+  <div class="abs" id="vpFrame"></div>
+  <div class="itag" id="tagVp">painted <em>v′</em></div>
+
+  <div class="chip" id="sd">
+    <svg class="ico" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round">
+      <path d="M8 1.8a6.2 6.2 0 1 0 0 12.4c1 0 1.5-.6 1.5-1.3 0-.9-.8-1.2-.8-2 0-.7.6-1.2 1.4-1.2h1.4a2.7 2.7 0 0 0 2.7-2.7C14.2 4.2 11.4 1.8 8 1.8z"/>
+      <circle cx="4.8" cy="7.6" r=".7" fill="currentColor"/><circle cx="6.6" cy="4.8" r=".7" fill="currentColor"/><circle cx="9.9" cy="4.9" r=".7" fill="currentColor"/>
+    </svg>Stable Diffusion</div>
+  <i data-i="arrow" data-s="16" data-w="2" class="i" id="sdArrow"></i>
+
+  <div class="panel" id="rule">
+    <div class="label abs" style="left:11px;top:9px">v vs v′ · every token</div>
+    <div class="rrow" id="r1" style="top:23px"><div class="glow"></div>
+      <div class="rt"><span class="rk">agree</span><i data-i="arrow" data-s="11"></i>complement<span class="sym">+</span></div></div>
+    <div class="rrow" id="r2" style="top:45px"><div class="glow"></div>
+      <div class="rt"><span class="rk">differ</span><i data-i="arrow" data-s="11"></i>contrast<span class="sym">−</span></div></div>
+  </div>
+
+  <div class="panel" id="resp">
+    <div class="who" id="w1">LLaVA-1.5 · based on <i>v</i></div>
+    <div class="who us" id="w2">corrected · based on <i>v</i> and <i>v′</i></div>
+    <div class="rtext" id="t1"><span id="p1"></span><span class="bad" id="b1"></span><span id="s1"></span></div>
+    <div class="rtext" id="t2"><span id="p2">The image features </span><span class="good" id="g2"></span><span id="s2"></span></div>
+    <div class="mark" id="mx"><i data-i="cross" data-s="12" data-w="2.4"></i></div>
+    <div class="mark" id="mc"><i data-i="check" data-s="13" data-w="2.4"></i></div>
+  </div>
+
+  <div id="ghost">two bunnies (or rabbits)</div>
+  <div class="box ok vb" style="left:18px;top:69px;width:45px;height:91px"></div>
+  <div class="box ok vb" style="left:70px;top:88px;width:34px;height:37px"></div>
+  <div class="box ok vb" style="left:102px;top:81px;width:40px;height:79px"></div>
+
+  <div class="panel" id="res">
+    <div class="label abs" style="left:16px;top:16px">CHAIR<sub style="font-size:7px">S</sub> ↓ · hallucinated captions</div>
+    <div class="label abs" style="right:16px;top:16px">LLaVA-1.5 · 64 tokens</div>
+    <div class="rname" style="top:56px">regular</div>
+    <div class="rtrack" style="top:56px"><div class="rbar" id="bar0" style="width:262px;background:var(--base)"></div></div>
+    <div class="rval soft" id="val0" style="left:356px;top:56px">26.2</div>
+    <div class="rname" style="top:102px;color:var(--acc)">DeGF</div>
+    <div class="rtrack" style="top:102px"><div class="rbar" id="bar1" style="width:184px;background:var(--acc)"></div></div>
+    <div class="rval hl" id="val1" style="left:278px;top:102px">18.4</div>
+    <div class="chip acc" id="gain" style="left:320px">−7.8</div>
+    <div class="note">% of captions naming an object that is not in the image</div>
+  </div>
+
+  <div class="caption" id="cap">
+    <span class="cap-half" id="ch1"><span class="gold">paint</span> the answer,</span>
+    <span class="cap-half" id="ch2">then <span class="hl">self-correct</span></span>
+  </div>
+</div></div>
+
+<script>
+// Gaussian-noise start of the diffusion step: fixed seed, theme colours
+(function () {
+  var c = document.getElementById('noise'), g = c.getContext('2d');
+  var cs = getComputedStyle(document.documentElement);
+  var seed = 7;
+  function rnd() { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }
+  g.fillStyle = cs.getPropertyValue('--panel-2'); g.fillRect(0, 0, 256, 256);
+  var inks = ['--ink', '--gold', '--ink-faint'].map(function (k) { return cs.getPropertyValue(k); });
+  for (var y = 0; y < 256; y += 4) for (var x = 0; x < 256; x += 4) {
+    g.globalAlpha = rnd() * 0.75; g.fillStyle = inks[Math.floor(rnd() * 3)]; g.fillRect(x, y, 4, 4);
+  }
+  g.globalAlpha = 1;
+  c.style.borderRadius = '6px';
+})();
+
+var T1 = ['The image features ', 'two bunnies (or rabbits)', ' as the main animals.'];
+var T2 = ['a group of three animals, including a bear, a cat, and a rabbit', '.'];
+
+Stage.build(function (o) {
+  var tl = o.tl, stage = document.getElementById('stage').getBoundingClientRect();
+  function rel(r) { return { left: r.left - stage.left, top: r.top - stage.top, width: r.width, height: r.height }; }
+
+  // measure the hallucinated span on its final layout (for the ghost + strike lines)
+  document.getElementById('p1').textContent = T1[0];
+  document.getElementById('b1').textContent = T1[1];
+  document.getElementById('s1').textContent = T1[2];
+  var bRects = Array.prototype.map.call(document.getElementById('b1').getClientRects(), rel);
+  var strikes = bRects.map(function (r) {
+    var d = document.createElement('div'); d.className = 'sline';
+    d.style.left = r.left + 'px'; d.style.top = (r.top + r.height * 0.55) + 'px'; d.style.width = r.width + 'px';
+    document.getElementById('scene').appendChild(d); return d;
+  });
+  var g = document.getElementById('ghost'), b0 = bRects[0];
+  g.style.left = b0.left + 'px'; g.style.top = b0.top + 'px';
+  var sd = rel(document.getElementById('sd').getBoundingClientRect());
+
+  // ---- beat 1: LLaVA-1.5 describes the picture, and invents two bunnies -------------
+  tl.from('#q', { opacity: 0, y: -6 }, 0.3);
+  tl.fromTo('#cap .cap-half', { opacity: 0 }, { opacity: 0.32, duration: 0.4 }, 0.4);
+  tl.from('#v', { opacity: 0, y: 8 }, 0.5);
+  tl.from('#tagV', { opacity: 0, y: 4 }, 0.75);
+  tl.from('#slot', { opacity: 0 }, 0.8);
+  tl.from('#resp', { opacity: 0, y: 8 }, 0.85);
+  tl.from('#w1', { opacity: 0 }, 1.0);
+  o.type('#p1', T1[0], 1.1, 0.35);
+  o.type('#b1', T1[1], 1.45, 0.5);
+  o.type('#s1', T1[2], 1.95, 0.35);
+  tl.fromTo('#mx', { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.2)' }, 2.45);
+
+  // ---- beat 2: paint the answer, compare, self-correct --------------------------------
+  var P = 2.95;
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, P);
+  tl.fromTo('#sd', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, P);
+  tl.fromTo(g, { opacity: 0 }, { opacity: 1, duration: 0.12 }, P + 0.1);
+  tl.fromTo(g, { x: 0, y: 0, scale: 1 },
+    { x: sd.left + sd.width / 2 - b0.left - b0.width / 2 * 0.5, y: sd.top + 4 - b0.top, scale: 0.5,
+      duration: 0.6, ease: 'power3.inOut', transformOrigin: '0% 50%' }, P + 0.1);
+  tl.to(g, { opacity: 0, duration: 0.2 }, P + 0.5);
+  tl.fromTo('#sdArrow', { opacity: 0, x: -6 }, { opacity: 1, x: 0, duration: 0.3 }, P + 0.55);
+  // noise -> picture
+  tl.fromTo('#noise', { opacity: 0 }, { opacity: 1, duration: 0.25 }, P + 0.6);
+  tl.fromTo('#vp', { opacity: 0, filter: 'blur(9px)' }, { opacity: 1, filter: 'blur(0px)', duration: 0.95, ease: 'power1.inOut' }, P + 0.75);
+  tl.to('#noise', { opacity: 0, duration: 0.9, ease: 'power1.inOut' }, P + 0.8);
+  tl.fromTo('#vpFrame', { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: 0.35 }, P + 1.5);
+  tl.from('#tagVp', { opacity: 0, y: 4 }, P + 1.6);
+
+  // the rule, applied at every token of a second decoding pass
+  var R = P + 1.75;
+  tl.from('#rule', { opacity: 0, y: 6 }, R);
+  tl.fromTo('#r1 .glow', { opacity: 0 }, { opacity: 1, duration: 0.3 }, R + 0.25);
+  tl.fromTo('#r2 .glow', { opacity: 0 }, { opacity: 1, duration: 0.3 }, R + 0.5);
+
+  // correction
+  var C = R + 0.8;
+  tl.fromTo(strikes, { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: 'power2.inOut' }, C);
+  tl.to(['#b1', '#s1'].concat(strikes), { opacity: 0, duration: 0.25 }, C + 0.45);
+  tl.to('#mx', { opacity: 0, scale: 0.6, duration: 0.25 }, C + 0.45);
+  tl.to('#w1', { opacity: 0, duration: 0.25 }, C + 0.45);
+  tl.fromTo('#w2', { opacity: 0 }, { opacity: 1, duration: 0.3 }, C + 0.55);
+  tl.set('#p1', { opacity: 0 }, C + 0.65);
+  tl.fromTo('#t2', { opacity: 0 }, { opacity: 1, duration: 0.01 }, C + 0.65);
+  o.type('#g2', T2[0], C + 0.67, 0.75);
+  o.type('#s2', T2[1], C + 1.42, 0.05);
+  var full = T2[0], perChar = 0.75 / full.length;
+  ['a bear', 'a cat', 'a rabbit'].forEach(function (w, k) {
+    var tk = C + 0.67 + perChar * (full.indexOf(w) + w.length);
+    tl.fromTo(document.querySelectorAll('.vb')[k], { opacity: 0, scale: 1.15 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(2)' }, tk);
+  });
+  tl.fromTo('#mc', { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.2)' }, C + 1.45);
+  tl.to('#ch2', { opacity: 1, duration: 0.4 }, C + 1.45);
+
+  // ---- beat 3: the number -------------------------------------------------------------
+  var RES = 8.05;
+  tl.to(['#v', '.vb', '#tagV', '#slot', '#vp', '#vpFrame', '#tagVp', '#sd', '#sdArrow', '#rule', '#resp'],
+    { opacity: 0, duration: 0.35 }, RES);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, RES + 0.2);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, RES + 0.25);
+  tl.fromTo('#bar0', { scaleX: 0 }, { scaleX: 1, duration: 0.6 }, RES + 0.45);
+  o.count('#val0', 0, 26.2, RES + 0.45, 0.6);
+  tl.fromTo('#val0', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.45);
+  tl.fromTo('#bar1', { scaleX: 0 }, { scaleX: 1, duration: 0.6 }, RES + 0.75);
+  o.count('#val1', 0, 18.4, RES + 0.75, 0.6);
+  tl.fromTo('#val1', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.75);
+  tl.fromTo('#gain', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, RES + 1.25);
+  tl.fromTo('.note', { opacity: 0 }, { opacity: 1, duration: 0.4 }, RES + 0.95);
+}, { duration: 10.5, poster: 7.5 });
+</script>
+</body></html>

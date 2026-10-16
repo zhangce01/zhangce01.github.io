@@ -1,0 +1,205 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>LENS teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* question card, top right (the venue badge owns the top-left corner) */
+  #q { left: 206px; top: 10px; width: 258px; height: 42px; }
+  #q .qmark { position: absolute; left: 9px; top: 11px; width: 19px; height: 19px; border-radius: 6px;
+              background: var(--ink); color: var(--bg); font: 700 11px/19px "Space Grotesk"; text-align: center; }
+  .qt { position: absolute; left: 36px; top: 7px; width: 214px; font: 600 11.5px/14px Inter; color: var(--ink); }
+
+  /* filmstrip */
+  #strip { position: absolute; left: 0; top: 60px; height: 46px; width: 1100px; background: var(--film); }
+  #strip::before, #strip::after { content: ""; position: absolute; left: 0; right: 0; height: 3px;
+    background: repeating-linear-gradient(90deg, rgba(255,255,255,.22) 0 5px, transparent 5px 11px); }
+  #strip::before { top: 1.5px; } #strip::after { bottom: 1.5px; }
+  .sf { position: absolute; top: 5px; width: 66px; height: 36px; border-radius: 2px; overflow: hidden; }
+  .sf img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pick { position: absolute; top: 3px; width: 70px; height: 40px; border-radius: 4px; border: 2px solid var(--acc); }
+  .pick.out { border-color: var(--blue); }
+
+  /* main view */
+  #view { left: 16px; top: 114px; width: 252px; height: 137px; border-radius: 8px; overflow: hidden; background: var(--panel-2); }
+  .fly { position: absolute; object-fit: cover; border-radius: 3px; }
+  #fog { left: 16px; top: 114px; width: 252px; height: 137px; border-radius: 8px; background: var(--fog);
+    -webkit-mask-image: radial-gradient(ellipse 25% 46% at 50% 26%, transparent 55%, #000 100%),
+                        radial-gradient(ellipse 19% 40% at 86% 22%, transparent 55%, #000 100%);
+    mask-image: radial-gradient(ellipse 25% 46% at 50% 26%, transparent 55%, #000 100%),
+                radial-gradient(ellipse 19% 40% at 86% 22%, transparent 55%, #000 100%);
+    -webkit-mask-composite: source-in; mask-composite: intersect; }
+  .mag { position: absolute; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center;
+         color: #fff; box-shadow: var(--shadow); }
+  html.dark .mag { color: #141311; }
+  #zinBadge { left: 230px; top: 120px; background: var(--acc); }
+  #zoutBadge { left: 230px; top: 120px; background: var(--blue); }
+  #hyperOutline { left: 14px; top: 112px; width: 256px; height: 141px; border-radius: 9px; border: 2px solid var(--blue); }
+  #hyperTag { left: 24px; top: 224px; background: var(--panel); border-color: var(--line); color: var(--blue); }
+
+  /* zoom toggle */
+  #toggle { left: 280px; top: 114px; width: 184px; height: 28px; border-radius: 8px; background: var(--panel-2); border: 1px solid var(--line); }
+  #knob { position: absolute; left: 2px; top: 2px; width: 89px; height: 22px; border-radius: 6px; background: var(--panel); box-shadow: var(--shadow); }
+  .tg { position: absolute; top: 0; width: 92px; height: 26px; display: flex; align-items: center; justify-content: center; gap: 4px;
+        font: 600 11.5px/1 Inter; color: var(--ink-faint); }
+  #tgIn { left: 0; } #tgOut { left: 92px; }
+
+  /* answers */
+  .who { position: absolute; left: 282px; font: 600 9.5px/1 Inter; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-faint); }
+  .who.us { color: var(--acc); }
+  .ans { left: 280px; height: 25px; font-size: 12px; }
+
+  /* result */
+  #res { left: 16px; top: 114px; width: 448px; height: 137px; }
+  .rname { position: absolute; left: 16px; width: 70px; font: 600 12.5px/22px Inter; color: var(--ink-soft); }
+  .rtrack { position: absolute; left: 88px; height: 22px; width: 300px; border-radius: 5px; background: var(--panel-2); }
+  .rbar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; transform-origin: 0 50%; }
+  .rval { position: absolute; font: 700 17px/22px "Space Grotesk"; }
+  #gain { left: 392px; top: 63px; height: 22px; font-size: 12px; }
+
+  .cap-half { display: inline-block; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <div class="panel" id="q">
+    <div class="qmark">Q</div>
+    <div class="qt" id="q1">Which of the following items is not hanging on the walls?</div>
+    <div class="qt" id="q2">What is the primary focus of this video?</div>
+  </div>
+
+  <div id="strip"></div>
+
+  <div class="abs" id="view"></div>
+  <img class="fly" id="v1" src="../assets/lens/frame1_wall_scrolls.jpg">
+  <div class="abs" id="fog"></div>
+  <div class="mag" id="zinBadge"><i data-i="zin" data-s="16" data-w="2.2"></i></div>
+  <img class="fly hf" id="h0" src="../assets/lens/frame2_legs_closeup.jpg">
+  <img class="fly hf" id="h1" src="../assets/lens/frame3_curtains.jpg">
+  <img class="fly hf" id="h2" src="../assets/lens/frame4_walking.jpg">
+  <img class="fly hf" id="h3" src="../assets/lens/frame5_legs_walking.jpg">
+  <div class="abs" id="hyperOutline"></div>
+  <div class="mag" id="zoutBadge"><i data-i="zout" data-s="16" data-w="2.2"></i></div>
+  <div class="chip" id="hyperTag">4 moments <i data-i="arrow" data-s="12"></i> 1 frame</div>
+
+  <div class="abs" id="toggle">
+    <div id="knob"></div>
+    <div class="tg" id="tgIn"><i data-i="zin" data-s="13"></i>zoom in</div>
+    <div class="tg" id="tgOut"><i data-i="zout" data-s="13"></i>zoom out</div>
+  </div>
+
+  <div class="who" id="whoA" style="top:155px">uniform sampling</div>
+  <div class="chip ans no" id="a1" style="top:168px">B. Curtains <i data-i="cross" data-s="12" data-w="2.4"></i></div>
+  <div class="chip ans no" id="a2" style="top:168px">A. how to dance <i data-i="cross" data-s="12" data-w="2.4"></i></div>
+  <div class="who us" id="whoB" style="top:205px">LENS</div>
+  <div class="chip ans ok" id="b1" style="top:218px">A. Mirrors <i data-i="check" data-s="13" data-w="2.4"></i></div>
+  <div class="chip ans ok" id="b2" style="top:218px">B. how to walk <i data-i="check" data-s="13" data-w="2.4"></i></div>
+
+  <div class="panel" id="res">
+    <div class="label abs" style="left:16px;top:16px">Video-MME accuracy</div>
+    <div class="label abs" style="right:16px;top:16px">Qwen2.5-VL-7B · 8 frames</div>
+    <div class="rname" style="top:42px">uniform</div>
+    <div class="rtrack" style="top:42px"><div class="rbar" id="bar0" style="width:228px;background:var(--base)"></div></div>
+    <div class="rval soft" id="val0" style="left:322px;top:42px">53.3</div>
+    <div class="rname" style="top:84px;color:var(--acc)">LENS</div>
+    <div class="rtrack" style="top:84px"><div class="rbar" id="bar1" style="width:260px;background:var(--acc)"></div></div>
+    <div class="rval hl" id="val1" style="left:354px;top:84px">60.7</div>
+    <div class="chip acc" id="gain" style="top:84px">+7.4</div>
+  </div>
+
+  <div class="caption" id="cap">
+    <span class="cap-half" id="ch1"><span class="hl">zoom in</span> for details,</span>
+    <span class="cap-half" id="ch2"><span class="blue">zoom out</span> for context</span>
+  </div>
+</div></div>
+
+<script>
+// filmstrip: the paper's six Fig. 1 frames, repeated
+var FR = ['title_card', 'frame1_wall_scrolls', 'frame2_legs_closeup', 'frame3_curtains', 'frame4_walking', 'frame5_legs_walking'];
+var strip = document.getElementById('strip');
+for (var i = 0; i < 15; i++) {
+  var d = document.createElement('div');
+  d.className = 'sf'; d.style.left = (8 + 72 * i) + 'px';
+  d.innerHTML = '<img src="../assets/lens/' + FR[i === 0 ? 0 : 1 + (i - 1) % 5] + '.jpg">';
+  strip.appendChild(d);
+}
+function pick(i, cls) {
+  var p = document.createElement('div');
+  p.className = 'pick ' + (cls || ''); p.style.left = (6 + 72 * i) + 'px';
+  strip.appendChild(p); return p;
+}
+var pickIn = pick(1), pickOut = [2, 3, 4, 5].map(function (i) { return pick(i, 'out'); });
+
+Stage.build(function (o) {
+  var tl = o.tl, D = o.D, SCROLL = 260;
+  function stripX(t) { return -SCROLL * t / D; }
+  // where filmstrip frame i sits on the stage at time t
+  function fromStrip(i, t) { return { left: 8 + 72 * i + stripX(t), top: 65, width: 66, height: 36 }; }
+
+  tl.fromTo(strip, { x: 0 }, { x: -SCROLL, duration: D, ease: 'none' }, 0);
+
+  // ---- beat 1: detail question -> zoom in ------------------------------------------
+  tl.from('#q', { opacity: 0, y: -6 }, 0.3);
+  tl.from('#q1', { opacity: 0 }, 0.45);
+  tl.fromTo('#cap .cap-half', { opacity: 0 }, { opacity: 0.32, duration: 0.4 }, 0.4);
+  tl.from('#toggle', { opacity: 0, y: 6 }, 0.6);
+  tl.set('#knob', { opacity: 0 }, 0);
+  tl.fromTo(pickIn, { opacity: 0, scale: 1.25 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2)' }, 0.85);
+  var s = fromStrip(1, 1.15);
+  tl.fromTo('#v1', { left: s.left, top: s.top, width: s.width, height: s.height, opacity: 0.0 },
+    { left: 16, top: 114, width: 252, height: 137, opacity: 1, duration: 0.7, ease: 'power3.inOut' }, 1.15);
+  tl.from('#whoA', { opacity: 0, x: -6 }, 1.75);
+  tl.from('#a1', { opacity: 0, x: -6 }, 1.9);
+
+  tl.to('#knob', { opacity: 1, duration: 0.2 }, 2.4);
+  tl.fromTo('#knob', { backgroundColor: 'var(--panel)' }, { backgroundColor: 'var(--acc-soft)', duration: 0.3 }, 2.4);
+  tl.to('#tgIn', { color: 'var(--acc)', duration: 0.3 }, 2.45);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, 2.45);
+  tl.fromTo('#fog', { opacity: 0 }, { opacity: 1, duration: 0.9, ease: 'power1.inOut' }, 2.6);
+  tl.fromTo('#zinBadge', { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.2)' }, 2.9);
+  tl.from('#whoB', { opacity: 0, x: -6 }, 3.5);
+  tl.fromTo('#b1', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, 3.65);
+
+  // ---- beat 2: event question -> zoom out --------------------------------------------
+  var OUT = 4.95;
+  tl.to(['#v1', '#fog', '#zinBadge', '#a1', '#b1', pickIn], { opacity: 0, duration: 0.35 }, OUT);
+  tl.to('#q1', { opacity: 0, duration: 0.25 }, OUT);
+  tl.fromTo('#q2', { opacity: 0 }, { opacity: 1, duration: 0.3 }, OUT + 0.25);
+  tl.to('#ch1', { opacity: 0.32, duration: 0.4 }, OUT + 0.2);
+  tl.to('#knob', { x: 91, backgroundColor: 'var(--blue-soft)', duration: 0.45, ease: 'power3.inOut' }, OUT + 0.3);
+  tl.to('#tgIn', { color: 'var(--ink-faint)', duration: 0.3 }, OUT + 0.3);
+  tl.to('#tgOut', { color: 'var(--blue)', duration: 0.3 }, OUT + 0.4);
+  tl.to('#ch2', { opacity: 1, duration: 0.4 }, OUT + 0.4);
+  tl.fromTo(pickOut, { opacity: 0, scale: 1.25 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(2)', stagger: 0.08 }, OUT + 0.35);
+  ['#h0', '#h1', '#h2', '#h3'].forEach(function (id, k) {
+    var t0 = OUT + 0.7 + 0.12 * k, f = fromStrip(2 + k, t0);
+    tl.fromTo(id, { left: f.left, top: f.top, width: f.width, height: f.height, opacity: 0 },
+      { left: 16 + (k % 2) * 127, top: 114 + Math.floor(k / 2) * 69.5, width: 125, height: 67.5, opacity: 1,
+        duration: 0.65, ease: 'power3.inOut' }, t0);
+  });
+  tl.fromTo('#hyperOutline', { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: 0.35 }, OUT + 1.5);
+  tl.fromTo('#zoutBadge', { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.2)' }, OUT + 1.55);
+  tl.from('#hyperTag', { opacity: 0, y: 6 }, OUT + 1.7);
+  tl.fromTo('#a2', { opacity: 0, x: -6 }, { opacity: 1, x: 0 }, OUT + 1.75);
+  tl.fromTo('#b2', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, OUT + 2.35);
+
+  // ---- beat 3: the number ------------------------------------------------------------
+  var RES = 8.2;
+  tl.to(['.hf', '#hyperOutline', '#zoutBadge', '#hyperTag', '#a2', '#b2', '#whoA', '#whoB', '#toggle'].concat(pickOut),
+    { opacity: 0, duration: 0.35 }, RES);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, RES + 0.2);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, RES + 0.25);
+  tl.fromTo('#bar0', { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: 'power2.out' }, RES + 0.45);
+  o.count('#val0', 0, 53.3, RES + 0.45, 0.6);
+  tl.fromTo('#val0', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.45);
+  tl.fromTo('#bar1', { scaleX: 0 }, { scaleX: 1, duration: 0.75, ease: 'power2.out' }, RES + 0.85);
+  o.count('#val1', 0, 60.7, RES + 0.85, 0.75);
+  tl.fromTo('#val1', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.85);
+  tl.fromTo('#gain', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, RES + 1.5);
+  // the +7.4 tag sits right after the LENS value
+  tl.set('#gain', { left: 402 }, 0);
+}, { duration: 10.5, poster: 4.5 });
+</script>
+</body></html>

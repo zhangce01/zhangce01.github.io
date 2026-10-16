@@ -21,7 +21,14 @@
 <li id="pub-{{ link.title | slugify }}">
 <div class="pub-row">
   <div class="col-sm-3 abbr" style="position: relative;padding-right: 15px;padding-left: 15px;">
-    {% if link.image %} 
+    {% if link.teaser %}
+    <div class="teaser teaser-anim z-depth-1" data-src="./assets/teasers/{{ link.teaser }}-{theme}.mp4">
+      {% assign teaser_alt = link.teaser_alt | default: link.title | escape %}
+      <img class="ta-light" src="./assets/teasers/{{ link.teaser }}-light.webp" alt="{{ teaser_alt }}" width="480" height="300" loading="lazy" decoding="async">
+      <img class="ta-dark" src="./assets/teasers/{{ link.teaser }}-dark.webp" alt="{{ teaser_alt }}" width="480" height="300" loading="lazy" decoding="async">
+      <video muted loop playsinline disablepictureinpicture preload="none" aria-hidden="true" tabindex="-1"></video>
+    </div>
+    {% elsif link.image %}
     <img src="{{ link.image }}" alt="{{ link.title }}" class="teaser img-fluid z-depth-1" loading="lazy" decoding="async"{% if link.image_w %} width="{{ link.image_w }}" height="{{ link.image_h }}"{% endif %}>
     {% endif %}
     {% if link.conference_short %} 

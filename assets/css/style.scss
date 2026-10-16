@@ -952,13 +952,57 @@ html.theme-dark a.ri-paper:hover {
   transform: scale(1.025);
 }
 
+/* Animated teaser: theme-matched poster underneath, looping video fades in
+   on top once it is actually playing (see assets/js/teasers.js) */
+.wrapper .publications ol.bibliography li .teaser-anim {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #f6f4f0;
+}
+.teaser-anim img,
+.teaser-anim video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+.teaser-anim .ta-dark { display: none; }
+.teaser-anim video {
+  opacity: 0;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+.teaser-anim.is-playing video { opacity: 1; }
+/* iOS Low Power Mode refuses autoplay and would draw a play button; keep the poster */
+.teaser-anim video::-webkit-media-controls-start-playback-button { display: none !important; -webkit-appearance: none; }
+
+@media (prefers-color-scheme: dark) {
+  html:not(.theme-light) .wrapper .publications ol.bibliography li .teaser-anim { background: #141311; }
+  html:not(.theme-light) .teaser-anim .ta-light { display: none; }
+  html:not(.theme-light) .teaser-anim .ta-dark { display: block; }
+}
+html.theme-dark .wrapper .publications ol.bibliography li .teaser-anim { background: #141311; }
+html.theme-dark .teaser-anim .ta-light { display: none; }
+html.theme-dark .teaser-anim .ta-dark { display: block; }
+
 /* Conference badge: quiet accent pill on the teaser image */
 .wrapper .publications ol.bibliography li .abbr abbr {
   background: var(--acc);
   border-radius: 999px;
   box-shadow: 0 6px 16px -6px rgba(17, 24, 39, 0.35);
-  top: 22px;
-  left: 28px;
+  /* small and tucked into the teaser's corner, so it covers as little of
+     the animation as possible */
+  top: 11px;
+  left: 26px;
+  font-size: 11px;
+  padding: 0.32em 0.7em;
+  letter-spacing: 0.01em;
+  z-index: 1;
 }
 
 /* Breathing room between the rows of each entry */
@@ -1444,6 +1488,9 @@ html.theme-dark::-webkit-scrollbar-thumb, html.theme-dark ::-webkit-scrollbar-th
 
   a { color: var(--ink); }
   .wrapper .publications ol.bibliography li .teaser { box-shadow: none; }
+  .teaser-anim video { display: none !important; }
+  .teaser-anim .ta-dark { display: none !important; }
+  .teaser-anim .ta-light { display: block !important; }
 }
 
 /* Sidebar name */

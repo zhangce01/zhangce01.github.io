@@ -1,0 +1,240 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>BDC-Adapter teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* question card, top right (the venue badge owns the top-left corner) */
+  #q { left: 206px; top: 10px; width: 258px; height: 42px; }
+  #q .qmark { position: absolute; left: 9px; top: 11px; width: 19px; height: 19px; border-radius: 6px;
+              background: var(--ink); color: var(--bg); font: 700 11px/19px "Space Grotesk"; text-align: center; }
+  .qt { position: absolute; left: 36px; top: 7px; width: 214px; height: 28px; display: flex; align-items: center;
+        font: 600 11.5px/14px Inter; color: var(--ink); }
+
+  /* beat 1: toy dependence plot */
+  #toy { left: 16px; top: 62px; width: 252px; height: 190px; }
+  #plot { position: absolute; left: 0; top: 0; overflow: visible; }
+  .ax { stroke: var(--ink-faint); stroke-width: 1.2; }
+  .axl { position: absolute; font: italic 500 12px/1 Inter; color: var(--ink-faint); }
+  .pt { fill: var(--ink-soft); }
+  .web { stroke: var(--acc); stroke-width: 1; opacity: 0.4; }
+  #covline { stroke: var(--bad); stroke-width: 2; stroke-dasharray: 5 4; }
+  #covlab { position: absolute; font: 700 13px/1 "Space Grotesk"; color: var(--bad); white-space: nowrap; }
+  .who { position: absolute; left: 286px; font: 600 9.5px/1 Inter; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap; }
+  .who.us { color: var(--acc); }
+  .ans { left: 284px; height: 25px; font-size: 12px; }
+
+  /* beat 2: BDC matrices and class prototypes (schematic) */
+  #cat { left: 16px; top: 64px; width: 96px; height: 96px; }
+  #bdcchip { left: 33px; top: 167px; }
+  #bdcchip svg { transform: rotate(90deg); }
+  .mat { position: absolute; }
+  .mat > div { position: absolute; border-radius: 1.5px; }
+  .mat.q > div { background: var(--acc); }
+  .mat.p > div { background: var(--blue); }
+  .row { position: absolute; left: 132px; width: 332px; height: 45px; border-radius: 8px; }
+  .ghost { position: absolute; width: 31px; height: 31px; border-radius: 4px; background: var(--panel-2); border: 1px solid var(--line); }
+  .thumb { position: absolute; left: 12px; top: 9px; width: 31px; height: 31px; border-radius: 4px; }
+  .cname { position: absolute; left: 50px; top: 16px; font: 600 12.5px/14px Inter; color: var(--ink-soft); white-space: nowrap;
+           display: flex; align-items: center; gap: 3px; }
+  .dotop { position: absolute; left: 138px; top: 15px; font: 700 16px/1 "Space Grotesk"; color: var(--ink-faint); }
+  .trk { position: absolute; left: 198px; top: 16px; width: 120px; height: 13px; border-radius: 4px; background: var(--panel-2); }
+  .sbar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; background: var(--base); transform-origin: 0 50%; }
+
+  /* beat 3: result */
+  #res { left: 16px; top: 88px; width: 448px; height: 137px; }
+  .rname { position: absolute; left: 16px; width: 92px; font: 600 12.5px/22px Inter; color: var(--ink-soft); white-space: nowrap; }
+  .rtrack { position: absolute; left: 112px; height: 22px; width: 262px; border-radius: 5px; background: var(--panel-2); }
+  .rbar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; transform-origin: 0 50%; }
+  .rval { position: absolute; font: 700 17px/22px "Space Grotesk"; }
+  #gain { top: 84px; height: 22px; font-size: 12px; }
+
+  .cap-half { display: inline-block; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <div class="panel" id="q">
+    <div class="qmark">Q</div>
+    <div class="qt" id="q1">Are these two features dependent?</div>
+    <div class="qt" id="q2">Which class: dog, cat, car or truck?</div>
+  </div>
+
+  <!-- beat 1: an illustration of the paper's argument, not data -->
+  <div class="panel" id="toy">
+    <div class="label abs" style="left:12px;top:11px">toy example</div>
+    <svg id="plot" width="252" height="190"></svg>
+    <div class="axl" style="left:30px;top:30px">y</div>
+    <div class="axl" style="left:232px;top:158px">x</div>
+    <div id="covlab">cov = 0</div>
+  </div>
+  <div class="who b1" id="whoA" style="top:100px">Tip-Adapter · covariance</div>
+  <div class="chip ans no b1" id="a1" style="top:113px">cov = 0: independent <i data-i="cross" data-s="12" data-w="2.4"></i></div>
+  <div class="who us b1" id="whoB" style="top:160px">BDC-Adapter</div>
+  <div class="chip ans ok b1" id="b1" style="top:173px">BDC &gt; 0: dependent <i data-i="check" data-s="13" data-w="2.4"></i></div>
+
+  <!-- beat 2 -->
+  <div class="img" id="cat"><img src="../assets/bdc/query_ragdoll_cat.jpg"></div>
+  <div class="chip solid" id="bdcchip"><i data-i="arrow" data-s="12" data-w="2.2"></i>BDC</div>
+  <div class="mat q" id="qmat" style="left:40px;top:197px"></div>
+  <div id="rows"></div>
+
+  <!-- beat 3 -->
+  <div class="panel" id="res">
+    <div class="label abs" style="left:16px;top:16px">few-shot accuracy · 11 datasets</div>
+    <div class="label abs" style="right:16px;top:16px">RN50 · 16 shots</div>
+    <div class="rname" style="top:42px">Tip-Adapter-F</div>
+    <div class="rtrack" style="top:42px"><div class="rbar" id="bar0" style="width:235px;background:var(--base)"></div></div>
+    <div class="rval soft" id="val0" style="left:353px;top:42px">75.8</div>
+    <div class="rname" style="top:84px;color:var(--acc)">BDC-Adapter</div>
+    <div class="rtrack" style="top:84px"><div class="rbar" id="bar1" style="width:243px;background:var(--acc)"></div></div>
+    <div class="rval hl" id="val1" style="left:361px;top:84px">78.5</div>
+    <div class="chip acc" id="gain" style="left:403px">+2.7</div>
+  </div>
+
+  <div class="caption" id="cap">
+    <span class="cap-half" id="ch1"><span class="hl">BDC</span> catches what</span>
+    <span class="cap-half" id="ch2"><span class="bad">covariance</span> misses</span>
+  </div>
+</div></div>
+
+<script>
+// fixed-seed PRNG so every render is identical
+function rng(seed) { return function () { seed |= 0; seed = seed + 0x6D2B79F5 | 0; var t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+  t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+var R = rng(11);
+
+// ---- toy: y depends on x through a U-shape. Points are mirror-symmetric, so cov(x, y) is exactly 0 ----
+var SVGNS = 'http://www.w3.org/2000/svg', plot = document.getElementById('plot');
+function S(tag, attrs) { var e = document.createElementNS(SVGNS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); return e; }
+plot.appendChild(S('line', { x1: 24, y1: 172, x2: 236, y2: 172, 'class': 'ax' }));
+plot.appendChild(S('line', { x1: 24, y1: 30, x2: 24, y2: 172, 'class': 'ax' }));
+var P = [], jit = [];
+for (var k = 0; k <= 10; k++) jit.push([k === 10 ? 0 : (R() - 0.5) * 4, (R() - 0.5) * 9]);
+for (var k = 0; k <= 20; k++) {
+  var u = -1 + k / 10, j = jit[k <= 10 ? k : 20 - k], s = k <= 10 ? 1 : -1;
+  P.push([130 + 96 * u + s * j[0], 160 - 112 * u * u + j[1]]);
+}
+var meanY = P.reduce(function (a, p) { return a + p[1]; }, 0) / P.length;
+var webG = S('g', {}), ptG = S('g', {});
+var WEB = [0, 3, 6, 10, 14, 17, 20];
+for (var a = 0; a < WEB.length; a++) for (var b = a + 1; b < WEB.length; b++) {
+  var p = P[WEB[a]], q = P[WEB[b]];
+  webG.appendChild(S('line', { x1: p[0], y1: p[1], x2: q[0], y2: q[1], 'class': 'web' }));
+}
+plot.appendChild(webG);
+plot.appendChild(S('line', { id: 'covline', x1: 30, y1: meanY, x2: 232, y2: meanY }));
+P.forEach(function (p) { ptG.appendChild(S('circle', { cx: p[0], cy: p[1], r: 3.7, 'class': 'pt' })); });
+plot.appendChild(ptG);
+var covlab = document.getElementById('covlab');
+covlab.style.left = '104px'; covlab.style.top = (meanY - 22) + 'px';
+
+// ---- schematic BDC matrices: illustrative plaid patterns, not real features ----
+// M[i][j] = 0.12 + 0.88 * v_i * v_j, so each class has a recognisable pattern; the cat
+// prototype is closest to the query's, truck the farthest (same ranking as Fig. 2c)
+var N = 6;
+function plaid(v) { var m = []; for (var i = 0; i < N; i++) { m.push([]); for (var j = 0; j < N; j++) m[i].push(0.12 + 0.88 * v[i] * v[j]); } return m; }
+var Q = plaid([1, 0.9, 0.2, 0.15, 0.85, 0.3]);
+var CLASSES = [
+  { name: 'dog',   img: 'support_dog_border_collie', v: [1, 0.75, 0.25, 0.85, 0.2, 0.3],  score: 0.65 },
+  { name: 'cat',   img: 'support_cat_ragdoll',       v: [0.95, 0.9, 0.25, 0.2, 0.8, 0.25], score: 1.0 },
+  { name: 'car',   img: 'support_car_blue_suv',      v: [0.25, 0.8, 0.9, 0.2, 0.3, 0.85],  score: 0.52 },
+  { name: 'truck', img: 'support_truck',             v: [0.2, 0.25, 0.9, 1, 0.15, 0.75],   score: 0.19 }
+];
+function matrix(el, m, cell, gap) {
+  el.style.width = el.style.height = (N * cell + (N - 1) * gap) + 'px';
+  for (var i = 0; i < N; i++) for (var j = 0; j < N; j++) {
+    var c = document.createElement('div');
+    c.style.left = j * (cell + gap) + 'px'; c.style.top = i * (cell + gap) + 'px';
+    c.style.width = c.style.height = cell + 'px'; c.style.opacity = m[i][j].toFixed(3);
+    c.setAttribute('data-d', i + j);
+    el.appendChild(c);
+  }
+  return el;
+}
+matrix(document.getElementById('qmat'), Q, 7, 1.4);
+var ROW_Y = function (k) { return 62 + 47 * k; };
+var rows = document.getElementById('rows');
+CLASSES.forEach(function (c, k) {
+  var r = document.createElement('div');
+  r.className = 'panel row'; r.id = 'row' + k; r.style.top = ROW_Y(k) + 'px';
+  r.innerHTML =
+    '<div class="ghost" style="left:6px;top:3px"></div><div class="ghost" style="left:9px;top:6px"></div>' +
+    '<div class="img thumb"><img src="../assets/bdc/' + c.img + '.jpg"></div>' +
+    '<div class="cname" id="cn' + k + '">' + c.name +
+      (c.name === 'cat' ? '<i data-i="check" data-s="14" data-w="2.6" id="okcat" style="color:var(--good)"></i>' : '') + '</div>' +
+    '<div class="mat p" style="left:92px;top:2px"></div>' +
+    '<div class="dotop">\u00b7</div>' +
+    '<div class="trk"><div class="sbar" style="width:' + Math.round(120 * c.score) + 'px' + (c.name === 'cat' ? ';background:var(--acc)' : '') + '"></div></div>';
+  rows.appendChild(r);
+  matrix(r.querySelector('.mat'), plaid(c.v), 6, 1);
+  // a copy of the query's BDC matrix that slides next to each prototype
+  var cp = matrix(document.createElement('div'), Q, 6, 1);
+  cp.className = 'mat q qcopy'; cp.id = 'qc' + k;
+  cp.style.left = (132 + 150) + 'px'; cp.style.top = (ROW_Y(k) + 2) + 'px';
+  document.getElementById('scene').appendChild(cp);
+});
+
+Stage.build(function (o) {
+  var tl = o.tl;
+
+  // ---- beat 1: covariance calls a U-shaped relation "independent" --------------------------
+  tl.from('#q', { opacity: 0, y: -6 }, 0.3);
+  tl.from('#q1', { opacity: 0 }, 0.45);
+  tl.set('#q2', { opacity: 0 }, 0);
+  tl.fromTo('#cap .cap-half', { opacity: 0 }, { opacity: 0.32, duration: 0.4 }, 0.4);
+  tl.from('#toy', { opacity: 0, y: 8 }, 0.45);
+  tl.from('#plot circle', { opacity: 0, scale: 0.3, transformOrigin: '50% 50%', duration: 0.3, ease: 'back.out(2)', stagger: 0.022 }, 0.6);
+  tl.fromTo('#covline', { scaleX: 0, transformOrigin: '0% 50%' }, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, 1.2);
+  tl.from('#covlab', { opacity: 0, y: 4, duration: 0.3 }, 1.5);
+  tl.from('#whoA', { opacity: 0, x: -6 }, 1.55);
+  tl.from('#a1', { opacity: 0, x: -6 }, 1.7);
+  tl.to('#ch2', { opacity: 1, duration: 0.4 }, 1.75);
+  // BDC works from all pairwise distances, so it sees the curve
+  tl.from('#plot .web', { opacity: 0, duration: 0.25, stagger: 0.022 }, 2.2);
+  tl.to('#plot circle', { fill: 'var(--acc)', duration: 0.35, stagger: 0.01 }, 2.35);
+  tl.to(['#covline', '#covlab'], { opacity: 0.35, duration: 0.35 }, 2.5);
+  tl.from('#whoB', { opacity: 0, x: -6 }, 2.6);
+  tl.fromTo('#b1', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, 2.75);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, 2.8);
+
+  // ---- beat 2: each image becomes a BDC matrix, matched against class prototypes -----------
+  var B2 = 4.0;
+  tl.to(['#toy', '.b1'], { opacity: 0, duration: 0.35 }, B2);
+  tl.to('#q1', { opacity: 0, duration: 0.25 }, B2);
+  tl.to('#q2', { opacity: 1, duration: 0.3 }, B2 + 0.25);
+  tl.fromTo('#cat', { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.45 }, B2 + 0.2);
+  tl.fromTo('#rows .row', { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.4, stagger: 0.07 }, B2 + 0.35);
+  tl.fromTo('#bdcchip', { opacity: 0, y: -6 }, { opacity: 1, y: 0, duration: 0.35 }, B2 + 0.55);
+  // matrices build cell by cell along the anti-diagonals
+  tl.from('#qmat > div', { scale: 0, duration: 0.25, ease: 'back.out(2)', stagger: function (i, el) { return 0.035 * +el.getAttribute('data-d'); } }, B2 + 0.75);
+  tl.from('#rows .mat > div', { scale: 0, duration: 0.25, ease: 'back.out(2)', stagger: function (i, el) { return 0.03 * +el.getAttribute('data-d') + 0.06 * Math.floor(i / 36); } }, B2 + 0.85);
+  tl.fromTo('#rows .dotop', { opacity: 0 }, { opacity: 1, duration: 0.3 }, B2 + 1.3);
+  // the query matrix is compared with every prototype
+  var qr = document.getElementById('qmat').getBoundingClientRect(), st = document.getElementById('stage').getBoundingClientRect();
+  CLASSES.forEach(function (c, k) {
+    var dx = (qr.left - st.left) - 282, dy = (qr.top - st.top) - (ROW_Y(k) + 2);
+    tl.fromTo('#qc' + k, { x: dx, y: dy, scale: 49 / 41, transformOrigin: '0 0', opacity: 0 },
+      { x: 0, y: 0, scale: 1, opacity: 1, duration: 0.6, ease: 'power3.inOut' }, B2 + 1.35 + 0.07 * k);
+  });
+  tl.fromTo('#rows .sbar', { scaleX: 0 }, { scaleX: 1, duration: 0.55, stagger: 0.06 }, B2 + 2.0);
+  tl.fromTo('#okcat', { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2.4)' }, B2 + 2.6);
+  tl.to('#cn1', { color: 'var(--good)', duration: 0.3 }, B2 + 2.6);
+  tl.to('#row1', { borderColor: 'var(--good-line)', duration: 0.3 }, B2 + 2.6);
+
+  // ---- beat 3: the number --------------------------------------------------------------
+  var RES = 7.9;
+  tl.to(['#cat', '#bdcchip', '#qmat', '#rows', '.qcopy'], { opacity: 0, duration: 0.35 }, RES);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, RES + 0.25);
+  tl.fromTo('#bar0', { scaleX: 0 }, { scaleX: 1, duration: 0.6 }, RES + 0.45);
+  o.count('#val0', 0, 75.8, RES + 0.45, 0.6);
+  tl.fromTo('#val0', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.45);
+  tl.fromTo('#bar1', { scaleX: 0 }, { scaleX: 1, duration: 0.75 }, RES + 0.85);
+  o.count('#val1', 0, 78.5, RES + 0.85, 0.75);
+  tl.fromTo('#val1', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.85);
+  tl.fromTo('#gain', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, RES + 1.5);
+}, { duration: 10.5, poster: 3.7 });
+</script>
+</body></html>

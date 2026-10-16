@@ -1,0 +1,158 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>InstructPart teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* photo, top right (the long "ACL 2025 (Main)" badge owns x < 280, y < 56) */
+  #photo { left: 282px; top: 10px; width: 182px; height: 243px; border-radius: 8px; overflow: hidden;
+           background: var(--panel-2); box-shadow: var(--shadow); }
+  #photo > img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  #photo::after { content: ""; position: absolute; inset: 0; border-radius: 8px; box-shadow: inset 0 0 0 1px var(--img-line); }
+
+  /* tinted mask layers: an SVG rect in a theme token, cut out by the model's mask PNG */
+  svg.ov { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; }
+  .ov .bad { fill: var(--bad); }
+  .ov .good { fill: var(--good); }
+  .pre { display: none; }
+
+  /* instruction card */
+  #q { left: 16px; top: 62px; width: 254px; height: 47px; }
+  #q .qmark { position: absolute; left: 10px; top: 12px; width: 21px; height: 21px; border-radius: 6px;
+              background: var(--ink); color: var(--bg); font: 700 11px/21px "Space Grotesk"; text-align: center; }
+  .qt { position: absolute; left: 40px; top: 8.5px; width: 208px; font: 500 12px/15px Inter; color: var(--ink); }
+  .qt b { font-weight: 700; color: var(--acc); }
+
+  /* model rows */
+  .who { position: absolute; left: 18px; font: 600 9.5px/1 Inter; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-faint); }
+  .who.us { color: var(--acc); }
+  .ans { left: 16px; height: 26px; font-size: 12.5px; padding: 0 9px; }
+
+  /* on-photo tags */
+  .tag { font-size: 11.5px; height: 20px; padding: 0 6px; background: var(--panel); }
+
+  /* result */
+  #res { left: 16px; top: 120px; width: 254px; height: 136px; }
+  .rname { position: absolute; left: 14px; width: 44px; font: 600 12.5px/22px Inter; color: var(--ink-soft); }
+  .rtrack { position: absolute; left: 60px; height: 22px; width: 140px; border-radius: 5px; background: var(--panel-2); }
+  .rbar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; transform-origin: 0 50%; }
+  .rval { position: absolute; font: 700 17px/22px "Space Grotesk"; }
+  .rsub { position: absolute; left: 60px; font: 500 11.5px/1 Inter; color: var(--ink-faint); white-space: nowrap; }
+  #gain { height: 22px; font-size: 12px; }
+
+  .cap-half { display: inline-block; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <div class="abs" id="photo">
+    <img src="../assets/instructpart/kettle.jpg">
+    <svg class="ov" viewBox="0 0 300 400" preserveAspectRatio="none">
+    <defs>
+      <mask id="mX" maskUnits="userSpaceOnUse" x="0" y="0" width="300" height="400"><image href="../assets/instructpart/mask_xdecoder.png" width="300" height="400"/></mask>
+      <mask id="nX" maskUnits="userSpaceOnUse" x="0" y="0" width="300" height="400"><image href="../assets/instructpart/edge_xdecoder.png" width="300" height="400"/></mask>
+      <mask id="mL" maskUnits="userSpaceOnUse" x="0" y="0" width="300" height="400"><image href="../assets/instructpart/mask_lisa.png" width="300" height="400"/></mask>
+      <mask id="nL" maskUnits="userSpaceOnUse" x="0" y="0" width="300" height="400"><image href="../assets/instructpart/edge_lisa.png" width="300" height="400"/></mask>
+      <mask id="mP" maskUnits="userSpaceOnUse" x="0" y="0" width="300" height="400"><image href="../assets/instructpart/mask_pisa.png" width="300" height="400"/></mask>
+      <mask id="nP" maskUnits="userSpaceOnUse" x="0" y="0" width="300" height="400"><image href="../assets/instructpart/edge_pisa.png" width="300" height="400"/></mask>
+    </defs>
+    <rect id="fX" class="bad" width="300" height="400" fill-opacity="0.5" mask="url(#mX)"/>
+    <rect id="eX" class="bad" width="300" height="400" mask="url(#nX)"/>
+    <rect id="fL" class="bad" width="300" height="400" fill-opacity="0.5" mask="url(#mL)"/>
+    <rect id="eL" class="bad" width="300" height="400" mask="url(#nL)"/>
+    <rect id="fP" class="good" width="300" height="400" fill-opacity="0.5" mask="url(#mP)"/>
+    <rect id="eP" class="good" width="300" height="400" mask="url(#nP)"/>
+    </svg>
+  </div>
+  <img class="pre" src="../assets/instructpart/mask_xdecoder.png">
+  <img class="pre" src="../assets/instructpart/edge_xdecoder.png">
+  <img class="pre" src="../assets/instructpart/mask_lisa.png">
+  <img class="pre" src="../assets/instructpart/edge_lisa.png">
+  <img class="pre" src="../assets/instructpart/mask_pisa.png">
+  <img class="pre" src="../assets/instructpart/edge_pisa.png">
+
+  <div class="panel" id="q">
+    <div class="qmark">Q</div>
+    <div class="qt"><span id="qa"></span><b id="qb"></b></div>
+  </div>
+
+  <div class="who" id="w1" style="top:122px">X-Decoder</div>
+  <div class="chip ans no" id="a1" style="top:135px">the toaster <i data-i="cross" data-s="12" data-w="2.4"></i></div>
+  <div class="who" id="w2" style="top:170px">LISA</div>
+  <div class="chip ans no" id="a2" style="top:183px">the whole kettle <i data-i="cross" data-s="12" data-w="2.4"></i></div>
+  <div class="who us" id="w3" style="top:218px">PISA · fine-tuned</div>
+  <div class="chip ans ok" id="a3" style="top:231px">just the handle <i data-i="check" data-s="13" data-w="2.4"></i></div>
+
+  <div class="panel" id="res">
+    <div class="label abs" style="left:14px;top:12px">gIoU · InstructPart</div>
+    <div class="rname" style="top:36px">LISA</div>
+    <div class="rtrack" style="top:36px"><div class="rbar" id="bar0" style="width:45px;background:var(--base)"></div></div>
+    <div class="rval soft" id="val0" style="left:111px;top:36px">32.1</div>
+    <div class="rsub" style="top:62px">best off-the-shelf model</div>
+    <div class="rname" style="top:84px;color:var(--acc)">PISA</div>
+    <div class="rtrack" style="top:84px"><div class="rbar" id="bar1" style="width:106.7px;background:var(--acc)"></div></div>
+    <div class="rval hl" id="val1" style="left:173px;top:84px">76.2</div>
+    <div class="chip acc" id="gain" style="left:216px;top:84px">2.4×</div>
+    <div class="rsub" style="top:110px">fine-tuned on InstructPart</div>
+  </div>
+
+  <div class="caption" id="cap">
+    <span class="cap-half" id="ch1">Not the <span class="bad">object</span>,</span>
+    <span class="cap-half" id="ch2">but the <span class="good">part</span> the task needs</span>
+  </div>
+</div></div>
+
+<script>
+Stage.build(function (o) {
+  var tl = o.tl;
+
+  // ---- beat 1: the instruction; off-the-shelf models grab whole objects -------------
+  tl.from('#photo', { opacity: 0, y: -6 }, 0.25);
+  tl.from('#q', { opacity: 0, y: 6 }, 0.35);
+  o.type('#qa', 'Which part in the picture can be utilized to ', 0.6, 0.95);
+  o.type('#qb', 'hold the kettle?', 1.55, 0.35);
+  tl.fromTo('#cap .cap-half', { opacity: 0 }, { opacity: 0.32, duration: 0.4 }, 0.4);
+  tl.set(['#fX', '#eX', '#fL', '#eL', '#fP', '#eP'], { opacity: 0 }, 0);
+
+  var B1 = 2.0;
+  tl.from('#w1', { opacity: 0, x: -6 }, B1);
+  tl.to('#fX', { opacity: 1, duration: 0.35 }, B1 + 0.1);
+  tl.to('#eX', { opacity: 1, duration: 0.35 }, B1 + 0.1);
+  tl.from('#a1', { opacity: 0, x: -6 }, B1 + 0.3);
+
+  var B2 = B1 + 1.15;
+  tl.to(['#fX', '#eX'], { opacity: 0, duration: 0.3 }, B2);
+  tl.from('#w2', { opacity: 0, x: -6 }, B2);
+  tl.to('#fL', { opacity: 1, duration: 0.35 }, B2 + 0.12);
+  tl.to('#eL', { opacity: 1, duration: 0.35 }, B2 + 0.12);
+  tl.from('#a2', { opacity: 0, x: -6 }, B2 + 0.3);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, B2 + 0.35);
+
+  // ---- beat 2: PISA finds the part the task needs -------------------------------------
+  var P = 4.75;
+  tl.to(['#fL', '#eL'], { opacity: 0, duration: 0.3 }, P);
+  tl.to(['#a1', '#a2', '#w1', '#w2'], { opacity: 0.38, duration: 0.3 }, P);
+  tl.to('#ch1', { opacity: 0.32, duration: 0.4 }, P);
+  tl.from('#w3', { opacity: 0, x: -6 }, P + 0.15);
+  tl.to('#fP', { opacity: 1, duration: 0.35 }, P + 0.3);
+  tl.fromTo('#eP', { opacity: 0, scale: 1.08, svgOrigin: '218 216' }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, P + 0.3);
+  tl.fromTo('#a3', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, P + 0.6);
+  tl.to('#ch2', { opacity: 1, duration: 0.4 }, P + 0.6);
+
+  // ---- beat 3: the number --------------------------------------------------------------
+  var R = 7.0;
+  tl.to(['#w1', '#a1', '#w2', '#a2', '#w3', '#a3'], { opacity: 0, duration: 0.3 }, R);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, R + 0.2);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, R + 0.2);
+  tl.fromTo('#bar0', { scaleX: 0 }, { scaleX: 1, duration: 0.6 }, R + 0.45);
+  o.count('#val0', 0, 32.1, R + 0.45, 0.6);
+  tl.fromTo('#val0', { opacity: 0 }, { opacity: 1, duration: 0.2 }, R + 0.45);
+  tl.fromTo('#bar1', { scaleX: 0 }, { scaleX: 1, duration: 0.8 }, R + 0.85);
+  o.count('#val1', 0, 76.2, R + 0.85, 0.8);
+  tl.fromTo('#val1', { opacity: 0 }, { opacity: 1, duration: 0.2 }, R + 0.85);
+  tl.fromTo('#gain', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, R + 1.55);
+}, { duration: 10.5, poster: 9.9 });
+</script>
+</body></html>

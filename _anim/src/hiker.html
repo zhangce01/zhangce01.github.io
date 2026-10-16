@@ -1,0 +1,232 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>HiKER-SGG teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* clean / sun glare toggle, top right (the venue badge owns the top-left corner) */
+  #toggle { left: 300px; top: 14px; width: 164px; height: 28px; border-radius: 8px; background: var(--panel-2); border: 1px solid var(--line); }
+  #knob { position: absolute; left: 2px; top: 2px; width: 78px; height: 22px; border-radius: 6px; background: var(--panel); box-shadow: var(--shadow); }
+  .tg { position: absolute; top: 0; width: 81px; height: 26px; display: flex; align-items: center; justify-content: center;
+        font: 600 11.5px/1 Inter; color: var(--ink-faint); white-space: nowrap; }
+  #tg0 { left: 0; } #tg1 { left: 81px; }
+
+  /* photo */
+  #photo { left: 16px; top: 62px; width: 212px; height: 146px; border-radius: 8px; overflow: hidden; background: var(--panel-2); box-shadow: var(--shadow); }
+  #photo > img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  #photo::after { content: ""; position: absolute; inset: 0; border-radius: 8px; box-shadow: inset 0 0 0 1px var(--img-line); }
+  .bx { position: absolute; border-radius: 3px; border: 2px solid; box-shadow: 0 0 0 1px var(--panel), inset 0 0 0 1px var(--panel); }
+  #bCat { left: 21.4%; top: 19.9%; width: 50.5%; height: 62.2%; border-color: var(--gold); }
+  #bGrass { left: 0.6%; top: 53.7%; width: 98.8%; height: 45.6%; border-color: var(--blue); }
+
+  /* scene graph: subject -on-> object */
+  .node { top: 220px; height: 25px; font-size: 12.5px; padding: 0 9px; }
+  .node.cat { background: var(--gold-soft); border-color: var(--gold); color: var(--gold); }
+  .node.grass { background: var(--blue-soft); border-color: var(--blue); color: var(--blue); left: 150px; }
+  #edge { position: absolute; left: 0; top: 0; width: 480px; height: 300px; overflow: visible; }
+  #edge path { fill: none; stroke: var(--ink-soft); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  #onLab { position: absolute; left: 112px; top: 216px; font: 600 12px/1 Inter; color: var(--ink-soft); }
+
+  /* classifier panel */
+  #cls { left: 240px; top: 50px; width: 224px; height: 198px; }
+  .who { position: absolute; left: 14px; font: 600 9.5px/1 Inter; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap; }
+  .who.us { color: var(--acc); }
+  .cb { position: absolute; left: 14px; height: 19px; border-radius: 3px 5px 5px 3px; background: var(--base); transform-origin: 0 50%; }
+  .cl { position: absolute; left: 20px; height: 19px; font: 500 11.5px/19px "JetBrains Mono", monospace; color: var(--ink); white-space: nowrap; }
+  .mark { position: absolute; }
+  .stg { position: absolute; left: 14px; font: 500 11.5px/1 Inter; color: var(--ink-soft); white-space: nowrap; }
+
+  /* result */
+  #res { left: 16px; top: 62px; width: 448px; height: 186px; }
+  .tile { position: absolute; top: 34px; width: 70px; height: 45px; border-radius: 4px; overflow: hidden; box-shadow: inset 0 0 0 1px var(--img-line); }
+  .tile img { width: 100%; height: 100%; display: block; object-fit: cover; }
+  #more { left: 406px; top: 46px; height: 22px; font-size: 11.5px; }
+  .rname { position: absolute; left: 16px; width: 84px; font: 600 12.5px/22px Inter; color: var(--ink-soft); white-space: nowrap; }
+  .rtrack { position: absolute; left: 104px; height: 22px; width: 260px; border-radius: 5px; background: var(--panel-2); }
+  .rbar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; transform-origin: 0 50%; }
+  .rval { position: absolute; font: 700 17px/22px "Space Grotesk"; }
+  #gain { height: 22px; font-size: 12px; }
+
+  .cap-part { display: inline-block; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <div class="abs" id="toggle">
+    <div id="knob"></div>
+    <div class="tg" id="tg0">clean</div>
+    <div class="tg" id="tg1">sun glare</div>
+  </div>
+
+  <div class="abs" id="photo">
+    <img src="../assets/hiker/cat_clean.jpg">
+    <img id="glare" src="../assets/hiker/cat_glare.jpg">
+    <div class="bx" id="bGrass"></div>
+    <div class="bx" id="bCat"></div>
+  </div>
+
+  <!-- scene graph -->
+  <div class="chip node cat" id="s0" style="left:16px">cat</div>
+  <div class="chip node" id="s1" style="left:16px">?</div>
+  <div class="chip node no" id="s2" style="left:16px">bread <i data-i="cross" data-s="12" data-w="2.4"></i></div>
+  <div class="chip node ok" id="s3" style="left:16px">cat <i data-i="check" data-s="13" data-w="2.4"></i></div>
+  <svg id="edge" viewBox="0 0 480 300"><path id="arr" d="M100 233 L 143 233 M 138.5 228.5 L 143 233 L 138.5 237.5"/></svg>
+  <div id="onLab">on</div>
+  <div class="chip node grass" id="o0">grass</div>
+
+  <!-- classifiers -->
+  <div class="panel" id="cls">
+    <div class="who" id="whoFlat" style="top:13px">conventional SGG</div>
+    <div class="who us" id="whoHi" style="top:13px">HiKER-SGG</div>
+    <div id="flat"></div>
+    <div id="hier">
+      <div class="stg" id="stA" style="top:28px">1 · superclass</div>
+      <div class="stg" id="stB" style="top:109px">2 · class within <b style="color:var(--good)">animal</b></div>
+    </div>
+  </div>
+
+  <div class="panel" id="res">
+    <div class="label abs" style="left:16px;top:16px">VG-C · 20 corruptions · zero-shot</div>
+    <div class="label abs" style="right:16px;top:16px">PredCls · mR@100</div>
+    <div class="tile" style="left:16px"><img src="../assets/hiker/vgc_sunlight_glare.jpg"></div>
+    <div class="tile" style="left:92px"><img src="../assets/hiker/vgc_waterdrop.jpg"></div>
+    <div class="tile" style="left:168px"><img src="../assets/hiker/vgc_wildfire_smoke.jpg"></div>
+    <div class="tile" style="left:244px"><img src="../assets/hiker/vgc_rain.jpg"></div>
+    <div class="tile" style="left:320px"><img src="../assets/hiker/vgc_snow.jpg"></div>
+    <div class="chip" id="more">+15</div>
+    <div class="rname" style="top:94px">GB-Net</div>
+    <div class="rtrack" style="top:94px"><div class="rbar" id="bar0" style="width:114.4px;background:var(--base)"></div></div>
+    <div class="rval soft" id="val0" style="left:224px;top:94px">44.0</div>
+    <div class="rname" style="top:122px">EB-Net</div>
+    <div class="rtrack" style="top:122px"><div class="rbar" id="bar1" style="width:147.4px;background:var(--base)"></div></div>
+    <div class="rval soft" id="val1" style="left:257px;top:122px">56.7</div>
+    <div class="rname" style="top:150px;color:var(--acc)">HiKER-SGG</div>
+    <div class="rtrack" style="top:150px"><div class="rbar" id="bar2" style="width:159.6px;background:var(--acc)"></div></div>
+    <div class="rval hl" id="val2" style="left:270px;top:150px">61.4</div>
+    <div class="chip acc" id="gain" style="left:314px;top:150px">+4.7</div>
+  </div>
+
+  <div class="caption" id="cap">
+    <span class="cap-part" id="c1">Coarse to fine:</span>
+    <span class="cap-part" id="c2"><span class="good">animal</span> first,</span>
+    <span class="cap-part" id="c3">then <span class="good">cat</span></span>
+  </div>
+</div></div>
+
+<script>
+// bar lengths follow the schematic Fig. 1 of the paper (no numbers are given there)
+var FLAT = [['cat', 225], ['dog', 130], ['rabbit', 148], ['bread', 288], ['toy', 98], ['carpet', 178]];
+var SUPER = [['artifact', 165], ['animal', 245], ['food', 195]];
+var SUB = [['rabbit', 130], ['dog', 165], ['cat', 252]];
+function bars(host, rows, top, step, scale, winner, cls, prefix) {
+  var h = document.getElementById(host), out = [];
+  rows.forEach(function (r, i) {
+    var y = top + i * step, w = Math.round(r[1] * scale);
+    var b = document.createElement('div'); b.className = 'cb'; b.id = prefix + 'b' + i;
+    b.style.top = y + 'px'; b.style.width = w + 'px'; h.appendChild(b);
+    var l = document.createElement('div'); l.className = 'cl'; l.id = prefix + 'l' + i;
+    l.style.top = y + 'px'; l.textContent = r[0]; h.appendChild(l);
+    if (i === winner) {
+      var m = document.createElement('div'); m.className = 'mark'; m.id = prefix + 'm';
+      m.style.left = (14 + w + 5) + 'px'; m.style.top = (y + 2) + 'px';
+      m.style.color = cls === 'bad' ? 'var(--bad)' : 'var(--good)';
+      m.innerHTML = '<i data-i="' + (cls === 'bad' ? 'cross' : 'check') + '" data-s="16" data-w="2.6"></i>';
+      h.appendChild(m);
+    }
+  });
+}
+bars('flat', FLAT, 31, 26, 172 / 288, 3, 'bad', 'f');
+bars('hier', SUPER, 43, 21, 150 / 245, 1, 'good', 'a');
+bars('hier', SUB, 125, 21, 150 / 252, 2, 'good', 'c');
+
+Stage.build(function (o) {
+  var tl = o.tl;
+  var L = document.getElementById('arr').getTotalLength();
+  tl.set('#arr', { strokeDasharray: L + ' ' + L, strokeDashoffset: L }, 0);
+  tl.set(['#glare', '#s1', '#s2', '#s3', '#whoHi', '#hier', '#cls'], { opacity: 0 }, 0);
+
+  // ---- setup: a clean photo parses fine ------------------------------------------------
+  tl.from('#photo', { opacity: 0, y: 6 }, 0.25);
+  tl.from('#toggle', { opacity: 0, y: -6 }, 0.4);
+  tl.set('#knob', { opacity: 0 }, 0);
+  tl.to('#knob', { opacity: 1, duration: 0.2 }, 0.6);
+  tl.to('#tg0', { color: 'var(--ink)', duration: 0.2 }, 0.6);
+  tl.fromTo('#cap .cap-part', { opacity: 0 }, { opacity: 0.32, duration: 0.4 }, 0.4);
+  tl.to('#c1', { opacity: 1, duration: 0.4 }, 0.8);
+  tl.fromTo(['#bCat', '#bGrass'], { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2)', stagger: 0.1 }, 0.5);
+  tl.fromTo('#s0', { opacity: 0, y: 5 }, { opacity: 1, y: 0, duration: 0.35 }, 0.7);
+  tl.to('#arr', { strokeDashoffset: 0, duration: 0.35, ease: 'power2.inOut' }, 0.85);
+  tl.from('#onLab', { opacity: 0 }, 0.95);
+  tl.from('#o0', { opacity: 0, y: 5 }, 1.0);
+
+  // ---- beat 1: sun glare -> a flat classifier says "bread" -------------------------------
+  var G = 1.9;
+  tl.to('#knob', { x: 81, backgroundColor: 'var(--gold-soft)', duration: 0.45, ease: 'power3.inOut' }, G);
+  tl.to('#tg0', { color: 'var(--ink-faint)', duration: 0.3 }, G);
+  tl.to('#tg1', { color: 'var(--gold)', duration: 0.3 }, G + 0.1);
+  tl.to('#glare', { opacity: 1, duration: 0.6, ease: 'power1.inOut' }, G + 0.1);
+  tl.to('#s0', { opacity: 0, duration: 0.25 }, G + 0.3);
+  tl.to('#s1', { opacity: 1, duration: 0.25 }, G + 0.4);
+  tl.fromTo('#cls', { opacity: 0, x: 8 }, { opacity: 1, x: 0, duration: 0.4 }, G + 0.45);
+  FLAT.forEach(function (r, i) {
+    tl.fromTo('#fb' + i, { scaleX: 0 }, { scaleX: 1, duration: 0.55 }, G + 0.65 + 0.05 * i);
+    tl.from('#fl' + i, { opacity: 0, duration: 0.3 }, G + 0.7 + 0.05 * i);
+  });
+  tl.to('#fb3', { backgroundColor: 'var(--bad)', duration: 0.3 }, G + 1.35);
+  tl.to('#fl3', { color: 'var(--panel)', duration: 0.3 }, G + 1.35);
+  tl.fromTo('#fm', { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.2)' }, G + 1.4);
+  tl.to('#s1', { opacity: 0, duration: 0.2 }, G + 1.5);
+  tl.fromTo('#s2', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, G + 1.55);
+
+  // ---- beat 2: hierarchical inference: superclass first, then the class ---------------
+  var K = 4.75;
+  tl.to(['#flat', '#whoFlat'], { opacity: 0, duration: 0.3 }, K);
+  tl.to('#s2', { opacity: 0, duration: 0.25 }, K);
+  tl.to('#s1', { opacity: 1, duration: 0.25 }, K + 0.1);
+  tl.to('#whoHi', { opacity: 1, duration: 0.3 }, K + 0.2);
+  tl.set('#hier', { opacity: 1 }, K + 0.2);
+  tl.set(['#stB', '#cb0', '#cb1', '#cb2', '#cl0', '#cl1', '#cl2', '#cm'], { opacity: 0 }, 0);
+  tl.from('#stA', { opacity: 0, x: -5 }, K + 0.25);
+    SUPER.forEach(function (r, i) {
+    tl.fromTo('#ab' + i, { scaleX: 0 }, { scaleX: 1, duration: 0.5 }, K + 0.35 + 0.06 * i);
+    tl.from('#al' + i, { opacity: 0, duration: 0.3 }, K + 0.4 + 0.06 * i);
+  });
+  tl.to('#ab1', { backgroundColor: 'var(--good)', duration: 0.3 }, K + 0.85);
+  tl.to('#al1', { color: 'var(--panel)', duration: 0.3 }, K + 0.85);
+  tl.fromTo('#am', { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.2)' }, K + 0.9);
+  tl.to('#c2', { opacity: 1, duration: 0.4 }, K + 0.9);
+  tl.to(['#ab0', '#ab2', '#al0', '#al2'], { opacity: 0.45, duration: 0.3 }, K + 1.15);
+
+  var C = K + 1.25;
+  tl.to('#stB', { opacity: 1, duration: 0.3 }, C);
+  SUB.forEach(function (r, i) {
+    tl.fromTo('#cb' + i, { opacity: 1, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5 }, C + 0.1 + 0.06 * i);
+    tl.to('#cl' + i, { opacity: 1, duration: 0.3 }, C + 0.15 + 0.06 * i);
+  });
+  tl.to('#cb2', { backgroundColor: 'var(--good)', duration: 0.3 }, C + 0.6);
+  tl.to('#cl2', { color: 'var(--panel)', duration: 0.3 }, C + 0.6);
+  tl.to('#cm', { opacity: 1, duration: 0.01 }, C + 0.65);
+  tl.fromTo('#cm', { scale: 0.4 }, { scale: 1, duration: 0.4, ease: 'back.out(2.2)' }, C + 0.65);
+  tl.to('#s1', { opacity: 0, duration: 0.2 }, C + 0.7);
+  tl.fromTo('#s3', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, C + 0.75);
+  tl.to('#c3', { opacity: 1, duration: 0.4 }, C + 0.7);
+  tl.to(['#cb0', '#cb1', '#cl0', '#cl1'], { opacity: 0.45, duration: 0.3 }, C + 0.95);
+
+  // ---- beat 3: the number ----------------------------------------------------------------
+  var R = 7.95;
+  tl.to(['#photo', '#cls', '#s3', '#edge', '#onLab', '#o0', '#toggle'], { opacity: 0, duration: 0.35 }, R);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, R + 0.2);
+  tl.fromTo('#res .tile', { opacity: 0, x: 6 }, { opacity: 1, x: 0, duration: 0.35, stagger: 0.06 }, R + 0.3);
+  tl.fromTo('#more', { opacity: 0 }, { opacity: 1, duration: 0.3 }, R + 0.65);
+  [['#bar0', '#val0', 44.0], ['#bar1', '#val1', 56.7], ['#bar2', '#val2', 61.4]].forEach(function (b, i) {
+    var t0 = R + 0.4 + 0.2 * i;
+    tl.fromTo(b[0], { scaleX: 0 }, { scaleX: 1, duration: 0.6 }, t0);
+    o.count(b[1], 0, b[2], t0, 0.6);
+    tl.fromTo(b[1], { opacity: 0 }, { opacity: 1, duration: 0.2 }, t0);
+  });
+  tl.fromTo('#gain', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, R + 1.35);
+}, { duration: 10.5, poster: 7.6 });
+</script>
+</body></html>

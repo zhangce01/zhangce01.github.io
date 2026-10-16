@@ -1,0 +1,266 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>VScan teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* question card, top right (the venue badge owns the top-left corner) */
+  #q { left: 206px; top: 10px; width: 258px; height: 42px; }
+  #q .qmark { position: absolute; left: 9px; top: 11px; width: 19px; height: 19px; border-radius: 6px;
+              background: var(--ink); color: var(--bg); font: 700 11px/19px "Space Grotesk"; text-align: center; }
+  .qt { position: absolute; left: 36px; top: 7px; width: 214px; font: 600 11.5px/14px Inter; color: var(--ink); }
+  #qGlow { left: 205px; top: 9px; width: 260px; height: 44px; border-radius: 11px; border: 2px solid var(--acc); }
+
+  /* image + visual-token grid (12 x 9 tokens of 18 px) */
+  #img { left: 16px; top: 64px; width: 216px; height: 162px; }
+  .tile { position: absolute; width: 18px; height: 18px; }
+  .veil { position: absolute; inset: 0; background: var(--fog); opacity: 0; }
+  .ol { position: absolute; inset: 0; border-radius: 2px; opacity: 0; }
+  .ol.g { box-shadow: inset 0 0 0 2px var(--acc); }
+  .ol.l { box-shadow: inset 0 0 0 2px var(--blue); }
+  #grid, #win { position: absolute; left: 0; top: 0; }
+
+  /* two-stage toggle */
+  #toggle { left: 248px; top: 64px; width: 216px; height: 28px; border-radius: 8px; background: var(--panel-2); border: 1px solid var(--line); }
+  #knob { position: absolute; left: 2px; top: 2px; width: 105px; height: 22px; border-radius: 6px; background: var(--panel); box-shadow: var(--shadow); }
+  #knobTint { position: absolute; inset: 0; border-radius: 6px; background: var(--acc-soft); }
+  .tg { position: absolute; top: 0; width: 107px; height: 26px; display: flex; align-items: center; justify-content: center; gap: 5px;
+        font: 600 11.5px/1 Inter; color: var(--ink-faint); white-space: nowrap; }
+  .tg .sn { display: inline-block; width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid currentColor;
+            font: 700 8.5px/11px "Space Grotesk"; text-align: center; }
+  #tg1 { left: 0; } #tg2 { left: 107px; }
+
+  /* stage-1 legend */
+  .leg { position: absolute; left: 250px; display: flex; align-items: center; gap: 7px; font: 500 12px/1 Inter; color: var(--ink-soft); white-space: nowrap; }
+  .leg b { font-weight: 600; }
+  .sw { width: 12px; height: 12px; border-radius: 2px; }
+
+  /* stage-2 strip: visual tokens per LLM layer */
+  #stripLab { left: 250px; top: 101px; }
+  #rnD { color: var(--acc); }
+  .lb { position: absolute; bottom: 0; width: 4px; height: 26px; border-radius: 1.5px; background: var(--base); transform-origin: 50% 100%; }
+  .lbAcc { position: absolute; inset: 0; border-radius: 1.5px; background: var(--acc); }
+  .cut { position: absolute; top: 115px; width: 2px; height: 31px; border-radius: 1px; }
+  .cutLab { position: absolute; top: 150px; font: 600 11.5px/1 Inter; white-space: nowrap; }
+
+  /* answers */
+  .rn { position: absolute; left: 250px; height: 22px; font: 600 12px/22px Inter; color: var(--ink-soft); white-space: nowrap; }
+  .ans { left: 352px; font-size: 12px; }
+
+  /* result */
+  #res { left: 16px; top: 64px; width: 448px; height: 186px; }
+  .rname { position: absolute; left: 16px; width: 84px; font: 600 12.5px/22px Inter; color: var(--ink-soft); white-space: nowrap; }
+  .rtrack { position: absolute; left: 104px; height: 22px; width: 260px; border-radius: 5px; background: var(--panel-2); }
+  .rbar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; transform-origin: 0 50%; }
+  .rval { position: absolute; font: 700 17px/22px "Space Grotesk"; white-space: nowrap; }
+  #gain { top: 76px; height: 22px; font-size: 12px; }
+  #rdiv { position: absolute; left: 16px; right: 16px; top: 116px; height: 1px; background: var(--line); }
+
+  .cap-half { display: inline-block; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <div class="panel" id="q">
+    <div class="qmark">Q</div>
+    <div class="qt">Where are the people standing in the image?</div>
+  </div>
+  <div class="abs" id="qGlow"></div>
+
+  <div class="img" id="img">
+    <img src="../assets/vscan/beach.jpg">
+    <div id="tiles"></div>
+    <svg id="grid" width="216" height="162"></svg>
+    <svg id="win" width="216" height="162"></svg>
+  </div>
+
+  <div class="abs" id="toggle">
+    <div id="knob"><div id="knobTint"></div></div>
+    <div class="tg" id="tg1"><span class="sn">1</span>encoder scan</div>
+    <div class="tg" id="tg2"><span class="sn">2</span>LLM prune</div>
+  </div>
+
+  <div class="leg" id="legG" style="top:108px"><span class="sw" style="background:var(--acc)"></span><b class="hl">global</b> [CLS] attention</div>
+  <div class="leg" id="legL" style="top:132px"><span class="sw" style="background:var(--blue)"></span><b class="blue">local</b> top token per window</div>
+
+  <div class="label abs" id="stripLab">visual tokens per LLM layer</div>
+  <div class="abs" id="bars" style="left:249px;top:116px;width:214px;height:26px"></div>
+  <div class="cut" id="cutE" style="background:var(--bad)"></div>
+  <div class="cut" id="cutM" style="background:var(--acc)"></div>
+  <div class="cutLab bad" id="cutELab">layer 2</div>
+  <div class="cutLab hl" id="cutMLab">layer 16</div>
+
+  <div class="rn" id="rnA" style="top:172px">text-agnostic</div>
+  <div class="chip ans no" id="aA" style="top:172px">Ground <i data-i="cross" data-s="12" data-w="2.4"></i></div>
+  <div class="rn" id="rnC" style="top:200px">early-layer</div>
+  <div class="chip ans no" id="aC" style="top:200px">Street <i data-i="cross" data-s="12" data-w="2.4"></i></div>
+  <div class="rn hl" id="rnD" style="top:228px">VScan</div>
+  <div class="chip ans ok" id="aD" style="top:228px">Beach <i data-i="check" data-s="13" data-w="2.4"></i></div>
+
+  <div class="panel" id="res">
+    <div class="label abs" style="left:16px;top:16px">Prefill time</div>
+    <div class="label abs" style="right:16px;top:16px">LLaVA-NeXT-7B · 11% of tokens</div>
+    <div class="rname" style="top:40px">LLaVA-NeXT</div>
+    <div class="rtrack" style="top:40px"><div class="rbar" id="bar0" style="width:260px;background:var(--base)"></div></div>
+    <div class="rval soft" id="val0" style="left:370px;top:40px">1420 s</div>
+    <div class="rname" style="top:76px;color:var(--acc)">VScan</div>
+    <div class="rtrack" style="top:76px"><div class="rbar" id="bar1" style="width:89.4px;background:var(--acc)"></div></div>
+    <div class="rval hl" id="val1" style="left:200px;top:76px">488 s</div>
+    <div class="chip acc" id="gain" style="left:254px">2.91&times; faster</div>
+    <div id="rdiv"></div>
+    <div class="label abs" style="left:16px;top:130px">Performance retained</div>
+    <div class="rname" style="top:148px;color:var(--acc)">VScan</div>
+    <div class="rtrack" style="top:148px"><div class="rbar" id="bar2" style="width:248px;background:var(--acc)"></div></div>
+    <div class="rval hl" id="val2" style="left:370px;top:148px">95.4%</div>
+  </div>
+
+  <div class="caption" id="cap">
+    <span class="cap-half" id="ch1"><span class="hl">global</span> + <span class="blue">local</span> scan,</span>
+    <span class="cap-half" id="ch2">then prune mid-LLM</span>
+  </div>
+</div></div>
+
+<script>
+// ---- token grid over the Fig. 1 image -------------------------------------------------
+var COLS = 12, ROWS = 9, T = 18;
+// global scan ([CLS] attention): the salient plane and the three people (illustrative)
+var GLOBAL = [[2,6],[3,5],[3,6],[3,7],[4,8],[5,8],[6,8],[7,8],[5,3],[6,3],[5,11],[6,11]];
+// local scan: the top token inside each 3x3 window (sky, clouds, sea, sand)
+var LOCAL = [[1,1],[0,4],[1,7],[0,10],[4,1],[4,4],[5,6],[3,10],[8,1],[7,5],[8,6],[7,9]];
+// middle-layer pruning keeps the 1/3 most relevant to "where are the people standing"
+var KEEP = ['6,3','6,8','7,8','6,11','8,1','8,6','7,5','7,9'];
+
+var tiles = document.getElementById('tiles'), cell = {};
+for (var r = 0; r < ROWS; r++) for (var c = 0; c < COLS; c++) {
+  var d = document.createElement('div');
+  d.className = 'tile'; d.style.left = c * T + 'px'; d.style.top = r * T + 'px';
+  d.innerHTML = '<div class="veil"></div>';
+  tiles.appendChild(d); cell[r + ',' + c] = d;
+}
+function addOl(list, cls) {
+  return list.map(function (rc) {
+    var o = document.createElement('div'); o.className = 'ol ' + cls;
+    cell[rc[0] + ',' + rc[1]].appendChild(o); return o;
+  });
+}
+var olG = addOl(GLOBAL, 'g'), olL = addOl(LOCAL, 'l');
+var keyG = GLOBAL.map(function (rc) { return rc.join(','); }), keyL = LOCAL.map(function (rc) { return rc.join(','); });
+function veilOf(keys) { return keys.map(function (k) { return cell[k].firstChild; }); }
+var allKeys = Object.keys(cell);
+var notGlobal = allKeys.filter(function (k) { return keyG.indexOf(k) < 0; });
+var localVeils = veilOf(keyL);
+var kept = keyG.concat(keyL);
+var dropMid = kept.filter(function (k) { return KEEP.indexOf(k) < 0; });
+var olAll = olG.concat(olL), olKeys = keyG.concat(keyL);
+var olDrop = olAll.filter(function (o, i) { return KEEP.indexOf(olKeys[i]) < 0; });
+
+// faint token grid + 4x3 local windows
+var svgNS = 'http://www.w3.org/2000/svg';
+function line(svg, x1, y1, x2, y2, style) {
+  var l = document.createElementNS(svgNS, 'line');
+  l.setAttribute('x1', x1); l.setAttribute('y1', y1); l.setAttribute('x2', x2); l.setAttribute('y2', y2);
+  l.setAttribute('style', style); svg.appendChild(l);
+}
+var grid = document.getElementById('grid'), win = document.getElementById('win');
+for (var x = 1; x < COLS; x++) line(grid, x * T, 0, x * T, 162, 'stroke:var(--bg);stroke-width:1;opacity:.45');
+for (var y = 1; y < ROWS; y++) line(grid, 0, y * T, 216, y * T, 'stroke:var(--bg);stroke-width:1;opacity:.45');
+[54, 108, 162].forEach(function (x) { line(win, x, 0, x, 162, 'stroke:var(--blue);stroke-width:2;stroke-dasharray:5 3'); });
+[54, 108].forEach(function (y) { line(win, 0, y, 216, y, 'stroke:var(--blue);stroke-width:2;stroke-dasharray:5 3'); });
+
+// LLM layer strip: 32 bars
+var bars = document.getElementById('bars'), lb = [];
+for (var i = 0; i < 32; i++) {
+  var b = document.createElement('div'); b.className = 'lb'; b.style.left = (i * 6.75) + 'px';
+  if (i >= 16) b.innerHTML = '<div class="lbAcc"></div>';
+  bars.appendChild(b); lb.push(b);
+}
+function barX(i) { return 249 + i * 6.75; }           // stage x of layer i (0-based)
+document.getElementById('cutE').style.left = (barX(2) - 2.4) + 'px';    // between layer 2 and 3
+document.getElementById('cutM').style.left = (barX(16) - 2.4) + 'px';   // between layer 16 and 17
+document.getElementById('cutELab').style.left = (barX(2) - 2) + 'px';
+document.getElementById('cutMLab').style.left = (barX(16) - 2) + 'px';
+
+Stage.build(function (o) {
+  var tl = o.tl;
+
+  // ---- beat 1: stage 1 in the encoder — global, then local ------------------------------
+  tl.from('#q', { opacity: 0, y: -6 }, 0.3);
+  tl.from('#img', { opacity: 0, y: 6 }, 0.35);
+  tl.fromTo('#cap .cap-half', { opacity: 0 }, { opacity: 0.32, duration: 0.4 }, 0.4);
+  tl.from('#toggle', { opacity: 0, y: 6 }, 0.55);
+  tl.set(['#knob'], { opacity: 0 }, 0);
+  tl.set(['#qGlow', '#win'], { opacity: 0 }, 0);
+  tl.set(['#stripLab', '#bars', '#cutE', '#cutM', '#cutELab', '#cutMLab'], { opacity: 0 }, 0);
+
+  tl.to('#knob', { opacity: 1, duration: 0.25 }, 0.85);
+  tl.to('#tg1', { color: 'var(--acc)', duration: 0.3 }, 0.85);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, 0.9);
+  // global: everything except the [CLS]-salient tokens fades back
+  tl.to(veilOf(notGlobal), { opacity: 1, duration: 0.5, ease: 'power1.inOut' }, 0.95);
+  tl.fromTo(olG, { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(2)', stagger: 0.025 }, 1.0);
+  tl.from('#legG', { opacity: 0, x: -6 }, 1.1);
+  tl.from(['#rnA', '#aA'], { opacity: 0, x: -6, stagger: 0.12 }, 1.55);
+
+  // local: dashed windows, one token lights up in each — sea, sand and sky come back
+  var LOC = 2.2;
+  tl.to('#win', { opacity: 0.85, duration: 0.35 }, LOC);
+  tl.to(localVeils, { opacity: 0, duration: 0.3, stagger: 0.04 }, LOC + 0.3);
+  tl.fromTo(olL, { opacity: 0, scale: 1.4 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(2)', stagger: 0.04 }, LOC + 0.3);
+  tl.from('#legL', { opacity: 0, x: -6 }, LOC + 0.4);
+  tl.to('#win', { opacity: 0.0, duration: 0.4 }, LOC + 1.25);
+
+  // ---- beat 2: stage 2 in the LLM — prune at the middle layer ----------------------------
+  var S2 = 3.75;
+  tl.to(['#legG', '#legL'], { opacity: 0, duration: 0.3 }, S2);
+  tl.to('#knob', { x: 105, duration: 0.45, ease: 'power3.inOut' }, S2 + 0.05);
+  tl.to('#tg1', { color: 'var(--ink-faint)', duration: 0.3 }, S2 + 0.05);
+  tl.to('#tg2', { color: 'var(--acc)', duration: 0.3 }, S2 + 0.2);
+  tl.to('#ch1', { opacity: 0.32, duration: 0.4 }, S2 + 0.1);
+  tl.to('#ch2', { opacity: 1, duration: 0.4 }, S2 + 0.25);
+  tl.to(['#stripLab', '#bars'], { opacity: 1, duration: 0.35 }, S2 + 0.3);
+  tl.from(lb, { scaleY: 0, duration: 0.3, stagger: 0.01 }, S2 + 0.3);
+
+  // baseline: prune right after layer 2
+  var E = S2 + 0.8;
+  tl.to('#cutE', { opacity: 1, duration: 0.2 }, E);
+  tl.from('#cutE', { scaleY: 0, duration: 0.3 }, E);
+  tl.to('#cutELab', { opacity: 1, duration: 0.25 }, E + 0.05);
+  tl.to(lb.slice(2), { scaleY: 0.33, duration: 0.35, stagger: 0.008, ease: 'power2.inOut' }, E + 0.15);
+  tl.from(['#rnC', '#aC'], { opacity: 0, x: -6, stagger: 0.12 }, E + 0.4);
+
+  // VScan: wait for the middle layer, then keep the 1/3 most text-relevant tokens
+  var M = E + 0.95;
+  tl.to(['#cutE', '#cutELab'], { opacity: 0.0, duration: 0.3 }, M);
+  tl.to(lb.slice(2, 16), { scaleY: 1, duration: 0.4, ease: 'power2.inOut' }, M);
+  tl.to('#cutM', { opacity: 1, duration: 0.2 }, M + 0.25);
+  tl.from('#cutM', { scaleY: 0, duration: 0.3 }, M + 0.25);
+  tl.to('#cutMLab', { opacity: 1, duration: 0.25 }, M + 0.3);
+  tl.fromTo('.lbAcc', { opacity: 0 }, { opacity: 1, duration: 0.3 }, M + 0.3);
+  tl.to('#qGlow', { opacity: 1, duration: 0.3 }, M + 0.3);
+  tl.to(veilOf(dropMid), { opacity: 1, duration: 0.45, ease: 'power1.inOut' }, M + 0.45);
+  tl.to(olDrop, { opacity: 0, duration: 0.35 }, M + 0.45);
+  tl.to('#qGlow', { opacity: 0, duration: 0.4 }, M + 1.3);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, M + 1.0);   // whole sentence while the beat holds
+  tl.from('#rnD', { opacity: 0, x: -6 }, M + 0.7);
+  tl.fromTo('#aD', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, M + 0.8);
+
+  // ---- beat 3: the numbers -----------------------------------------------------------------
+  var RES = 7.65;
+  tl.to(['#img', '#toggle', '#stripLab', '#bars', '#cutM', '#cutMLab', '#rnA', '#aA', '#rnC', '#aC', '#rnD', '#aD'],
+    { opacity: 0, duration: 0.35 }, RES);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, RES + 0.25);
+  tl.fromTo('#bar0', { scaleX: 0 }, { scaleX: 1, duration: 0.55 }, RES + 0.4);
+  o.count('#val0', 0, 1420, RES + 0.4, 0.55, { decimals: 0, suffix: ' s' });
+  tl.fromTo('#val0', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.4);
+  tl.fromTo('#bar1', { scaleX: 0 }, { scaleX: 1, duration: 0.45 }, RES + 0.65);
+  o.count('#val1', 0, 488, RES + 0.65, 0.45, { decimals: 0, suffix: ' s' });
+  tl.fromTo('#val1', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.65);
+  tl.fromTo('#gain', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, RES + 1.05);
+  tl.fromTo('#bar2', { scaleX: 0 }, { scaleX: 1, duration: 0.6 }, RES + 0.95);
+  o.count('#val2', 0, 95.4, RES + 0.95, 0.6, { suffix: '%' });
+  tl.fromTo('#val2', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.95);
+}, { duration: 10.5, poster: 7.3 });
+</script>
+</body></html>

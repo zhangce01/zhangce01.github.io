@@ -1,0 +1,183 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>SimNL teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* ground-truth card, top right (the venue badge owns the top-left corner) */
+  #gt { left: 206px; top: 10px; width: 258px; height: 42px; }
+  #gt .mark { position: absolute; left: 10px; top: 11px; width: 20px; height: 20px; border-radius: 6px;
+              background: var(--ink); color: var(--bg); font: 700 9.5px/20px "Space Grotesk"; text-align: center; letter-spacing: .02em; }
+  #gt .lab { position: absolute; left: 40px; top: 8px; }
+  #gt .val { position: absolute; left: 40px; top: 20px; font: 700 14px/16px "Space Grotesk"; color: var(--ink); }
+
+  /* the test image */
+  #img { left: 16px; top: 64px; width: 156px; height: 132px; }
+  #img img { object-position: 50% 42%; }
+
+  /* prediction under the image */
+  .who { position: absolute; left: 18px; top: 208px; font: 600 9.5px/1 Inter; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-faint); }
+  .who.us { color: var(--acc); }
+  .pred { left: 16px; top: 221px; height: 25px; font-size: 12.5px; }
+
+  /* diverging similarity chart: "is not a" grows left, "is a" grows right */
+  .hdr { position: absolute; top: 66px; font: 600 11.5px/14px Inter; white-space: nowrap; }
+  #hNeg { right: 140px; color: var(--gold); }
+  #hPos { left: 352px; color: var(--blue); }
+  #axis { position: absolute; left: 345px; top: 84px; width: 1.5px; height: 158px; background: var(--ink-faint); transform-origin: 50% 0; }
+  .row { position: absolute; left: 0; width: 480px; height: 24px; }
+  .cl { position: absolute; right: 236px; top: 0; font: 600 12px/24px Inter; color: var(--ink-soft); white-space: nowrap; }
+  .cl.gtc { color: var(--ink); font-weight: 700; }
+  .b { position: absolute; top: 0; height: 24px; overflow: hidden; display: flex; align-items: center;
+       font: 700 12px/1 "Space Grotesk"; white-space: nowrap; color: #fff; }
+  html.dark .b { color: #141311; }
+  .b.pos { left: 347px; background: var(--blue); border-radius: 1px 5px 5px 1px; justify-content: flex-end; }
+  .b.neg { right: 135px; background: var(--gold); border-radius: 5px 1px 1px 5px; justify-content: flex-start; }
+  .b span { flex: none; margin: 0 6px; }
+  .strikeL { position: absolute; left: 186px; top: 11px; width: 278px; height: 2px; border-radius: 1px; background: var(--ink-soft); transform-origin: 0 50%; }
+
+  /* top-1 marker: red while wrong, green once right (two layers, cross-faded) */
+  .mk { position: absolute; left: 180px; width: 288px; height: 30px; border-radius: 8px; border: 2px solid var(--bad); }
+  .mk.ok { border-color: var(--good); }
+
+  /* result */
+  #res { left: 16px; top: 96px; width: 448px; height: 146px; }
+  .rname { position: absolute; left: 16px; width: 96px; font: 600 12.5px/22px Inter; color: var(--ink-soft); white-space: nowrap; }
+  .rtrack { position: absolute; left: 110px; height: 22px; width: 250px; border-radius: 5px; background: var(--panel-2); }
+  .rbar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; transform-origin: 0 50%; }
+  .rval { position: absolute; font: 700 17px/22px "Space Grotesk"; }
+  #gain { height: 22px; font-size: 12px; }
+
+  .cap-half { display: inline-block; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <div class="panel" id="gt">
+    <div class="mark">GT</div>
+    <div class="label lab">FGVCAircraft · ground truth</div>
+    <div class="val">707-320</div>
+  </div>
+
+  <div class="img" id="img"><img src="../assets/simnl/aircraft_707-320_input.jpg"></div>
+
+  <div class="who" id="whoA">positive only</div>
+  <div class="chip pred no" id="pA">Tu-134 <i data-i="cross" data-s="12" data-w="2.4"></i></div>
+  <div class="who us" id="whoB">SimNL</div>
+  <div class="chip pred ok" id="pB">707-320 <i data-i="check" data-s="13" data-w="2.4"></i></div>
+
+  <div class="hdr" id="hNeg">is not a&nbsp;…</div>
+  <div class="hdr" id="hPos">is a&nbsp;…</div>
+  <div id="axis"></div>
+  <div id="rows"></div>
+  <div class="mk" id="mkBad"></div>
+  <div class="mk ok" id="mkOk"></div>
+
+  <div class="panel" id="res">
+    <div class="label abs" style="left:16px;top:16px">FGVCAircraft accuracy</div>
+    <div class="label abs" style="right:16px;top:16px">CLIP RN50 · 16 shots</div>
+    <div class="rname" style="top:40px">Tip-Adapter-F</div>
+    <div class="rtrack" style="top:40px"><div class="rbar" id="r0" style="background:var(--base)"></div></div>
+    <div class="rval soft" id="v0">35.50</div>
+    <div class="rname" style="top:74px">TaskRes</div>
+    <div class="rtrack" style="top:74px"><div class="rbar" id="r1" style="background:var(--base)"></div></div>
+    <div class="rval soft" id="v1">36.30</div>
+    <div class="rname" style="top:108px;color:var(--acc)">SimNL</div>
+    <div class="rtrack" style="top:108px"><div class="rbar" id="r2" style="background:var(--acc)"></div></div>
+    <div class="rval hl" id="v2">40.27</div>
+    <div class="chip acc" id="gain">+3.97</div>
+  </div>
+
+  <div class="caption" id="cap">
+    <span class="cap-half" id="ch1">learn what it <span class="blue">is</span>,</span>
+    <span class="cap-half" id="ch2">and what it is <span class="gold">not</span></span>
+  </div>
+</div></div>
+
+<script>
+// Figure 1 (Middle), FGVCAircraft, GT 707-320: similarities (x100) to the learned
+// positive / negative features of five look-alike classes.
+var ROWS = [
+  { c: 'Tu-134',  pos: 24.29, neg: 17.31 },
+  { c: 'DC-8',    pos: 24.24, neg: 18.89 },
+  { c: 'DC-6',    pos: 24.19, neg: 19.80 },
+  { c: '707-320', pos: 23.88, neg: 14.77, gt: true },
+  { c: '727-200', pos: 23.57, neg: 14.58 }
+];
+var S = 4.7, Y0 = 86, DY = 32;          // px per similarity unit, first row, row pitch
+var host = document.getElementById('rows');
+ROWS.forEach(function (r, i) {
+  var d = document.createElement('div');
+  d.className = 'row'; d.id = 'row' + i; d.style.top = (Y0 + DY * i) + 'px';
+  d.innerHTML = '<div class="cl' + (r.gt ? ' gtc' : '') + '">' + r.c + '</div>' +
+    '<div class="b neg" id="n' + i + '"><span id="nv' + i + '"></span></div>' +
+    '<div class="b pos" id="p' + i + '"><span id="pv' + i + '"></span></div>' +
+    (i < 3 ? '<div class="strikeL" id="s' + i + '"></div>' : '');
+  host.appendChild(d);
+});
+
+Stage.build(function (o) {
+  var tl = o.tl;
+  function rowTop(i) { return Y0 + DY * i - 3; }
+  tl.set(['#mkBad', '#mkOk'], { top: rowTop(0) }, 0);
+
+  // ---- beat 1: the positive branch alone can't separate look-alikes -------------------
+  tl.from('#gt', { opacity: 0, y: -6 }, 0.3);
+  tl.fromTo('#img', { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.5 }, 0.4);
+  tl.fromTo('#cap .cap-half', { opacity: 0 }, { opacity: 0.32, duration: 0.4 }, 0.4);
+  tl.from('.cl', { opacity: 0, x: -6, stagger: 0.06 }, 0.6);
+  tl.from('#axis', { scaleY: 0, duration: 0.5, ease: 'power2.inOut' }, 0.85);
+  tl.from('#hPos', { opacity: 0, x: -6 }, 0.95);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, 1.0);
+  ROWS.forEach(function (r, i) {
+    var t0 = 1.05 + 0.07 * i;
+    tl.fromTo('#p' + i, { width: 0 }, { width: r.pos * S, duration: 0.7, ease: 'power2.out' }, t0);
+    o.count('#pv' + i, 0, r.pos, t0, 0.7, { decimals: 2 });
+  });
+  tl.fromTo('#mkBad', { opacity: 0, scale: 1.06 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2)' }, 2.05);
+  tl.from('#whoA', { opacity: 0, x: -6 }, 2.2);
+  tl.fromTo('#pA', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, 2.3);
+
+  // ---- beat 2: the negative branch rules out the wrong look-alikes --------------------
+  var NB = 3.7;
+  tl.from('#hNeg', { opacity: 0, x: 6 }, NB);
+  tl.to('#ch2', { opacity: 1, duration: 0.4 }, NB + 0.05);
+  ROWS.forEach(function (r, i) {
+    var t0 = NB + 0.1 + 0.07 * i;
+    tl.fromTo('#n' + i, { width: 0 }, { width: r.neg * S, duration: 0.7, ease: 'power2.out' }, t0);
+    o.count('#nv' + i, 0, r.neg, t0, 0.7, { decimals: 2 });
+  });
+  [0, 1, 2].forEach(function (i, k) {
+    var t0 = NB + 1.1 + 0.2 * k;
+    tl.fromTo('#s' + i, { scaleX: 0 }, { scaleX: 1, duration: 0.3, ease: 'power2.inOut' }, t0);
+    tl.to('#row' + i, { opacity: 0.28, duration: 0.35 }, t0 + 0.2);
+  });
+  var FLIP = NB + 1.95;
+  tl.to('#mkBad', { top: rowTop(3), duration: 0.55, ease: 'power3.inOut' }, FLIP);
+  tl.to('#mkOk', { top: rowTop(3), duration: 0.55, ease: 'power3.inOut' }, FLIP);
+  tl.to('#mkBad', { opacity: 0, duration: 0.3 }, FLIP + 0.35);
+  tl.fromTo('#mkOk', { opacity: 0 }, { opacity: 1, duration: 0.3 }, FLIP + 0.3);
+  tl.to(['#whoA', '#pA'], { opacity: 0, y: -4, duration: 0.25 }, FLIP + 0.45);
+  tl.fromTo('#whoB', { opacity: 0, y: 4 }, { opacity: 1, y: 0, duration: 0.3 }, FLIP + 0.6);
+  tl.fromTo('#pB', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, FLIP + 0.65);
+
+  // ---- beat 3: the number ----------------------------------------------------------
+  var RES = 7.65;
+  tl.to(['#img', '#whoB', '#pB', '#hNeg', '#hPos', '#axis', '#rows', '#mkOk'], { opacity: 0, duration: 0.35 }, RES);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, RES + 0.25);
+  var VALS = [35.50, 36.30, 40.27], PX = 5.0;      // track = 0..50 %
+  VALS.forEach(function (v, i) {
+    var t0 = RES + 0.45 + 0.25 * i, w = v * PX;
+    tl.set('#r' + i, { width: w }, 0);
+    tl.set('#v' + i, { left: 110 + w + 8, top: 40 + 34 * i }, 0);
+    tl.fromTo('#r' + i, { scaleX: 0 }, { scaleX: 1, duration: 0.65, ease: 'power2.out' }, t0);
+    o.count('#v' + i, 0, v, t0, 0.65, { decimals: 2 });
+    tl.fromTo('#v' + i, { opacity: 0 }, { opacity: 1, duration: 0.2 }, t0);
+  });
+  tl.set('#gain', { left: 110 + 40.27 * PX + 64, top: 108 }, 0);
+  tl.fromTo('#gain', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, RES + 1.45);
+}, { duration: 10.5, poster: 7.0 });
+</script>
+</body></html>

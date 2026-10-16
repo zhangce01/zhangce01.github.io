@@ -1,0 +1,244 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>CPL teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* prompt card, top right (the venue badge owns the top-left corner) */
+  #p { left: 206px; top: 10px; width: 258px; height: 42px; }
+  #p .pmark { position: absolute; left: 9px; top: 11px; width: 19px; height: 19px; border-radius: 6px;
+              background: var(--ink); color: var(--bg); display: grid; place-items: center; }
+  #p .tag { position: absolute; right: 10px; top: 8px; }
+  #tagA { color: var(--ink-faint); }
+  #tagB { color: var(--acc); }
+  .pl { position: absolute; left: 36px; top: 7px; width: 214px; font: 500 11.5px/14px "JetBrains Mono", monospace; color: var(--ink); white-space: nowrap; }
+  .pl .cls { color: var(--blue); }
+  .pl .sub { font: 500 11.5px/14px Inter, sans-serif; color: var(--ink-soft); }
+  .tok { display: inline-block; width: 17px; height: 12px; margin-right: 3px; border-radius: 3px; vertical-align: -1px;
+         background: var(--base); }
+  .cw { color: transparent; font-weight: 600; background: linear-gradient(var(--acc-line), var(--acc-line)) 0 100% / 100% 1.5px no-repeat; }
+  .fw { position: absolute; font: 600 11.5px/14px "JetBrains Mono", monospace; color: var(--acc); white-space: nowrap; }
+
+  /* beat 1: base / novel aircraft */
+  .who { position: absolute; font: 600 9.5px/1 Inter; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap; }
+  .who.us { color: var(--acc); }
+  .ac { position: absolute; width: 96px; height: 62px; }
+  .rowlab { position: absolute; font: 600 12px/14px Inter; color: var(--ink-soft); white-space: nowrap; }
+  .acn { position: absolute; font: 500 11.5px/1 "JetBrains Mono", monospace; color: var(--ink-soft); white-space: nowrap; }
+  .rname { position: absolute; font: 600 12.5px/22px Inter; color: var(--ink-soft); white-space: nowrap; }
+  .rtrack { position: absolute; height: 22px; border-radius: 5px; background: var(--panel-2); }
+  .rbar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; transform-origin: 0 50%; }
+  .rval { position: absolute; font: 700 17px/22px "Space Grotesk"; white-space: nowrap; }
+  .xmark { position: absolute; color: var(--bad); }
+
+  /* beat 2: concept cache */
+  #cat { left: 16px; top: 66px; width: 112px; height: 112px; }
+  #find { left: 16px; top: 190px; }
+  #cache { left: 140px; top: 62px; width: 156px; height: 190px; }
+  .krow { position: absolute; left: 0; width: 156px; height: 18px; }
+  .key { position: absolute; left: 12px; top: 5px; width: 40px; height: 8px; border-radius: 2px; background: var(--blue); }
+  .karr { position: absolute; left: 57px; top: 2px; color: var(--ink-faint); }
+  .val { position: absolute; left: 76px; top: 0; height: 18px; padding: 0 6px; border-radius: 5px;
+         background: var(--panel-2); border: 1px solid var(--line);
+         font: 600 11.5px/16px "JetBrains Mono", monospace; color: var(--ink-soft); white-space: nowrap; }
+  .val.hit { background: var(--acc-soft); border-color: var(--acc-line); color: var(--acc); }
+  #probs { left: 308px; top: 62px; width: 156px; height: 190px; }
+  .pn { position: absolute; left: 12px; width: 44px; font: 600 12.5px/14px Inter; color: var(--ink-soft); white-space: nowrap;
+        display: flex; align-items: center; gap: 3px; }
+  .pt { position: absolute; left: 58px; width: 86px; height: 14px; border-radius: 4px; background: var(--panel-2); }
+  .pb { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; transform-origin: 0 50%; background: var(--base); }
+
+  /* beat 3: result */
+  #res { left: 16px; top: 62px; width: 448px; height: 190px; }
+  .rthumb { position: absolute; width: 92px; height: 56px; }
+  #unseen { position: absolute; left: 226px; top: 48px; width: 200px; font: 500 12.5px/16px Inter; color: var(--ink-soft); }
+  #gain { top: 152px; height: 22px; font-size: 12px; }
+
+  .cap-half { display: inline-block; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <!-- prompt card -->
+  <div class="panel" id="p">
+    <div class="pmark"><svg viewBox="0 0 16 16" width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M2.5 4h11M2.5 8h11M2.5 12h7"/></svg></div>
+    <div class="label tag" id="tagA">CoOp</div>
+    <div class="label tag" id="tagB">CPL</div>
+    <div class="pl" id="p1"><span class="tok"></span><span class="tok"></span><span class="tok"></span><span class="tok"></span> <span class="cls">{class}</span><br><span class="sub">context learned on base classes</span></div>
+    <div class="pl" id="p2">A <span class="cw" id="cw0">brown</span> <span class="cw" id="cw1">fluffy</span> <span class="cw" id="cw2">little</span><br><span class="cw" id="cw3">round</span> photo of a <span class="cls">{class}</span></div>
+    <div class="pl" id="p3">A <span class="hl" style="font-weight:600">{concepts}</span> photo<br>of a <span class="cls">{class}</span></div>
+  </div>
+
+  <!-- beat 1 -->
+  <div class="rowlab b1" style="left:16px;top:59px">base classes</div>
+  <div class="img ac b1" style="left:16px;top:75px"><img src="../assets/cpl/fgvc_base_boeing_707.jpg"></div>
+  <div class="img ac b1" style="left:116px;top:75px"><img src="../assets/cpl/fgvc_base_airbus_a380.jpg"></div>
+  <div class="acn b1" style="left:17px;top:141px">Boeing 707</div>
+  <div class="acn b1" style="left:117px;top:141px">Airbus A380</div>
+  <div class="rowlab b1n" style="left:16px;top:159px">novel classes</div>
+  <div class="img ac b1n" style="left:16px;top:175px"><img src="../assets/cpl/fgvc_novel_atr-42.jpg"></div>
+  <div class="img ac b1n" style="left:116px;top:175px"><img src="../assets/cpl/fgvc_novel_challenger_600.jpg"></div>
+  <div class="acn b1n" style="left:17px;top:242px">ATR-42</div>
+  <div class="acn b1n" style="left:117px;top:242px">Challenger 600</div>
+
+  <div class="rname b1" style="left:232px;top:95px">CoOp</div>
+  <div class="rtrack b1" style="left:276px;top:95px;width:176px"><div class="rbar" id="cb0" style="width:121px;background:var(--base)"></div></div>
+  <div class="rval soft b1v" id="cv0" style="left:403px;top:95px">40.44</div>
+  <div class="rname b1n" style="left:232px;top:194px">CoOp</div>
+  <div class="rtrack b1n" style="left:276px;top:194px;width:176px"><div class="rbar" id="cb1" style="width:67px;background:var(--bad)"></div></div>
+  <div class="rval bad b1v" id="cv1" style="left:349px;top:194px">22.30</div>
+  <div class="xmark b1v" id="cx1" style="left:399px;top:197px"><i data-i="cross" data-s="16" data-w="2.6"></i></div>
+
+  <!-- beat 2 -->
+  <div class="img" id="cat"><img src="../assets/cpl/concept_query_cat.jpg"></div>
+  <div class="chip" id="find"><i data-i="search" data-s="13"></i>similar keys <i data-i="arrow" data-s="12"></i></div>
+  <div class="panel" id="cache">
+    <div class="label abs" style="left:12px;top:11px">visual concept cache</div>
+  </div>
+  <div class="panel" id="probs">
+    <div class="label abs" style="left:12px;top:11px">probabilities</div>
+  </div>
+
+  <!-- beat 3 -->
+  <div class="panel" id="res">
+    <div class="label abs" style="left:16px;top:14px">FGVC Aircraft · novel classes</div>
+    <div class="label abs" style="right:16px;top:14px">ViT-B/16 · 16 shots</div>
+    <div class="img rthumb" style="left:16px;top:32px"><img src="../assets/cpl/fgvc_novel_atr-42.jpg"></div>
+    <div class="img rthumb" style="left:114px;top:32px"><img src="../assets/cpl/fgvc_novel_challenger_600.jpg"></div>
+    <div id="unseen">aircraft types never seen in training</div>
+    <div class="rname" style="left:16px;top:112px">CoOp</div>
+    <div class="rtrack" style="left:74px;top:112px;width:300px"><div class="rbar" id="bar0" style="width:138px;background:var(--base)"></div></div>
+    <div class="rval soft" id="val0" style="left:218px;top:112px">22.30</div>
+    <div class="rname" style="left:16px;top:152px;color:var(--acc)">CPL</div>
+    <div class="rtrack" style="left:74px;top:152px;width:300px"><div class="rbar" id="bar1" style="width:241px;background:var(--acc)"></div></div>
+    <div class="rval hl" id="val1" style="left:321px;top:152px">38.85</div>
+    <div class="chip acc" id="gain" style="left:376px">+16.55</div>
+  </div>
+
+  <div class="caption" id="cap">
+    <span class="cap-half" id="ch1">prompts <span class="bad">overfit</span>,</span>
+    <span class="cap-half" id="ch2"><span class="hl">visual concepts</span> transfer</span>
+  </div>
+</div></div>
+
+<script>
+// ---- the visual concept cache (Fig. 3): keys = image features, values = concept words ----
+var VALS = ['green', 'brown', 'light', 'paper', 'fluffy', 'little', 'square', 'round'];
+var HIT = { brown: 0, fluffy: 1, little: 2, round: 3 };        // the top-K values of Fig. 3b, in prompt order
+var SHADE = [0.35, 0.8, 0.5, 0.3, 0.65, 0.45, 0.25, 0.7];      // key bars: decorative feature shades
+var cache = document.getElementById('cache');
+VALS.forEach(function (w, k) {
+  var r = document.createElement('div');
+  r.className = 'krow'; r.style.top = (31 + 19.5 * k) + 'px';
+  r.innerHTML = '<div class="key" style="opacity:' + SHADE[k] + '"></div>' +
+    '<i class="karr" data-i="arrow" data-s="11"></i>' +
+    '<div class="val">' + w + '</div>';
+  cache.appendChild(r);
+});
+
+// ---- class probabilities: schematic, relative heights read off Fig. 3 (no numbers in the paper) ----
+var PROBS = [['dog', 0.35], ['cat', 1.0], ['car', 0.56], ['truck', 0.2], ['panda', 0.78]];
+var probs = document.getElementById('probs');
+PROBS.forEach(function (p, k) {
+  var y = 34 + 30 * k;
+  var n = document.createElement('div');
+  n.className = 'pn'; n.style.top = y + 'px'; n.id = 'pn' + k;
+  n.innerHTML = p[0] + (p[0] === 'cat' ? '<i data-i="check" data-s="13" data-w="2.4" id="pcheck" style="color:var(--good)"></i>' : '');
+  var t = document.createElement('div');
+  t.className = 'pt'; t.style.top = y + 'px';
+  t.innerHTML = '<div class="pb" id="pb' + k + '" style="width:' + Math.round(86 * p[1]) + 'px' +
+    (p[0] === 'cat' ? ';background:var(--acc)' : '') + '"></div>';
+  probs.appendChild(n); probs.appendChild(t);
+});
+
+Stage.build(function (o) {
+  var tl = o.tl;
+  var stage = document.getElementById('stage').getBoundingClientRect();
+  function rect(el) { var r = el.getBoundingClientRect(); return { x: r.left - stage.left, y: r.top - stage.top }; }
+
+  // flying concept words: final position = the hidden placeholder in the prompt card,
+  // start position = the matching value chip in the cache (measured before any tween is created)
+  var fly = [];
+  document.querySelectorAll('.val').forEach(function (chip) {
+    var w = chip.textContent;
+    if (!(w in HIT)) return;
+    chip.classList.add('hit-cand');
+    var dst = rect(document.getElementById('cw' + HIT[w]));
+    var src = rect(chip);
+    var f = document.createElement('div');
+    f.className = 'fw'; f.textContent = w;
+    f.style.left = dst.x + 'px'; f.style.top = dst.y + 'px';
+    document.getElementById('scene').appendChild(f);
+    fly.push({ el: f, chip: chip, dx: src.x + 7 - dst.x, dy: src.y + 1 - dst.y, order: HIT[w] });
+  });
+  fly.sort(function (a, b) { return a.order - b.order; });
+  var hits = fly.map(function (f) { return f.chip; });
+  var hitKeys = hits.map(function (c) { return c.parentNode.querySelector('.key'); });
+
+  // ---- beat 1: a learned prompt fits the base classes, not the novel ones -----------------
+  tl.from('#p', { opacity: 0, y: -6 }, 0.3);
+  tl.from('#p1 .tok', { opacity: 0, scale: 0.5, duration: 0.3, ease: 'back.out(2)', stagger: 0.06 }, 0.45);
+  tl.from(['#p1 .cls', '#p1 .sub', '#tagA'], { opacity: 0, duration: 0.35 }, 0.65);
+  tl.set(['#tagB', '#p2', '#p3'], { opacity: 0 }, 0);
+  tl.fromTo('#cap .cap-half', { opacity: 0 }, { opacity: 0.32, duration: 0.4 }, 0.4);
+
+  tl.from('.b1', { opacity: 0, y: 6, stagger: 0.04 }, 0.5);
+  tl.fromTo('#cb0', { scaleX: 0 }, { scaleX: 1, duration: 0.55 }, 0.8);
+  o.count('#cv0', 0, 40.44, 0.8, 0.55, { decimals: 2 });
+  tl.fromTo('#cv0', { opacity: 0 }, { opacity: 1, duration: 0.2 }, 0.8);
+  tl.from('.b1n', { opacity: 0, y: 6, stagger: 0.04 }, 1.2);
+  tl.fromTo('#cb1', { scaleX: 0 }, { scaleX: 1, duration: 0.55 }, 1.5);
+  o.count('#cv1', 0, 22.30, 1.5, 0.55, { decimals: 2 });
+  tl.fromTo('#cv1', { opacity: 0 }, { opacity: 1, duration: 0.2 }, 1.5);
+  tl.fromTo('#cx1', { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2.4)' }, 2.0);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, 2.0);
+
+  // ---- beat 2: look up visual concepts and write them into the prompt ---------------------
+  var B2 = 3.3;
+  tl.to(['.b1', '.b1n', '.b1v'], { opacity: 0, duration: 0.35 }, B2);
+  tl.to(['#p1', '#tagA'], { opacity: 0, duration: 0.3 }, B2);
+  tl.to(['#tagB', '#p2'], { opacity: 1, duration: 0.35 }, B2 + 0.3);
+  tl.fromTo('#cat', { opacity: 0, scale: 0.94 }, { opacity: 1, scale: 1, duration: 0.45 }, B2 + 0.2);
+  tl.fromTo('#cache', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, B2 + 0.3);
+  tl.from('#cache .krow', { opacity: 0, x: -6, duration: 0.3, stagger: 0.035 }, B2 + 0.4);
+  tl.fromTo('#find', { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.35 }, B2 + 0.7);
+  // the K most similar keys light up
+  hitKeys.forEach(function (k, i) {
+    tl.to(k, { opacity: 1, backgroundColor: 'var(--acc)', duration: 0.25 }, B2 + 1.0 + 0.09 * i);
+  });
+  hits.forEach(function (c, i) {
+    tl.to(c, { backgroundColor: 'var(--acc-soft)', borderColor: 'var(--acc-line)', color: 'var(--acc)', duration: 0.25 }, B2 + 1.05 + 0.09 * i);
+  });
+  tl.to('#cache .krow', { opacity: function (i, el) { return el.querySelector('.hit-cand') ? 1 : 0.4; }, duration: 0.35 }, B2 + 1.1);
+  // their values fly into the prompt's slots
+  fly.forEach(function (f, i) {
+    var t0 = B2 + 1.4 + 0.09 * i;
+    tl.fromTo(f.el, { x: f.dx, y: f.dy, opacity: 0 },
+      { x: 0, y: 0, opacity: 1, duration: 0.65, ease: 'power3.inOut' }, t0);
+    tl.to('#cw' + i, { opacity: 0, duration: 0.2 }, t0 + 0.5);
+  });
+  tl.to('#ch2', { opacity: 1, duration: 0.4 }, B2 + 1.9);
+  // and the concept-guided prompt scores the classes
+  tl.fromTo('#probs', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, B2 + 1.95);
+  tl.fromTo('#probs .pb', { scaleX: 0 }, { scaleX: 1, duration: 0.55, stagger: 0.06 }, B2 + 2.15);
+  tl.fromTo('#pcheck', { opacity: 0, scale: 0.4 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2.4)' }, B2 + 2.75);
+  tl.to('#pn1', { color: 'var(--good)', duration: 0.3 }, B2 + 2.75);
+
+  // ---- beat 3: the number --------------------------------------------------------------
+  var RES = 7.4;
+  tl.to(['#cat', '#find', '#cache', '#probs'], { opacity: 0, duration: 0.35 }, RES);
+  tl.to(fly.map(function (f) { return f.el; }).concat(['#p2']), { opacity: 0, duration: 0.3 }, RES);
+  tl.to('#p3', { opacity: 1, duration: 0.35 }, RES + 0.3);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, RES + 0.25);
+  tl.fromTo('#bar0', { scaleX: 0 }, { scaleX: 1, duration: 0.6 }, RES + 0.45);
+  o.count('#val0', 0, 22.30, RES + 0.45, 0.6, { decimals: 2 });
+  tl.fromTo('#val0', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.45);
+  tl.fromTo('#bar1', { scaleX: 0 }, { scaleX: 1, duration: 0.75 }, RES + 0.85);
+  o.count('#val1', 0, 38.85, RES + 0.85, 0.75, { decimals: 2 });
+  tl.fromTo('#val1', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.85);
+  tl.fromTo('#gain', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, RES + 1.5);
+}, { duration: 10.5, poster: 6.9 });
+</script>
+</body></html>

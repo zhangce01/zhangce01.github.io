@@ -1,0 +1,245 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>pySpatial teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* question card, top right (the venue badge owns the top-left corner) */
+  #q { left: 206px; top: 10px; width: 258px; height: 42px; }
+  #q .qmark { position: absolute; left: 9px; top: 11px; width: 19px; height: 19px; border-radius: 6px;
+              background: var(--ink); color: var(--bg); font: 700 11px/19px "Space Grotesk"; text-align: center; }
+  .qt { position: absolute; left: 36px; top: 7px; width: 216px; font: 600 11.5px/14px Inter; color: var(--ink); }
+
+  /* the four input views */
+  .vw { position: absolute; width: 106px; height: 78px; }
+  .num { position: absolute; left: 5px; top: 5px; width: 16px; height: 16px; border-radius: 50%;
+         background: var(--panel); color: var(--ink-soft); font: 700 10px/16px "Space Grotesk"; text-align: center;
+         box-shadow: var(--shadow); }
+  .num.on { background: var(--acc); color: #fff; }
+  html.dark .num.on { color: #1b1714; }
+  #v3ring { left: 14px; top: 146px; width: 110px; height: 82px; border-radius: 8px; border: 2px solid var(--acc); }
+
+  /* 3D reconstruction viewer */
+  #viewer { left: 16px; top: 64px; width: 216px; height: 162px; border-radius: 8px; background: var(--film); overflow: hidden; }
+  #cloud { position: absolute; left: 8px; top: 27px; width: 200px; height: 108px; }
+  #vTag { left: 24px; top: 72px; height: 20px; font-size: 11.5px; background: var(--panel); border-color: var(--line); color: var(--ink); }
+
+  /* camera rotation widget (top-down) */
+  #cam { left: 20px; top: 166px; width: 56px; height: 56px; border-radius: 50%; background: var(--panel); box-shadow: var(--shadow); }
+  #camSvg { position: absolute; left: 0; top: 0; }
+  #camRot { transform-origin: 28px 32px; }
+  #deg { left: 80px; top: 196px; height: 20px; font-size: 11.5px; }
+
+  /* novel view */
+  #nv { left: 22px; top: 70px; width: 204px; height: 121px; border-radius: 6px; overflow: hidden; box-shadow: var(--shadow); }
+  #nv img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  #nvTag { left: 136px; top: 196px; height: 20px; font-size: 11.5px; }
+
+  /* imagined 2D map (baseline) */
+  #map { left: 248px; top: 64px; width: 216px; height: 86px; }
+  .mc { position: absolute; width: 16px; height: 16px; }
+  .obj { position: absolute; width: 12px; height: 12px; border-radius: 3px; background: var(--base); }
+  #mChair { background: var(--acc); color: #fff; font: 700 9px/12px "Space Grotesk"; text-align: center; }
+  html.dark #mChair { color: #1b1714; }
+  #mBin { background: var(--blue); }
+  #mBinRing { position: absolute; width: 18px; height: 18px; border-radius: 4px; border: 2px solid var(--bad); }
+  #mArrow { position: absolute; transform-origin: 100% 50%; }
+
+  /* program */
+  #code { left: 248px; top: 64px; width: 216px; height: 84px; }
+  .cl { position: absolute; left: 12px; width: 196px; font: 500 11.5px/18px "JetBrains Mono", monospace; color: var(--ink-soft); white-space: pre; }
+  .cl b { font-weight: 600; color: var(--acc); }
+  .pc { position: absolute; left: 4px; width: 208px; height: 18px; border-radius: 4px; background: var(--acc-soft); }
+
+  /* answers */
+  .rn { position: absolute; left: 250px; height: 24px; font: 600 12px/24px Inter; color: var(--ink-soft); white-space: nowrap; }
+  #rnB { color: var(--acc); }
+  .ans { left: 322px; height: 24px; font-size: 12px; }
+
+  /* result */
+  #res { left: 16px; top: 64px; width: 448px; height: 162px; }
+  .rname { position: absolute; left: 16px; width: 88px; font: 600 12.5px/22px Inter; color: var(--ink-soft); white-space: nowrap; }
+  .rtrack { position: absolute; left: 104px; height: 22px; width: 240px; border-radius: 5px; background: var(--panel-2); }
+  .rbar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; transform-origin: 0 50%; }
+  .rval { position: absolute; font: 700 17px/22px "Space Grotesk"; white-space: nowrap; }
+  #gain { height: 22px; font-size: 12px; }
+
+  .cap-half { display: inline-block; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <div class="panel" id="q">
+    <div class="qmark">Q</div>
+    <div class="qt">From view 3, what is to the left of the office chair with blue seat?</div>
+  </div>
+
+  <!-- 3D viewer sits under the views; the views fold into it -->
+  <div class="abs" id="viewer"><img id="cloud" src="../assets/pyspatial/recon.png"></div>
+  <div class="chip" id="vTag">3D reconstruction</div>
+
+  <div class="img vw" id="w1" style="left:16px;top:64px"><img src="../assets/pyspatial/view1.jpg"><div class="num">1</div></div>
+  <div class="img vw" id="w2" style="left:126px;top:64px"><img src="../assets/pyspatial/view2.jpg"><div class="num">2</div></div>
+  <div class="img vw" id="w3" style="left:16px;top:148px"><img src="../assets/pyspatial/view3.jpg"><div class="num on">3</div></div>
+  <div class="img vw" id="w4" style="left:126px;top:148px"><img src="../assets/pyspatial/view4.jpg"><div class="num">4</div></div>
+  <div class="abs" id="v3ring"></div>
+
+  <div class="img" id="nv"><img src="../assets/pyspatial/novel_view.jpg"></div>
+  <div class="chip acc" id="nvTag">novel view</div>
+
+  <div class="abs" id="cam">
+    <svg id="camSvg" width="56" height="56" viewBox="0 0 56 56">
+      <!-- 45 degree arc, from straight ahead to the left -->
+      <path id="arc" d="M28 10 A22 22 0 0 0 12.4 16.4" fill="none" style="stroke:var(--acc);stroke-width:1.8;stroke-dasharray:3 2.5"/>
+      <g id="camRot">
+        <path d="M28 32 L17 13 L39 13 Z" style="fill:var(--acc-soft);stroke:var(--acc);stroke-width:1.6;stroke-linejoin:round"/>
+        <rect x="22.5" y="29" width="11" height="9" rx="2" style="fill:var(--acc)"/>
+      </g>
+    </svg>
+  </div>
+  <div class="chip acc" id="deg">rotate left 45&deg;</div>
+
+  <!-- baseline: imagined 2D cognitive map -->
+  <div class="panel" id="map">
+    <div class="label abs" style="left:12px;top:11px">imagined 2D map</div>
+    <svg class="abs" id="mapGrid" style="left:44px;top:28px" width="129" height="49"></svg>
+    <div class="obj" style="left:142px;top:30px"></div>
+    <div class="obj" style="left:158px;top:62px"></div>
+    <div class="obj" style="left:62px;top:62px"></div>
+    <div class="obj" style="left:142px;top:62px"></div>
+    <div class="obj" id="mBin" style="left:62px;top:46px"></div>
+    <div id="mBinRing" style="left:59px;top:43px"></div>
+    <svg id="mArrow" style="left:76px;top:46px" width="32" height="12" viewBox="0 0 32 12">
+      <path d="M31 6H3M8 1.5L2.5 6 8 10.5" fill="none" style="stroke:var(--ink);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"/>
+    </svg>
+    <div class="obj" id="mChair" style="left:110px;top:46px">3</div>
+  </div>
+
+  <!-- pySpatial: the generated program (shortened; real API names) -->
+  <div class="panel" id="code">
+    <div class="label abs" style="left:12px;top:10px">generated program</div>
+    <div class="pc" id="pc"></div>
+    <div class="cl" style="top:24px"><span id="c1"></span></div>
+    <div class="cl" style="top:42px"><span id="c2"></span></div>
+    <div class="cl" style="top:60px"><span id="c3"></span></div>
+  </div>
+
+  <div class="rn" id="rnA" style="top:162px">2D map</div>
+  <div class="chip ans no" id="aA" style="top:162px">C. Blue rubbish bin <i data-i="cross" data-s="12" data-w="2.4"></i></div>
+  <div class="rn" id="rnB" style="top:194px">pySpatial</div>
+  <div class="chip ans ok" id="aB" style="top:194px">B. Sofa and table <i data-i="check" data-s="13" data-w="2.4"></i></div>
+
+  <div class="panel" id="res">
+    <div class="label abs" style="left:16px;top:16px">MindCube accuracy</div>
+    <div class="label abs" style="right:16px;top:16px">zero-shot · same GPT-4.1-mini</div>
+    <div class="rname" style="top:50px">GPT-4.1-mini</div>
+    <div class="rtrack" style="top:50px"><div class="rbar" id="bar0" style="width:173.4px;background:var(--base)"></div></div>
+    <div class="rval soft" id="val0" style="left:284px;top:50px">45.62</div>
+    <div class="rname" style="top:100px;color:var(--acc)">pySpatial</div>
+    <div class="rtrack" style="top:100px"><div class="rbar" id="bar1" style="width:222.5px;background:var(--acc)"></div></div>
+    <div class="rval hl" id="val1" style="left:333px;top:100px">58.56</div>
+    <div class="chip acc" id="gain" style="left:388px;top:100px">+12.94</div>
+  </div>
+
+  <div class="caption" id="cap">
+    <span class="cap-half" id="ch1">don't <span class="bad">imagine</span> a 2D map,</span>
+    <span class="cap-half" id="ch2"><span class="hl">rebuild</span> it in 3D</span>
+  </div>
+</div></div>
+
+<script>
+// faint 8 x 3 grid for the imagined map
+var g = document.getElementById('mapGrid'), NS = 'http://www.w3.org/2000/svg';
+function ln(x1, y1, x2, y2) {
+  var l = document.createElementNS(NS, 'line');
+  l.setAttribute('x1', x1); l.setAttribute('y1', y1); l.setAttribute('x2', x2); l.setAttribute('y2', y2);
+  l.setAttribute('style', 'stroke:var(--line);stroke-width:1'); g.appendChild(l);
+}
+for (var x = 0; x <= 8; x++) ln(0.5 + x * 16, 0, 0.5 + x * 16, 48.5);
+for (var y = 0; y <= 3; y++) ln(0, 0.5 + y * 16, 128.5, 0.5 + y * 16);
+
+var L1 = '<b>reconstruct</b>(scene)', L2 = '<b>rotate_left</b>(view_3)', L3 = '<b>synthesize_novel_view</b>(r, v)';
+
+Stage.build(function (o) {
+  var tl = o.tl;
+  // typed code: reveal the plain text, then swap in the highlighted version
+  function typeLine(id, pre, html, t0, dur) {
+    var plain = pre + html.replace(/<[^>]+>/g, '');
+    var el = document.getElementById(id);
+    o.at(function (t) {
+      var n = Math.round(plain.length * Math.max(0, Math.min(1, (t - t0) / dur)));
+      var s = n >= plain.length ? pre + html : plain.slice(0, n).replace(/</g, '&lt;');
+      if (el.innerHTML !== s) el.innerHTML = s;
+    });
+  }
+
+  // ---- beat 1: four views, a 2D-map guess ---------------------------------------------
+  tl.from('#q', { opacity: 0, y: -6 }, 0.3);
+  tl.fromTo('#cap .cap-half', { opacity: 0 }, { opacity: 0.32, duration: 0.4 }, 0.4);
+  tl.from(['#w1', '#w2', '#w3', '#w4'], { opacity: 0, y: 6, stagger: 0.1 }, 0.4);
+  tl.set(['#viewer', '#vTag', '#nv', '#nvTag', '#cam', '#deg', '#code', '#v3ring', '#mBinRing', '#pc'], { opacity: 0 }, 0);
+  tl.fromTo('#v3ring', { opacity: 0, scale: 1.08 }, { opacity: 1, scale: 1, duration: 0.35 }, 1.0);
+  tl.from('#w3 .num', { scale: 0.4, duration: 0.4, ease: 'back.out(2.2)' }, 1.0);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, 1.1);
+  tl.from('#map', { opacity: 0, y: 6 }, 1.2);
+  tl.from('#mChair', { scale: 0.4, opacity: 0, duration: 0.35, ease: 'back.out(2.2)' }, 1.5);
+  tl.from('#mArrow', { scaleX: 0, opacity: 0, duration: 0.4, ease: 'power2.inOut' }, 1.75);
+  tl.fromTo('#mBinRing', { opacity: 0, scale: 1.5 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(2)' }, 2.1);
+  tl.from('#rnA', { opacity: 0, x: -6 }, 2.2);
+  tl.from('#aA', { opacity: 0, x: -6 }, 2.3);
+
+  // ---- beat 2: write a program, run it in 3D ------------------------------------------
+  var P = 3.45;
+  tl.to('#map', { opacity: 0, duration: 0.3 }, P);
+  tl.to('#ch1', { opacity: 0.32, duration: 0.4 }, P);
+  tl.to('#ch2', { opacity: 1, duration: 0.4 }, P + 0.15);
+  tl.fromTo('#code', { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.4 }, P + 0.15);
+
+  // line 1: reconstruct -> the views fold into a point cloud
+  var A = P + 0.35;
+  typeLine('c1', 'r = ', L1, A, 0.4);
+  tl.fromTo('#pc', { opacity: 0, y: 24 }, { opacity: 1, y: 24, duration: 0.2 }, A + 0.35);
+  tl.to(['#w1', '#w2', '#w3', '#w4'], { left: 71, top: 106, width: 106, height: 78, opacity: 0, duration: 0.55, ease: 'power3.inOut' }, A + 0.45);
+  tl.to('#v3ring', { opacity: 0, duration: 0.2 }, A + 0.45);
+  tl.fromTo('#viewer', { opacity: 0 }, { opacity: 1, duration: 0.4 }, A + 0.55);
+  tl.fromTo('#cloud', { scale: 0.7, rotation: -4 }, { scale: 1, rotation: 0, duration: 0.8, ease: 'power3.out' }, A + 0.55);
+  tl.fromTo('#vTag', { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.35 }, A + 0.9);
+
+  // line 2: rotate the view-3 camera 45 degrees to the left
+  var B = A + 0.95;
+  tl.to('#pc', { y: 42, duration: 0.25, ease: 'power2.inOut' }, B - 0.05);
+  typeLine('c2', 'v = ', L2, B, 0.4);
+  tl.fromTo('#cam', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, B + 0.2);
+  tl.fromTo('#arc', { opacity: 0 }, { opacity: 1, duration: 0.2 }, B + 0.45);
+  tl.fromTo('#camRot', { rotation: 0 }, { rotation: -45, duration: 0.55, ease: 'power3.inOut', svgOrigin: '28 32' }, B + 0.45);
+  tl.fromTo('#deg', { opacity: 0, x: -6 }, { opacity: 1, x: 0, duration: 0.35 }, B + 0.55);
+
+  // line 3: render the novel view -> sofa and table
+  var C = B + 0.95;
+  tl.to('#pc', { y: 60, duration: 0.25, ease: 'power2.inOut' }, C - 0.05);
+  typeLine('c3', '', L3, C, 0.45);
+  tl.to(['#vTag', '#deg'], { opacity: 0, duration: 0.25 }, C + 0.3);
+  tl.fromTo('#nv', { opacity: 0, scale: 0.3, x: -70, y: 60 }, { opacity: 1, scale: 1, x: 0, y: 0, duration: 0.55, ease: 'power3.inOut' }, C + 0.35);
+  tl.to('#cam', { opacity: 0, scale: 0.8, duration: 0.3 }, C + 0.45);
+  tl.fromTo('#nvTag', { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.35 }, C + 0.8);
+  tl.to('#pc', { opacity: 0, duration: 0.3 }, C + 0.85);
+  tl.from('#rnB', { opacity: 0, x: -6 }, C + 0.8);
+  tl.fromTo('#aB', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, C + 0.9);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, C + 1.15);
+
+  // ---- beat 3: the number -------------------------------------------------------------
+  var RES = 7.75;
+  tl.to(['#viewer', '#nv', '#nvTag', '#cam', '#code', '#rnA', '#aA', '#rnB', '#aB'], { opacity: 0, duration: 0.35 }, RES);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, RES + 0.25);
+  tl.fromTo('#bar0', { scaleX: 0 }, { scaleX: 1, duration: 0.5 }, RES + 0.35);
+  o.count('#val0', 0, 45.62, RES + 0.35, 0.5, { decimals: 2 });
+  tl.fromTo('#val0', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.35);
+  tl.fromTo('#bar1', { scaleX: 0 }, { scaleX: 1, duration: 0.6 }, RES + 0.6);
+  o.count('#val1', 0, 58.56, RES + 0.6, 0.6, { decimals: 2 });
+  tl.fromTo('#val1', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.6);
+  tl.fromTo('#gain', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, RES + 1.1);
+}, { duration: 10.5, poster: 7.5 });
+</script>
+</body></html>

@@ -1,0 +1,222 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>NHL Hebbian teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* pipeline card, top right (the venue badge owns the top-left corner) */
+  #pipe { left: 206px; top: 8px; width: 258px; height: 46px; }
+  .blk { top: 7px; height: 22px; font-size: 11.5px; padding: 0 7px; }
+  .blk.on { background: var(--acc-soft); border-color: var(--acc-line); color: var(--acc); }
+  .parr { position: absolute; top: 12px; color: var(--ink-faint); }
+  #fb { position: absolute; left: 0; top: 0; overflow: visible; }
+
+  /* tiles */
+  .tile { position: absolute; top: 66px; width: 112px; height: 112px; border-radius: 6px; overflow: hidden;
+          box-shadow: inset 0 0 0 1px var(--img-line); background: var(--panel-2); }
+  .tile img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  #tIn { left: 16px; } #tFeat { left: 206px; } #tOr { left: 352px; }
+  .wipe { position: absolute; left: 0; top: 0; width: 112px; overflow: hidden; }
+  .wipe img { position: absolute; left: 0; top: 0; width: 112px; height: 112px; }
+  .tlab { position: absolute; top: 186px; width: 112px; text-align: center; font: 600 12px/14px Inter; color: var(--ink-soft); white-space: nowrap; }
+  .tlab b { font-weight: 600; }
+  #patch { position: absolute; width: 20px; height: 20px; border: 2px solid var(--acc); border-radius: 3px;
+           box-shadow: 0 0 0 1px rgba(255,255,255,.5); }
+  #approx { position: absolute; left: 323px; top: 108px; width: 26px; text-align: center; font: 700 24px/26px "Space Grotesk"; color: var(--good); }
+  #conv { position: absolute; left: 142px; top: 186px; width: 50px; text-align: center; font: 600 12px/14px Inter; color: var(--ink-soft); }
+  #net { position: absolute; left: 0; top: 0; overflow: visible; }
+
+  .note { top: 214px; }
+  #nBad { left: 206px; }
+  #nHeb { left: 113px; }
+  #nOk  { right: 16px; }
+
+  /* result */
+  #res { left: 16px; top: 62px; width: 448px; height: 192px; }
+  .rname { position: absolute; left: 16px; width: 70px; font: 600 12.5px/22px Inter; color: var(--ink-soft); }
+  .rtrack { position: absolute; left: 88px; height: 22px; width: 290px; border-radius: 5px; background: var(--panel-2); }
+  .rbar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; transform-origin: 0 50%; }
+  .rval { position: absolute; font: 700 17px/22px "Space Grotesk"; }
+  #gain { top: 134px; height: 22px; font-size: 12px; }
+
+  .cap-half { display: inline-block; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <div class="panel" id="pipe">
+    <div class="chip blk" id="bH" style="left:10px">conv1</div>
+    <div class="parr" style="left:63px"><i data-i="arrow" data-s="12"></i></div>
+    <div class="chip blk" id="bM" style="left:80px">modulator</div>
+    <div class="parr" style="left:157px"><i data-i="arrow" data-s="12"></i></div>
+    <div class="chip blk" id="bC" style="left:174px">classifier <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.2" y="7.2" width="9.6" height="6.6" rx="1.6"/><path d="M5.4 7.2V5.3a2.6 2.6 0 0 1 5.2 0v1.9"/></svg></div>
+    <svg id="fb" width="258" height="46">
+      <path id="fbPath" d="M 213 30 V 39 H 117 V 33" fill="none" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path id="fbHead" d="M 113.5 35.5 L 117 31.5 L 120.5 35.5" fill="none" stroke="var(--acc)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <rect id="fbBg" x="139" y="34" width="52" height="10" fill="var(--panel)"/>
+      <text id="fbTxt" x="165" y="42" text-anchor="middle" font-family="Inter" font-weight="600" font-size="9" letter-spacing=".06em" fill="var(--acc)">ENTROPY</text>
+    </svg>
+  </div>
+
+  <div class="tile" id="tIn">
+    <img src="../assets/hebbian/ship_clean.jpg">
+    <div class="wipe" id="wCor" style="height:0"><img src="../assets/hebbian/ship_corrupted.jpg"></div>
+    <div id="patch"></div>
+  </div>
+  <div class="tlab" id="labIn0" style="left:16px">clean</div>
+  <div class="tlab" id="labIn1" style="left:16px">corrupted test image</div>
+
+  <svg id="net" width="480" height="300"></svg>
+  <div id="conv">conv1</div>
+
+  <div class="tile" id="tFeat">
+    <img src="../assets/hebbian/ship_source.jpg">
+    <img id="fHeb" src="../assets/hebbian/ship_hebbian.jpg" style="opacity:0">
+  </div>
+  <div class="tlab" id="labF0" style="left:206px">source features</div>
+  <div class="tlab" id="labF1" style="left:206px;color:var(--acc)">Hebbian features</div>
+
+  <div id="approx">≈</div>
+  <div class="tile" id="tOr"><img src="../assets/hebbian/ship_oracle.jpg"></div>
+  <div class="tlab" id="labOr" style="left:352px">oracle (true labels)</div>
+
+  <div class="chip no note" id="nBad">features break <i data-i="cross" data-s="12" data-w="2.4"></i></div>
+  <div class="chip acc note" id="nHeb">Hebbian rule · no labels</div>
+  <div class="chip ok note" id="nOk">as good as supervised <i data-i="check" data-s="13" data-w="2.4"></i></div>
+
+  <div class="panel" id="res">
+    <div class="label abs" style="left:16px;top:16px">ImageNet-C error ↓ · lower is better</div>
+    <div class="label abs" style="right:16px;top:16px">ResNet-18 · severity 5</div>
+    <div class="rname" style="top:46px">source</div>
+    <div class="rtrack" style="top:46px"><div class="rbar" id="bar0" style="background:var(--base)"></div></div>
+    <div class="rval soft" id="val0" style="top:46px">85.7</div>
+    <div class="rname" style="top:90px">TENT</div>
+    <div class="rtrack" style="top:90px"><div class="rbar" id="bar1" style="background:var(--base)"></div></div>
+    <div class="rval soft" id="val1" style="top:90px">62.7</div>
+    <div class="rname" style="top:134px;color:var(--acc)">NHL</div>
+    <div class="rtrack" style="top:134px"><div class="rbar" id="bar2" style="background:var(--acc)"></div></div>
+    <div class="rval hl" id="val2" style="top:134px">60.4</div>
+    <div class="chip acc" id="gain">−2.3 vs TENT</div>
+  </div>
+
+  <div class="caption" id="cap">
+    <span class="cap-half" id="ch1"><span class="hl">Hebbian</span> early layers,</span>
+    <span class="cap-half" id="ch2"><span class="hl">modulated</span> by feedback</span>
+  </div>
+</div></div>
+
+<script>
+// ---- conv1 as a tiny competitive layer: 4 neurons between input and feature map ----
+var NS = 'http://www.w3.org/2000/svg';
+var net = document.getElementById('net');
+function el(tag, attrs) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); net.appendChild(e); return e; }
+var NX = 167, NY = [86, 108, 130, 152], IN_X = 129, OUT_X = 205;
+// patches (tile-local top-left) the three Hebbian "ticks" look at, and who wins each
+var PATCH = [{ x: 16, y: 50, w: 1 }, { x: 62, y: 56, w: 3 }, { x: 44, y: 18, w: 0 }];
+var inLines = [], outLines = [], arcs = [], neurons = [];
+NY.forEach(function (y, k) {
+  inLines.push(el('line', { x1: IN_X, y1: 125, x2: NX - 8, y2: y, stroke: 'var(--ink-faint)', 'stroke-width': 1, 'stroke-linecap': 'round', opacity: 0.55 }));
+  outLines.push(el('line', { x1: NX + 8, y1: y, x2: OUT_X, y2: 122, stroke: 'var(--line)', 'stroke-width': 1.2 }));
+});
+// lateral inhibition between neighbours (curved, on the right of the column)
+for (var k = 0; k < NY.length - 1; k++) {
+  arcs.push(el('path', { d: 'M ' + (NX + 9) + ' ' + (NY[k] + 3) + ' Q ' + (NX + 19) + ' ' + ((NY[k] + NY[k + 1]) / 2) + ' ' + (NX + 9) + ' ' + (NY[k + 1] - 3),
+    fill: 'none', stroke: 'var(--blue)', 'stroke-width': 1.6, 'stroke-linecap': 'round', opacity: 0 }));
+}
+NY.forEach(function (y) {
+  neurons.push(el('circle', { cx: NX, cy: y, r: 7.5, fill: 'var(--panel)', stroke: 'var(--ink-soft)', 'stroke-width': 1.6 }));
+});
+function fanY(p) { return 66 + p.y + 10; }
+
+Stage.build(function (o) {
+  var tl = o.tl;
+
+  // ---- beat 1: corruption breaks the early features ----------------------------------
+  tl.from('#pipe', { opacity: 0, y: -6 }, 0.3);
+  tl.set(['#fbPath', '#fbHead', '#fbBg', '#fbTxt'], { opacity: 0 }, 0);
+  tl.fromTo('#cap .cap-half', { opacity: 0 }, { opacity: 0.32, duration: 0.4 }, 0.4);
+  tl.from('#tIn', { opacity: 0, y: 6 }, 0.5);
+  tl.from('#labIn0', { opacity: 0 }, 0.6);
+  tl.set('#labIn1', { opacity: 0 }, 0);
+  tl.fromTo('#wCor', { height: 0 }, { height: 112, duration: 0.7, ease: 'power2.inOut' }, 0.9);
+  tl.to('#labIn0', { opacity: 0, duration: 0.2 }, 1.05);
+  tl.to('#labIn1', { opacity: 1, duration: 0.3 }, 1.2);
+  tl.set('#patch', { opacity: 0 }, 0);
+
+  tl.fromTo(neurons, { opacity: 0, scale: 0.5, transformOrigin: '50% 50%' }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(2)', stagger: 0.06 }, 1.4);
+  tl.fromTo(inLines.concat(outLines), { opacity: 0 }, { opacity: 0.55, duration: 0.3 }, 1.5);
+  tl.from('#conv', { opacity: 0 }, 1.5);
+  tl.from('#tFeat', { opacity: 0, x: -8 }, 1.7);
+  tl.from('#labF0', { opacity: 0 }, 1.85);
+  tl.set('#labF1', { opacity: 0 }, 0);
+  tl.fromTo('#nBad', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, 2.15);
+  tl.set(['#tOr', '#labOr', '#approx', '#nHeb', '#nOk'], { opacity: 0 }, 0);
+
+  // ---- beat 2: test-time Hebbian learning on conv1 (soft winner-take-all) --------------
+  var B2 = 3.3;
+  tl.to('#nBad', { opacity: 0, duration: 0.25 }, B2);
+  tl.to('#bH', { backgroundColor: 'var(--acc-soft)', borderColor: 'var(--acc-line)', color: 'var(--acc)', duration: 0.3 }, B2);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, B2 + 0.1);
+  tl.to('#conv', { color: 'var(--acc)', duration: 0.3 }, B2);
+  tl.fromTo('#nHeb', { opacity: 0, y: 6 }, { opacity: 1, y: 0 }, B2 + 0.2);
+
+  PATCH.forEach(function (p, i) {
+    var t = B2 + 0.45 + 0.56 * i;
+    // the input patch that drives the layer this tick
+    if (i === 0) tl.fromTo('#patch', { opacity: 0, left: p.x, top: p.y }, { opacity: 1, duration: 0.2 }, t);
+    else tl.to('#patch', { left: p.x, top: p.y, duration: 0.25, ease: 'power3.inOut' }, t);
+    inLines.forEach(function (ln) { tl.to(ln, { attr: { y1: fanY(p) }, duration: 0.25, ease: 'power3.inOut' }, t); });
+    // winner fires, neighbours are inhibited, its synapses strengthen
+    neurons.forEach(function (c, k) {
+      var win = k === p.w;
+      tl.to(c, { attr: { fill: win ? 'var(--acc)' : 'var(--panel)', stroke: win ? 'var(--acc)' : 'var(--ink-faint)' }, scale: win ? 1.2 : 0.9, duration: 0.22 }, t + 0.18);
+      tl.to(inLines[k], { attr: { 'stroke-width': win ? 2.6 : 0.8, stroke: win ? 'var(--acc)' : 'var(--ink-faint)' }, opacity: win ? 1 : 0.35, duration: 0.22 }, t + 0.18);
+    });
+    arcs.forEach(function (a, k) {
+      var near = k === p.w || k === p.w - 1;
+      tl.to(a, { opacity: near ? 1 : 0, duration: 0.2 }, t + 0.25);
+    });
+    // features get cleaner with every update
+    tl.to('#fHeb', { opacity: (i + 1) / 3, duration: 0.35 }, t + 0.25);
+  });
+  var HE = B2 + 0.45 + 0.56 * 3;            // learning done
+  tl.to('#patch', { opacity: 0, duration: 0.25 }, HE);
+  tl.to(arcs, { opacity: 0, duration: 0.25 }, HE);
+  neurons.forEach(function (c) { tl.to(c, { attr: { fill: 'var(--panel)', stroke: 'var(--acc)' }, scale: 1, duration: 0.25 }, HE); });
+  tl.to(inLines, { attr: { 'stroke-width': 1, stroke: 'var(--acc)' }, opacity: 0.45, duration: 0.25 }, HE);
+  tl.to('#labF0', { opacity: 0, duration: 0.2 }, HE - 0.1);
+  tl.to('#labF1', { opacity: 1, duration: 0.3 }, HE + 0.05);
+  // ... and they match a conv1 trained with labels
+  tl.fromTo('#tOr', { opacity: 0, x: 8 }, { opacity: 1, x: 0 }, HE + 0.15);
+  tl.fromTo('#labOr', { opacity: 0 }, { opacity: 1 }, HE + 0.3);
+  tl.fromTo('#approx', { opacity: 0, scale: 0.5 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2.4)' }, HE + 0.4);
+  tl.fromTo('#nOk', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, HE + 0.55);
+
+  // the neuro-modulator is tuned by entropy feedback; the classifier stays fixed
+  var NM = HE + 1.0;
+  tl.to('#bM', { backgroundColor: 'var(--acc-soft)', borderColor: 'var(--acc-line)', color: 'var(--acc)', duration: 0.3 }, NM);
+  tl.fromTo('#fbPath', { opacity: 1, strokeDasharray: 120, strokeDashoffset: 120 }, { strokeDashoffset: 0, duration: 0.55, ease: 'power2.inOut' }, NM);
+  tl.fromTo('#fbHead', { opacity: 0 }, { opacity: 1, duration: 0.15 }, NM + 0.5);
+  tl.fromTo(['#fbBg', '#fbTxt'], { opacity: 0 }, { opacity: 1, duration: 0.3 }, NM + 0.3);
+  tl.to('#ch2', { opacity: 1, duration: 0.4 }, NM + 0.1);
+
+  // ---- beat 3: the number ------------------------------------------------------------
+  var RES = 8.1;
+  tl.to(['.tile', '.tlab', '#net', '#conv', '#approx', '#nHeb', '#nOk'], { opacity: 0, duration: 0.35 }, RES);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, RES + 0.25);
+  var S = 290 / 100;                         // error %, bars from zero
+  [[85.7, 0], [62.7, 1], [60.4, 2]].forEach(function (d) {
+    var v = d[0], i = d[1], t = RES + 0.45 + 0.3 * i;
+    tl.set('#bar' + i, { width: v * S }, 0);
+    tl.set('#val' + i, { left: 88 + v * S + 7 }, 0);
+    tl.fromTo('#bar' + i, { scaleX: 0 }, { scaleX: 1, duration: 0.6 + 0.1 * i }, t);
+    o.count('#val' + i, 0, v, t, 0.6 + 0.1 * i);
+    tl.fromTo('#val' + i, { opacity: 0 }, { opacity: 1, duration: 0.2 }, t);
+  });
+  tl.set('#gain', { left: 88 + 60.4 * S + 54 }, 0);
+  tl.fromTo('#gain', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, RES + 1.6);
+}, { duration: 10.5, poster: 7.3 });
+</script>
+</body></html>

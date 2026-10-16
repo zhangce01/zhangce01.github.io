@@ -1,0 +1,234 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>WebAggregator teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* dataset tag, top right (the long "ACL 2026 (Main)" badge owns x < 280, y < 56) */
+  .tag { right: 16px; top: 18px; height: 24px; font-size: 12px; }
+  #tag1 { background: var(--panel); border-color: var(--line); color: var(--ink-soft); }
+
+  /* full-width question card */
+  #q { left: 16px; top: 58px; width: 448px; height: 38px; }
+  #q .qmark { position: absolute; left: 9px; top: 9px; width: 19px; height: 19px; border-radius: 6px;
+              background: var(--ink); color: var(--bg); font: 700 11px/19px "Space Grotesk"; text-align: center; }
+  .qt { position: absolute; left: 36px; top: 5px; width: 402px; font: 600 11.5px/14px Inter; color: var(--ink); }
+
+  .colLab { position: absolute; top: 102px; }
+  #labIS { left: 18px; color: var(--blue); }
+  #labCR { left: 238px; color: var(--acc); }
+
+  /* beat 1: the web page that already holds the answer */
+  #page { left: 16px; top: 112px; width: 208px; height: 118px; }
+  .ph { position: absolute; left: 10px; height: 5px; border-radius: 2px; background: var(--panel-2); }
+  .dotw { position: absolute; top: 8px; width: 6px; height: 6px; border-radius: 50%; background: var(--line); }
+  #url { position: absolute; left: 34px; top: 5px; width: 120px; height: 12px; border-radius: 6px; background: var(--panel-2);
+         font: 600 8px/12px "JetBrains Mono", monospace; color: var(--ink-faint); padding-left: 6px; }
+  #pageRule { position: absolute; left: 0; right: 0; top: 22px; height: 1px; background: var(--line); }
+  #title { position: absolute; left: 10px; top: 30px; width: 190px; font: 500 11.5px/14px Inter; color: var(--ink-soft); }
+  .date { font-size: 11.5px; background: var(--blue-soft); border-color: var(--blue); color: var(--blue); padding: 0 7px; }
+  #dateSrc { left: 26px; top: 178px; }
+  #dateFly { left: 26px; top: 178px; }
+  #copyTxt { position: absolute; left: 238px; top: 116px; font: 500 12px/14px Inter; color: var(--ink); white-space: nowrap; }
+  #ansLab { left: 238px; top: 142px; }
+  #slot { left: 236px; top: 154px; width: 188px; height: 26px; border-radius: 7px; border: 1.5px dashed var(--line); }
+
+  /* beat 2: two retrieved sets, then filter -> std -> sort */
+  .set { width: 208px; height: 68px; }
+  #setA { left: 16px; top: 112px; } #setB { left: 16px; top: 186px; }
+  .sh { position: absolute; left: 10px; top: 7px; font: 500 11.5px/14px Inter; color: var(--blue); white-space: nowrap; }
+  .sh b { font-weight: 700; }
+  .row { position: absolute; left: 0; width: 208px; height: 7px; }
+  .nm { position: absolute; left: 10px; top: 0; height: 7px; border-radius: 2px; background: var(--base); }
+  .ar { position: absolute; left: 56px; top: 0; height: 7px; border-radius: 2px; background: var(--blue); opacity: 0.7; }
+  .sp { position: absolute; left: 56px; top: 0; width: 40px; height: 7px; }
+  .sp i { position: absolute; bottom: 0; width: 3px; border-radius: 1px; background: var(--blue); opacity: 0.8; }
+  .sg { position: absolute; left: 56px; top: 0; height: 7px; border-radius: 2px; background: var(--acc); transform-origin: 0 50%; }
+  #thr { position: absolute; left: 105px; top: 22px; width: 0; height: 44px; border-left: 2px dashed var(--acc); }
+  #topRing { position: absolute; left: 5px; top: 24px; width: 198px; height: 13px; border-radius: 4px; border: 2px solid var(--good); }
+
+  #noSee { position: absolute; left: 238px; top: 114px; display: flex; align-items: center; gap: 6px;
+           font: 500 12px/14px Inter; color: var(--ink); white-space: nowrap; }
+  .op { position: absolute; left: 236px; height: 22px; }
+  .op .chip { position: absolute; left: 0; top: 0; width: 54px; justify-content: center; }
+  .op .ex { position: absolute; left: 62px; top: 0; font: 500 11.5px/22px "JetBrains Mono", monospace; color: var(--ink); white-space: pre; }
+  .sig { font-family: "Inter", "Segoe UI", sans-serif; font-weight: 700; font-size: 13px; }
+  #ans { left: 236px; top: 220px; height: 30px; padding: 0 10px; font: 600 12.5px/1 Inter; gap: 7px; }
+  #ans .big { font: 700 18px/1 "Space Grotesk", sans-serif; letter-spacing: -0.01em; }
+
+  /* beat 3: result */
+  #res { left: 16px; top: 58px; width: 448px; height: 168px; }
+  .rname { position: absolute; left: 16px; width: 124px; font: 600 12.5px/22px Inter; color: var(--ink-soft); white-space: nowrap; }
+  .rtrack { position: absolute; left: 144px; height: 22px; width: 240px; border-radius: 5px; background: var(--panel-2); }
+  .rbar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; transform-origin: 0 50%; }
+  .rval { position: absolute; font: 700 17px/22px "Space Grotesk"; white-space: nowrap; }
+  #gain { height: 22px; font-size: 12px; }
+  #refs { position: absolute; left: 16px; top: 134px; font: 500 11.5px/14px Inter; color: var(--ink-soft); white-space: nowrap; }
+  #refs b { font-weight: 600; color: var(--ink); }
+
+  .cap-half { display: inline-block; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <div class="chip tag" id="tag1">WebWalkerQA</div>
+  <div class="chip acc tag" id="tag2">WebAggregatorQA (ours)</div>
+
+  <div class="panel" id="q">
+    <div class="qmark">Q</div>
+    <div class="qt" id="q1">What time will James Landay share his experiences in the 2024 ACM SIGCHI Awards series?</div>
+    <div class="qt" id="q2">Among countries with area &gt;2M km&sup2; what is the highest GDP per capita (in USD) standard deviation among them from 2010&mdash;2020?</div>
+  </div>
+
+  <div class="label colLab" id="labIS">information seeking</div>
+  <div class="label colLab" id="labCR">compositional reasoning</div>
+
+  <!-- beat 1 -->
+  <div class="panel" id="page">
+    <div class="dotw" style="left:9px"></div><div class="dotw" style="left:17px"></div><div class="dotw" style="left:25px"></div>
+    <div id="url">www</div>
+    <div id="pageRule"></div>
+    <div id="title">Title: A Funny Thing Happened on the Way to the Farm</div>
+    <div class="ph" style="top:98px;width:170px"></div>
+    <div class="ph" style="top:107px;width:120px"></div>
+  </div>
+  <div class="chip date" id="dateSrc">Friday, June 14, 1:30pm PDT</div>
+  <div id="copyTxt">I could <span class="bad" style="font-weight:600">copy the answer directly</span>!</div>
+  <div class="label abs" id="ansLab">answer</div>
+  <div class="abs" id="slot"></div>
+  <div class="chip date" id="dateFly">Friday, June 14, 1:30pm PDT</div>
+
+  <!-- beat 2 -->
+  <div class="panel set" id="setA">
+    <div class="sh"><b>Set</b> of (Country, Area)</div>
+    <div id="thr"></div>
+  </div>
+  <div class="panel set" id="setB">
+    <div class="sh"><b>Set</b> of (Country, GDP, year)</div>
+    <div id="topRing"></div>
+  </div>
+
+  <div id="noSee"><i data-i="search" data-s="13" style="color:var(--ink-faint)"></i>I could not see the answer!</div>
+  <div class="op" id="op1" style="top:136px"><div class="chip acc">Filter</div><div class="ex">A=(Country, Area&gt;2M)</div></div>
+  <div class="op" id="op2" style="top:162px"><div class="chip acc"><span class="sig">&sigma;</span></div><div class="ex">B=std(A; GDP, year)</div></div>
+  <div class="op" id="op3" style="top:188px"><div class="chip acc">Sort</div><div class="ex">C=sort(B)</div></div>
+  <div class="chip ok" id="ans">Answer: <span class="big">2604</span> <i data-i="check" data-s="14" data-w="2.4"></i></div>
+
+  <!-- beat 3 -->
+  <div class="panel" id="res">
+    <div class="label abs" style="left:16px;top:16px">GAIA-text · Pass@1</div>
+    <div class="label abs" style="right:16px;top:16px">fine-tuned on WebAggregatorQA</div>
+    <div class="rname" style="top:46px">Qwen3-32B</div>
+    <div class="rtrack" style="top:46px"><div class="rbar" id="bar0" style="width:142.8px;background:var(--base)"></div></div>
+    <div class="rval soft" id="val0" style="left:293px;top:46px">40.8</div>
+    <div class="rname" style="top:90px;color:var(--acc)">WebAggregator-32B</div>
+    <div class="rtrack" style="top:90px"><div class="rbar" id="bar1" style="width:197px;background:var(--acc)"></div></div>
+    <div class="rval hl" id="val1" style="left:347px;top:90px">56.3</div>
+    <div class="chip acc" id="gain" style="left:392px;top:90px">+15.5</div>
+    <div id="refs">for reference: <b>GPT-4.1</b> 43.7 · <b>Claude-3.7-sonnet</b> 60.2</div>
+  </div>
+
+  <div class="caption" id="cap">
+    <span class="cap-half" id="ch1">from <span class="blue">copying</span> answers</span>
+    <span class="cap-half" id="ch2">to <span class="hl">composing</span> them</span>
+  </div>
+</div></div>
+
+<script>
+// four countries (illustrative shapes, no real values): name width, area, GDP series, std
+var NAMES = [30, 24, 34, 27];
+var AREA = [92, 30, 70, 112];           // row 1 falls under the "> 2M" line (x = 50)
+var GDP = [[2,3,3,4,4,5,6,6], [3,3,4,4,4,4,5,5], [4,4,4,5,4,5,5,5], [1,2,3,3,4,5,6,7]];
+var SIG = [62, 0, 28, 92];              // std bars; sort order: 3, 0, 2
+var ORDER = [1, 3, 2, 0];               // new slot of each row after sorting (dropped row -> bottom)
+function slotY(k) { return 27 + 10 * k; }
+
+var A = document.getElementById('setA'), B = document.getElementById('setB');
+var rowsA = [], rowsB = [], sps = [], sgs = [];
+for (var i = 0; i < 4; i++) {
+  var ra = document.createElement('div'); ra.className = 'row'; ra.style.top = slotY(i) + 'px';
+  ra.innerHTML = '<div class="nm" style="width:' + NAMES[i] + 'px"></div><div class="ar" style="width:' + AREA[i] + 'px"></div>';
+  A.insertBefore(ra, document.getElementById('thr')); rowsA.push(ra);
+  var rb = document.createElement('div'); rb.className = 'row'; rb.style.top = slotY(i) + 'px';
+  var sp = '<div class="sp">';
+  for (var j = 0; j < 8; j++) sp += '<i style="left:' + (j * 5) + 'px;height:' + GDP[i][j] + 'px"></i>';
+  sp += '</div>';
+  rb.innerHTML = '<div class="nm" style="width:' + NAMES[i] + 'px"></div>' + sp +
+                 '<div class="sg" style="width:' + SIG[i] + 'px"></div>';
+  B.insertBefore(rb, document.getElementById('topRing')); rowsB.push(rb);
+  sps.push(rb.querySelector('.sp')); sgs.push(rb.querySelector('.sg'));
+}
+
+Stage.build(function (o) {
+  var tl = o.tl;
+  tl.set(['#tag2', '#q2', '#setA', '#setB', '#noSee', '#op1', '#op2', '#op3', '#ans', '#thr', '#topRing'], { opacity: 0 }, 0);
+  tl.set(sgs, { scaleX: 0 }, 0);
+
+  // ---- beat 1: the answer is already on the page -> copy it ----------------------------
+  tl.from('#tag1', { opacity: 0, y: -6 }, 0.3);
+  tl.from('#q', { opacity: 0, y: -6 }, 0.35);
+  tl.fromTo('#cap .cap-half', { opacity: 0 }, { opacity: 0.32, duration: 0.4 }, 0.4);
+  tl.from(['#labIS', '#labCR'], { opacity: 0, duration: 0.4 }, 0.6);
+  tl.from('#page', { opacity: 0, y: 6 }, 0.65);
+  tl.from('#title', { opacity: 0 }, 0.9);
+  tl.from('#dateSrc', { opacity: 0, y: 4 }, 1.05);
+  tl.set('#dateFly', { opacity: 0 }, 0);
+  tl.from(['#ansLab', '#slot'], { opacity: 0, duration: 0.35 }, 1.2);
+  tl.from('#copyTxt', { opacity: 0, x: -6 }, 1.45);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, 1.5);
+  tl.set('#dateFly', { opacity: 1 }, 1.85);
+  tl.fromTo('#dateFly', { left: 26, top: 178 }, { left: 238, top: 156, duration: 0.65, ease: 'power3.inOut' }, 1.85);
+  tl.fromTo('#dateFly', { scale: 1 }, { scale: 1.06, duration: 0.3, yoyo: true, repeat: 1, ease: 'power1.inOut' }, 1.85);
+  tl.to('#slot', { opacity: 0, duration: 0.25 }, 2.45);
+  tl.to('#dateSrc', { opacity: 0.45, duration: 0.3 }, 2.0);
+
+  // ---- beat 2: the answer is on no page -> filter, std, sort -----------------------------
+  var C = 3.35;
+  tl.to(['#page', '#title', '#dateSrc', '#dateFly', '#copyTxt', '#ansLab'], { opacity: 0, duration: 0.3 }, C);
+  tl.to('#tag1', { opacity: 0, duration: 0.25 }, C);
+  tl.fromTo('#tag2', { opacity: 0, y: -6 }, { opacity: 1, y: 0, duration: 0.4 }, C + 0.15);
+  tl.to('#q1', { opacity: 0, duration: 0.25 }, C);
+  tl.to('#q2', { opacity: 1, duration: 0.3 }, C + 0.25);
+  tl.to('#ch1', { opacity: 0.32, duration: 0.4 }, C + 0.1);
+  tl.to('#ch2', { opacity: 1, duration: 0.4 }, C + 0.3);
+  tl.fromTo('#setA', { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.4 }, C + 0.35);
+  tl.fromTo('#setB', { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.4 }, C + 0.47);
+  tl.fromTo('#noSee', { opacity: 0, x: -6 }, { opacity: 1, x: 0 }, C + 0.6);
+
+  // 1 · filter: area > 2M
+  var F = C + 0.95;
+  tl.fromTo('#op1', { opacity: 0, x: -6 }, { opacity: 1, x: 0 }, F);
+  tl.fromTo('#thr', { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.35 }, F + 0.2);
+  tl.to([rowsA[1], rowsB[1]], { opacity: 0.22, duration: 0.35 }, F + 0.45);
+
+  // 2 · std of each kept country's GDP series
+  var S = F + 0.65;
+  tl.fromTo('#op2', { opacity: 0, x: -6 }, { opacity: 1, x: 0 }, S);
+  tl.to([sps[0], sps[2], sps[3]], { opacity: 0, duration: 0.3 }, S + 0.2);
+  tl.to([sgs[0], sgs[2], sgs[3]], { scaleX: 1, duration: 0.45, stagger: 0.06 }, S + 0.3);
+
+  // 3 · sort, the top one is the answer
+  var R = S + 0.7;
+  tl.fromTo('#op3', { opacity: 0, x: -6 }, { opacity: 1, x: 0 }, R);
+  rowsB.forEach(function (rb, i) { tl.to(rb, { top: slotY(ORDER[i]), duration: 0.5, ease: 'power3.inOut' }, R + 0.2); });
+  tl.fromTo('#topRing', { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: 0.3 }, R + 0.7);
+  tl.fromTo('#ans', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, R + 0.75);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, R + 1.0);
+
+  // ---- beat 3: train on such tasks -> the number -----------------------------------------
+  var RES = 7.6;
+  tl.to(['#q', '#tag2', '#labIS', '#labCR', '#setA', '#setB', '#noSee', '#op1', '#op2', '#op3', '#ans'], { opacity: 0, duration: 0.35 }, RES);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, RES + 0.25);
+  tl.fromTo('#bar0', { scaleX: 0 }, { scaleX: 1, duration: 0.5 }, RES + 0.4);
+  o.count('#val0', 0, 40.8, RES + 0.4, 0.5);
+  tl.fromTo('#val0', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.4);
+  tl.fromTo('#bar1', { scaleX: 0 }, { scaleX: 1, duration: 0.65 }, RES + 0.65);
+  o.count('#val1', 0, 56.3, RES + 0.65, 0.65);
+  tl.fromTo('#val1', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.65);
+  tl.fromTo('#gain', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, RES + 1.2);
+  tl.fromTo('#refs', { opacity: 0, y: 4 }, { opacity: 1, y: 0, duration: 0.35 }, RES + 1.35);
+}, { duration: 10.5, poster: 7.3 });
+</script>
+</body></html>

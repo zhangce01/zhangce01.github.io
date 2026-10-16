@@ -1,0 +1,227 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>ONLY teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* question card, top right (the venue badge owns the top-left corner) */
+  #q { left: 206px; top: 10px; width: 258px; height: 42px; }
+  #q .qmark { position: absolute; left: 9px; top: 11px; width: 19px; height: 19px; border-radius: 6px;
+              background: var(--ink); color: var(--bg); font: 700 11px/19px "Space Grotesk"; text-align: center; }
+  .qt { position: absolute; left: 36px; top: 14px; width: 214px; font: 600 11.5px/14px Inter; color: var(--ink); }
+
+  #img { left: 16px; top: 60px; width: 128px; height: 128px; }
+
+  /* the LVLM: a stack of layers, one of them re-run with text-leaning heads */
+  #net { left: 154px; top: 60px; width: 148px; height: 128px; }
+  .slab { position: absolute; top: 27px; width: 11px; height: 42px; border-radius: 3px; background: var(--panel-2);
+          box-shadow: inset 0 0 0 1px var(--line); }
+  .slab .on { position: absolute; inset: 0; border-radius: 3px; background: var(--acc-soft); box-shadow: inset 0 0 0 1px var(--acc-line); }
+  .slab .hot { position: absolute; inset: 0; border-radius: 3px; background: var(--acc); }
+  #more { position: absolute; left: 12px; top: 73px; width: 124px; text-align: center; font: 600 9.5px/1 Inter; letter-spacing: .09em;
+          text-transform: uppercase; color: var(--ink-faint); }
+  #link { position: absolute; left: 17px; top: 69px; width: 1.5px; height: 19px; background: var(--acc); transform-origin: 50% 0; }
+  #te { position: absolute; left: 9px; top: 88px; width: 130px; height: 32px; border-radius: 7px; background: var(--acc-soft);
+        box-shadow: inset 0 0 0 1px var(--acc-line); }
+  .hd { position: absolute; top: 5px; width: 10px; height: 10px; border-radius: 50%; background: var(--acc); }
+  .hd .off { position: absolute; inset: 0; border-radius: 50%; background: var(--panel-2); box-shadow: inset 0 0 0 1px var(--line); }
+  #teLab { position: absolute; left: 0; top: 18px; width: 130px; text-align: center; font: 600 10.5px/1 Inter; color: var(--acc); white-space: nowrap; }
+
+  /* next-token chart */
+  #chart { left: 312px; top: 60px; width: 152px; height: 128px; }
+  .lg { position: absolute; top: 9px; font: 600 9.5px/1 Inter; letter-spacing: .09em; text-transform: uppercase; white-space: nowrap; }
+  .tok { position: absolute; left: 6px; width: 42px; text-align: right; font: 600 11.5px/14px Inter; color: var(--ink-soft); }
+  .b { position: absolute; left: 54px; border-radius: 3px; transform-origin: 0 50%; }
+  .b.r  { height: 10px; background: var(--base); }
+  .b.o  { height: 10px; background: var(--acc); }
+  .b.te { height: 5px; background: var(--gold); border-radius: 2px; }
+
+  /* response */
+  #resp { left: 16px; top: 196px; width: 448px; height: 56px; }
+  .who { position: absolute; left: 12px; top: 9px; font: 600 9.5px/1 Inter; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap; }
+  .who.us { color: var(--acc); }
+  #rline { position: absolute; left: 12px; top: 27px; width: 430px; font: 500 12.5px/18px Inter; color: var(--ink); white-space: nowrap; }
+  .slotw { display: inline-block; position: relative; width: 70px; height: 18px; vertical-align: top; margin-left: 4px; }
+  .slot { position: absolute; left: 0; top: -1px; height: 20px; display: inline-flex; align-items: center; gap: 4px; padding: 0 7px;
+          border-radius: 5px; font: 600 12px/1 Inter; white-space: nowrap; }
+  .slot.no { background: var(--bad-soft); color: var(--bad); box-shadow: inset 0 0 0 1px var(--bad-line); }
+  .slot.ok { background: var(--good-soft); color: var(--good); box-shadow: inset 0 0 0 1px var(--good-line); }
+  .slot.blank { width: 60px; background: var(--panel-2); box-shadow: inset 0 0 0 1px var(--line); }
+
+  /* result */
+  #res { left: 16px; top: 62px; width: 448px; height: 186px; }
+  .rname { position: absolute; left: 16px; width: 70px; font: 600 12.5px/22px Inter; color: var(--ink-soft); }
+  .rtrack { position: absolute; left: 88px; height: 22px; width: 280px; border-radius: 5px; background: var(--panel-2); }
+  .rbar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; transform-origin: 0 50%; }
+  .rval { position: absolute; font: 700 17px/22px "Space Grotesk"; white-space: nowrap; }
+  .rx { position: absolute; font: 600 11.5px/22px Inter; color: var(--ink-faint); }
+  #gain { height: 22px; font-size: 12px; }
+  #regLine { position: absolute; top: 34px; width: 0; height: 102px; border-left: 1.5px dashed var(--ink-faint); }
+  #regLab { position: absolute; top: 140px; font: 600 11.5px/1 Inter; color: var(--ink-soft); white-space: nowrap; }
+  .note { position: absolute; left: 16px; bottom: 13px; font: 500 11.5px/1 Inter; color: var(--ink-soft); white-space: nowrap; }
+
+  .cap-half { display: inline-block; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <div class="panel" id="q">
+    <div class="qmark">Q</div>
+    <div class="qt">Describe this image.</div>
+  </div>
+
+  <div class="img" id="img"><img src="../assets/only/black_banana_fruits.jpg"></div>
+
+  <div class="panel" id="net">
+    <div class="label abs" style="left:11px;top:10px">LLaVA-1.5 layers</div>
+    <div id="slabs"></div>
+    <div id="more">one pass</div>
+    <div id="link"></div>
+    <div id="te"><div id="heads"></div><div id="teLab">text-leaning heads</div></div>
+  </div>
+
+  <div class="panel" id="chart">
+    <div class="lg" id="lgR" style="left:10px;color:var(--ink-faint)">next token</div>
+    <div class="lg" id="lgT" style="left:10px;color:var(--gold)">text-biased</div>
+    <div class="lg" id="lgO" style="left:10px;color:var(--acc)">ONLY · contrast</div>
+    <div id="rows"></div>
+  </div>
+
+  <div class="panel" id="resp">
+    <div class="who" id="w1">regular decoding</div>
+    <div class="who us" id="w2">ONLY</div>
+    <div id="rline"><span id="rt"></span><span class="slotw">
+      <span class="slot blank" id="sk"></span>
+      <span class="slot no" id="sy">yellow <i data-i="cross" data-s="11" data-w="2.4"></i></span>
+      <span class="slot ok" id="sb">black <i data-i="check" data-s="12" data-w="2.4"></i></span>
+    </span></div>
+  </div>
+
+  <div class="panel" id="res">
+    <div class="label abs" style="left:16px;top:16px">avg. latency per instance</div>
+    <div class="label abs" style="right:16px;top:16px">LLaVA-1.5 · CHAIR</div>
+    <div class="rname" style="top:40px">VCD</div>
+    <div class="rtrack" style="top:40px"><div class="rbar" id="bar0" style="width:251px;background:var(--base)"></div></div>
+    <div class="rval soft" id="val0" style="left:345px;top:40px">6.97 s</div>
+    <div class="rx" id="x0" style="left:398px;top:40px">×2.01</div>
+    <div class="rname" style="top:74px">M3ID</div>
+    <div class="rtrack" style="top:74px"><div class="rbar" id="bar1" style="width:254px;background:var(--base)"></div></div>
+    <div class="rval soft" id="val1" style="left:348px;top:74px">7.05 s</div>
+    <div class="rx" id="x1" style="left:401px;top:74px">×2.03</div>
+    <div class="rname" style="top:108px;color:var(--acc)">ONLY</div>
+    <div class="rtrack" style="top:108px"><div class="rbar" id="bar2" style="width:133px;background:var(--acc)"></div></div>
+    <div class="rval hl" id="val2" style="left:227px;top:108px">3.70 s</div>
+    <div class="chip acc" id="gain" style="left:282px;top:108px">×1.07</div>
+    <div id="regLine"></div>
+    <div id="regLab">regular 3.47 s</div>
+    <div class="note" id="mme">MME-Hallucination score: 562.5 <i data-i="arrow" data-s="11"></i> <b class="hl">635.6</b></div>
+  </div>
+
+  <div class="caption" id="cap">
+    <span class="cap-half" id="ch1"><span class="hl">one extra layer</span>,</span>
+    <span class="cap-half" id="ch2">not a second pass</span>
+  </div>
+</div></div>
+
+<script>
+// schematic bar shapes, read off the paper's Fig. 2 (no values are reported there)
+var TOK = ['black', 'yellow', 'green', 'brown'];
+var R  = [0.80, 0.95, 0.58, 0.22];   // regular next-token distribution
+var TE = [0.30, 1.00, 0.47, 0.38];   // textual-enhanced (text-biased) branch
+var O  = [1.00, 0.36, 0.50, 0.38];   // after contrastive decoding
+var BW = 88, ROW0 = 27, PITCH = 24;
+var rows = document.getElementById('rows');
+TOK.forEach(function (t, i) {
+  var y = ROW0 + PITCH * i;
+  rows.insertAdjacentHTML('beforeend',
+    '<div class="tok" id="tok' + i + '" style="top:' + (y + 2) + 'px">' + t + '</div>' +
+    '<div class="b r" id="br' + i + '" style="top:' + (y + 2) + 'px;width:' + (R[i] * BW) + 'px"></div>' +
+    '<div class="b o" id="bo' + i + '" style="top:' + (y + 2) + 'px;width:' + (R[i] * BW) + 'px"></div>' +
+    '<div class="b te" id="bt' + i + '" style="top:' + (y + 14) + 'px;width:' + (TE[i] * BW) + 'px"></div>');
+});
+var slabs = document.getElementById('slabs');
+for (var i = 0; i < 8; i++)
+  slabs.insertAdjacentHTML('beforeend', '<div class="slab" style="left:' + (12 + 16.5 * i) + 'px"><div class="on"></div>' +
+    (i === 0 ? '<div class="hot"></div>' : '') + '</div>');
+var KEEP = [1, 0, 1, 1, 0, 1, 0, 0];   // illustrative: heads whose text/visual entropy ratio is above the layer average
+var heads = document.getElementById('heads');
+KEEP.forEach(function (k, i) {
+  heads.insertAdjacentHTML('beforeend', '<div class="hd" style="left:' + (15 + 13.5 * i) + 'px">' + (k ? '' : '<div class="off"></div>') + '</div>');
+});
+
+Stage.build(function (o) {
+  var tl = o.tl;
+  var ons = document.querySelectorAll('.slab .on');
+
+  // ---- beat 1: one regular pass; the language prior says "yellow" -------------------
+  tl.from('#q', { opacity: 0, y: -6 }, 0.3);
+  tl.fromTo('#cap .cap-half', { opacity: 0 }, { opacity: 0.32, duration: 0.4 }, 0.4);
+  tl.from('#img', { opacity: 0, y: 8 }, 0.5);
+  tl.from('#net', { opacity: 0, y: 8 }, 0.65);
+  tl.from('#chart', { opacity: 0, y: 8 }, 0.75);
+  tl.from('#resp', { opacity: 0, y: 8 }, 0.85);
+  tl.from('#w1', { opacity: 0 }, 0.95);
+  o.type('#rt', 'The image shows some fruits, the color of the banana is', 1.0, 0.9);
+  tl.fromTo('#sk', { opacity: 0 }, { opacity: 1, duration: 0.2 }, 1.85);
+  tl.set('.hot', { opacity: 0 }, 0);
+  tl.set('#lgT, #lgO, .b.o, .b.te, #link, #te', { opacity: 0 }, 0);
+  // forward pass sweeps through the stack
+  tl.fromTo(ons, { opacity: 0 }, { opacity: 1, duration: 0.15, stagger: 0.07 }, 1.15);
+  tl.to(ons, { opacity: 0, duration: 0.3, stagger: 0.07 }, 1.4);
+  tl.from('#more', { opacity: 0 }, 1.3);
+  tl.fromTo('.b.r', { scaleX: 0 }, { scaleX: 1, duration: 0.5, stagger: 0.07 }, 1.85);
+  tl.to('#tok1', { color: 'var(--bad)', duration: 0.2 }, 2.45);
+  tl.to('#sk', { opacity: 0, duration: 0.15 }, 2.45);
+  tl.fromTo('#sy', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, 2.45);
+
+  // ---- beat 2: re-run ONE layer with only text-leaning heads, then contrast ----------
+  var M = 3.35;
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, M);
+  tl.to('#more', { opacity: 0, duration: 0.2 }, M);
+  tl.fromTo('.hot', { opacity: 0 }, { opacity: 1, duration: 0.3 }, M + 0.05);
+  tl.fromTo('#link', { opacity: 0, scaleY: 0 }, { opacity: 1, scaleY: 1, duration: 0.3 }, M + 0.3);
+  tl.fromTo('#te', { opacity: 0, y: -6 }, { opacity: 1, y: 0, duration: 0.35 }, M + 0.45);
+  tl.fromTo('.hd .off', { opacity: 0 }, { opacity: 1, duration: 0.3, stagger: 0.06 }, M + 0.9);
+  // the text-biased branch: yellow even stronger
+  var T = M + 1.4;
+  tl.to('#lgR', { opacity: 0, duration: 0.2 }, T);
+  tl.fromTo('#lgT', { opacity: 0 }, { opacity: 1, duration: 0.3 }, T + 0.1);
+  tl.fromTo('.b.te', { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.5, stagger: 0.07 }, T + 0.1);
+  // contrast: regular minus text-biased
+  var K = T + 1.0;
+  tl.to('#lgT', { opacity: 0, duration: 0.2 }, K);
+  tl.fromTo('#lgO', { opacity: 0 }, { opacity: 1, duration: 0.3 }, K + 0.1);
+  tl.to('.b.te', { opacity: 0.3, duration: 0.3 }, K);
+  tl.to('.b.r', { opacity: 0, duration: 0.3 }, K + 0.1);
+  tl.fromTo('.b.o', { opacity: 0 }, { opacity: 1, duration: 0.2 }, K + 0.05);
+  TOK.forEach(function (t, i) {
+    tl.fromTo('#bo' + i, { width: R[i] * BW }, { width: O[i] * BW, duration: 0.6, ease: 'power3.inOut' }, K + 0.15);
+  });
+  tl.to('#tok1', { color: 'var(--ink-soft)', duration: 0.2 }, K + 0.4);
+  tl.to('#tok0', { color: 'var(--good)', duration: 0.2 }, K + 0.65);
+  tl.to(['#sy', '#w1'], { opacity: 0, duration: 0.2 }, K + 0.55);
+  tl.fromTo('#w2', { opacity: 0 }, { opacity: 1, duration: 0.3 }, K + 0.6);
+  tl.fromTo('#sb', { opacity: 0, scale: 0.8 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, K + 0.7);
+  tl.to('#ch2', { opacity: 1, duration: 0.4 }, K + 0.8);
+
+  // ---- beat 3: the cost ---------------------------------------------------------------
+  var RES = 7.7;
+  tl.to(['#img', '#net', '#chart', '#resp'], { opacity: 0, duration: 0.35 }, RES);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, RES + 0.25);
+  tl.fromTo('#regLine, #regLab', { opacity: 0 }, { opacity: 1, duration: 0.3 }, RES + 0.4);
+  [0, 1].forEach(function (k) {
+    tl.fromTo('#bar' + k, { scaleX: 0 }, { scaleX: 1, duration: 0.7 }, RES + 0.5 + 0.12 * k);
+    tl.fromTo(['#val' + k, '#x' + k], { opacity: 0 }, { opacity: 1, duration: 0.3 }, RES + 0.95 + 0.12 * k);
+  });
+  tl.fromTo('#bar2', { scaleX: 0 }, { scaleX: 1, duration: 0.5 }, RES + 0.95);
+  tl.fromTo('#val2', { opacity: 0 }, { opacity: 1, duration: 0.3 }, RES + 1.25);
+  tl.fromTo('#mme', { opacity: 0, y: 4 }, { opacity: 1, y: 0, duration: 0.4 }, RES + 1.3);
+  tl.fromTo('#gain', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, RES + 1.35);
+  // the dashed "regular" marker sits at 3.47 s on the same 36 px/s scale
+  tl.set('#regLine', { left: 88 + 3.47 * 36 }, 0);
+  tl.set('#regLab', { left: 88 + 3.47 * 36 - 42 }, 0);
+}, { duration: 10.5, poster: 7.4 });
+</script>
+</body></html>

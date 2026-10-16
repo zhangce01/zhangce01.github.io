@@ -1,0 +1,201 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>SCAI pose teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* question card, top right (the venue badge owns the top-left corner) */
+  #q { left: 206px; top: 10px; width: 258px; height: 42px; }
+  #q .qmark { position: absolute; left: 9px; top: 11px; width: 19px; height: 19px; border-radius: 6px;
+              background: var(--ink); color: var(--bg); font: 700 11px/19px "Space Grotesk"; text-align: center; }
+  .qt { position: absolute; left: 36px; top: 7px; width: 214px; font: 600 11.5px/14px Inter; color: var(--ink); }
+
+  /* photo */
+  #photo { left: 16px; top: 62px; width: 132px; height: 194px; }
+  #photo img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .ring { position: absolute; width: 30px; height: 30px; margin: -15px 0 0 -15px; border-radius: 50%;
+          border: 2.5px solid var(--bad); box-shadow: 0 0 0 1.5px rgba(255,255,255,.55); }
+  html.dark .ring { box-shadow: 0 0 0 1.5px rgba(0,0,0,.45); }
+
+  /* verdict */
+  .who { position: absolute; left: 168px; top: 68px; font: 600 9.5px/1 Inter; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-faint); white-space: nowrap; }
+  .who.us { color: var(--acc); }
+  .ans { left: 166px; top: 81px; }
+
+  /* self-check schematic */
+  #mech { left: 166px; top: 114px; width: 298px; height: 142px; }
+  #msvg { position: absolute; left: 0; top: 0; overflow: visible; }
+  .step { position: absolute; font: 600 11.5px/1 Inter; white-space: nowrap; }
+  #mlab { position: absolute; left: 160px; top: 40px; font: 600 11.5px/1 Inter; color: var(--ink-soft); white-space: nowrap; }
+  #mtrack { position: absolute; left: 160px; top: 56px; width: 124px; height: 10px; border-radius: 5px; background: var(--panel-2); overflow: hidden; }
+  #mfill { position: absolute; left: 0; top: 0; bottom: 0; width: 124px; border-radius: 5px; background: var(--bad); transform-origin: 0 50%; }
+  #mhi { position: absolute; left: 160px; top: 72px; font: 700 13px/1 "Space Grotesk"; white-space: nowrap; }
+  #nogt { left: 160px; top: 96px; }
+
+  /* result */
+  #res { left: 166px; top: 62px; width: 298px; height: 194px; }
+  .rname { position: absolute; left: 14px; width: 80px; font: 600 12px/22px Inter; color: var(--ink-soft); white-space: nowrap; }
+  .rtrack { position: absolute; left: 90px; height: 22px; width: 140px; border-radius: 5px; background: var(--panel-2); }
+  .rbar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; transform-origin: 0 50%; }
+  .rval { position: absolute; font: 700 16px/22px "Space Grotesk"; }
+  #gain { height: 22px; font-size: 12px; }
+
+  .cap-half { display: inline-block; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <div class="panel" id="q">
+    <div class="qmark">?</div>
+    <div class="qt">No ground truth at test time: is this pose right?</div>
+  </div>
+
+  <div class="img" id="photo">
+    <img id="pBase" src="../assets/pose/man_baseline.jpg">
+    <img id="pOurs" src="../assets/pose/man_scai.jpg">
+  </div>
+  <div class="ring" id="ring"></div>
+
+  <div class="who" id="whoA">HRNet-W48 baseline</div>
+  <div class="who us" id="whoB">SCAI</div>
+  <div class="chip ans no" id="aBad">left knee misplaced <i data-i="cross" data-s="12" data-w="2.4"></i></div>
+  <div class="chip ans ok" id="aOk">left knee corrected <i data-i="check" data-s="13" data-w="2.4"></i></div>
+
+  <div class="panel" id="mech">
+    <svg id="msvg" width="298" height="142"></svg>
+    <div class="step" id="s1" style="left:12px;top:12px;color:var(--acc)">1 · map back, compare</div>
+    <div class="step" id="s2" style="left:12px;top:12px;color:var(--good)">2 · correct</div>
+    <div id="mlab">self-check error</div>
+    <div id="mtrack"><div id="mfill"></div></div>
+    <div id="mhi" class="bad">high</div>
+    <div id="mlo" class="good" style="position:absolute;left:160px;top:72px;font:700 13px/1 'Space Grotesk'">low</div>
+    <div class="chip acc" id="nogt">no ground truth</div>
+  </div>
+
+  <div class="panel" id="res">
+    <div class="label abs" style="left:14px;top:14px">COCO test-dev · AP ↑</div>
+    <div class="rname" style="top:44px">HRNet-W48</div>
+    <div class="rtrack" style="top:44px"><div class="rbar" id="bar0" style="background:var(--base)"></div></div>
+    <div class="rval soft" id="val0" style="top:44px">75.5</div>
+    <div class="rname" style="top:86px">SCIO <span class="faint" style="font-weight:500">prev.</span></div>
+    <div class="rtrack" style="top:86px"><div class="rbar" id="bar1" style="background:var(--base)"></div></div>
+    <div class="rval soft" id="val1" style="top:86px">79.2</div>
+    <div class="rname" style="top:128px;color:var(--acc)">SCAI</div>
+    <div class="rtrack" style="top:128px"><div class="rbar" id="bar2" style="background:var(--acc)"></div></div>
+    <div class="rval hl" id="val2" style="top:128px">80.6</div>
+    <div class="chip acc" id="gain" style="top:128px">+1.4</div>
+    <div class="label abs" style="left:14px;top:168px">+5.1 over its HRNet-W48 baseline</div>
+  </div>
+
+  <div class="caption" id="cap">
+    <span class="cap-half" id="ch1"><span class="hl">check</span> itself,</span>
+    <span class="cap-half" id="ch2">then <span class="good">correct</span> itself</span>
+  </div>
+</div></div>
+
+<script>
+// photo: 223 x 327 tile shown at 132 x 194 (scale 0.592) from (16, 62)
+var SC = 132 / 223;
+function P(x, y) { return { left: 16 + x * SC, top: 62 + y * SC }; }
+var KNEE_BASE = P(214, 218), KNEE_OURS = P(132, 227);   // pink (left) knee, Fig. 6 col. 3
+
+// ---- self-check schematic: a limb A-B-C with distal tip D (as in Fig. 2) ---------------
+var NS = 'http://www.w3.org/2000/svg', svg = document.getElementById('msvg');
+function el(tag, attrs) { var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); svg.appendChild(e); return e; }
+var A = [30, 62], B = [56, 80], C = [82, 98], Dw = [128, 84], Dc = [106, 124], Ag = [52, 48];
+var limb = el('polyline', { points: [A, B, C].map(String).join(' '), fill: 'none', stroke: 'var(--ink-faint)', 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+var tip = el('line', { x1: C[0], y1: C[1], x2: Dw[0], y2: Dw[1], stroke: 'var(--bad)', 'stroke-width': 3, 'stroke-linecap': 'round' });
+// map-back arrow (D -> A'), the A-A' gap, the correction arrow (D -> D')
+var back = el('path', { d: 'M ' + (Dw[0] - 2) + ' ' + (Dw[1] - 8) + ' C 126 54, 92 40, ' + (Ag[0] + 8) + ' ' + (Ag[1] - 2),
+  fill: 'none', stroke: 'var(--acc)', 'stroke-width': 1.8, 'stroke-dasharray': '4 3', 'stroke-linecap': 'round' });
+var gap = el('line', { x1: A[0], y1: A[1], x2: Ag[0], y2: Ag[1], stroke: 'var(--bad)', 'stroke-width': 2.4, 'stroke-linecap': 'round' });
+var fix = el('path', { d: 'M ' + (Dw[0] + 2) + ' ' + (Dw[1] + 9) + ' Q 134 116, ' + (Dc[0] + 9) + ' ' + (Dc[1] + 1),
+  fill: 'none', stroke: 'var(--good)', 'stroke-width': 2, 'stroke-linecap': 'round' });
+var fixHead = el('path', { d: 'M ' + (Dc[0] + 15) + ' ' + (Dc[1] - 4) + ' L ' + (Dc[0] + 9) + ' ' + (Dc[1] + 1) + ' L ' + (Dc[0] + 16) + ' ' + (Dc[1] + 5),
+  fill: 'none', stroke: 'var(--good)', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
+var dots = [A, B, C].map(function (p) { return el('circle', { cx: p[0], cy: p[1], r: 6, fill: 'var(--ink-soft)', stroke: 'var(--panel)', 'stroke-width': 2 }); });
+var ghost = el('circle', { cx: Ag[0], cy: Ag[1], r: 6, fill: 'none', stroke: 'var(--acc)', 'stroke-width': 2, 'stroke-dasharray': '3 2' });
+var D = el('circle', { cx: Dw[0], cy: Dw[1], r: 7, fill: 'var(--gold)', stroke: 'var(--panel)', 'stroke-width': 2 });
+var tA = el('text', { x: A[0] - 16, y: A[1] + 4, 'font-family': 'Inter', 'font-weight': 600, 'font-size': 11.5, fill: 'var(--ink-soft)' }); tA.textContent = 'A';
+var tAg = el('text', { x: Ag[0] + 9, y: Ag[1] - 4, 'font-family': 'Inter', 'font-weight': 600, 'font-size': 11.5, fill: 'var(--acc)' }); tAg.textContent = 'A′';
+var tD = el('text', { x: Dw[0] + 11, y: Dw[1] + 4, 'font-family': 'Inter', 'font-weight': 600, 'font-size': 11.5, fill: 'var(--ink-soft)' }); tD.textContent = 'D';
+
+Stage.build(function (o) {
+  var tl = o.tl;
+  ['ring'].forEach(function (id) { var r = document.getElementById(id); r.style.left = KNEE_BASE.left + 'px'; r.style.top = KNEE_BASE.top + 'px'; });
+
+  // ---- beat 1: the baseline gets a leg wrong ------------------------------------------
+  tl.from('#q', { opacity: 0, y: -6 }, 0.3);
+  tl.from('#q .qt', { opacity: 0 }, 0.45);
+  tl.fromTo('#cap .cap-half', { opacity: 0 }, { opacity: 0.32, duration: 0.4 }, 0.4);
+  tl.from('#photo', { opacity: 0, y: 6 }, 0.5);
+  tl.set('#pOurs', { opacity: 0 }, 0);
+  tl.from('#whoA', { opacity: 0, x: -6 }, 1.0);
+  tl.fromTo('#aBad', { opacity: 0, x: -6 }, { opacity: 1, x: 0 }, 1.15);
+  tl.fromTo('#ring', { opacity: 0, scale: 1.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, 1.3);
+  tl.to('#ring', { scale: 1.18, duration: 0.25, ease: 'power1.inOut', yoyo: true, repeat: 3 }, 1.9);
+  tl.set(['#whoB', '#aOk', '#mech', '#mlo'], { opacity: 0 }, 0);
+
+  // ---- beat 2: map the prediction back and compare -> self-check error ----------------
+  var B2 = 3.2;
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, B2);
+  tl.fromTo('#mech', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, B2);
+  tl.set(['#s2'], { opacity: 0 }, 0);
+  tl.fromTo('#s1', { opacity: 0 }, { opacity: 1, duration: 0.3 }, B2 + 0.2);
+  tl.fromTo([limb, tip].concat(dots, [D, tA, tD]), { opacity: 0 }, { opacity: 1, duration: 0.35, stagger: 0.04 }, B2 + 0.25);
+  tl.set([back, gap, ghost, tAg, fix, fixHead], { opacity: 0 }, 0);
+  tl.fromTo(back, { opacity: 1, strokeDashoffset: 0, attr: { 'stroke-dasharray': '0 200' } },
+    { attr: { 'stroke-dasharray': '4 3' }, duration: 0.01 }, B2 + 0.8);
+  tl.fromTo(back, { opacity: 0 }, { opacity: 1, duration: 0.35 }, B2 + 0.8);
+  tl.fromTo([ghost, tAg], { opacity: 0, scale: 0.4, transformOrigin: '50% 50%' }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2.2)' }, B2 + 1.1);
+  tl.fromTo(gap, { opacity: 0 }, { opacity: 1, duration: 0.3 }, B2 + 1.35);
+  tl.fromTo('#mfill', { scaleX: 0 }, { scaleX: 0.88, duration: 0.6 }, B2 + 1.35);
+  tl.fromTo(['#mlab', '#mtrack'], { opacity: 0 }, { opacity: 1, duration: 0.3 }, B2 + 0.6);
+  tl.fromTo('#mhi', { opacity: 0, y: 4 }, { opacity: 1, y: 0, duration: 0.3 }, B2 + 1.7);
+  tl.fromTo('#nogt', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, B2 + 1.9);
+
+  // ---- ... then correct: D moves, A' falls back onto A, the error drains --------------
+  var FX = B2 + 2.55;
+  tl.to('#s1', { opacity: 0, duration: 0.2 }, FX);
+  tl.fromTo('#s2', { opacity: 0 }, { opacity: 1, duration: 0.3 }, FX + 0.15);
+  tl.to('#ch2', { opacity: 1, duration: 0.4 }, FX + 0.15);
+  tl.to(back, { opacity: 0.25, duration: 0.3 }, FX);
+  tl.fromTo([fix, fixHead], { opacity: 0 }, { opacity: 1, duration: 0.3 }, FX + 0.1);
+  tl.to(D, { attr: { cx: Dc[0], cy: Dc[1] }, duration: 0.7, ease: 'power3.inOut' }, FX + 0.35);
+  tl.to(tD, { attr: { x: Dc[0] - 22, y: Dc[1] + 5 }, duration: 0.7, ease: 'power3.inOut' }, FX + 0.35);
+  tl.to(tip, { attr: { x2: Dc[0], y2: Dc[1], stroke: 'var(--good)' }, duration: 0.7, ease: 'power3.inOut' }, FX + 0.35);
+  tl.to(ghost, { attr: { cx: A[0], cy: A[1] }, duration: 0.7, ease: 'power3.inOut' }, FX + 0.5);
+  tl.to(tAg, { opacity: 0, duration: 0.3 }, FX + 0.5);
+  tl.to(ghost, { opacity: 0, duration: 0.25 }, FX + 1.1);
+  tl.fromTo(dots[0], { attr: { fill: 'var(--ink-soft)' } }, { attr: { fill: 'var(--good)' }, duration: 0.3 }, FX + 1.1);
+  tl.to(gap, { attr: { x2: A[0], y2: A[1] }, opacity: 0, duration: 0.6, ease: 'power3.inOut' }, FX + 0.5);
+  tl.to('#mfill', { scaleX: 0.12, backgroundColor: 'var(--good)', duration: 0.8, ease: 'power2.inOut' }, FX + 0.5);
+  tl.to('#mhi', { opacity: 0, duration: 0.2 }, FX + 0.6);
+  tl.to('#mlo', { opacity: 1, duration: 0.3 }, FX + 0.85);
+  // the real fix on the photo (Fig. 6, registered crossfade)
+  tl.to('#pOurs', { opacity: 1, duration: 1.0, ease: 'power1.inOut' }, FX + 0.4);
+  tl.to('#ring', { left: KNEE_OURS.left, top: KNEE_OURS.top, borderColor: 'var(--good)', duration: 0.9, ease: 'power3.inOut' }, FX + 0.45);
+  tl.to(['#whoA', '#aBad'], { opacity: 0, duration: 0.25 }, FX + 0.6);
+  tl.fromTo('#whoB', { opacity: 0, x: -6 }, { opacity: 1, x: 0 }, FX + 0.95);
+  tl.fromTo('#aOk', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, FX + 1.1);
+
+  // ---- beat 3: the number ------------------------------------------------------------
+  var RES = 8.0;
+  tl.to(['#mech', '#whoB', '#aOk'], { opacity: 0, duration: 0.35 }, RES);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, RES + 0.25);
+  var S = 140 / 100;                         // AP, bars from zero
+  [[75.5, 0], [79.2, 1], [80.6, 2]].forEach(function (d) {
+    var v = d[0], i = d[1], t = RES + 0.45 + 0.3 * i;
+    tl.set('#bar' + i, { width: v * S }, 0);
+    tl.set('#val' + i, { left: 90 + v * S + 6 }, 0);
+    tl.fromTo('#bar' + i, { scaleX: 0 }, { scaleX: 1, duration: 0.6 + 0.1 * i }, t);
+    o.count('#val' + i, 0, v, t, 0.6 + 0.1 * i);
+    tl.fromTo('#val' + i, { opacity: 0 }, { opacity: 1, duration: 0.2 }, t);
+  });
+  tl.set('#gain', { left: 90 + 80.6 * S + 48 }, 0);
+  tl.fromTo('#gain', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, RES + 1.6);
+}, { duration: 10.5, poster: 7.3 });
+</script>
+</body></html>

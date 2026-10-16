@@ -1,0 +1,220 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>SGFNet teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* image / high-pass / fused toggle, top right (the venue badge owns the top-left corner) */
+  #toggle { left: 272px; top: 16px; width: 192px; height: 28px; border-radius: 8px; background: var(--panel-2); border: 1px solid var(--line); }
+  #knob { position: absolute; left: 2px; top: 2px; width: 60px; height: 22px; border-radius: 6px; background: var(--panel); box-shadow: var(--shadow); }
+  .tg { position: absolute; top: 0; width: 63.3px; height: 26px; display: flex; align-items: center; justify-content: center;
+        font: 600 11.5px/1 Inter; color: var(--ink-faint); white-space: nowrap; }
+  #tg0 { left: 0; } #tg1 { left: 63.3px; } #tg2 { left: 126.6px; }
+
+  /* the two sensor panels */
+  .pic { position: absolute; border-radius: 8px; overflow: hidden; background: var(--panel-2); box-shadow: var(--shadow); }
+  .pic > img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .pic::after { content: ""; position: absolute; inset: 0; border-radius: 8px; box-shadow: inset 0 0 0 1px var(--img-line); }
+  #pL { left: 16px; top: 60px; width: 214px; height: 160.5px; }
+  #pR { left: 250px; top: 60px; width: 214px; height: 160.5px; }
+  .ptag { position: absolute; left: 6px; top: 6px; height: 20px; padding: 0 7px; border-radius: 5px; background: var(--panel);
+          font: 600 11.5px/20px Inter; color: var(--ink); white-space: nowrap; z-index: 2; }
+  .bx { position: absolute; border-radius: 4px; border: 2px solid var(--good); }
+  .bx.miss { border: 2px dashed var(--bad); }
+  .bike { left: 61%; top: 43.8%; width: 37.8%; height: 20.9%; }
+  .ped  { left: 17.8%; top: 31.4%; width: 16.1%; height: 31.2%; }
+  .ans { height: 24px; font-size: 12px; top: 228px; }
+
+  /* fusion */
+  #sgf { left: 146px; top: 112px; width: 56px; height: 84px; }
+  #sgf .h { position: absolute; left: 0; right: 0; top: 10px; text-align: center; color: var(--acc); }
+  #dct { position: absolute; left: 9.5px; top: 36px; width: 37px; height: 37px; }
+  svg#wires { position: absolute; left: 0; top: 0; width: 480px; height: 300px; overflow: visible; }
+  #wires path { fill: none; stroke: var(--ink-faint); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+  #out { left: 216px; top: 62px; width: 248px; height: 186px; }
+  #out .veil { inset: 0; opacity: 0.32; }
+  svg.ov { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .ov .gold { fill: var(--gold); }
+  .ov .blue { fill: var(--blue); }
+  .chip.otag { position: absolute; height: 22px; font-size: 12px; background: var(--panel); box-shadow: var(--shadow); }
+  .pre { display: none; }
+
+  /* result */
+  #res { left: 16px; top: 70px; width: 448px; height: 166px; }
+  .rname { position: absolute; left: 16px; width: 74px; font: 600 12.5px/22px Inter; color: var(--ink-soft); }
+  .rtrack { position: absolute; left: 92px; height: 22px; width: 290px; border-radius: 5px; background: var(--panel-2); }
+  .rbar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; transform-origin: 0 50%; }
+  .rval { position: absolute; font: 700 17px/22px "Space Grotesk"; }
+  .rsub { position: absolute; left: 16px; font: 500 11.5px/1 Inter; color: var(--ink-faint); white-space: nowrap; }
+  #gain { height: 22px; font-size: 12px; }
+
+  .cap-half { display: inline-block; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <div class="abs" id="toggle">
+    <div id="knob"></div>
+    <div class="tg" id="tg0">image</div>
+    <div class="tg" id="tg1">high-pass</div>
+    <div class="tg" id="tg2">fused</div>
+  </div>
+
+  <svg id="wires" viewBox="0 0 480 300">
+    <path id="w1" d="M128 106 C 138 106, 136 140, 146 140"/>
+    <path id="w2" d="M128 202 C 138 202, 136 168, 146 168"/>
+    <path id="w3" d="M202 155 L 213 155 M 209 151 L 213 155 L 209 159"/>
+  </svg>
+
+  <div class="pic" id="pL">
+    <img src="../assets/sgfnet/rgb.jpg">
+    <img class="hp" src="../assets/sgfnet/hpf_rgb.jpg">
+    <div class="ptag">RGB</div>
+    <div class="bx bike" id="bL1"></div>
+    <div class="bx miss ped" id="bL2"></div>
+  </div>
+  <div class="pic" id="pR">
+    <img src="../assets/sgfnet/thermal.jpg">
+    <img class="hp" src="../assets/sgfnet/hpf_thermal.jpg">
+    <div class="ptag">Thermal</div>
+    <div class="bx ped" id="bR1"></div>
+    <div class="bx miss bike" id="bR2"></div>
+  </div>
+
+  <div class="chip ans ok" id="cL1" style="left:16px">bikes <i data-i="check" data-s="13" data-w="2.4"></i></div>
+  <div class="chip ans no" id="cL2" style="left:90px">people <i data-i="cross" data-s="12" data-w="2.4"></i></div>
+  <div class="chip ans ok" id="cR1" style="left:250px">people <i data-i="check" data-s="13" data-w="2.4"></i></div>
+  <div class="chip ans no" id="cR2" style="left:334px">bikes <i data-i="cross" data-s="12" data-w="2.4"></i></div>
+
+  <div class="panel" id="sgf">
+    <div class="h">SGF</div>
+    <canvas id="dct" width="74" height="74"></canvas>
+  </div>
+
+  <div class="pic" id="out">
+    <img src="../assets/sgfnet/rgb.jpg">
+    <div class="veil"></div>
+    <svg class="ov" id="ov" viewBox="0 0 600 450" preserveAspectRatio="none">
+      <defs>
+        <mask id="mP" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="450"><image href="../assets/sgfnet/mask_person.png" width="600" height="450"/></mask>
+        <mask id="nP" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="450"><image href="../assets/sgfnet/edge_person.png" width="600" height="450"/></mask>
+        <mask id="mB" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="450"><image href="../assets/sgfnet/mask_bike.png" width="600" height="450"/></mask>
+        <mask id="nB" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="450"><image href="../assets/sgfnet/edge_bike.png" width="600" height="450"/></mask>
+      </defs>
+      <rect class="gold" width="600" height="450" fill-opacity="0.72" mask="url(#mP)"/>
+      <rect class="gold" width="600" height="450" mask="url(#nP)"/>
+      <rect class="blue" width="600" height="450" fill-opacity="0.6" mask="url(#mB)"/>
+      <rect class="blue" width="600" height="450" mask="url(#nB)"/>
+    </svg>
+    <div class="ptag">SGFNet</div>
+    <div class="chip ok otag" id="oP" style="left:28px;top:38px">people <i data-i="check" data-s="13" data-w="2.4"></i></div>
+    <div class="chip ok otag" id="oB" style="left:166px;top:57px">bikes <i data-i="check" data-s="13" data-w="2.4"></i></div>
+  </div>
+  <img class="pre" src="../assets/sgfnet/mask_person.png"><img class="pre" src="../assets/sgfnet/edge_person.png">
+  <img class="pre" src="../assets/sgfnet/mask_bike.png"><img class="pre" src="../assets/sgfnet/edge_bike.png">
+
+  <div class="panel" id="res">
+    <div class="label abs" style="left:16px;top:16px">MFNet · mIoU</div>
+    <div class="label abs" style="right:16px;top:16px">RGB-T segmentation · ResNet-152</div>
+    <div class="rname" style="top:44px">EAEFNet</div>
+    <div class="rtrack" style="top:44px"><div class="rbar" id="bar0" style="width:170.8px;background:var(--base)"></div></div>
+    <div class="rval soft" id="val0" style="left:269px;top:44px">58.9</div>
+    <div class="rsub" style="top:70px">previous best</div>
+    <div class="rname" style="top:94px;color:var(--acc)">SGFNet</div>
+    <div class="rtrack" style="top:94px"><div class="rbar" id="bar1" style="width:174.3px;background:var(--acc)"></div></div>
+    <div class="rval hl" id="val1" style="left:272px;top:94px">60.1</div>
+    <div class="chip acc" id="gain" style="left:316px;top:94px">+1.2</div>
+    <div class="rsub" style="top:136px">also best on PST900: <b style="color:var(--acc)">85.4</b> mIoU (prev. 84.4)</div>
+  </div>
+
+  <div class="caption" id="cap">
+    <span class="cap-half" id="ch1">Fuse the <span class="hl">high frequencies</span></span>
+    <span class="cap-half" id="ch2">of RGB + thermal</span>
+  </div>
+</div></div>
+
+<script>
+// a 3x3 patch of 2-D DCT cosine bases (the "spectral" in spectral-aware fusion)
+(function () {
+  var cv = document.getElementById('dct'), g = cv.getContext('2d');
+  var acc = getComputedStyle(document.documentElement).getPropertyValue('--acc').trim();
+  var N = 8, cell = 22, gap = 4, px = cell / N;
+  g.fillStyle = acc;
+  for (var u = 0; u < 3; u++) for (var v = 0; v < 3; v++) {
+    for (var x = 0; x < N; x++) for (var y = 0; y < N; y++) {
+      var b = Math.cos(Math.PI * u * (x + 0.5) / N) * Math.cos(Math.PI * v * (y + 0.5) / N);
+      g.globalAlpha = 0.12 + 0.88 * (b + 1) / 2;
+      g.fillRect(u * (cell + gap) + x * px, v * (cell + gap) + y * px, px + 0.02, px + 0.02);
+    }
+  }
+})();
+
+Stage.build(function (o) {
+  var tl = o.tl;
+  ['#w1', '#w2', '#w3'].forEach(function (id) {
+    var L = document.querySelector(id).getTotalLength();
+    tl.set(id, { strokeDasharray: L + ' ' + L, strokeDashoffset: L }, 0);
+  });
+
+  // ---- setup: the two sensors --------------------------------------------------------
+  tl.from('#pL', { opacity: 0, x: -8 }, 0.25);
+  tl.from('#pR', { opacity: 0, x: 8 }, 0.32);
+  tl.from('#toggle', { opacity: 0, y: -6 }, 0.45);
+  tl.set('#knob', { opacity: 0 }, 0);
+  tl.to('#knob', { opacity: 1, duration: 0.2 }, 0.7);
+  tl.to('#tg0', { color: 'var(--ink)', duration: 0.2 }, 0.7);
+  tl.fromTo('#cap .cap-half', { opacity: 0 }, { opacity: 0.32, duration: 0.4 }, 0.4);
+  tl.set(['.hp', '.bx', '.ans', '#sgf', '#out', '#oP', '#oB'], { opacity: 0 }, 0);
+
+  // ---- beat 1: high-pass each sensor; each sees different edges ----------------------
+  var H = 1.45;
+  tl.to('#knob', { x: 63.3, backgroundColor: 'var(--acc-soft)', duration: 0.45, ease: 'power3.inOut' }, H);
+  tl.to('#tg0', { color: 'var(--ink-faint)', duration: 0.3 }, H);
+  tl.to('#tg1', { color: 'var(--acc)', duration: 0.3 }, H + 0.1);
+  tl.to('.hp', { opacity: 1, duration: 0.5, ease: 'power1.inOut' }, H + 0.15);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, H + 0.2);
+
+  var B = H + 0.85;
+  tl.fromTo('#bL1', { opacity: 0, scale: 1.15 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2)' }, B);
+  tl.fromTo('#cL1', { opacity: 0, y: -5 }, { opacity: 1, y: 0, duration: 0.35 }, B + 0.1);
+  tl.fromTo('#bL2', { opacity: 0, scale: 1.15 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2)' }, B + 0.25);
+  tl.fromTo('#cL2', { opacity: 0, y: -5 }, { opacity: 1, y: 0, duration: 0.35 }, B + 0.35);
+  tl.fromTo('#bR1', { opacity: 0, scale: 1.15 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2)' }, B + 0.6);
+  tl.fromTo('#cR1', { opacity: 0, y: -5 }, { opacity: 1, y: 0, duration: 0.35 }, B + 0.7);
+  tl.fromTo('#bR2', { opacity: 0, scale: 1.15 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2)' }, B + 0.85);
+  tl.fromTo('#cR2', { opacity: 0, y: -5 }, { opacity: 1, y: 0, duration: 0.35 }, B + 0.95);
+
+  // ---- beat 2: SGF fuses both spectra -> both classes found --------------------------
+  var F = 4.55;
+  tl.to(['.bx', '.ans'], { opacity: 0, duration: 0.3 }, F);
+  tl.to('#pL', { left: 16, top: 64, width: 112, height: 84, duration: 0.6, ease: 'power3.inOut' }, F + 0.1);
+  tl.to('#pR', { left: 16, top: 160, width: 112, height: 84, duration: 0.6, ease: 'power3.inOut' }, F + 0.16);
+  tl.to('#knob', { x: 126.6, duration: 0.45, ease: 'power3.inOut' }, F + 0.35);
+  tl.to('#tg1', { color: 'var(--ink-faint)', duration: 0.3 }, F + 0.35);
+  tl.to('#tg2', { color: 'var(--acc)', duration: 0.3 }, F + 0.45);
+  tl.fromTo('#sgf', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, F + 0.6);
+  tl.to(['#w1', '#w2'], { strokeDashoffset: 0, duration: 0.35, ease: 'power2.inOut' }, F + 0.75);
+  tl.to('#w3', { strokeDashoffset: 0, duration: 0.25, ease: 'power2.inOut' }, F + 1.05);
+  tl.fromTo('#out', { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.4 }, F + 1.1);
+  tl.fromTo('#ov', { clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.6, ease: 'power2.inOut' }, F + 1.35);
+  tl.fromTo('#oP', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2)' }, F + 1.7);
+  tl.fromTo('#oB', { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'back.out(2)' }, F + 1.85);
+  tl.to('#ch2', { opacity: 1, duration: 0.4 }, F + 1.4);
+
+  // ---- beat 3: the number ------------------------------------------------------------
+  var R = 7.75;
+  tl.to(['#pL', '#pR', '#sgf', '#wires', '#out', '#toggle'], { opacity: 0, duration: 0.35 }, R);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, R + 0.25);
+  tl.fromTo('#bar0', { scaleX: 0 }, { scaleX: 1, duration: 0.6 }, R + 0.45);
+  o.count('#val0', 0, 58.9, R + 0.45, 0.6);
+  tl.fromTo('#val0', { opacity: 0 }, { opacity: 1, duration: 0.2 }, R + 0.45);
+  tl.fromTo('#bar1', { scaleX: 0 }, { scaleX: 1, duration: 0.75 }, R + 0.8);
+  o.count('#val1', 0, 60.1, R + 0.8, 0.75);
+  tl.fromTo('#val1', { opacity: 0 }, { opacity: 1, duration: 0.2 }, R + 0.8);
+  tl.fromTo('#gain', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, R + 1.45);
+}, { duration: 10.5, poster: 7.5 });
+</script>
+</body></html>
