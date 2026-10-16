@@ -52,12 +52,14 @@ Bars start from zero.
 
 **Layout.**
 - On the site the venue badge covers the top-left corner. At the smallest
-  display width (200 px), keep anything that matters out of x < 200, y < 56 (x < 280 for the long "ACL 20xx (Main)" badge).
+  display width (200 px), keep anything that matters out of x < 200, y < 56
+  (x < 280 for the long "ACL 20xx (Main)" badge).
   The top-right strip is free real estate (question cards, labels).
 - One-line caption at the bottom (`.caption`, 19 px Space Grotesk, <= ~44
   characters) with one or two coloured words (`.hl`, `.good`, `.blue`, ...).
-- The teaser is shown 200-320 px wide (320 on a desktop), so: few words,
-  11.5 px minimum for anything you need to read, big shapes, strong contrast between states.
+- The teaser is shown 200-320 px wide (280 on a desktop), so: few words,
+  11.5 px minimum for anything you need to read, big shapes, strong contrast
+  between states.
 
 **Colour.** Only the tokens in `lib/base.css`, so both themes work:
 `--acc` (warm brown) is the method / "ours", `--good` = correct, `--bad` = wrong,
