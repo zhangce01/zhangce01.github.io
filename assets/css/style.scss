@@ -467,7 +467,8 @@ section ul > li:hover::before {
   height: 2px;
   z-index: 70;
   background: var(--acc);
-  transform: scaleX(0);
+  transform: scaleX(0.001);   /* not 0, see progress.js */
+  visibility: hidden;
   transform-origin: 0 0;
   pointer-events: none;
 }

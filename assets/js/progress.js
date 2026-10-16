@@ -10,7 +10,12 @@
   function update() {
     var max = document.documentElement.scrollHeight - window.innerHeight;
     var p = max > 0 ? window.pageYOffset / max : 0;
-    bar.style.transform = 'scaleX(' + Math.min(Math.max(p, 0), 1) + ')';
+    p = Math.min(Math.max(p, 0), 1);
+    // never scaleX(0): with a zero-width layer on top, Chrome drops the
+    // avatar's round clip at the very top of the page (it turns square).
+    // At the top the bar is hidden instead.
+    bar.style.transform = 'scaleX(' + Math.max(p, 0.001) + ')';
+    bar.style.visibility = p > 0 ? 'visible' : 'hidden';
     ticking = false;
   }
   function onchange() {
