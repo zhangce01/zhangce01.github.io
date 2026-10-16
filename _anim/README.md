@@ -39,7 +39,8 @@ theme (`assets/js/teasers.js`); the `.webp` posters are the still fallback.
 
 ## Authoring rules
 
-**Stage.** 480 x 300 CSS px, rendered at 1.5x (720 x 450: the site shows it 200 px wide, so this covers 2x-3x screens). `#scene` holds everything; the
+**Stage.** 480 x 300 CSS px, rendered at 1.5x (720 x 450: the site shows it
+200-320 px wide, so this stays sharp on 2x screens). `#scene` holds everything; the
 runner fades it in over the first 0.35 s and out over the last 0.45 s, so the loop
 is seamless. Default length 10.5 s.
 
@@ -50,13 +51,13 @@ number must come from the paper; shorten text only where the meaning survives.
 Bars start from zero.
 
 **Layout.**
-- On the site the venue badge covers the top-left corner: keep anything that
-  matters out of x < 200, y < 56 (x < 280 for the long "ACL 20xx (Main)" badge).
+- On the site the venue badge covers the top-left corner. At the smallest
+  display width (200 px), keep anything that matters out of x < 200, y < 56 (x < 280 for the long "ACL 20xx (Main)" badge).
   The top-right strip is free real estate (question cards, labels).
 - One-line caption at the bottom (`.caption`, 19 px Space Grotesk, <= ~44
   characters) with one or two coloured words (`.hl`, `.good`, `.blue`, ...).
-- The teaser is shown ~200 px wide, so: few words, 11.5 px minimum for anything
-  you need to read, big shapes, strong contrast between states.
+- The teaser is shown 200-320 px wide (320 on a desktop), so: few words,
+  11.5 px minimum for anything you need to read, big shapes, strong contrast between states.
 
 **Colour.** Only the tokens in `lib/base.css`, so both themes work:
 `--acc` (warm brown) is the method / "ours", `--good` = correct, `--bad` = wrong,

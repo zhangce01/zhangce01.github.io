@@ -212,7 +212,7 @@ html.theme-dark .cursor-light {
 }
 
 .topbar-inner {
-  max-width: 1120px;
+  max-width: 1240px;
   margin: 0 auto;
   padding: 10px 24px;
   display: flex;
@@ -373,6 +373,18 @@ email { color: var(--ink-faint); }
 footer { display: none; }
 
 /* ---------- content column ---------- */
+
+/* 120px wider than the theme's 1120px. The extra width all goes to the
+   publication teasers (below), so text lines keep their usual length.
+   Fluid down to the theme's single-column breakpoint. */
+@media screen and (min-width: 1121px) {
+  .wrapper {
+    width: auto;
+    max-width: 1240px;
+    padding: 0 24px;     /* same as .topbar-inner, so the edges line up */
+  }
+  section { width: calc(100% - 320px); }   /* sidebar card + gap, as in the theme */
+}
 
 section {
   color: var(--ink-soft);
@@ -945,6 +957,11 @@ html.theme-dark a.ri-paper:hover {
   border-radius: 12px;
   box-shadow: 0 8px 22px -10px rgba(15, 23, 42, 0.35);
   transition: transform .3s ease;
+  /* 200px in the theme; up to 320px wherever the wider layout leaves room,
+     with the text column keeping its width */
+  width: calc(100vw - 960px);
+  min-width: 200px;
+  max-width: 320px;
 }
 
 /* gentle zoom on the figure when the card is hovered */
@@ -1450,6 +1467,19 @@ html.theme-dark::-webkit-scrollbar-thumb, html.theme-dark ::-webkit-scrollbar-th
 @media print, screen and (max-width: 480px) {
   .topbar .brand { display: none; }
   .site-nav { margin-left: 0; }
+}
+
+/* teaser width in the single-column layouts (print keeps the 200px) */
+@media screen and (max-width: 1120px) {
+  .wrapper .publications ol.bibliography li .teaser { width: calc(100vw - 610px); }
+}
+
+@media screen and (max-width: 480px) {
+  /* rows stack here, so the teaser spans the card */
+  .wrapper .publications ol.bibliography li .teaser {
+    width: calc(100% - 5px);
+    min-width: 0;
+  }
 }
 
 /* ---------- print: clean paper output ---------- */
