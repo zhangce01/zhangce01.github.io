@@ -1,0 +1,292 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>RSIGame teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* loop strip, top right (the venue badge owns the top-left corner) */
+  #loop { left: 214px; top: 16px; width: 250px; height: 26px; }
+  .stg { position: absolute; top: 0; height: 26px; width: 74px; justify-content: center; font-size: 12px; }
+  #sE { left: 0; } #sD { left: 88px; } #sI { left: 176px; }
+  /* highlighted copy of each stage, cross-faded in (CSS-variable colours do not tween) */
+  .stg .nm, .stg .hi { display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
+  .stg .hi { position: absolute; inset: -1px; border-radius: 6px; background: var(--acc-soft);
+             border: 1px solid var(--acc-line); color: var(--acc); opacity: 0; }
+  .sarr { position: absolute; top: 6px; color: var(--ink-faint); }
+  #gameTag { right: 16px; top: 18px; height: 24px; font-size: 12px; background: var(--panel); color: var(--ink-soft); }
+
+  /* the game */
+  #shot { left: 16px; top: 60px; width: 200px; height: 113px; }
+  #shot img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; }
+  .rtag { position: absolute; left: 6px; bottom: 6px; height: 18px; padding: 0 6px; border-radius: 4px;
+          background: rgba(20,19,17,.72); color: #fff; font: 600 11px/18px Inter; white-space: nowrap; }
+  #cursor { left: 120px; top: 120px; color: var(--ink); }
+
+  /* beat 1: what the generated build gets wrong */
+  #see { left: 226px; top: 60px; width: 238px; height: 113px; }
+  #see .num { position: absolute; left: 12px; top: 30px; }
+  #see .sub { position: absolute; left: 78px; top: 32px; font: 500 11.5px/14px Inter; color: var(--ink-soft); }
+  .issue { left: 12px; height: 22px; font-size: 11.5px; }
+
+  /* naive refinement */
+  #naive { left: 16px; top: 180px; width: 448px; height: 66px; }
+  .nstep { top: 32px; height: 24px; font-size: 12.5px; }
+  .narr { position: absolute; top: 37px; color: var(--ink-faint); }
+
+  /* beat 2: checklist */
+  #chk { left: 226px; top: 60px; width: 238px; height: 113px; }
+  .crow { position: absolute; left: 10px; width: 222px; height: 20px; display: flex; align-items: center; gap: 6px;
+          font: 500 11.5px/14px Inter; color: var(--ink); white-space: nowrap; }
+  .crow .ic { width: 16px; display: flex; justify-content: center; }
+  .crow.bad .ic { color: var(--bad); }
+  .crow.ok .ic { color: var(--good); }
+  .crow .r { margin-left: auto; font: 600 10px/1 Inter; color: var(--ink-faint); }
+
+  /* score chart */
+  #chart { left: 16px; top: 180px; width: 448px; height: 82px; }
+  #chart svg { position: absolute; left: 0; top: 0; }
+  .clab { position: absolute; font: 700 12px/1 "Space Grotesk"; white-space: nowrap; }
+  #legHeld { position: absolute; right: 10px; top: 8px; display: flex; align-items: center; gap: 5px;
+             font: 600 10.5px/1 Inter; color: var(--acc); white-space: nowrap; }
+  #legHeld i { display: inline-block; width: 16px; border-top: 2px dashed var(--acc); }
+
+  /* beat 3: result */
+  #res { left: 16px; top: 58px; width: 448px; height: 194px; }
+  .gl { position: absolute; top: 166px; width: 140px; text-align: center; font: 600 12.5px/1 Inter; color: var(--ink); }
+  .vb { position: absolute; width: 56px; border-radius: 4px 4px 1px 1px; transform-origin: 50% 100%; }
+  .vv { position: absolute; width: 70px; text-align: center; font: 700 15px/1 "Space Grotesk"; }
+  #axis { position: absolute; left: 16px; width: 254px; top: 158px; height: 1px; background: var(--line); }
+  .lg { position: absolute; left: 284px; display: flex; align-items: flex-start; gap: 6px; width: 140px;
+        font: 600 11.5px/14px Inter; color: var(--ink-soft); }
+  .lg b { flex: none; width: 10px; height: 10px; border-radius: 2px; margin-top: 2px; }
+  /* two lines: the 11x token cut is the Godot generator's (Table 1: 6.41M -> 0.57M) */
+  #tok { left: 284px; top: 122px; height: auto; padding: 5px 8px; align-items: flex-start; font-size: 11.5px; line-height: 14px; }
+  #tok .ico { margin-top: 1px; }
+
+  .cap-half { display: inline-block; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <div class="chip" id="gameTag">Lawn Guardians</div>
+  <div class="abs" id="loop">
+    <div class="chip stg" id="sE"><span class="nm"><i data-i="search" data-s="12"></i>explore</span><span class="hi"><i data-i="search" data-s="12"></i>explore</span></div>
+    <i data-i="arrow" data-s="12" class="sarr" style="left:76px"></i>
+    <div class="chip stg" id="sD"><span class="nm"><i data-i="warn" data-s="12"></i>diagnose</span><span class="hi"><i data-i="warn" data-s="12"></i>diagnose</span></div>
+    <i data-i="arrow" data-s="12" class="sarr" style="left:164px"></i>
+    <div class="chip stg" id="sI"><span class="nm"><i data-i="bolt" data-s="12"></i>improve</span><span class="hi"><i data-i="bolt" data-s="12"></i>improve</span></div>
+  </div>
+
+  <div class="img" id="shot">
+    <img id="im0" src="../assets/rsigame/lawn_r0.jpg">
+    <img id="im12" src="../assets/rsigame/lawn_r12.jpg">
+    <div class="box no" id="bxCards" style="left:18px;top:0px;width:74px;height:21px"></div>
+    <div class="box no" id="bxHouse" style="left:0px;top:22px;width:35px;height:82px"></div>
+    <div class="rtag" id="tag0">R0 · generated</div>
+    <div class="rtag" id="tag12">R12 · held best</div>
+  </div>
+  <i data-i="cursor" data-s="16" id="cursor" class="i"></i>
+
+  <!-- beat 1 -->
+  <div class="panel" id="see">
+    <div class="label abs" style="left:12px;top:12px">base game · official score</div>
+    <div class="num" id="s0">61.7</div>
+    <div class="sub">playable, but<br>placeholder art</div>
+    <div class="chip no issue" id="is1" style="top:60px"><i data-i="cross" data-s="11" data-w="2.4"></i>plants spill out of the cards</div>
+    <div class="chip no issue" id="is2" style="top:85px"><i data-i="cross" data-s="11" data-w="2.4"></i>46 art files ship, 4 used</div>
+  </div>
+  <div class="panel" id="naive">
+    <div class="label abs" style="left:12px;top:12px">naive refinement · Play2Code</div>
+    <div class="chip nstep" id="n0" style="left:12px">start 61.7</div>
+    <i data-i="arrow" data-s="13" class="narr" style="left:96px"></i>
+    <div class="chip nstep ok" id="n1" style="left:116px">peaks 81.5</div>
+    <i data-i="arrow" data-s="13" class="narr" style="left:210px"></i>
+    <div class="chip nstep no" id="n2" style="left:230px">ends 65.7 <i data-i="cross" data-s="12" data-w="2.4"></i></div>
+  </div>
+
+  <!-- beat 2 -->
+  <div class="panel" id="chk">
+    <div class="label abs" style="left:12px;top:10px">evolving checklist</div>
+    <div class="crow bad" id="c1" style="top:24px"><span class="ic"><i data-i="warn" data-s="13"></i></span>draws almost none of 46 images<span class="r">R1</span></div>
+    <div class="crow bad" id="c2" style="top:45px"><span class="ic"><i data-i="warn" data-s="13"></i></span>“actions did not register”<span class="r">replay</span></div>
+    <div class="crow ok" id="c3" style="top:66px"><span class="ic"><i data-i="check" data-s="13" data-w="2.4"></i></span>sprites wired: 46 → 114<span class="r">R4–11</span></div>
+    <div class="crow ok" id="c4" style="top:87px"><span class="ic"><i data-i="check" data-s="13" data-w="2.4"></i></span>hit flashes, chew shake<span class="r">R12</span></div>
+  </div>
+  <div class="panel" id="chart">
+    <div class="label abs" style="left:12px;top:8px">official score · rounds 0–21</div>
+    <div id="legHeld"><i></i>held best</div>
+    <svg width="448" height="82" viewBox="0 0 448 82">
+      <polyline id="held" fill="none" stroke="var(--acc)" stroke-width="2" stroke-dasharray="5 4" />
+      <polyline id="curve" fill="none" stroke="var(--blue)" stroke-width="2.2" stroke-linejoin="round" />
+      <g id="dots"></g>
+      <path id="star" fill="var(--gold)" stroke="var(--acc)" stroke-width="1" />
+    </svg>
+    <div class="clab blue" id="l0">61.7</div>
+    <div class="clab bad" id="l6">64.6</div>
+    <div class="clab hl" id="l12">86.1</div>
+    <div class="clab bad" id="l18">73.2</div>
+  </div>
+
+  <!-- beat 3 -->
+  <div class="panel" id="res">
+    <div class="label abs" style="left:16px;top:14px">GameCraft-Bench · 140 tasks · Overall</div>
+    <div id="axis"></div>
+    <div class="vb" id="b0" style="background:var(--base)"></div>
+    <div class="vb" id="b1" style="background:var(--acc)"></div>
+    <div class="vb" id="b2" style="background:var(--base)"></div>
+    <div class="vb" id="b3" style="background:var(--acc)"></div>
+    <div class="vv soft" id="v0">50.26</div>
+    <div class="vv hl" id="v1">61.38</div>
+    <div class="vv soft" id="v2">49.44</div>
+    <div class="vv hl" id="v3">58.53</div>
+    <div class="gl" style="left:11px">Godot</div>
+    <div class="gl" style="left:137px">Phaser</div>
+    <div class="lg" id="lgA" style="top:46px"><b style="background:var(--base)"></b>GPT-5.5 one-shot</div>
+    <div class="lg" id="lgB" style="top:72px;color:var(--acc)"><b style="background:var(--acc)"></b>Qwen3.8-27B + RSIGame, experience internalized</div>
+    <div class="chip acc" id="tok"><i data-i="bolt" data-s="12"></i><span>11× fewer gen. tokens<br>on Godot</span></div>
+  </div>
+
+  <div class="caption" id="cap">
+    <span class="cap-half" id="ch1"><span class="hl">explore, diagnose, improve</span>,</span>
+    <span class="cap-half" id="ch2">keep the <span class="good">best</span></span>
+  </div>
+</div></div>
+
+<script>
+// Lawn Guardians, official score at every third round (paper Fig. 10)
+var PTS = [[0, 61.7], [3, 80.0], [6, 64.6], [9, 86.1], [12, 86.1], [15, 86.1], [18, 73.2], [21, 82.7]];
+// the version the Global Quality Monitor holds: R0, then R3, then R12
+var HELD = [[0, 61.7], [3, 61.7], [3, 80.0], [12, 80.0], [12, 86.1], [21, 86.1]];
+function X(r) { return 40 + r * 17.4; }
+function Y(v) { return 72 - (v - 60) * 1.45; }
+function pl(pts) { return pts.map(function (p) { return X(p[0]).toFixed(1) + ',' + Y(p[1]).toFixed(1); }).join(' '); }
+var ns = 'http://www.w3.org/2000/svg', dots = document.getElementById('dots');
+var dotEls = PTS.map(function (p) {
+  var c = document.createElementNS(ns, 'circle');
+  c.setAttribute('cx', X(p[0])); c.setAttribute('cy', Y(p[1])); c.setAttribute('r', 2.8);
+  c.setAttribute('fill', 'var(--blue)'); dots.appendChild(c); return c;
+});
+// partial polyline up to round r
+function partial(pts, r) {
+  var out = [pts[0]];
+  for (var i = 1; i < pts.length; i++) {
+    var a = pts[i - 1], b = pts[i];
+    if (b[0] <= r) { out.push(b); continue; }
+    if (a[0] < r) { var f = (r - a[0]) / (b[0] - a[0]); out.push([r, a[1] + (b[1] - a[1]) * f]); }
+    break;
+  }
+  return out;
+}
+function starPath(cx, cy, R) {
+  var d = '';
+  for (var k = 0; k < 10; k++) {
+    var rr = k % 2 ? R * 0.45 : R, a = -Math.PI / 2 + k * Math.PI / 5;
+    d += (k ? 'L' : 'M') + (cx + rr * Math.cos(a)).toFixed(1) + ' ' + (cy + rr * Math.sin(a)).toFixed(1);
+  }
+  return d + 'Z';
+}
+document.getElementById('star').setAttribute('d', starPath(X(12), Y(86.1), 8));
+function place(id, r, v, dx, dy) { var e = document.getElementById(id); e.style.left = (16 + X(r) + dx - 16) + 'px'; e.style.top = (Y(v) + dy) + 'px'; }
+// value labels kept clear of the panel edges and of the line: 64.6 sits right of its dip
+place('l0', 0, 61.7, -30, -6); place('l6', 6, 64.6, 7, -2); place('l12', 12, 86.1, -14, -24); place('l18', 18, 73.2, -12, 4);
+
+// result bars (Table 1): max 61.38 -> 104 px
+var VALS = [50.26, 61.38, 49.44, 58.53], BX = [24, 82, 150, 208], H = 104 / 61.38, BASE = 158;
+VALS.forEach(function (v, i) {
+  var b = document.getElementById('b' + i), h = v * H;
+  b.style.left = BX[i] + 'px'; b.style.top = (BASE - h) + 'px'; b.style.height = h + 'px';
+  var t = document.getElementById('v' + i); t.style.left = (BX[i] - 7) + 'px'; t.style.top = (BASE - h - 20) + 'px';
+});
+
+Stage.build(function (o) {
+  var tl = o.tl;
+  tl.set(['#loop', '#chk', '#chart', '#res', '#im12', '#tag12', '#cursor', '#bxCards', '#bxHouse',
+          '#c1', '#c2', '#c3', '#c4', '#l0', '#l6', '#l12', '#l18', '#star', '#legHeld'], { opacity: 0 }, 0);
+  tl.set(dotEls, { opacity: 0 }, 0);
+
+  // ---- beat 1: playable but rough; naive refinement gives back its gains ----------------
+  tl.from('#gameTag', { opacity: 0, y: -6 }, 0.3);
+  tl.fromTo('#cap .cap-half', { opacity: 0 }, { opacity: 0.32, duration: 0.4 }, 0.4);
+  tl.from('#shot', { opacity: 0, y: 6 }, 0.45);
+  tl.from('#see', { opacity: 0, y: 6 }, 0.6);
+  o.count('#s0', 0, 61.7, 0.7, 0.6);
+  tl.fromTo('#bxCards', { opacity: 0, scale: 1.15 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(2)' }, 1.05);
+  tl.from('#is1', { opacity: 0, x: -6 }, 1.1);
+  tl.fromTo('#bxHouse', { opacity: 0, scale: 1.15 }, { opacity: 1, scale: 1, duration: 0.3, ease: 'back.out(2)' }, 1.35);
+  tl.from('#is2', { opacity: 0, x: -6 }, 1.4);
+  tl.from('#naive', { opacity: 0, y: 6 }, 1.8);
+  tl.from('#n0', { opacity: 0, x: -6 }, 2.0);
+  tl.from('#n1', { opacity: 0, x: -6 }, 2.3);
+  tl.from('#n2', { opacity: 0, scale: 0.85, ease: 'back.out(2)' }, 2.65);
+
+  // ---- beat 2: explore -> diagnose -> improve, checklist grows, best build held ---------
+  var B = 3.7;
+  tl.to(['#see', '#naive', '#gameTag', '#bxCards', '#bxHouse'], { opacity: 0, duration: 0.3 }, B);
+  tl.to('#loop', { opacity: 1, duration: 0.4 }, B + 0.15);
+  tl.fromTo('#chk', { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.4 }, B + 0.25);
+  tl.fromTo('#chart', { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.4 }, B + 0.3);
+  tl.to(dotEls[0], { opacity: 1, duration: 0.2 }, B + 0.5);
+  tl.to('#l0', { opacity: 1, duration: 0.3 }, B + 0.5);
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, B + 0.3);
+
+  function lit(id, t) {
+    tl.to(id + ' .hi', { opacity: 1, duration: 0.2 }, t);
+    tl.to(id + ' .nm', { opacity: 0, duration: 0.2 }, t);
+    tl.to(id + ' .hi', { opacity: 0, duration: 0.25 }, t + 0.5);
+    tl.to(id + ' .nm', { opacity: 1, duration: 0.25 }, t + 0.5);
+  }
+  // explore: the explorer plays the build
+  var E = B + 0.55;
+  lit('#sE', E);
+  tl.fromTo('#cursor', { opacity: 0, left: 150, top: 150 }, { opacity: 1, left: 60, top: 70, duration: 0.55, ease: 'power3.inOut' }, E);
+  tl.to('#cursor', { left: 112, top: 112, duration: 0.4, ease: 'power3.inOut' }, E + 0.55);
+  // diagnose: issues land on the checklist
+  var Dg = E + 0.6;
+  lit('#sD', Dg);
+  tl.fromTo('#c1', { opacity: 0, x: -6 }, { opacity: 1, x: 0, duration: 0.35 }, Dg + 0.05);
+  tl.fromTo('#c2', { opacity: 0, x: -6 }, { opacity: 1, x: 0, duration: 0.35 }, Dg + 0.3);
+  // improve: sprites wired, feedback added; score climbs to R12
+  var Im = Dg + 0.65;
+  lit('#sI', Im);
+  tl.to('#cursor', { opacity: 0, duration: 0.25 }, Im);
+  tl.fromTo('#c3', { opacity: 0, x: -6 }, { opacity: 1, x: 0, duration: 0.35 }, Im + 0.1);
+  tl.to('#im12', { opacity: 1, duration: 0.5 }, Im + 0.2);
+  tl.to('#tag0', { opacity: 0, duration: 0.3 }, Im + 0.2);
+  tl.fromTo('#c4', { opacity: 0, x: -6 }, { opacity: 1, x: 0, duration: 0.35 }, Im + 0.45);
+  tl.to(['#c1', '#c2'], { opacity: 0.4, duration: 0.3 }, Im + 0.6);
+
+  var C0 = Im + 0.1, C1 = Im + 1.0, C2 = C1 + 0.3, C3 = C2 + 0.8;   // curve to R12, hold, on to R21
+  var curve = document.getElementById('curve'), held = document.getElementById('held');
+  o.at(function (t) {
+    var r = t < C0 ? 0 : t < C1 ? 12 * gsap.parseEase('power1.inOut')((t - C0) / (C1 - C0))
+          : t < C2 ? 12 : t < C3 ? 12 + 9 * gsap.parseEase('power1.inOut')((t - C2) / (C3 - C2)) : 21;
+    curve.setAttribute('points', pl(partial(PTS, r)));
+    held.setAttribute('points', pl(partial(HELD, r)));
+    held.style.opacity = t < C0 ? 0 : 1;
+    for (var i = 1; i < PTS.length; i++) dotEls[i].style.opacity = PTS[i][0] <= r + 1e-6 ? 1 : 0;
+  });
+  tl.to('#l6', { opacity: 1, duration: 0.25 }, C0 + 0.55);
+  tl.to('#legHeld', { opacity: 1, duration: 0.3 }, C0 + 0.3);
+  tl.fromTo('#star', { opacity: 0, scale: 0.3, transformOrigin: '50% 50%' }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, C1);
+  tl.to('#l12', { opacity: 1, duration: 0.3 }, C1 + 0.05);
+  tl.to('#tag12', { opacity: 1, duration: 0.3 }, C1 + 0.05);
+  tl.to('#ch2', { opacity: 1, duration: 0.4 }, C1 + 0.1);
+  tl.to('#l18', { opacity: 1, duration: 0.25 }, C2 + 0.55);
+
+  // ---- beat 3: the number ---------------------------------------------------------------
+  var RES = 8.3;
+  tl.to(['#loop', '#chk', '#chart', '#shot'], { opacity: 0, duration: 0.35 }, RES);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, RES + 0.25);
+  tl.from(['#lgA', '#lgB'], { opacity: 0, x: -6, stagger: 0.1 }, RES + 0.35);
+  [0, 2, 1, 3].forEach(function (i, k) {
+    var t0 = RES + 0.45 + (k < 2 ? 0 : 0.45);
+    tl.fromTo('#b' + i, { scaleY: 0 }, { scaleY: 1, duration: 0.6 }, t0);
+    tl.fromTo('#v' + i, { opacity: 0 }, { opacity: 1, duration: 0.2 }, t0);
+    o.count('#v' + i, 0, VALS[i], t0, 0.6, { decimals: 2 });
+  });
+  tl.fromTo('#tok', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, RES + 1.4);
+}, { duration: 11.5, poster: 10.2 });
+</script>
+</body></html>

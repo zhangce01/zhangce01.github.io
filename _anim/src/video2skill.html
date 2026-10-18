@@ -1,0 +1,215 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>Video2Skill teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* video stream pills, top right (the venue badge owns the top-left corner) */
+  .vp { position: absolute; top: 18px; width: 66px; height: 24px; border-radius: 7px; background: var(--panel);
+        border: 1px solid var(--line); font: 600 12px/22px Inter; text-align: center; color: var(--ink-faint); }
+  .vp.on { border-color: var(--ink); color: var(--ink); box-shadow: var(--shadow); }
+  .va { position: absolute; top: 23px; color: var(--ink-faint); }
+
+  /* the current video */
+  #view { left: 16px; top: 62px; width: 164px; height: 124px; border-radius: 8px; overflow: hidden; background: var(--panel-2);
+          box-shadow: inset 0 0 0 1px var(--img-line); }
+  #view img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; }
+  #clock { position: absolute; right: 6px; bottom: 6px; height: 18px; padding: 0 6px; border-radius: 5px;
+           background: rgba(20,19,17,.72); color: #fff; font: 600 11.5px/18px "JetBrains Mono", monospace; }
+
+  /* event timeline under the video */
+  #track { left: 16px; top: 192px; width: 164px; height: 14px; border-radius: 4px; background: var(--panel-2); overflow: hidden; }
+  .seg { position: absolute; top: 0; height: 14px; border-radius: 3px; overflow: hidden;
+         font: 700 9.5px/14px "Space Grotesk"; color: #fff; text-align: center; }
+  html.dark .seg { color: #141311; }
+  .seg.c { background: var(--acc); }
+  .seg.r { background: var(--blue); }
+  #head { left: 16px; top: 188px; width: 2px; height: 22px; border-radius: 1px; background: var(--ink); }
+
+  /* skill calls */
+  .row { position: absolute; left: 192px; width: 272px; height: 28px; background: var(--panel); border: 1px solid var(--line);
+         border-radius: 8px; box-shadow: var(--shadow); }
+  .row .chip { left: 5px; top: 2px; height: 22px; width: 60px; justify-content: center; font-size: 10.5px; letter-spacing: .05em; }
+  .chip.re { background: var(--blue-soft); border-color: var(--blue); color: var(--blue); }
+  .call { position: absolute; left: 73px; top: 0; font: 600 12px/26px Inter; color: var(--ink); white-space: nowrap; }
+  .note { position: absolute; left: 194px; top: 170px; font: 500 12px/1.2 Inter; color: var(--ink-soft); white-space: nowrap; }
+
+  /* shared skill library */
+  #lib { left: 16px; top: 212px; width: 448px; height: 46px; }
+  .slot { position: absolute; top: 19px; width: 102px; height: 21px; border-radius: 6px; border: 1.5px dashed var(--line);
+          font: 600 12px/18px Inter; white-space: nowrap; padding-left: 6px; }
+  .slot .sid { color: var(--ink-faint); font: 700 10.5px/18px "Space Grotesk"; margin-right: 5px; }
+  .fill-s { position: absolute; inset: -1.5px; border-radius: 6px; background: var(--acc-soft); border: 1.5px solid var(--acc); }
+  .flash { position: absolute; inset: -1.5px; border-radius: 6px; background: var(--blue-soft); border: 1.5px solid var(--blue); }
+  .slot .in { position: relative; }
+
+  /* result */
+  #res { left: 16px; top: 62px; width: 448px; height: 142px; }
+  .rname { position: absolute; left: 16px; width: 110px; font: 600 12.5px/22px Inter; color: var(--ink-soft); white-space: nowrap; }
+  .rtrack { position: absolute; left: 132px; height: 22px; width: 240px; border-radius: 5px; background: var(--panel-2); }
+  .rbar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 5px; transform-origin: 0 50%; }
+  .rval { position: absolute; font: 700 17px/22px "Space Grotesk"; white-space: nowrap; }
+  #half { height: 22px; font-size: 12px; }
+
+  .cap-half { display: inline-block; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <div class="vp" id="p1" style="left:222px">Video 1</div>
+  <i data-i="arrow" data-s="12" class="va" style="left:292px" id="a1"></i>
+  <div class="vp" id="p2" style="left:308px">Video 2</div>
+  <i data-i="arrow" data-s="12" class="va" style="left:378px" id="a2"></i>
+  <div class="vp" id="p3" style="left:394px">Video 3</div>
+
+  <div class="abs" id="view">
+    <img src="../assets/video2skill/v1_1.jpg"><img src="../assets/video2skill/v1_2.jpg"><img src="../assets/video2skill/v1_3.jpg">
+    <img src="../assets/video2skill/v2_1.jpg"><img src="../assets/video2skill/v2_2.jpg"><img src="../assets/video2skill/v2_3.jpg">
+    <img src="../assets/video2skill/v3_1.jpg"><img src="../assets/video2skill/v3_2.jpg"><img src="../assets/video2skill/v3_3.jpg">
+    <div id="clock">0.0 s</div>
+  </div>
+  <div class="abs" id="track"></div>
+  <div class="abs" id="head"></div>
+
+  <div id="rows"></div>
+  <div class="note" id="n1">introduces <b>grasp</b>, <b>transfer</b>, <b>place</b></div>
+  <div class="note" id="n2">new objects &amp; scene: reuses all three</div>
+  <div class="note" id="n3"><b>throw</b> &ne; <b>place</b>: new transformation</div>
+
+  <div class="panel" id="lib">
+    <div class="label abs" style="left:12px;top:7px">shared skill library</div>
+    <div class="slot" id="s1" style="left:10px"><div class="fill-s"></div><div class="flash"></div><span class="in"><span class="sid">S1</span>grasp</span></div>
+    <div class="slot" id="s2" style="left:120px"><div class="fill-s"></div><div class="flash"></div><span class="in"><span class="sid">S2</span>transfer</span></div>
+    <div class="slot" id="s3" style="left:230px"><div class="fill-s"></div><div class="flash"></div><span class="in"><span class="sid">S3</span>place</span></div>
+    <div class="slot" id="s4" style="left:340px"><div class="fill-s"></div><div class="flash"></div><span class="in"><span class="sid">S4</span>throw</span></div>
+  </div>
+
+  <div class="panel" id="res">
+    <div class="label abs" style="left:16px;top:14px">library size · 40 HD-EPIC clips</div>
+    <div class="label abs" style="right:16px;top:14px">Qwen3.5-4B · oracle-history SFT</div>
+    <div class="rname" style="top:40px">reference classes</div>
+    <div class="rtrack" style="top:40px"><div class="rbar" id="bar0" style="width:220.8px;background:var(--good)"></div></div>
+    <div class="rval good" id="val0" style="left:361px;top:40px">46</div>
+    <div class="rname" style="top:80px;color:var(--acc)">model library</div>
+    <div class="rtrack" style="top:80px"><div class="rbar" id="bar1" style="width:105.6px;background:var(--acc)"></div></div>
+    <div class="rval hl" id="val1" style="left:246px;top:80px">22</div>
+    <div class="chip acc" id="half" style="left:300px;top:80px">&lt; half</div>
+    <div class="abs t faint" id="orders" style="left:132px;top:114px;font-size:11.5px">across all 3 video orders</div>
+  </div>
+
+  <div class="caption" id="cap">
+    <span class="cap-half" id="ch1">from <span class="blue">streaming video</span></span>
+    <span class="cap-half" id="ch2">to <span class="hl">reusable skills</span></span>
+  </div>
+</div></div>
+
+<script>
+// Fig. 1 of the paper: three videos, their segments (s), decisions and skill calls
+var V = [
+  { dur: 17.4, t0: 0.5, t1: 2.5, segs: [[0, 11.2], [11.3, 13.2], [13.3, 17.4]],
+    rows: [['c', 'grasp(lid, pot)', 1], ['c', 'transfer(lid, pot → table)', 2], ['c', 'place(lid, table)', 3]] },
+  { dur: 16.6, t0: 3.45, t1: 4.65, segs: [[0, 9.8], [9.9, 11.1], [11.2, 16.6]],
+    rows: [['r', 'grasp(cloth, table)', 1], ['r', 'transfer(cloth, table → stand)', 2], ['r', 'place(cloth, stand)', 3]] },
+  { dur: 16.1, t0: 5.45, t1: 6.95, segs: [[0, 11.2], [11.3, 13.6], [13.3, 16.1]],
+    rows: [['r', 'grasp(cloth, table)', 1], ['r', 'transfer(cloth, table → stand)', 2], ['c', 'throw(fabric, table)', 4]] }
+];
+var RES = 7.8;
+var imgs = document.querySelectorAll('#view img');
+var track = document.getElementById('track'), rowsEl = document.getElementById('rows');
+var TW = 164, ROWY = [66, 100, 134];
+V.forEach(function (v, vi) {
+  v.segEls = v.segs.map(function (s, k) {
+    var d = document.createElement('div');
+    d.className = 'seg ' + v.rows[k][0];
+    d.style.left = (TW * s[0] / v.dur + (k ? 1 : 0)) + 'px';
+    d.textContent = k + 1;
+    track.appendChild(d); return d;
+  });
+  v.rowEls = v.rows.map(function (r, k) {
+    var d = document.createElement('div');
+    d.className = 'row'; d.style.top = ROWY[k] + 'px';
+    d.innerHTML = '<div class="chip ' + (r[0] === 'c' ? (vi === 2 ? 'solid' : 'acc') : 're') + '">' + (r[0] === 'c' ? 'CREATE' : 'REUSE') +
+      '</div><div class="call">' + r[1] + '</div>';
+    rowsEl.appendChild(d); return d;
+  });
+});
+
+Stage.build(function (o) {
+  var tl = o.tl;
+  function vidAt(t) { var i = 0; for (var k = 0; k < 3; k++) if (t >= V[k].t0 - 0.15) i = k; return i; }
+  // video frames, clock, timeline segments and playhead, all straight off the clock
+  var clock = document.getElementById('clock'), head = document.getElementById('head');
+  o.at(function (t) {
+    var vi = vidAt(t), v = V[vi];
+    var p = Math.max(0, Math.min(1, (t - v.t0) / (v.t1 - v.t0))), sec = p * v.dur;
+    var seg = 0; for (var k = 0; k < 3; k++) if (sec >= v.segs[k][0]) seg = k;
+    for (var i = 0; i < imgs.length; i++) imgs[i].style.opacity = (i === vi * 3 + seg) ? 1 : 0;
+    var s = sec.toFixed(1) + ' s'; if (clock.textContent !== s) clock.textContent = s;
+    head.style.transform = 'translateX(' + (p * TW - 1) + 'px)';
+    V.forEach(function (w, wi) {
+      w.segEls.forEach(function (el, k) {
+        var st = w.segs[k][0], en = w.segs[k][1];
+        var full = TW * (en - st) / w.dur - (k ? 1 : 0);
+        var shown = wi !== vi ? 0 : Math.max(0, Math.min(full, TW * (sec - st) / w.dur - (k ? 1 : 0)));
+        el.style.width = shown + 'px';
+      });
+    });
+  });
+
+  tl.fromTo('#cap .cap-half', { opacity: 0 }, { opacity: 0.32, duration: 0.4 }, 0.4);
+  tl.from(['#view', '#track', '#head'], { opacity: 0, y: 6, stagger: 0.05 }, 0.3);
+  tl.from(['#p1', '#a1', '#p2', '#a2', '#p3'], { opacity: 0, y: -6, stagger: 0.05 }, 0.3);
+  tl.from('#lib', { opacity: 0, y: 6 }, 0.45);
+  tl.set(['.fill-s', '.flash', '.slot .in', '.row', '.note', '#res'], { opacity: 0 }, 0);
+
+  V.forEach(function (v, vi) {
+    var pill = '#p' + (vi + 1);
+    tl.set(pill, { attr: { class: 'vp on' } }, v.t0 - 0.15);
+    if (vi) tl.set('#p' + vi, { attr: { class: 'vp' } }, v.t0 - 0.15);
+    if (vi) {
+      // next video: the view dips and comes back (video 1 already fades in with the scene)
+      tl.fromTo('#view', { opacity: 0.25 }, { opacity: 1, duration: 0.3, immediateRender: false }, v.t0 - 0.15);
+      tl.to(V[vi - 1].rowEls, { opacity: 0, duration: 0.2 }, v.t0 - 0.2);
+      tl.to('#n' + vi, { opacity: 0, duration: 0.2 }, v.t0 - 0.2);
+    }
+    v.rows.forEach(function (r, k) {
+      var tEnd = v.t0 + (v.t1 - v.t0) * v.segs[k][1] / v.dur;
+      var row = v.rowEls[k], slot = '#s' + r[2];
+      if (r[0] === 'c') {
+        tl.fromTo(row, { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.35 }, tEnd - 0.05);
+        tl.fromTo(row.firstChild, { scale: 0.6 }, { scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, tEnd - 0.05);
+        tl.to(slot + ' .fill-s', { opacity: 1, duration: 0.25 }, tEnd + 0.1);
+        tl.to(slot + ' .in', { opacity: 1, duration: 0.25 }, tEnd + 0.1);
+        // the fill pops into the dashed placeholder; the placeholder itself stays put
+        tl.fromTo(slot + ' .fill-s', { scale: 0.7 }, { scale: 1, duration: 0.45, ease: 'back.out(2.4)' }, tEnd + 0.1);
+      } else {
+        tl.fromTo(row, { opacity: 0, x: -8 }, { opacity: 1, x: 0, duration: 0.3 }, tEnd - 0.05);
+        tl.fromTo(slot + ' .flash', { opacity: 0 }, { opacity: 1, duration: 0.15 }, tEnd + 0.05);
+        tl.to(slot + ' .flash', { opacity: 0, duration: 0.5 }, tEnd + 0.45);
+        tl.fromTo(slot, { scale: 1 }, { scale: 1.08, duration: 0.15, yoyo: true, repeat: 1, ease: 'power2.out' }, tEnd + 0.05);
+      }
+    });
+    tl.fromTo('#n' + (vi + 1), { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.35 }, v.t1 + 0.05);
+  });
+  tl.to('#ch1', { opacity: 1, duration: 0.4 }, V[0].t0 + 0.2);
+  tl.to('#ch2', { opacity: 1, duration: 0.4 }, V[1].t0 + 0.4);
+
+  // ---- beat 3: the library stalls -----------------------------------------------------
+  tl.to(['#view', '#track', '#head', '#n3', '#p1', '#a1', '#p2', '#a2', '#p3'].concat(V[2].rowEls), { opacity: 0, duration: 0.35 }, RES);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, RES + 0.25);
+  tl.fromTo('#bar0', { scaleX: 0 }, { scaleX: 1, duration: 0.6 }, RES + 0.4);
+  o.count('#val0', 0, 46, RES + 0.4, 0.6, { decimals: 0 });
+  tl.fromTo('#val0', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.4);
+  tl.fromTo('#bar1', { scaleX: 0 }, { scaleX: 1, duration: 0.6 }, RES + 0.75);
+  o.count('#val1', 0, 22, RES + 0.75, 0.6, { decimals: 0 });
+  // the three orders end at 21-22 schemas
+  var v1 = document.getElementById('val1');
+  o.at(function (t) { if (t >= RES + 1.4 && v1.textContent !== '21–22') v1.textContent = '21–22'; });
+  tl.fromTo('#val1', { opacity: 0 }, { opacity: 1, duration: 0.2 }, RES + 0.75);
+  tl.fromTo('#half', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2.4)' }, RES + 1.35);
+  tl.fromTo('#orders', { opacity: 0 }, { opacity: 1, duration: 0.3 }, RES + 1.5);
+}, { duration: 10.5, poster: 7.6 });
+</script>
+</body></html>
