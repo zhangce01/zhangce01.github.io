@@ -210,8 +210,10 @@ Stage.build(function (o) {
   tl.to('#mx', { opacity: 0, scale: 0.6, duration: 0.25 }, C + 0.45);
   tl.to('#w1', { opacity: 0, duration: 0.25 }, C + 0.45);
   tl.fromTo('#w2', { opacity: 0 }, { opacity: 1, duration: 0.3 }, C + 0.55);
-  tl.set('#p1', { opacity: 0 }, C + 0.65);
+  // swap to the corrected line: #t2 is fully in before #p1 (the same words, same spot) goes,
+  // so no frame lands in between with neither visible
   tl.fromTo('#t2', { opacity: 0 }, { opacity: 1, duration: 0.01 }, C + 0.65);
+  tl.set('#p1', { opacity: 0 }, C + 0.665);
   o.type('#g2', T2[0], C + 0.67, 0.75);
   o.type('#s2', T2[1], C + 1.42, 0.05);
   var full = T2[0], perChar = 0.75 / full.length;

@@ -20,7 +20,8 @@ _anim/
 pip install playwright imageio-ffmpeg pillow    # uses the installed Chrome
 python _anim/render.py lens --sheet             # 12-frame contact sheets -> _anim/review/
 python _anim/render.py lens --still 6.5         # one full-res frame
-python _anim/render.py lens                     # final MP4 + poster, both themes
+python _anim/render.py lens                     # final MP4 + poster + HD MP4, both themes
+python _anim/render.py --hd-only                # only the HD (lightbox) MP4s
 python _anim/render.py                          # everything
 ```
 
@@ -36,13 +37,16 @@ Then point the paper at it in `_data/publications.yml`:
 
 The site picks `<slug>-light.mp4` or `<slug>-dark.mp4` to match the day / night
 theme (`assets/js/teasers.js`); the `.webp` posters are the still fallback.
+Clicking a teaser opens `<slug>-<theme>-hd.mp4` (1440 x 900, 60 fps) in a lightbox
+(`assets/js/teaserzoom.js`), so re-render the HD file whenever an animation changes.
 
 ## Authoring rules
 
 **Stage.** 480 x 300 CSS px, rendered at 1.5x (720 x 450: the site shows it
 200-320 px wide, so this stays sharp on 2x screens). `#scene` holds everything; the
 runner fades it in over the first 0.35 s and out over the last 0.45 s, so the loop
-is seamless. Default length 10.5 s.
+is seamless. Default length 10.5 s. The click-to-enlarge copy is the same page
+rendered at 3x and 60 fps, so everything must stay crisp when shown ~1000 px wide.
 
 **Story.** One concrete running example from the paper (its real images, its
 exact question / caption / answers), told in 3 beats: setup and how the baseline
