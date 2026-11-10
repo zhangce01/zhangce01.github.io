@@ -3,9 +3,10 @@
 // and every place visitors have come from is a larger dot, bigger where more
 // of them came from. Beside it the eight countries and regions with the most
 // visitors can be stepped through. The globe turns to the chosen one, its land
-// darkens, its places light up in the accent colour and its flag pops up over
-// it. Dragging the globe works the other way round: whichever listed country
-// comes nearest to that spot is the one shown. It only redraws while it moves.
+// darkens, its places light up in the accent colour and slowly twinkle, and
+// its flag pops up over it. Dragging the globe works the other way round:
+// whichever listed country comes nearest to that spot is the one shown. It
+// draws only while it is on screen.
 //
 // The data is visitors.json from the visitor-map-data repository, which a
 // workflow there rebuilds every day (assets/data/visitors.json is a snapshot
@@ -58,6 +59,9 @@
   var home = -80;                        // longitude the globe turns to when it arrives
   var vLon = 0, vLat = 0;                // drag momentum, degrees per ms
   var ready = false, seen = false, raf = 0, lastT = 0;
+  var inView = false, drawn = 0;         // on screen now; time of the last frame drawn
+  var landC = document.createElement('canvas'), landG = landC.getContext('2d');
+  var painted = '';                      // the view the land canvas was last painted for
   var intro = null;                      // {from, to, t0} while the globe turns into place
   var fly = null;                        // {lon0, lat0, dLon, dLat, t0} while it turns to a chosen country
   var ripple = 0;                        // start time of the ring that marks "You"
@@ -87,20 +91,46 @@
     return a >= 0 && a < 180 ? a * 360 + o : -1;
   }
 
-  // {d: day, cell: 1 degree cell or -1, cc: country code or 'ZZ'}, or null
+  // {d: day, cell: 1 degree cell or -1, cc: country code or 'ZZ', n: 1 once counted}, or null
   function locate() {
     try {
       var c = JSON.parse(localStorage.getItem('visit-geo'));
-      if (c && c.d === today() && c.cc) return Promise.resolve(c);
+      if (c && c.d === today() && c.cc) {
+        if (!c.n) count(c);
+        return Promise.resolve(c);
+      }
     } catch (e) { /* no storage: look it up again */ }
     return fetch(GEO).then(json).then(function (d) {
       var cc = String(d.country_code || '').toUpperCase();
       var c = { d: today(), cell: cellOf(parseFloat(d.latitude), parseFloat(d.longitude)), cc: /^[A-Z]{2}$/.test(cc) ? cc : 'ZZ' };
       if (c.cell < 0 && c.cc === 'ZZ') return null;
-      try { localStorage.setItem('visit-geo', JSON.stringify(c)); } catch (e) { /* fine */ }
-      if (LIVE) tally(c.cell, c.cc);
+      keep(c);
+      count(c);
       return c;
     }).catch(function () { return null; });
+  }
+
+  function keep(c) {
+    try { localStorage.setItem('visit-geo', JSON.stringify(c)); } catch (e) { /* fine */ }
+  }
+
+  // A visit counts once it has lasted ten seconds with the page in view. That
+  // is the measure the history before the counters was taken in, and it leaves
+  // out the crawlers that load the page and go.
+  function count(c) {
+    if (!LIVE) return;
+    setTimeout(function wait() {
+      if (document.visibilityState === 'hidden') {
+        document.addEventListener('visibilitychange', function back() {
+          document.removeEventListener('visibilitychange', back);
+          setTimeout(wait, 2000);
+        });
+        return;
+      }
+      c.n = 1;
+      keep(c);
+      tally(c.cell, c.cc);
+    }, 10000);
   }
 
   // One more visit from this place. Abacus cannot list its counters, so places
@@ -187,6 +217,11 @@
       var v = dot(Math.floor(key / 4096), key % 4096);
       v.by = at[key].by;
       v.w = Math.log(1 + at[key].n) / Math.log(1 + max);
+      // each dot glows to its own slow beat, so the chosen country's places
+      // twinkle out of step with one another
+      var h = Math.sin(key * 12.9898) * 43758.5453;
+      v.ph = (h - Math.floor(h)) * TAU;
+      v.beat = 0.75 + 0.5 * (h * 7.13 - Math.floor(h * 7.13));
       lit.push(v);
     }
     lit.sort(function (a, b) { return a.w - b.w; });
@@ -207,6 +242,7 @@
       : { land: [17, 24, 39], landA: 0.46, limb: 'rgba(17,24,39,0.13)', acc: [154, 91, 60], ink: '#111827', rim: 'rgba(255,255,255,0.95)' };
     // the disc is painted in the page colour so the page's own grid stops at the horizon
     pal.disc = body.backgroundColor;
+    painted = '';
   }
 
   function size() {
@@ -226,10 +262,15 @@
     // dots keep their proportion to the gaps between them on a smaller globe
     dotR = clamp(0.235 * R * grid.step * RAD, 0.6, 1.25);
     litK = clamp(R / 330, 0.72, 1);
+    landC.width = canvas.width;
+    landC.height = canvas.height;
+    landG.setTransform(canvas.width / w, 0, 0, canvas.height / h, 0, 0);
+    painted = '';
     return true;
   }
 
-  function draw(now) {
+  // the disc, its rim and the land, as seen from the current view centre
+  function paintLand(g, code, sl, cl, sp, cp) {
     g.clearRect(0, 0, W, H);
     g.beginPath();
     g.arc(cx, cy, R, 0, TAU);
@@ -239,13 +280,10 @@
     g.strokeStyle = pal.limb;
     g.stroke();
 
-    var sl = Math.sin(lon * RAD), cl = Math.cos(lon * RAD);
-    var sp = Math.sin(lat * RAD), cp = Math.cos(lat * RAD);
     var i, k, b, n = LX.length;
 
     // land, bucketed by how squarely it faces us: dots thin out towards the rim.
     // The chosen country's own land goes into a second set of buckets, drawn darker.
-    var code = sel >= 0 ? ranked[sel].code : null;
     var own = code ? grid.codes.indexOf(code) : -1;
     for (k = 0; k < SHADES * 2; k++) buckets[k].length = 0;
     for (i = 0; i < n; i++) {
@@ -270,9 +308,29 @@
       }
       g.fill();
     }
+  }
+
+  function draw(now) {
+    var sl = Math.sin(lon * RAD), cl = Math.cos(lon * RAD);
+    var sp = Math.sin(lat * RAD), cp = Math.cos(lat * RAD);
+    var code = sel >= 0 ? ranked[sel].code : null;
+
+    // The disc and the land change only when the globe turns or another
+    // country is chosen, so they are painted on a canvas of their own and each
+    // frame starts from a copy of it. A twinkle then costs a handful of dots.
+    var view = [lon, lat, code, W, H].join('|');
+    if (view !== painted) {
+      painted = view;
+      paintLand(landG, code, sl, cl, sp, cp);
+    }
+    g.clearRect(0, 0, W, H);
+    g.drawImage(landC, 0, 0, W, H);
+    var i;
 
     // visitors: everywhere else faintly first, then the chosen country's places
-    // at full strength on top (all of them, when there is no list to choose from)
+    // at full strength on top (all of them, when there is no list to choose
+    // from). The chosen country's glow slowly, each to its own beat.
+    var alive = twinkling(), beat = now / 1000 * TAU / 3.8;
     for (var pass = 0; pass < 2; pass++) {
       for (i = 0; i < lit.length; i++) {
         var v = lit[i], on = !code || v.by[code] > 0;
@@ -280,13 +338,19 @@
         var p = project(v, sl, cl, sp, cp);
         if (!p) continue;
         var fade = 0.2 + 0.8 * p.z, cr = (1.3 + 2.1 * v.w) * (0.7 + 0.3 * p.z) * litK;
-        if (on && v.w > 0.3) {
-          g.fillStyle = rgba(pal.acc, 0.15 * fade);
+        var s = 0.7;   // how brightly it glows right now, 0..1
+        if (on && alive) {
+          s = 0.5 + 0.5 * Math.sin(beat * v.beat + v.ph);
+          s = s * s * (3 - 2 * s);
+        }
+        if (on) {
+          var big = v.w > 0.3;
+          g.fillStyle = rgba(pal.acc, (big ? 0.07 + 0.16 * s : 0.03 + 0.11 * s) * fade);
           g.beginPath();
-          g.arc(p.x, p.y, cr * 2.7, 0, TAU);
+          g.arc(p.x, p.y, cr * (big ? 2.2 + 0.9 * s : 1.9 + 0.8 * s), 0, TAU);
           g.fill();
         }
-        g.fillStyle = rgba(pal.acc, (on ? 0.6 + 0.4 * v.w : 0.3 + 0.2 * v.w) * fade);
+        g.fillStyle = rgba(pal.acc, (on ? (0.6 + 0.4 * v.w) * (0.7 + 0.3 * s) : 0.3 + 0.2 * v.w) * fade);
         g.beginPath();
         g.arc(p.x, p.y, on ? cr : cr * 0.85, 0, TAU);
         g.fill();
@@ -295,6 +359,11 @@
 
     if (me) drawMe(project(me, sl, cl, sp, cp), now);
     placePin(sel >= 0 ? project(ranked[sel].at, sl, cl, sp, cp) : null);
+  }
+
+  // the chosen country's places twinkle while the globe is on screen
+  function twinkling() {
+    return !still && seen && inView && sel >= 0;
   }
 
   // the chosen country's flag stands on a short stem over its place on the globe
@@ -376,7 +445,7 @@
   // ---------- the list of countries ----------
 
   var els = {};
-  ['vg-from', 'vg-countries', 'vg-top', 'vg-flag', 'vg-name', 'vg-stat', 'vg-ticks', 'vg-prev', 'vg-next', 'vg-pin-flag'].forEach(function (id) {
+  ['vg-from', 'vg-countries', 'vg-top', 'vg-flag', 'vg-name', 'vg-stat', 'vg-recent', 'vg-ticks', 'vg-prev', 'vg-next', 'vg-pin-flag'].forEach(function (id) {
     els[id] = document.getElementById(id);
   });
   var hasList = !!(els['vg-top'] && els['vg-name'] && els['vg-stat'] && els['vg-ticks']);
@@ -393,7 +462,7 @@
     }
     if (!hasList || !total) return;
     for (i = 0; i < all.length && i < LIST; i++) {
-      ranked.push({ code: all[i][0], name: all[i][1], share: all[i][2] / total, lat: all[i][3], lon: all[i][4], at: vec(all[i][3], all[i][4]) });
+      ranked.push({ code: all[i][0], name: all[i][1], share: all[i][2] / total, lat: all[i][3], lon: all[i][4], at: vec(all[i][3], all[i][4]), recent: all[i][6] });
     }
     if (ranked.length < 2) { ranked = []; return; }
     // have the flags ready before they are asked for
@@ -418,6 +487,10 @@
       sel = k;
       els['vg-name'].textContent = c.name;
       els['vg-stat'].textContent = 'No. ' + (k + 1) + ' · ' + (pct >= 1 ? Math.round(pct) : '<1') + '% of visitors';
+      if (els['vg-recent']) {
+        els['vg-recent'].hidden = !(c.recent >= 0);
+        if (c.recent >= 0) els['vg-recent'].textContent = (c.recent > 0 ? c.recent.toLocaleString('en-US') : 'None') + ' in the last 30 days';
+      }
       if (els['vg-flag']) {
         els['vg-flag'].hidden = !flag;
         if (flag) els['vg-flag'].src = flag;
@@ -490,6 +563,12 @@
     if (ripple && now - ripple >= 1100) ripple = 0;
     if (ripple) more = true;
 
+    if (twinkling()) {
+      // nothing but the twinkle to show: thirty frames a second is plenty
+      if (!more && !drag && now - drawn < 30) { kick(); return; }
+      more = true;
+    }
+    drawn = now;
     draw(now);
     if (more) kick();
     else lastT = 0;
@@ -617,11 +696,13 @@
       if (mqDark && mqDark.addEventListener) mqDark.addEventListener('change', function () { theme(); kick(); });
 
       if (window.IntersectionObserver) {
-        var io = new IntersectionObserver(function (en) {
-          if (en[0].isIntersecting) { io.disconnect(); arrive(); }
-        }, { threshold: 0.35 });
-        io.observe(canvas);
+        new IntersectionObserver(function (en) {
+          inView = en[0].isIntersecting;
+          if (en[0].intersectionRatio >= 0.35) arrive();
+          if (inView) kick();
+        }, { threshold: [0, 0.35] }).observe(canvas);
       } else {
+        inView = true;
         arrive();
       }
     }).catch(function () { /* no land data: the visitor line stands alone */ });

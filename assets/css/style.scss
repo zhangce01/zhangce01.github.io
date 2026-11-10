@@ -631,6 +631,15 @@ section ul > li:hover::before {
 
 .vg-stat { margin-top: 4px; }
 
+/* and how many of them came in the last 30 days */
+.vg-recent {
+  margin-top: 1px;
+  color: var(--ink-faint);
+  font-size: 0.8rem;
+}
+
+.vg-recent[hidden] { display: none; }
+
 /* the chosen country's flag, on a short stem over its place on the globe;
    visitorglobe.js moves the pin and replays the pop when the country changes */
 .vg-pin {

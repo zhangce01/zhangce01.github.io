@@ -15,9 +15,11 @@ visitors be stepped through. Three pieces feed it:
   visitor's rough location from their network address (geojs.io), rounds it to
   a 1 degree cell (about 100 km) and adds one to an
   [Abacus](https://abacus.jasoncameron.dev) counter for that cell and country,
-  in the same namespace as the total kept by `counter.js`. Nothing finer than
-  the cell is stored, and previews on any other host than zhangce01.github.io
-  never count.
+  in the same namespace as the total kept by `counter.js`. A visit only counts
+  once it has lasted ten seconds with the page in view, the same measure as
+  the history (Google Analytics engaged sessions), which keeps most crawlers
+  out. Nothing finer than the cell is stored, and previews on any other host
+  than zhangce01.github.io never count.
 - **The data** lives in its own repository,
   [visitor-map-data](https://github.com/zhangce01/visitor-map-data). A workflow
   there reads the counters once a day, adds the history from before they
