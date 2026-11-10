@@ -1,7 +1,7 @@
 // Visitor globe. Above the footer line rises the dome of a dotted globe: land
 // is a matrix of small dots (assets/data/land.json, built by _visitors/land.py)
 // and every place visitors have come from is a larger dot, bigger where more
-// of them came from. Beside it the eight countries and regions with the most
+// of them came from. Beside it the five countries and regions with the most
 // visitors can be stepped through. The globe turns to the chosen one, its land
 // darkens, its places light up in the accent colour and slowly twinkle, and
 // its flag pops up over it. Dragging the globe works the other way round:
@@ -35,7 +35,7 @@
   var TILT = -8;         // latitude of the view centre: the north fills the dome
   var RISE = 42;         // a place is shown this many degrees above the view centre
   var SHADES = 8;        // depth steps for the land dots
-  var LIST = 8;          // countries and regions that can be stepped through
+  var LIST = 5;          // countries and regions that can be stepped through
   var FOCUS = Math.sin(RISE * RAD);   // where a chosen country sits: this far up the disc, on its centre line
   var NOFLAG = { TW: true };          // listed by name only
   var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;

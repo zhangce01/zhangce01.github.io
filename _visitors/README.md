@@ -1,7 +1,7 @@
 # Visitor globe
 
 The dotted globe above the footer (`assets/js/visitorglobe.js`) shows where
-visitors come from, and lets the eight countries and regions with the most
+visitors come from, and lets the five countries and regions with the most
 visitors be stepped through. Three pieces feed it:
 
 - **`assets/data/land.json`** is the dot matrix of land, with the country or
