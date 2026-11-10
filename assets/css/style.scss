@@ -597,8 +597,8 @@ section ul > li:hover::before {
 .vg-from[hidden],
 .vg-top[hidden] { display: none; }
 
-/* one country or region at a time: rank, name, share of visitors, and the
-   ticks and arrows that step through the list and turn the globe */
+/* one country or region at a time: flag, name, rank and share of visitors,
+   and the ticks and arrows that step through the list and turn the globe */
 .vg-top {
   flex: 1;
   display: flex;
@@ -608,6 +608,9 @@ section ul > li:hover::before {
 }
 
 .vg-country {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: 'Space Grotesk', 'Inter', sans-serif;
   font-size: 1.3rem;
   font-weight: 600;
@@ -616,13 +619,87 @@ section ul > li:hover::before {
   color: var(--ink);
 }
 
-.vg-no {
-  margin-right: 9px;
-  color: var(--acc);
-  font-variant-numeric: tabular-nums;
+.vg-flag {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 18px;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px var(--line);
 }
 
-.vg-stat { margin-top: 3px; }
+.vg-flag[hidden] { display: none; }
+
+.vg-stat { margin-top: 4px; }
+
+/* the chosen country's flag, on a short stem over its place on the globe;
+   visitorglobe.js moves the pin and replays the pop when the country changes */
+.vg-pin {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vg-pin-in {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
+  transform: translateX(-50%);
+}
+
+.vg-pin.pop .vg-pin-in { animation: vg-pop .32s cubic-bezier(.2, .9, .3, 1.2); }
+
+@keyframes vg-pop {
+  from { opacity: 0; transform: translateX(-50%) translateY(7px) scale(.9); }
+}
+
+.vg-pin-card {
+  display: block;
+  padding: 3px;
+  line-height: 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  box-shadow: var(--shadow);
+}
+
+/* the pin itself has no width, so the theme's img { max-width: 100% } would
+   squeeze the flag to nothing */
+.vg-pin-card img {
+  display: block;
+  width: 22px;
+  max-width: none;
+  height: 16.5px;
+}
+
+.vg-pin-stem {
+  width: 1px;
+  height: var(--stem, 22px);
+  background: var(--ink-faint);
+}
+
+/* a region shown without a flag gets a plain marker on the same stem */
+.vg-pin-dot {
+  display: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--acc);
+  box-shadow: 0 0 0 2px var(--card);
+}
+
+.vg-pin.no-flag .vg-pin-card { display: none; }
+.vg-pin.no-flag .vg-pin-dot { display: block; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vg-pin.pop .vg-pin-in { animation: none; }
+}
 
 .vg-pager {
   display: flex;
@@ -1780,7 +1857,7 @@ html.theme-dark::-webkit-scrollbar-thumb, html.theme-dark ::-webkit-scrollbar-th
 
   .topbar, .bg-blobs, .fx-field, .fx-trail, .back-to-top,
   .scroll-progress, .year-jump, .teaser-lightbox,
-  .vg-canvas, .vg-hint, .vg-top { display: none !important; }
+  .vg-canvas, .vg-hint, .vg-top, .vg-pin { display: none !important; }
 
   body, html.theme-dark body { background: #fff; }
   body::before, body::after { display: none; }

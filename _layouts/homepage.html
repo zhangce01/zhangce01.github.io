@@ -182,7 +182,7 @@
           <div class="vg-info">
             <p class="vg-line"><span id="visitors" style="visibility:hidden;"><span class="visitor-pill"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg><span id="visitor-count" class="visitor-count"></span>&nbsp;visitors</span></span><span class="vg-from" id="vg-from" hidden>from <span id="vg-countries"></span> countries and regions</span></p>
             <div class="vg-top" id="vg-top" hidden>
-              <p class="vg-country" aria-live="polite"><span class="vg-no" id="vg-no"></span><span class="vg-name" id="vg-name"></span></p>
+              <p class="vg-country" aria-live="polite"><img class="vg-flag" id="vg-flag" alt="" hidden><span class="vg-name" id="vg-name"></span></p>
               <p class="vg-stat" id="vg-stat"></p>
               <div class="vg-pager">
                 <div class="vg-ticks" id="vg-ticks" role="group" aria-label="Countries and regions with the most visitors"></div>
@@ -193,6 +193,7 @@
           </div>
           <span class="vg-hint" aria-hidden="true">Drag the globe to spin it</span>
           <canvas class="vg-canvas" id="vg-canvas" role="img" tabindex="0" aria-label="Dotted globe with a dot for each place visitors to this site have come from. Drag it, or use the arrow keys, to spin it." hidden></canvas>
+          <div class="vg-pin" id="vg-pin" aria-hidden="true"><div class="vg-pin-in"><span class="vg-pin-card"><img id="vg-pin-flag" alt=""></span><span class="vg-pin-dot"></span><span class="vg-pin-stem"></span></div></div>
         </div>
         <div class="site-foot">
           {% if site.enable_footnote %}

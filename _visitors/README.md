@@ -4,8 +4,13 @@ The dotted globe above the footer (`assets/js/visitorglobe.js`) shows where
 visitors come from, and lets the eight countries and regions with the most
 visitors be stepped through. Three pieces feed it:
 
-- **`assets/data/land.json`** is the dot matrix of land. `land.py` builds it
-  from Natural Earth outlines; rerun it only to change the dot density.
+- **`assets/data/land.json`** is the dot matrix of land, with the country or
+  region each dot belongs to, so the one being shown can be darkened. `land.py`
+  builds it from Natural Earth outlines; rerun it only to change the dot
+  density. Its docstring says which outlines, and how Taiwan is handled.
+- **`assets/flags/`** holds the flag shown beside a country's name and over it
+  on the globe (flag-icons, MIT). Taiwan is listed by name only, so there is
+  no `tw.svg` and `visitorglobe.js` does not ask for one.
 - **Counting.** Once a day per browser, `visitorglobe.js` looks up the
   visitor's rough location from their network address (geojs.io), rounds it to
   a 1 degree cell (about 100 km) and adds one to an
