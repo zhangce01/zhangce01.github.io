@@ -160,41 +160,38 @@ body::after {
   background: radial-gradient(closest-side, rgba(154, 91, 60, 0.06), rgba(233, 226, 212, 0.30) 55%, transparent 100%);
 }
 
-/* Cursor spotlight (cursorlight.js drives --mx/--my): inside a soft circle
-   around the pointer the grid dots re-render in the terracotta accent with
-   a faint warm halo. Idle page = zero motion. */
-.cursor-light {
+/* Cursor trail (cursortrail.js). On mouse devices the script adds two fixed
+   canvases: .fx-field sits just above the grid and takes it over, so the dots
+   can bend around the trail and light up in the accent colour; .fx-trail
+   floats above the whole page for the line and the pointer dot, which stands
+   in for the system cursor. A resting page still has zero motion. */
+.fx-field,
+.fx-trail {
   position: fixed;
-  inset: 0;
-  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  --cl-dot: rgba(154, 91, 60, 0.42);
-  --cl-halo: rgba(154, 91, 60, 0.05);
-  background:
-    radial-gradient(300px circle at var(--mx, 50%) var(--my, -20%), var(--cl-halo), transparent 70%),
-    radial-gradient(var(--cl-dot) 1px, transparent 1.4px) 0 0 / 24px 24px;
-  -webkit-mask-image: radial-gradient(240px circle at var(--mx, 50%) var(--my, -20%), #000 20%, transparent 100%);
-  mask-image: radial-gradient(240px circle at var(--mx, 50%) var(--my, -20%), #000 20%, transparent 100%);
-  opacity: 0;
-  transition: opacity .6s ease;
 }
+.fx-field { z-index: -1; }
+.fx-trail { z-index: 2000; }
 
-/* dark mode: no grid or wash (clean black), but the spotlight stays —
-   warm dots surfacing out of the dark */
+/* the canvas draws the dots while it is active */
+html.fx-field-on body::before { display: none; }
+
+/* the pointer dot replaces the cursor only once the script is drawing it */
+html.fx-cursor,
+html.fx-cursor * { cursor: none !important; }
+
+/* dark mode: no grid or wash (clean black); the trail's wake still surfaces
+   warm dots out of the dark */
 @media (prefers-color-scheme: dark) {
   html:not(.theme-light) body::before,
   html:not(.theme-light) body::after { display: none; }
-  html:not(.theme-light) .cursor-light {
-    --cl-dot: rgba(200, 148, 114, 0.30);
-    --cl-halo: rgba(200, 148, 114, 0.04);
-  }
 }
 html.theme-dark body::before,
 html.theme-dark body::after { display: none; }
-html.theme-dark .cursor-light {
-  --cl-dot: rgba(200, 148, 114, 0.30);
-  --cl-halo: rgba(200, 148, 114, 0.04);
-}
 
 
 /* ---------- glassy fixed top bar with tabs ---------- */
@@ -1567,7 +1564,7 @@ html.theme-dark::-webkit-scrollbar-thumb, html.theme-dark ::-webkit-scrollbar-th
     --card: #ffffff;
   }
 
-  .topbar, .bg-blobs, .cursor-light, .back-to-top,
+  .topbar, .bg-blobs, .fx-field, .fx-trail, .back-to-top,
   .scroll-progress, .year-jump, .teaser-lightbox { display: none !important; }
 
   body, html.theme-dark body { background: #fff; }
