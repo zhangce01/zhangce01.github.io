@@ -1,15 +1,18 @@
 // Visitor globe. Above the footer line rises the dome of a dotted globe: land
 // is a matrix of small dots (assets/data/land.json, built by _visitors/land.py)
-// and every place visitors have come from is a dot lit in the accent colour,
-// larger where more of them came from. Drag it to spin; it only redraws while
-// it moves.
+// and every place visitors have come from is a larger dot, bigger where more
+// of them came from. Beside it the eight countries and regions with the most
+// visitors can be stepped through; the globe turns to the chosen one and its
+// places light up in the accent colour. Drag the globe to spin it. It only
+// redraws while it moves.
 //
-// Where visitors come from is counted here too. Once a day per browser the
+// The data is visitors.json from the visitor-map-data repository, which a
+// workflow there rebuilds every day (assets/data/visitors.json is a snapshot
+// to fall back on). Counting happens here: once a day per browser the
 // visitor's rough location (their network's, from geojs.io, rounded to a
-// 1 degree cell, never stored more precisely) adds one to that cell's Abacus
-// counter, next to the total kept by counter.js. _visitors/aggregate.py turns
-// those counters into assets/data/visitors.json, which is what gets drawn. The
-// visitor's own cell is ringed and labelled "You" straight away.
+// 1 degree cell, never stored more precisely) and country add one to an
+// Abacus counter, next to the total kept by counter.js. The visitor's own
+// cell is ringed and labelled "You" straight away.
 (function () {
   var box = document.getElementById('visitor-globe');
   var canvas = document.getElementById('vg-canvas');
@@ -20,6 +23,7 @@
   var ABACUS = 'https://abacus.jasoncameron.dev';
   var SPACE = '/zhangce01-github-io/';
   var GEO = 'https://get.geojs.io/v1/ip/geo.json';
+  var DATA = '/visitor-map-data/visitors.json';
   // previews and local copies read the map but never add to it
   var LIVE = location.hostname === 'zhangce01.github.io';
 
@@ -27,7 +31,9 @@
   var TOP = 10;          // px from the canvas top to the top of the dome
   var SHOWN = 0.78;      // how much of the globe's radius stands above the footer line
   var TILT = -8;         // latitude of the view centre: the north fills the dome
+  var RISE = 42;         // a place is shown this many degrees above the view centre
   var SHADES = 8;        // depth steps for the land dots
+  var LIST = 8;          // countries and regions that can be stepped through
   var still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var root = document.documentElement;
@@ -35,9 +41,11 @@
   var pal = null;
 
   var LX = null, LY = null, LZ = null;   // land dots as unit vectors
-  var lit = [];                          // visitor dots: {x, y, z, w} sorted by weight
+  var lit = [];                          // visitor dots: {x, y, z, w, by: {code: visits}}, light ones first
   var me = null;                         // this visitor's dot: {x, y, z}
   var grid = null;                       // land.json
+  var ranked = [];                        // the listed countries: {code, name, share, lat, lon}
+  var sel = -1;                          // which of them is chosen
 
   var W = 0, H = 0, R = 1, cx = 0, cy = 0, cut = 0, dotR = 1, litK = 1;
   var lon = -80, lat = TILT;             // centre of the view, degrees
@@ -45,6 +53,7 @@
   var vLon = 0, vLat = 0;                // drag momentum, degrees per ms
   var ready = false, seen = false, raf = 0, lastT = 0;
   var intro = null;                      // {from, to, t0} while the globe turns into place
+  var fly = null;                        // {lon0, lat0, dLon, dLat, t0} while it turns to a chosen country
   var ripple = 0;                        // start time of the ring that marks "You"
   var drag = null;
   var buckets = [];
@@ -59,46 +68,58 @@
     return r.json();
   }
 
+  function clamp(v, lo, hi) {
+    return v < lo ? lo : v > hi ? hi : v;
+  }
+
   // ---------- where is this visitor ----------
 
   // 1 degree cells: id = (floor(lat) + 90) * 360 + (floor(lon) + 180)
   function cellOf(la, lo) {
+    if (!isFinite(la) || !isFinite(lo) || (la === 0 && lo === 0)) return -1;
     var a = Math.floor(la) + 90, o = ((Math.floor(lo) + 180) % 360 + 360) % 360;
     return a >= 0 && a < 180 ? a * 360 + o : -1;
   }
 
+  // {d: day, cell: 1 degree cell or -1, cc: country code or 'ZZ'}, or null
   function locate() {
     try {
       var c = JSON.parse(localStorage.getItem('visit-geo'));
-      if (c && c.d === today() && c.cell >= 0) return Promise.resolve(c);
+      if (c && c.d === today() && c.cc) return Promise.resolve(c);
     } catch (e) { /* no storage: look it up again */ }
     return fetch(GEO).then(json).then(function (d) {
-      var la = parseFloat(d.latitude), lo = parseFloat(d.longitude);
-      if (!isFinite(la) || !isFinite(lo) || (la === 0 && lo === 0)) return null;
-      var c = { d: today(), cell: cellOf(la, lo) };
-      if (c.cell < 0) return null;
+      var cc = String(d.country_code || '').toUpperCase();
+      var c = { d: today(), cell: cellOf(parseFloat(d.latitude), parseFloat(d.longitude)), cc: /^[A-Z]{2}$/.test(cc) ? cc : 'ZZ' };
+      if (c.cell < 0 && c.cc === 'ZZ') return null;
       try { localStorage.setItem('visit-geo', JSON.stringify(c)); } catch (e) { /* fine */ }
-      if (LIVE) tally(c.cell);
+      if (LIVE) tally(c.cell, c.cc);
       return c;
     }).catch(function () { return null; });
   }
 
-  // One more visit from this cell. Abacus cannot list its counters, so cells
+  // One more visit from this place. Abacus cannot list its counters, so places
   // also sign a register the aggregator can walk: counter "cells" hands out
-  // slot numbers and "slot-N" holds a cell id. A cell signs on its 1st visit
-  // and again on its 2nd, 4th, 8th, ... in case an earlier signing was cut
-  // short; duplicates are harmless.
-  function tally(cell) {
-    fetch(ABACUS + '/hit' + SPACE + 'c-' + cell).then(json).then(function (d) {
+  // slot numbers and "slot-N" holds the cell and the country code packed into
+  // one number. A place signs on its 1st visit and again on its 2nd, 4th,
+  // 8th, ... in case an earlier signing was cut short; duplicates are harmless.
+  function tally(cell, cc) {
+    fetch(ABACUS + '/hit' + SPACE + 'c-' + (cell < 0 ? 'x' : cell) + '-' + cc).then(json).then(function (d) {
       var v = d.value;
       if (!(v > 0) || (v & (v - 1)) !== 0) return;
+      var packed = (cell + 1) * 676 + (cc.charCodeAt(0) - 65) * 26 + cc.charCodeAt(1) - 65;
       return fetch(ABACUS + '/hit' + SPACE + 'cells').then(json).then(function (n) {
-        return fetch(ABACUS + '/create' + SPACE + 'slot-' + n.value + '?initializer=' + (cell + 1));
+        return fetch(ABACUS + '/create' + SPACE + 'slot-' + n.value + '?initializer=' + packed);
       });
     }).catch(function () { /* the map misses one visit */ });
   }
 
   // ---------- data ----------
+
+  function visitors() {
+    return fetch(DATA).then(json)
+      .catch(function () { return fetch('./assets/data/visitors.json').then(json); })
+      .catch(function () { return {}; });
+  }
 
   function vec(la, lo) {
     var c = Math.cos(la * RAD);
@@ -108,7 +129,7 @@
   // the dot of the land matrix nearest to a place, as [row, column]
   function snap(la, lo) {
     var i = Math.round((la - grid.lat0) / grid.step);
-    i = Math.max(0, Math.min(grid.rows.length - 1, i));
+    i = clamp(i, 0, grid.rows.length - 1);
     var n = grid.rows[i][0];
     var k = Math.floor(((lo + 180) % 360 + 360) % 360 / 360 * n);
     return [i, Math.min(n - 1, k)];
@@ -140,22 +161,24 @@
     }
   }
 
-  // visitor cells -> lit dots on the matrix (several cells can share a dot)
-  function buildLit(cells) {
-    var sum = {}, max = 1, key, i;
-    for (i = 0; i < cells.length; i++) {
-      var id = cells[i][0], c = cells[i][1];
-      if (!(c > 0) || !(id >= 0 && id < 64800)) continue;
-      var ll = cellCentre(id), at = snap(ll[0], ll[1]);
-      key = at[0] * 4096 + at[1];
-      sum[key] = (sum[key] || 0) + c;
-      if (sum[key] > max) max = sum[key];
+  // [cell, country, visits] places -> lit dots on the matrix (places can share a dot)
+  function buildLit(places) {
+    var at = {}, max = 1, key, i;
+    for (i = 0; i < places.length; i++) {
+      var id = places[i][0], cc = places[i][1], n = places[i][2];
+      if (!(n > 0) || !(id >= 0 && id < 64800)) continue;
+      var ll = cellCentre(id), rc = snap(ll[0], ll[1]);
+      key = rc[0] * 4096 + rc[1];
+      var d = at[key] || (at[key] = { n: 0, by: {} });
+      d.n += n;
+      d.by[cc] = (d.by[cc] || 0) + n;
+      if (d.n > max) max = d.n;
     }
     lit = [];
-    for (key in sum) {
+    for (key in at) {
       var v = dot(Math.floor(key / 4096), key % 4096);
-      v.n = sum[key];
-      v.w = Math.log(1 + sum[key]) / Math.log(1 + max);
+      v.by = at[key].by;
+      v.w = Math.log(1 + at[key].n) / Math.log(1 + max);
       lit.push(v);
     }
     lit.sort(function (a, b) { return a.w - b.w; });
@@ -193,8 +216,8 @@
     cy = TOP + R;
     cut = (cy - h) / R;
     // dots keep their proportion to the gaps between them on a smaller globe
-    dotR = Math.max(0.6, Math.min(1.25, 0.235 * R * grid.step * RAD));
-    litK = Math.max(0.72, Math.min(1, R / 330));
+    dotR = clamp(0.235 * R * grid.step * RAD, 0.6, 1.25);
+    litK = clamp(R / 330, 0.72, 1);
     return true;
   }
 
@@ -236,21 +259,27 @@
       g.fill();
     }
 
-    // visitors, small ones first so the big ones sit on top
-    for (i = 0; i < lit.length; i++) {
-      var p = project(lit[i], sl, cl, sp, cp);
-      if (!p) continue;
-      var fade = 0.2 + 0.8 * p.z, cr = (1.3 + 2.1 * lit[i].w) * (0.7 + 0.3 * p.z) * litK;
-      if (lit[i].w > 0.3) {
-        g.fillStyle = rgba(pal.acc, 0.15 * fade);
+    // visitors: everywhere else in ink first, then the chosen country's places
+    // in the accent colour on top (all of them, when there is no list to choose from)
+    var code = sel >= 0 ? ranked[sel].code : null;
+    for (var pass = 0; pass < 2; pass++) {
+      for (i = 0; i < lit.length; i++) {
+        var v = lit[i], on = !code || v.by[code] > 0;
+        if (on !== (pass === 1)) continue;
+        var p = project(v, sl, cl, sp, cp);
+        if (!p) continue;
+        var fade = 0.2 + 0.8 * p.z, cr = (1.3 + 2.1 * v.w) * (0.7 + 0.3 * p.z) * litK;
+        if (on && v.w > 0.3) {
+          g.fillStyle = rgba(pal.acc, 0.15 * fade);
+          g.beginPath();
+          g.arc(p.x, p.y, cr * 2.7, 0, TAU);
+          g.fill();
+        }
+        g.fillStyle = on ? rgba(pal.acc, (0.6 + 0.4 * v.w) * fade) : rgba(pal.land, (0.5 + 0.3 * v.w) * fade);
         g.beginPath();
-        g.arc(p.x, p.y, cr * 2.7, 0, TAU);
+        g.arc(p.x, p.y, on ? cr : cr * 0.85, 0, TAU);
         g.fill();
       }
-      g.fillStyle = rgba(pal.acc, (0.6 + 0.4 * lit[i].w) * fade);
-      g.beginPath();
-      g.arc(p.x, p.y, cr, 0, TAU);
-      g.fill();
     }
 
     if (me) drawMe(project(me, sl, cl, sp, cp), now);
@@ -304,19 +333,88 @@
     g.fillText('You', tx, p.y + 0.5);
   }
 
+  // ---------- the list of countries ----------
+
+  var els = {};
+  ['vg-from', 'vg-countries', 'vg-top', 'vg-no', 'vg-name', 'vg-stat', 'vg-ticks', 'vg-prev', 'vg-next'].forEach(function (id) {
+    els[id] = document.getElementById(id);
+  });
+  var hasList = !!(els['vg-top'] && els['vg-no'] && els['vg-name'] && els['vg-stat'] && els['vg-ticks']);
+
+  function buildList(data) {
+    var all = data.countries || [], total = data.total || 0, i;
+    if (els['vg-from'] && els['vg-countries'] && all.length > 1) {
+      els['vg-countries'].textContent = all.length;
+      els['vg-from'].hidden = false;
+    }
+    if (!hasList || !total) return;
+    for (i = 0; i < all.length && i < LIST; i++) {
+      ranked.push({ code: all[i][0], name: all[i][1], share: all[i][2] / total, lat: all[i][3], lon: all[i][4] });
+    }
+    if (ranked.length < 2) { ranked = []; return; }
+    ranked.forEach(function (c, k) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'vg-tick';
+      b.setAttribute('aria-label', c.name);
+      b.addEventListener('click', function () { choose(k, true); });
+      els['vg-ticks'].appendChild(b);
+    });
+    if (els['vg-prev']) els['vg-prev'].addEventListener('click', function () { choose((sel + ranked.length - 1) % ranked.length, true); });
+    if (els['vg-next']) els['vg-next'].addEventListener('click', function () { choose((sel + 1) % ranked.length, true); });
+    els['vg-top'].hidden = false;
+  }
+
+  // show country k beside the globe and, when asked, turn the globe to it
+  function choose(k, turnTo) {
+    sel = k;
+    var c = ranked[k], pct = c.share * 100;
+    els['vg-no'].textContent = k + 1;
+    els['vg-name'].textContent = c.name;
+    els['vg-stat'].textContent = (pct >= 1 ? Math.round(pct) : '<1') + '% of visitors';
+    var ticks = els['vg-ticks'].children;
+    for (var i = 0; i < ticks.length; i++) ticks[i].setAttribute('aria-pressed', i === k ? 'true' : 'false');
+    if (!turnTo) return;
+    box.classList.add('vg-used');
+    aim(c.lon, clamp(c.lat - RISE, -80, 30));
+  }
+
   // ---------- motion ----------
+
+  // turn the view centre to (lo, la) by the shorter way round
+  function aim(lo, la) {
+    intro = null;
+    vLon = vLat = 0;
+    if (!seen || still) {
+      // not on screen yet, or no animation wanted: just be there
+      home = lo;
+      lon = seen || still ? lo : lo - 75;
+      lat = la;
+      fly = null;
+    } else {
+      fly = { lon0: lon, lat0: lat, dLon: ((lo - lon + 540) % 360) - 180, dLat: la - lat, t0: performance.now() };
+    }
+    kick();
+  }
 
   function frame(now) {
     raf = 0;
     var dt = lastT ? Math.min(64, now - lastT) : 16;
     lastT = now;
-    var more = false;
+    var more = false, t;
 
     if (intro) {
-      var t = Math.min(1, (now - intro.t0) / 1700);
+      t = Math.min(1, (now - intro.t0) / 1700);
       lon = intro.from + (intro.to - intro.from) * (1 - Math.pow(1 - t, 3));
       if (t < 1) more = true;
       else { intro = null; if (me) ripple = now; }
+    } else if (fly) {
+      t = Math.min(1, (now - fly.t0) / 950);
+      var e = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      lon = fly.lon0 + fly.dLon * e;
+      lat = fly.lat0 + fly.dLat * e;
+      if (t < 1) more = true;
+      else { fly = null; turn(0, 0); }
     } else if (!drag && (vLon || vLat)) {
       turn(vLon * dt, vLat * dt);
       var k = Math.exp(-dt / 320);
@@ -338,7 +436,7 @@
 
   function turn(dLon, dLat) {
     lon = ((lon + dLon + 540) % 360) - 180;
-    lat = Math.max(-80, Math.min(40, lat + dLat));
+    lat = clamp(lat + dLat, -80, 40);
   }
 
   // the first time the dome scrolls into view it turns into place, once
@@ -354,7 +452,7 @@
 
   canvas.addEventListener('pointerdown', function (e) {
     if (!ready || (e.pointerType === 'mouse' && e.button !== 0)) return;
-    intro = null;
+    intro = fly = null;
     vLon = vLat = 0;
     drag = { id: e.pointerId, x: e.clientX, y: e.clientY, t: performance.now(), touch: e.pointerType === 'touch' };
     try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* older browsers */ }
@@ -372,8 +470,8 @@
     var dLat = drag.touch ? 0 : (e.clientY - drag.y) * gain;
     turn(dLon, dLat);
     // momentum for after the release, capped so a flick cannot send it spinning for ages
-    vLon = Math.max(-0.28, Math.min(0.28, vLon * 0.6 + (dLon / dt) * 0.4));
-    vLat = Math.max(-0.14, Math.min(0.14, vLat * 0.6 + (dLat / dt) * 0.4));
+    vLon = clamp(vLon * 0.6 + (dLon / dt) * 0.4, -0.28, 0.28);
+    vLat = clamp(vLat * 0.6 + (dLat / dt) * 0.4, -0.14, 0.14);
     drag.x = e.clientX; drag.y = e.clientY; drag.t = now;
     kick();
   });
@@ -393,7 +491,7 @@
     var step = { ArrowLeft: [-14, 0], ArrowRight: [14, 0], ArrowUp: [0, 8], ArrowDown: [0, -8] }[e.key];
     if (!step || !ready) return;
     e.preventDefault();
-    intro = null;
+    intro = fly = null;
     turn(step[0], step[1]);
     box.classList.add('vg-used');
     kick();
@@ -402,34 +500,40 @@
   // ---------- start ----------
 
   function start() {
-    var place = locate();
     Promise.all([
       fetch('./assets/data/land.json').then(json),
-      fetch('./assets/data/visitors.json').then(json).catch(function () { return { cells: [] }; }),
-      place
+      visitors(),
+      locate()
     ]).then(function (res) {
       grid = res[0];
-      var cells = (res[1] && res[1].cells) || [];
+      var data = res[1] || {}, here = res[2];
       buildLand();
-      buildLit(cells);
+      buildLit(data.places || []);
+      buildList(data);
 
-      var from = document.getElementById('vg-from'), places = document.getElementById('vg-places');
-      if (from && places && cells.length > 1) {
-        places.textContent = cells.length.toLocaleString('en-US');
-        from.hidden = false;
+      var ll = here && here.cell >= 0 ? cellCentre(here.cell) : null;
+      if (ll) {
+        var rc = snap(ll[0], ll[1]);
+        me = dot(rc[0], rc[1]);
       }
 
-      // face the visitor, or else wherever most visitors are
-      if (res[2]) {
-        var ll = cellCentre(res[2].cell), at = snap(ll[0], ll[1]);
-        me = dot(at[0], at[1]);
+      // open on the visitor's own country if it is listed, else on the first
+      var k = 0;
+      if (here) for (var i = 0; i < ranked.length; i++) if (ranked[i].code === here.cc) k = i;
+      if (ranked.length) choose(k, false);
+
+      // face the visitor when their country is the one shown (or nothing is),
+      // otherwise the country shown
+      if (ll && (!ranked.length || ranked[k].code === here.cc)) {
         lon = ll[1];
-        lat = Math.max(-80, Math.min(TILT, ll[0] - 42));
+        lat = clamp(ll[0] - RISE, -80, TILT);
+      } else if (ranked.length) {
+        lon = ranked[k].lon;
+        lat = clamp(ranked[k].lat - RISE, -80, 30);
       } else if (lit.length) {
-        var top = lit[lit.length - 1];
-        lon = Math.atan2(top.x, top.z) / RAD;
+        var most = lit[lit.length - 1];
+        lon = Math.atan2(most.x, most.z) / RAD;
       }
-
       // it waits a quarter turn short of there until it is scrolled into view
       home = lon;
       if (!still) lon = home - 75;

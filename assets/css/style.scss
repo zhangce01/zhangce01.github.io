@@ -558,41 +558,154 @@ section ul > li:hover::before {
   75%      { transform: translateX(4px) rotate(6deg); }
 }
 
-/* Visitor globe (visitorglobe.js): the visitor count sits at the top left, and
-   beside it the dome of a dotted globe rises from the footer's top line, with
-   a lit dot for each place visitors have come from. Without the script or its
-   data the canvas stays hidden and the count stands alone. */
+/* Visitor globe (visitorglobe.js): the visitor count and the countries most
+   visitors come from sit at the left, and beside them the dome of a dotted
+   globe rises from the footer's top line, with a dot for each place visitors
+   have come from. Without the script or its data the canvas and the list stay
+   hidden and the count stands alone. */
 .visitor-globe {
   position: relative;
   margin-top: 0.4rem;
 }
 
-/* count, places and hint stacked at the left; the canvas runs underneath
-   them, so a drag can start anywhere */
-.vg-line {
+/* the text lies over the left of the canvas, which runs the full width so
+   that a drag can start anywhere; only the buttons take clicks */
+.vg-info {
   position: absolute;
   top: 0;
   left: 0;
+  bottom: 14px;
   z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 7px;
-  margin: 0;
   color: var(--ink-soft);
   font-size: 0.85rem;
   line-height: 1.35;
   pointer-events: none;
 }
 
-.vg-from[hidden] { display: none; }
+.vg-info p { margin: 0; }
 
-/* shown once the globe has turned into view, gone after the first drag */
+.vg-line {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.vg-from[hidden],
+.vg-top[hidden] { display: none; }
+
+/* one country or region at a time: rank, name, share of visitors, and the
+   ticks and arrows that step through the list and turn the globe */
+.vg-top {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 26px;
+}
+
+.vg-country {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.vg-no {
+  margin-right: 9px;
+  color: var(--acc);
+  font-variant-numeric: tabular-nums;
+}
+
+.vg-stat { margin-top: 3px; }
+
+.vg-pager {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: auto;
+  pointer-events: auto;
+}
+
+.vg-ticks {
+  display: flex;
+  margin-right: 8px;
+}
+
+.vg-tick {
+  position: relative;
+  width: 12px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.vg-tick::before {
+  content: '';
+  position: absolute;
+  left: 5px;
+  bottom: 6px;
+  width: 2px;
+  height: 8px;
+  border-radius: 1px;
+  background: var(--ink-faint);
+  opacity: 0.55;
+  transition: height .2s ease, background-color .2s ease, opacity .2s ease;
+}
+
+.vg-tick:hover::before { opacity: 1; }
+
+.vg-tick[aria-pressed="true"]::before {
+  height: 15px;
+  background: var(--ink);
+  opacity: 1;
+}
+
+.vg-step {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: color .2s ease, border-color .2s ease, background-color .2s ease;
+}
+
+.vg-step:hover {
+  color: var(--ink);
+  border-color: var(--ink-faint);
+  background: rgba(148, 163, 184, 0.1);
+}
+
+.vg-tick:focus-visible,
+.vg-step:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 1px;
+  border-radius: 6px;
+}
+
+/* shown once the globe has turned into view, gone after the first use */
 .vg-hint {
+  position: absolute;
+  top: 6px;
+  right: 0;
+  font-size: 0.74rem;
   color: var(--ink-faint);
-  font-size: 0.78rem;
   opacity: 0;
   transition: opacity .5s ease;
+  pointer-events: none;
 }
 
 .visitor-globe.vg-in .vg-hint { opacity: 1; }
@@ -624,9 +737,16 @@ section ul > li:hover::before {
 
 /* single column: the text goes above the globe instead of beside it */
 @media (max-width: 760px) {
-  .vg-line { position: static; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+  .vg-info { position: static; }
+  .vg-line { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+  .vg-top { margin-top: 16px; }
+  .vg-pager { margin-top: 10px; }
+  /* fingers need more room than a pointer */
+  .vg-tick { width: 18px; height: 34px; }
+  .vg-tick::before { left: 8px; bottom: 10px; }
+  .vg-step { width: 34px; height: 34px; }
   .vg-hint { display: none; }
-  .vg-canvas { height: 200px; margin-top: 8px; }
+  .vg-canvas { height: 200px; margin-top: 4px; }
 }
 
 .site-foot {
@@ -1660,7 +1780,7 @@ html.theme-dark::-webkit-scrollbar-thumb, html.theme-dark ::-webkit-scrollbar-th
 
   .topbar, .bg-blobs, .fx-field, .fx-trail, .back-to-top,
   .scroll-progress, .year-jump, .teaser-lightbox,
-  .vg-canvas, .vg-hint { display: none !important; }
+  .vg-canvas, .vg-hint, .vg-top { display: none !important; }
 
   body, html.theme-dark body { background: #fff; }
   body::before, body::after { display: none; }

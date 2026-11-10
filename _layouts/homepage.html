@@ -176,11 +176,23 @@
       <section>
         {{ content }}
         <br>
-        <!-- Visitor count and the globe of where visitors come from (visitorglobe.js);
-             its dome rises behind the footer's top line -->
+        <!-- Visitor count, the countries and regions most visitors come from, and the
+             globe they are shown on (visitorglobe.js); its dome rises behind the footer's top line -->
         <div class="visitor-globe" id="visitor-globe">
-          <p class="vg-line"><span id="visitors" style="visibility:hidden;"><span class="visitor-pill"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg><span id="visitor-count" class="visitor-count"></span>&nbsp;visitors</span></span><span class="vg-from" id="vg-from" hidden>from <span id="vg-places"></span> places around the world</span><span class="vg-hint" aria-hidden="true">Drag the globe to spin it</span></p>
-          <canvas class="vg-canvas" id="vg-canvas" role="img" tabindex="0" aria-label="Dotted globe with a lit dot for each place visitors to this site have come from. Drag it, or use the arrow keys, to spin it." hidden></canvas>
+          <div class="vg-info">
+            <p class="vg-line"><span id="visitors" style="visibility:hidden;"><span class="visitor-pill"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg><span id="visitor-count" class="visitor-count"></span>&nbsp;visitors</span></span><span class="vg-from" id="vg-from" hidden>from <span id="vg-countries"></span> countries and regions</span></p>
+            <div class="vg-top" id="vg-top" hidden>
+              <p class="vg-country" aria-live="polite"><span class="vg-no" id="vg-no"></span><span class="vg-name" id="vg-name"></span></p>
+              <p class="vg-stat" id="vg-stat"></p>
+              <div class="vg-pager">
+                <div class="vg-ticks" id="vg-ticks" role="group" aria-label="Countries and regions with the most visitors"></div>
+                <button type="button" class="vg-step" id="vg-prev" aria-label="Previous country or region"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg></button>
+                <button type="button" class="vg-step" id="vg-next" aria-label="Next country or region"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+              </div>
+            </div>
+          </div>
+          <span class="vg-hint" aria-hidden="true">Drag the globe to spin it</span>
+          <canvas class="vg-canvas" id="vg-canvas" role="img" tabindex="0" aria-label="Dotted globe with a dot for each place visitors to this site have come from. Drag it, or use the arrow keys, to spin it." hidden></canvas>
         </div>
         <div class="site-foot">
           {% if site.enable_footnote %}
