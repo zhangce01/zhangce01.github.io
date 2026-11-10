@@ -4,7 +4,7 @@ layout: homepage
 
 ## About Me
 
-Hi there! I'm **Ce Zhang** <span class="wave" aria-hidden="true">👋</span> I am currently a fourth-year PhD candidate in the Robotics Institute at Carnegie Mellon University (CMU), with an expected graduation of 2028.
+Hi there! I'm **Ce Zhang** <span class="wave" aria-hidden="true">👋</span> I am currently a fourth-year PhD candidate in the Robotics Institute at Carnegie Mellon University (CMU), with an expected graduation of 2028. I am looking for <span class="hl">Summer 2027 research internships</span>.
 
 <div class="edu-cards">
   <div class="edu-card">
