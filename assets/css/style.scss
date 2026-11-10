@@ -263,6 +263,23 @@ html.theme-dark body::after { display: none; }
 
 .site-nav::-webkit-scrollbar { display: none; }
 
+/* On narrow screens the tabs scroll sideways. scrollspy.js marks the edges
+   that hide more tabs, and those edges fade out as a hint. */
+.site-nav.more-right {
+  -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 34px), transparent);
+  mask-image: linear-gradient(to right, #000 calc(100% - 34px), transparent);
+}
+
+.site-nav.more-left {
+  -webkit-mask-image: linear-gradient(to left, #000 calc(100% - 34px), transparent);
+  mask-image: linear-gradient(to left, #000 calc(100% - 34px), transparent);
+}
+
+.site-nav.more-left.more-right {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 34px, #000 calc(100% - 34px), transparent);
+  mask-image: linear-gradient(to right, transparent, #000 34px, #000 calc(100% - 34px), transparent);
+}
+
 .site-nav a {
   position: relative;
   z-index: 1;

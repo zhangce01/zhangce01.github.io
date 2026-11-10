@@ -94,6 +94,29 @@
     pill.style.width = a.offsetWidth + 'px';
   }
 
+  // On narrow screens the tabs scroll sideways. Mark which edges hide more
+  // tabs, so style.scss can fade them as a hint ...
+  var nav = document.querySelector('.site-nav');
+
+  function navEdges() {
+    if (!nav) return;
+    var max = nav.scrollWidth - nav.clientWidth;
+    nav.classList.toggle('more-left', nav.scrollLeft > 2);
+    nav.classList.toggle('more-right', nav.scrollLeft < max - 2);
+  }
+
+  // ... and keep the current tab in view.
+  function showTab(i) {
+    if (!nav || i < 0 || nav.scrollWidth <= nav.clientWidth) return;
+    var a = navLinks[i];
+    var left = a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2;
+    if (nav.scrollTo && 'scrollBehavior' in document.documentElement.style) {
+      nav.scrollTo({ left: left, behavior: 'smooth' });
+    } else {
+      nav.scrollLeft = left;
+    }
+  }
+
   function setActive(current) {
     for (var j = 0; j < navLinks.length; j++) {
       navLinks[j].classList.toggle('active', j === current);
@@ -101,7 +124,10 @@
     if (current !== lastCurrent) {
       lastCurrent = current;
       // wait a frame so the active font-weight applies before measuring
-      requestAnimationFrame(function () { movePill(current); });
+      requestAnimationFrame(function () {
+        movePill(current);
+        showTab(current);
+      });
     }
   }
 
@@ -176,8 +202,10 @@
   function refresh() {
     lastCurrent = -2;
     onScroll();
+    navEdges();
   }
 
+  if (nav) nav.addEventListener('scroll', navEdges, { passive: true });
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', refresh);
   // images and webfonts settle after DOMContentLoaded and move the headings
@@ -187,4 +215,5 @@
   if (newsMore) newsMore.addEventListener('toggle', onScroll);
 
   onScroll();
+  navEdges();
 })();
