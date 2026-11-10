@@ -9,8 +9,10 @@
 
   var BASE = 'https://abacus.jasoncameron.dev';
   var PATH = '/zhangce01-github-io/visits';
-  // easycounter total at the moment this counter took over (Sep 2026)
-  var OFFSET = 4563;
+  // easycounter total at the moment this counter took over (Sep 2026), less
+  // the 21 hits that local preview runs added on 2026-11-10 before the
+  // hostname check below existed
+  var OFFSET = 4563 - 21;
 
   var action = '/hit';
   try {
@@ -21,6 +23,8 @@
       localStorage.setItem('visit-day', today);
     }
   } catch (e) { /* storage blocked: just count the hit */ }
+  // previews and local copies show the count but never add to it
+  if (location.hostname !== 'zhangce01.github.io') action = '/get';
 
   // one-shot count-up over ~0.8s (skipped for reduced-motion users)
   function show(total) {

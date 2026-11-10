@@ -36,7 +36,7 @@
   var TAU = Math.PI * 2;
   var REACH2 = REACH * REACH, SPOT2 = SPOT * SPOT;
 
-  var HOT = 'a[href], button, summary, label, select, input, textarea, [role="button"], .teaser-lightbox';
+  var HOT = 'a[href], button, summary, label, select, input, textarea, [role="button"], .teaser-lightbox, .vg-canvas';
 
   // dot = resting grid dot, acc = lit dot / line / glow, core = the pointer dot
   // (centre, edge), rim = hairline that keeps the pointer visible on any content

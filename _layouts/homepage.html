@@ -176,10 +176,18 @@
       <section>
         {{ content }}
         <br>
-        {% if site.enable_footnote %}
-          <p style="margin-bottom:0;"><small>Powered by Jekyll and <a href="https://github.com/yaoyao-liu/minimal-light" target="_blank" rel="noopener">Minimal Light</a> theme. Thanks to <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude</a> <span class="crab"><img src="./assets/img/clawd.gif" alt="Clawd the crab"></span> for polishing this site.</small></p>
-        {% endif %}
-        <p class="site-copyright"><span id="visitors" style="visibility:hidden;"><span class="visitor-pill"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg><span id="visitor-count" class="visitor-count"></span>&nbsp;visitors</span></span><small>&copy; 2026 &middot; Ce Zhang &middot; Robotics Institute, Carnegie Mellon University &middot; Last Edited: {{ site.time | date: "%B %d, %Y" }}</small></p>
+        <!-- Visitor count and the globe of where visitors come from (visitorglobe.js);
+             its dome rises behind the footer's top line -->
+        <div class="visitor-globe" id="visitor-globe">
+          <p class="vg-line"><span id="visitors" style="visibility:hidden;"><span class="visitor-pill"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg><span id="visitor-count" class="visitor-count"></span>&nbsp;visitors</span></span><span class="vg-from" id="vg-from" hidden>from <span id="vg-places"></span> places around the world</span><span class="vg-hint" aria-hidden="true">Drag the globe to spin it</span></p>
+          <canvas class="vg-canvas" id="vg-canvas" role="img" tabindex="0" aria-label="Dotted globe with a lit dot for each place visitors to this site have come from. Drag it, or use the arrow keys, to spin it." hidden></canvas>
+        </div>
+        <div class="site-foot">
+          {% if site.enable_footnote %}
+            <p><small>Powered by Jekyll and <a href="https://github.com/yaoyao-liu/minimal-light" target="_blank" rel="noopener">Minimal Light</a> theme. Thanks to <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude</a> <span class="crab"><img src="./assets/img/clawd.gif" alt="Clawd the crab"></span> for polishing this site.</small></p>
+          {% endif %}
+          <p class="site-copyright"><small>&copy; 2026 &middot; Ce Zhang &middot; Robotics Institute, Carnegie Mellon University &middot; Last Edited: {{ site.time | date: "%B %d, %Y" }}</small></p>
+        </div>
       </section>
 
       <footer></footer>
@@ -188,8 +196,9 @@
     <button id="back-to-top" class="back-to-top" type="button" aria-label="Back to top"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
 
     <script src="{{ "/assets/js/scale.fix.js" | relative_url }}"></script>
-    <script src="{{ "/assets/js/scrollspy.js" | relative_url }}?v=7"></script>
-    <script src="{{ "/assets/js/counter.js" | relative_url }}?v=3"></script>
+    <script src="{{ "/assets/js/scrollspy.js" | relative_url }}?v=8"></script>
+    <script src="{{ "/assets/js/counter.js" | relative_url }}?v=4"></script>
+    <script src="{{ "/assets/js/visitorglobe.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/publications.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/teasers.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/teaserzoom.js" | relative_url }}?v=2"></script>
