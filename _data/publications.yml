@@ -1,4 +1,27 @@
 main:
+  - title: "MORSE: Optimizing Streaming Memory Design via Open-World Auto-Research"
+    year: 2026
+    authors: <strong>Ce Zhang<sup>*</sup></strong>, Jianshu Zhang<sup>*</sup>, Jinxi He, Xiyuan Yang, Pan Wang, Han Liu, Katia Sycara, Yaqi Xie <span class="eq-contrib">(<sup>*</sup>Equal contribution)</span>
+    conference_short: Preprint
+    conference: Preprint, 2026.
+    website: https://zhangce01.github.io/morse/
+    teaser: morse
+    teaser_alt: "MORSE: a 409-second Ego4D stream goes by once and the question 'What tool did I use to tighten the screw?' arrives at the end; the seed harness, holding 64 kept frames, answers 'using a wrench'; an editor then loops through diagnose, research, propose and validate for 25 rounds, reading 28 papers, and the evolved harness keeps a step log whose entry '2-16 s uses screwdriver on metal part' leads to the right answer, 'using a screwdriver'; on OVO-Bench with a frozen Qwen3-VL-8B, accuracy goes from 60.1 (VLM alone) and 67.4 (seed harness) to 75.1, answering in 0.30 s"
+    bibtex: |
+      @article{zhang2026morse,
+          title     = {MORSE: Optimizing Streaming Memory Design via Open-World Auto-Research},
+          author    = {Zhang, Ce and Zhang, Jianshu and He, Jinxi and Yang, Xiyuan and Wang, Pan and Liu, Han and Sycara, Katia and Xie, Yaqi},
+          year      = {2026}
+      }
+
+  - title: "GRAPE-Bench: When Vision Degrades, Does Video Reasoning Hold?"
+    year: 2026
+    authors: <strong>Ce Zhang</strong>, Junyi He, Tianshi Ming, Jinxi He, Jianshu Zhang, Xiyuan Yang, Jianuo Zhu, Yicheng Tao, Xiyu Luo, Minghao Fu, Jiahui Zhu, Kehan Guo, Yunzhong Xiao, Jingyang Lin, Wei Chow, Lingdong Kong, Katia Sycara, Yaqi Xie
+    conference_short: Preprint
+    conference: Preprint, 2026.
+    teaser: grape-bench
+    teaser_alt: "GRAPE-Bench: five video models ranked by accuracy on driving videos with synthetic rain (MiniCPM-V 4.5 first at 64.3, Cosmos-Reason2 third at 60.8) change order on footage captured in real rain, where Cosmos-Reason2 rises to first (74.2) and MiniCPM-V 4.5 drops to third (67.9); three questions about one rainy scene then show that the hardest one (L3, answered wrong by 90% of models) has the lowest safety relevance (38), while L1 and L2 score 85 and 82; the benchmark has 32,523 synthetic questions over 12 corruption types and 1,716 real-world questions on 572 driving videos"
+
   - title: "RSIGame: Autonomous Agentic Game Development with Recursive Self-improvement"
     year: 2026
     authors: Wenyi Wu<sup>*</sup>, Minghao Fu<sup>*</sup>, Jieyu You, Kun Zhou, Siqi Liu, Aayush Salvi, Yiheng Lin, <strong>Ce Zhang</strong>, Xiaohan Lan, Jiahui Zhu, Yujie Zhong, Qi She, Biwei Huang <span class="eq-contrib">(<sup>*</sup>Equal contribution)</span>
@@ -354,188 +377,3 @@ main:
     website: https://zhangce01.github.io/DPE-CLIP
     pdf: http://arxiv.org/pdf/2410.12790.pdf
     video: https://www.youtube.com/watch?v=_kI1sGfEMSw
-
-  - title: "HiKER-SGG: Hierarchical Knowledge Enhanced Robust Scene Graph Generation"
-    year: 2024
-    authors: <strong>Ce Zhang</strong>, Simon Stepputtis, Joseph Campbell, Katia Sycara, Yaqi Xie
-    conference_short: CVPR 2024
-    conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2024.
-    conference2: NeurIPS 2023 New Frontiers in Graph Learning Workshop.
-    place: Seattle, WA, US, June 17-21, 2024
-    image: ./assets/img/hiker_intro.webp
-    image_w: 640
-    image_h: 508
-    teaser: hiker
-    teaser_alt: "HiKER-SGG: under sun glare a flat classifier calls the cat 'bread', while hierarchical inference picks 'animal' first and then 'cat'; on VG-C (20 corruptions) PredCls mR@100 is 61.4 vs 56.7 (EB-Net) and 44.0 (GB-Net)"
-    abstract: |
-      Being able to understand visual scenes is a precursor for many downstream tasks including autonomous driving robotics and other vision-based approaches. A common approach enabling the ability to reason over visual data is Scene Graph Generation (SGG); however many existing approaches assume undisturbed vision i.e. the absence of real-world corruptions such as fog snow smoke as well as non-uniform perturbations like sun glare or water drops. In this work we propose a novel SGG benchmark containing procedurally generated weather corruptions and other transformations over the Visual Genome dataset. Further we introduce a corresponding approach Hierarchical Knowledge Enhanced Robust Scene Graph Generation (HiKER-SGG) providing a strong baseline for scene graph generation under such challenging setting. At its core HiKER-SGG utilizes a hierarchical knowledge graph in order to refine its predictions from coarse initial estimates to detailed predictions. In our extensive experiments we show that HiKER-SGG does not only demonstrate superior performance on corrupted images in a zero-shot manner but also outperforms current state-of-the-art methods on uncorrupted SGG tasks. Code is available at https://github.com/zhangce01/HiKER-SGG.
-    bibtex: |
-      @inproceedings{zhang2024hiker,
-          title     = {HiKER-SGG: Hierarchical Knowledge Enhanced Robust Scene Graph Generation},
-          author    = {Zhang, Ce and Stepputtis, Simon and Campbell, Joseph and Sycara, Katia and Xie, Yaqi},
-          booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-          pages     = {28233--28243},
-          year      = {2024}
-      }
-    code: https://github.com/zhangce01/HiKER-SGG
-    badge: https://img.shields.io/github/stars/zhangce01/HiKER-SGG?style=social&label=Code+Stars
-    website: https://zhangce01.github.io/HiKER-SGG
-    pdf: https://openaccess.thecvf.com/content/CVPR2024/papers/Zhang_HiKER-SGG_Hierarchical_Knowledge_Enhanced_Robust_Scene_Graph_Generation_CVPR_2024_paper.pdf
-    video: https://www.youtube.com/watch?v=GLCagI1XDdg
-    supp: https://openaccess.thecvf.com/content/CVPR2024/supplemental/Zhang_HiKER-SGG_Hierarchical_Knowledge_CVPR_2024_supplemental.pdf
-
-  - title: "Concept-Guided Prompt Learning for Generalization in Vision-Language Models"
-    year: 2024
-    authors: Yi Zhang, <strong>Ce Zhang</strong>, Ke Yu, Yushun Tang, Zhihai He
-    conference_short: AAAI 2024
-    conference: AAAI Conference on Artificial Intelligence <strong>(AAAI)</strong>, 2024.
-    place: Vancouver, Canada, February 22-25, 2024
-    pdf: https://arxiv.org/pdf/2401.07457.pdf
-    video: https://underline.io/lecture/93595-concept-guided-prompt-learning-for-generalization-in-vision-language-models
-    image: ./assets/img/aaai2024.webp
-    image_w: 640
-    image_h: 383
-    teaser: cpl
-    teaser_alt: "CPL: a learned CoOp prompt falls from 40.44 on base to 22.30 on unseen FGVC Aircraft classes; CPL looks up visual concepts (brown, fluffy, little, round) in a concept cache to write the prompt, and novel-class accuracy rises from 22.30 to 38.85"
-    abstract: |
-      Contrastive Language-Image Pretraining (CLIP) model has exhibited remarkable efficacy in establishing cross-modal connections between texts and images, yielding impressive performance across a broad spectrum of downstream applications through fine-tuning. However, for generalization tasks, the current fine-tuning methods for CLIP, such as CoOp and CoCoOp, demonstrate relatively low performance on some fine-grained datasets. We recognize the underlying reason is that these previous methods only projected global features into the prompt, neglecting the various visual concepts, such as colors, shapes, and sizes, which are naturally transferable across domains and play a crucial role in generalization tasks. To address this issue, in this work, we propose Concept-Guided Prompt Learning (CPL) for vision-language models. Specifically, we leverage the well-learned knowledge of CLIP to create a visual concept cache to enable concept-guided prompting. In order to refine the text features, we further develop a projector that transforms multi-level visual features into text features. We observe that this concept-guided prompt learning approach is able to achieve enhanced consistency between visual and linguistic modalities. Extensive experimental results demonstrate that our CPL method significantly improves generalization capabilities compared to the current state-of-the-art methods.
-    bibtex: |
-      @inproceedings{zhang2024concept,
-          author    = {Yi Zhang and Ce Zhang and Ke Yu and Yushun Tang and Zhihai He},
-          title     = {Concept-Guided Prompt Learning for Generalization in Vision-Language Models},
-          booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence (AAAI)},
-          volume    = {38},
-          number    = {7},
-          pages     = {7377--7386},
-          year      = {2024},
-          doi       = {10.1609/aaai.v38i7.28568}
-      }
-
-  - title: "Learning to Adapt CLIP for Few-Shot Monocular Depth Estimation"
-    year: 2024
-    authors: Xueting Hu, <strong>Ce Zhang</strong>, Yi Zhang, Bowen Hai, Ke Yu, Zhihai He
-    conference_short: WACV 2024
-    conference: IEEE/CVF Winter Conference on Applications of Computer Vision <strong>(WACV)</strong>, 2024.
-    place: Waikoloa, HI, US, January 4-8, 2024
-    pdf: https://arxiv.org/pdf/2311.01034.pdf
-    video: https://www.youtube.com/watch?v=EA4M1vgQkFk
-    image: ./assets/img/wacv2024.webp
-    image_w: 640
-    image_h: 396
-    teaser: depthclip
-    teaser_alt: "Few-shot CLIP depth: a bathroom photo is matched to its scene's learned depth bins (a cafe's 'unseen' means 4.23 m, a bathroom's 3.00 m) instead of one fixed set for every room; NYU V2 MARE drops from 0.388 to 0.347"
-    abstract: |
-      Pre-trained Visual-Language Models (VLMs), such as CLIP, have shown enhanced performance across a range of tasks that involve the integration of visual and linguistic elements. When CLIP is used for depth estimation tasks, the patches, divided from the input images, can be combined with a series of semantic descriptions of the depth information to obtain similarity results. The coarse estimation of depth is then achieved by weighting and summing the depth values, called depth bins, corresponding to the predefined semantic descriptions. The zero-shot approach circumvents the computational and time-intensive nature of traditional fully-supervised depth estimation methods. However, this method, utilizing fixed depth bins, may not effectively generalize as images from different scenes may exhibit distinct depth distributions. To address this challenge, we propose a few-shot-based method which learns to adapt the VLMs for monocular depth estimation to balance training costs and generalization capabilities. Specifically, it assigns different depth bins for different scenes, which can be selected by the model during inference. Additionally, we incorporate learnable prompts to preprocess the input text to convert the easily human-understood text into easily model-understood vectors and further enhance the performance. With only one image per scene for training, our extensive experiment results on the NYU V2 dataset demonstrate that our method outperforms the previous state-of-the-art method by up to 10.6% in terms of MARE.
-    bibtex: |
-      @inproceedings{hu2024learning,
-          author    = {Xueting Hu and Ce Zhang and Yi Zhang and Bowen Hai and Ke Yu and Zhihai He},
-          title     = {Learning to Adapt CLIP for Few-Shot Monocular Depth Estimation},
-          booktitle = {IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
-          pages     = {5582--5591},
-          publisher = {IEEE},
-          year      = {2024},
-          doi       = {10.1109/WACV57701.2024.00550}
-      }
-
-  - title: "BDC-Adapter: Brownian Distance Covariance for Better Vision-Language Reasoning"
-    year: 2023
-    authors: Yi Zhang<sup>*</sup>, <strong>Ce Zhang<sup>*</sup></strong>, Zihan Liao, Yushun Tang, Zhihai He <span class="eq-contrib">(<sup>*</sup>Equal contribution)</span>
-    conference_short: BMVC 2023
-    conference: British Machine Vision Conference <strong>(BMVC)</strong>, 2023.
-    place: Aberdeen, UK, November 20-24, 2023
-    pdf: https://papers.bmvc2023.org/0182.pdf
-    supp: https://bmvc2022.mpi-inf.mpg.de/BMVC2023/0182_supp.pdf
-    video: https://bmvc2022.mpi-inf.mpg.de/BMVC2023/0182_video.mp4
-    website: https://zhangce01.github.io/BDC-Adapter
-    image: ./assets/img/bmvc2023_clip.webp
-    image_w: 640
-    image_h: 403
-    teaser: bdc
-    teaser_alt: "BDC-Adapter: for a toy U-shaped relation, covariance is 0 and calls the features independent while Brownian distance covariance is positive; the query cat's BDC matrix best matches the cat prototype, and 16-shot accuracy over 11 datasets rises from 75.8 (Tip-Adapter-F) to 78.5"
-    abstract: |
-      Large-scale pre-trained Vision-Language Models (VLMs), such as CLIP and ALIGN, have introduced a new paradigm for learning transferable visual representations. Recently, there has been a surge of interest among researchers in developing lightweight fine-tuning techniques to adapt these models to downstream visual tasks. We recognize that current state-of-the-art fine-tuning methods, such as Tip-Adapter, simply consider the covariance between the query image feature and features of support few-shot training samples, which only captures linear relations and potentially instigates a deceptive perception of independence. To address this issue, in this work, we innovatively introduce Brownian Distance Covariance (BDC) to the field of vision-language reasoning. The BDC metric can model all possible relations, providing a robust metric for measuring feature dependence. Based on this, we present a novel method called BDC-Adapter, which integrates BDC prototype similarity reasoning and multi-modal reasoning network prediction to perform classification tasks. Our extensive experimental results show that the proposed BDC-Adapter can freely handle non-linear relations and fully characterize independence, outperforming the current state-of-the-art methods by large margins.
-    bibtex: |
-      @inproceedings{zhang2023bdc,
-          author    = {Yi Zhang and Ce Zhang and Zihan Liao and Yushun Tang and Zhihai He},
-          title     = {BDC-Adapter: Brownian Distance Covariance for Better Vision-Language Reasoning},
-          booktitle = {34th British Machine Vision Conference (BMVC)},
-          publisher = {BMVA},
-          year      = {2023}
-      }
-
-  - title: "Neuro-Modulated Hebbian Learning for Fully Test-Time Adaptation"
-    year: 2023
-    authors: Yushun Tang, <strong>Ce Zhang</strong>, Heng Xu, Shuoshuo Chen, Jie Cheng, Luziwei Leng, Qinghai Guo, Zhihai He
-    conference_short: CVPR 2023
-    conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2023.
-    place: Vancouver, Canada, June 18-22, 2023
-    pdf: https://openaccess.thecvf.com/content/CVPR2023/papers/Tang_Neuro-Modulated_Hebbian_Learning_for_Fully_Test-Time_Adaptation_CVPR_2023_paper.pdf
-    supp: https://openaccess.thecvf.com/content/CVPR2023/supplemental/Tang_Neuro-Modulated_Hebbian_Learning_CVPR_2023_supplemental.pdf
-    video: https://www.youtube.com/watch?v=d1f4UDmAadk
-    image: ./assets/img/cvpr2023_tta.webp
-    image_w: 640
-    image_h: 443
-    teaser: hebbian
-    teaser_alt: "Neuro-modulated Hebbian learning: a corrupted CIFAR-10-C ship breaks the source model's early features; label-free Hebbian learning at test time restores them to match a supervised oracle, and ImageNet-C error falls to 60.4 (TENT 62.7, source 85.7)"
-    abstract: |
-      Fully test-time adaptation aims to adapt the network model based on sequential analysis of input samples during the inference stage to address the cross-domain performance degradation problem of deep neural networks. We take inspiration from the biological plausibility learning where the neuron responses are tuned based on a local synapse-change procedure and activated by competitive lateral inhibition rules. Based on these feed-forward learning rules, we design a soft Hebbian learning process which provides an unsupervised and effective mechanism for online adaptation. We observe that the performance of this feed-forward Hebbian learning for fully test-time adaptation can be significantly improved by incorporating a feedback neuro-modulation layer. It is able to fine-tune the neuron responses based on the external feedback generated by the error back-propagation from the top inference layers. This leads to our proposed neuro-modulated Hebbian learning (NHL) method for fully test-time adaptation. With the unsupervised feed-forward soft Hebbian learning being combined with a learned neuro-modulator to capture feedback from external responses, the source model can be effectively adapted during the testing process. Experimental results on benchmark datasets demonstrate that our proposed method can significantly improve the adaptation performance of network models and outperforms existing state-of-the-art methods.
-    bibtex: |
-      @inproceedings{tang2023neuro,
-          title     = {Neuro-Modulated Hebbian Learning for Fully Test-Time Adaptation},
-          author    = {Tang, Yushun and Zhang, Ce and Xu, Heng and Chen, Shuoshuo and Cheng, Jie and Leng, Luziwei and Guo, Qinghai and He, Zhihai},
-          booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-          pages     = {3728--3738},
-          year      = {2023}
-      }
-
-  - title: "Self-Correctable and Adaptable Inference for Generalizable Human Pose Estimation"
-    year: 2023
-    authors: Zhehan Kan, Shuoshuo Chen, <strong>Ce Zhang</strong>, Yushun Tang, Zhihai He
-    conference_short: CVPR 2023
-    conference: IEEE/CVF Conference on Computer Vision and Pattern Recognition <strong>(CVPR)</strong>, 2023.
-    place: Vancouver, Canada, June 18-22, 2023
-    pdf: https://openaccess.thecvf.com/content/CVPR2023/papers/Kan_Self-Correctable_and_Adaptable_Inference_for_Generalizable_Human_Pose_Estimation_CVPR_2023_paper.pdf
-    supp: https://openaccess.thecvf.com/content/CVPR2023/supplemental/Kan_Self-Correctable_and_Adaptable_CVPR_2023_supplemental.pdf
-    video: https://www.youtube.com/watch?v=W5cn4W1hBOg
-    image: ./assets/img/cvpr2023_pose.webp
-    image_w: 640
-    image_h: 456
-    teaser: pose
-    teaser_alt: "SCAI: the baseline misplaces a seated man's left knee; a self-check that maps the prediction back without ground truth flags the error and the correction fixes it; COCO test-dev AP rises from 75.5 (HRNet-W48) to 80.6, 1.4 above the previous best SCIO"
-    abstract: |
-      A central challenge in human pose estimation, as well as in many other machine learning and prediction tasks, is the generalization problem. The learned network does not have the capability to characterize the prediction error, generate feedback information from the test sample, and correct the prediction error on the fly for each individual test sample, which results in degraded performance in generalization. In this work, we introduce a self-correctable and adaptable inference (SCAI) method to address the generalization challenge of network prediction and use human pose estimation as an example to demonstrate its effectiveness and performance. We learn a correction network to correct the prediction result conditioned by a fitness feedback error. This feedback error is generated by a learned fitness feedback network which maps the prediction result to the original input domain and compares it against the original input. Interestingly, we find that this self-referential feedback error is highly correlated with the actual prediction error. This strong correlation suggests that we can use this error as feedback to guide the correction process. It can be also used as a loss function to quickly adapt and optimize the correction network during the inference process. Our extensive experimental results on human pose estimation demonstrate that the proposed SCAI method is able to significantly improve the generalization capability and performance of human pose estimation.
-    bibtex: |
-      @inproceedings{kan2023self,
-          title     = {Self-Correctable and Adaptable Inference for Generalizable Human Pose Estimation},
-          author    = {Kan, Zhehan and Chen, Shuoshuo and Zhang, Ce and Tang, Yushun and He, Zhihai},
-          booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-          pages     = {5537--5546},
-          year      = {2023}
-      }
-  - title: "Critical Sampling for Robust Evolution Operator Learning of Unknown Dynamical Systems"
-    year: 2023
-    authors: <strong>Ce Zhang</strong>, Kailiang Wu, Zhihai He
-    conference_short: IEEE TAI
-    conference: IEEE Transactions on Artificial Intelligence, 2023.
-    conference2: First Workshop on Out-of-Distribution Generalization in Robotics at CoRL 2023.
-    place: Atlanta, GA, US, November 6-9, 2023
-    pdf: https://arxiv.org/pdf/2304.07485.pdf
-    image: ./assets/img/tai_critical.webp
-    image_w: 587
-    image_h: 425
-    teaser: critical
-    teaser_alt: "Critical sampling: on a damped pendulum, a forward-then-backward round trip that misses its start flags where the learned model is wrong; sampling there reaches the uniform baseline's error with 417 instead of 14,400 samples, and with 1,765 instead of 1,000,000 on Lorenz (567x fewer)"
-    abstract: |
-      Given an unknown dynamical system, what is the minimum number of samples needed for effective learning of its governing laws and accurate prediction of its future evolution behavior, and how to select these critical samples? In this work, we propose to explore this problem based on a design approach. Starting from a small initial set of samples, we adaptively discover critical samples to achieve increasingly accurate learning of the system evolution. One central challenge here is that we do not know the network modeling error since the ground-truth system state is unknown, which is, however, needed for critical sampling. To address this challenge, we introduce a multistep reciprocal prediction network where forward and backward evolution networks are designed to learn the temporal evolution behavior in the forward and backward time directions, respectively. Very interestingly, we find that the desired network modeling error is highly correlated with the multistep reciprocal prediction error, which can be directly computed from the current system state. This allows us to perform a dynamic selection of critical samples from regions with high network modeling errors for dynamical systems. In addition, a joint spatial-temporal evolution network is introduced, which incorporates spatial dynamics modeling into the temporal evolution prediction for robust learning of the system evolution operator with few samples. Our extensive experimental results demonstrate that our proposed method is able to dramatically reduce the number of samples needed for effective learning and accurate prediction of evolution behaviors of unknown dynamical systems by up to hundreds of times.
-    bibtex: |
-      @article{zhang2024critical,
-          author  = {Ce Zhang and Kailiang Wu and Zhihai He},
-          title   = {Critical Sampling for Robust Evolution Operator Learning of Unknown Dynamical Systems},
-          journal = {IEEE Transactions on Artificial Intelligence},
-          volume  = {5},
-          number  = {6},
-          pages   = {2856--2871},
-          year    = {2024},
-          doi     = {10.1109/TAI.2023.3327676}
-      }
-

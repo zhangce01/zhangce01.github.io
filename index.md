@@ -64,7 +64,6 @@ I build multi-modal AI systems that are <span class="hl">efficient</span> and <s
 {% assign p_only = site.data.publications.main | where_exp: "p", "p.title contains 'ONLY:'" | first %}
 {% assign p_echosafe = site.data.publications.main | where_exp: "p", "p.title contains 'Evolving Contextual Safety'" | first %}
 {% assign p_pyspatial = site.data.publications.main | where_exp: "p", "p.title contains 'pySpatial:'" | first %}
-{% assign p_hiker = site.data.publications.main | where_exp: "p", "p.title contains 'HiKER-SGG:'" | first %}
 {% assign p_webagg = site.data.publications.main | where_exp: "p", "p.title contains 'WebAggregator:'" | first %}
 
 <div class="ri-axes">
@@ -98,7 +97,7 @@ I build multi-modal AI systems that are <span class="hl">efficient</span> and <s
       <div class="ri-axis-text">Giving MLLMs explicit structure to reason over: 3D scenes, tools, knowledge graphs, aggregated evidence.</div>
       <div class="ri-papers">
         <a class="ri-paper" href="#pub-{{ p_pyspatial.title | slugify }}">pySpatial<span class="ri-venue">ICLR'26</span></a>
-        <a class="ri-paper" href="#pub-{{ p_hiker.title | slugify }}">HiKER-SGG<span class="ri-venue">CVPR'24</span></a>
+        <a class="ri-paper" href="https://zhangce01.github.io/HiKER-SGG/" target="_blank" rel="noopener">HiKER-SGG<span class="ri-venue">CVPR'24</span></a>
         <a class="ri-paper" href="#pub-{{ p_webagg.title | slugify }}">WebAggregator<span class="ri-venue">ACL'26</span></a>
       </div>
     </div>

@@ -1,0 +1,244 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<title>GRAPE-Bench teaser</title>
+<link rel="stylesheet" href="../lib/base.css">
+<script src="../lib/gsap.min.js"></script>
+<script src="../lib/stage.js"></script>
+<style>
+  /* condition switch, top right (the venue badge owns the top-left corner) */
+  #toggle { left: 206px; top: 14px; width: 258px; height: 30px; border-radius: 8px; background: var(--panel-2); border: 1px solid var(--line); }
+  #knob { position: absolute; left: 2px; top: 2px; width: 126px; height: 24px; border-radius: 6px; background: var(--panel); box-shadow: var(--shadow); }
+  .tg { position: absolute; top: 0; width: 129px; height: 28px; display: flex; align-items: center; justify-content: center;
+        font: 600 12px/1 Inter; color: var(--ink-faint); white-space: nowrap; }
+  .tg.on { color: var(--ink); }
+  .tgS { left: 0; } .tgR { left: 127px; }
+
+  /* the video */
+  #ph { left: 16px; top: 62px; width: 180px; height: 112px; border-radius: 8px; overflow: hidden; background: var(--panel-2);
+        box-shadow: inset 0 0 0 1px var(--img-line); }
+  #ph img { position: absolute; left: 0; top: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ct { position: absolute; left: 16px; top: 184px; font: 700 15px/1.15 "Space Grotesk", sans-serif; letter-spacing: -0.01em; white-space: nowrap; }
+  .cs { position: absolute; left: 16px; top: 205px; width: 180px; font: 500 12px/1.3 Inter; color: var(--ink-soft); }
+
+  /* leaderboard */
+  #lbh { position: absolute; left: 230px; top: 64px; }
+  .rk { position: absolute; left: 204px; width: 20px; text-align: right; font: 600 11.5px/29px "JetBrains Mono", monospace; color: var(--ink-faint); }
+  .row { position: absolute; left: 230px; top: 82px; width: 234px; height: 29px; border-radius: 8px;
+         background: var(--panel); border: 1px solid var(--line); box-shadow: var(--shadow); }
+  .row .tint { position: absolute; inset: -1px; border-radius: 8px; border: 1.5px solid; }
+  .row.gold .tint { border-color: var(--gold); background: var(--gold-soft); }
+  .row.blue .tint { border-color: var(--blue); background: var(--blue-soft); }
+  .nm { position: absolute; left: 11px; top: 0; font: 600 12.5px/29px Inter; white-space: nowrap; }
+  .v  { position: absolute; right: 11px; top: 0; font: 700 15px/29px "Space Grotesk"; }
+  .row.gold .nm, .row.gold .v { color: var(--gold); }
+  .row.blue .nm, .row.blue .v { color: var(--blue); }
+  .dl { left: 128px; top: 4px; height: 20px; padding: 0 6px; gap: 2px; font: 700 11.5px/1 "Space Grotesk"; background: var(--panel); }
+  .row.gold .dl { border-color: var(--gold); color: var(--gold); }
+  .row.blue .dl { border-color: var(--blue); color: var(--blue); }
+
+  /* three questions about one scene */
+  #lq { left: 16px; top: 182px; width: 180px; height: 70px; }
+  #lq .qmark { position: absolute; left: 9px; top: 9px; width: 19px; height: 19px; border-radius: 6px;
+               background: var(--ink); color: var(--bg); font: 700 11px/19px "Space Grotesk"; text-align: center; }
+  .lqt { position: absolute; left: 36px; top: 7px; width: 138px; font: 600 11.5px/14px Inter; color: var(--ink); }
+  #lv { left: 206px; top: 62px; width: 258px; height: 188px; }
+  .lr { position: absolute; left: 0; width: 258px; height: 50px; }
+  .lb { position: absolute; left: 12px; top: 0; width: 24px; height: 18px; border-radius: 5px; background: var(--ink); color: var(--bg);
+        font: 700 11px/18px "Space Grotesk"; text-align: center; }
+  .ln { position: absolute; left: 44px; top: 1px; font: 600 12.5px/16px Inter; white-space: nowrap; }
+  .lr .track { top: 30px; }
+  .mv { position: absolute; top: 22px; font: 700 13.5px/22px "Space Grotesk"; white-space: nowrap; }
+  #lvhi { position: absolute; left: 5px; top: 127px; width: 248px; height: 54px; border-radius: 9px; border: 1.5px solid var(--gold); background: var(--gold-soft); }
+
+  /* the benchmark in numbers */
+  #res { left: 16px; top: 62px; width: 448px; height: 188px; }
+  .blk { position: absolute; top: 16px; width: 196px; }
+  .blk .label { position: absolute; left: 0; top: 0; }
+  .blk .num { position: absolute; left: 0; top: 20px; font-size: 30px; }
+  .blk .u { position: absolute; top: 33px; font: 600 12.5px/1 Inter; color: var(--ink-soft); }
+  .blk .s { position: absolute; left: 0; top: 62px; font: 500 12.5px/1.3 Inter; color: var(--ink-soft); white-space: nowrap; }
+  #vdiv { position: absolute; left: 224px; top: 18px; width: 1px; height: 84px; background: var(--line); }
+  #hdiv { position: absolute; left: 14px; right: 14px; top: 120px; height: 1px; background: var(--line); }
+  .lvc { top: 140px; height: 26px; font-size: 12.5px; padding: 0 9px 0 5px; gap: 7px; }
+  .lvc b { display: inline-block; width: 24px; height: 18px; border-radius: 5px; background: var(--ink); color: var(--bg);
+           font: 700 11px/18px "Space Grotesk"; text-align: center; }
+</style>
+</head>
+<body>
+<div id="stage"><div id="scene">
+
+  <div class="abs" id="toggle">
+    <div id="knob"></div>
+    <div class="tg tgS">synthetic rain</div><div class="tg on tgS" id="tgS">synthetic rain</div>
+    <div class="tg tgR">real-world rain</div><div class="tg on tgR" id="tgR">real-world rain</div>
+  </div>
+
+  <div class="abs" id="ph">
+    <img id="imS" src="../assets/grape-bench/synth.jpg">
+    <img id="imR" src="../assets/grape-bench/real.jpg">
+    <img id="imQ" src="../assets/grape-bench/scene.jpg">
+  </div>
+  <div class="ct" id="ctS">Synthetic rain</div>
+  <div class="cs" id="csS">added to driving videos</div>
+  <div class="ct" id="ctR">Real-world rain</div>
+  <div class="cs" id="csR">footage captured in real rain</div>
+
+  <!-- leaderboard -->
+  <div class="label" id="lbh">accuracy, %</div>
+  <div id="ranks"></div>
+  <div id="rows"></div>
+
+  <!-- three questions, one scene -->
+  <div class="panel" id="lq">
+    <div class="qmark">Q</div>
+    <div class="lqt" id="q0">Did the ego vehicle stop because of a red traffic light?</div>
+    <div class="lqt" id="q1">How does the electric two-wheeler move relative to its original lane?</div>
+    <div class="lqt" id="q2">How many vehicles initially queue on the left side of the intersection?</div>
+  </div>
+  <div class="panel" id="lv">
+    <div id="lvhi"></div>
+    <div class="label abs" style="left:44px;top:10px;letter-spacing:.05em">models wrong</div>
+    <div class="label abs" style="left:146px;top:10px;letter-spacing:.05em">safety relevance</div>
+    <div id="lrows"></div>
+  </div>
+
+  <!-- the benchmark -->
+  <div class="panel" id="res">
+    <div class="blk" style="left:16px">
+      <div class="label">synthetic</div>
+      <div class="num" id="n1">32,523</div><div class="u" style="left:106px">questions</div>
+      <div class="s">12 corruption types</div>
+    </div>
+    <div id="vdiv"></div>
+    <div class="blk" style="left:240px">
+      <div class="label">real-world</div>
+      <div class="num" id="n2">1,716</div><div class="u" style="left:84px">questions</div>
+      <div class="s">572 driving videos</div>
+    </div>
+    <div id="hdiv"></div>
+    <div class="chip lvc" id="c1" style="left:14px"><b>L1</b>fundamental</div>
+    <div class="chip lvc" id="c2" style="left:150px"><b>L2</b>contextual</div>
+    <div class="chip lvc" id="c3" style="left:276px"><b>L3</b>stress test</div>
+  </div>
+
+  <div class="caption" id="cap">when <span class="hl">vision degrades</span>, does reasoning hold?</div>
+</div></div>
+
+<script>
+// accuracy on driving videos with synthetic rain, and on footage captured in real rain
+var MODELS = [
+  { name: 'MiniCPM-V 4.5',  syn: 64.3, real: 67.9, cls: 'gold', d: -2 },
+  { name: 'InternVL3.5',    syn: 61.2, real: 65.1 },
+  { name: 'Cosmos-Reason2', syn: 60.8, real: 74.2, cls: 'blue', d: 2 },
+  { name: 'GLM-4.1V',       syn: 59.9, real: 68.6 },
+  { name: 'VideoLLaMA3',    syn: 54.3, real: 67.4 }
+];
+var Y0 = 82, PITCH = 34;
+var bySyn = MODELS.slice().sort(function (a, b) { return b.syn - a.syn; });
+var byReal = MODELS.slice().sort(function (a, b) { return b.real - a.real; });
+var rowsEl = document.getElementById('rows'), ranksEl = document.getElementById('ranks'), rows = [], ranks = [];
+MODELS.forEach(function (m, i) {
+  m.s0 = bySyn.indexOf(m); m.s1 = byReal.indexOf(m);
+  var r = document.createElement('div'); r.className = 'row' + (m.cls ? ' ' + m.cls : '');
+  r.innerHTML = (m.cls ? '<div class="tint"></div>' : '') + '<span class="nm">' + m.name + '</span>' +
+    (m.d ? '<div class="chip dl"><i data-i="arrow" data-s="11" data-w="2.4" style="transform:rotate(' + (m.d > 0 ? -90 : 90) + 'deg)"></i>' + Math.abs(m.d) + '</div>' : '') +
+    '<span class="v">' + m.syn.toFixed(1) + '</span>';
+  r.style.top = (Y0 + m.s0 * PITCH) + 'px';
+  rowsEl.appendChild(r); rows.push(r); m.el = r;
+  var k = document.createElement('div'); k.className = 'rk'; k.style.top = (Y0 + i * PITCH) + 'px'; k.textContent = '#' + (i + 1);
+  ranksEl.appendChild(k); ranks.push(k);
+});
+
+// the three questions of Figure 1(b): share of evaluated models that answer wrong, and safety relevance (0-100)
+var LEVELS = [
+  { k: 'L1', name: 'Fundamental judgment',  wrong: 20, safe: 85 },
+  { k: 'L2', name: 'Contextual reasoning',  wrong: 33, safe: 82 },
+  { k: 'L3', name: 'Reasoning stress test', wrong: 90, safe: 38 }
+];
+var lrows = document.getElementById('lrows'), lr = [];
+LEVELS.forEach(function (l, i) {
+  var g = document.createElement('div'); g.className = 'lr'; g.style.top = (30 + i * 52) + 'px';
+  g.innerHTML = '<div class="lb">' + l.k + '</div><div class="ln">' + l.name + '</div>' +
+    '<div class="track" style="left:44px;width:60px"><div class="fill w" style="width:' + (0.6 * l.wrong) + 'px;background:var(--gold)"></div></div>' +
+    '<div class="mv w gold" style="left:110px">' + l.wrong + '%</div>' +
+    '<div class="track" style="left:146px;width:60px"><div class="fill s" style="width:' + (0.6 * l.safe) + 'px;background:var(--blue)"></div></div>' +
+    '<div class="mv s blue" style="left:212px">' + l.safe + '</div>';
+  lrows.appendChild(g); lr.push(g);
+});
+
+// 2D transforms only: no compositor layers popping in and out while frames are captured
+gsap.config({ force3D: false });
+
+Stage.build(function (o) {
+  var tl = o.tl;
+  tl.set(['#tgR', '#imR', '#imQ', '#ctR', '#csR', '.dl', '#lq', '.lqt', '#lv', '#lvhi', '#res'], { opacity: 0 }, 0);
+
+  // caption: one fade-in, then it holds until the loop fade-out
+  tl.fromTo('#cap', { opacity: 0 }, { opacity: 1, duration: 0.5 }, 0.45);
+
+  // ---- beat 1: who is best when the rain is synthetic --------------------------------
+  tl.from('#toggle', { opacity: 0, y: -6 }, 0.3);
+  tl.from('#ph', { opacity: 0, y: 6 }, 0.35);
+  tl.from(['#ctS', '#csS'], { opacity: 0, y: 5, duration: 0.35, stagger: 0.08 }, 0.55);
+  tl.from(['#lbh'].concat(ranks), { opacity: 0, duration: 0.3 }, 0.7);
+  MODELS.forEach(function (m) {
+    tl.from(m.el, { opacity: 0, x: 10, duration: 0.4 }, 0.75 + m.s0 * 0.1);
+  });
+
+  // ---- beat 2: the same models in real rain: the order changes ------------------------
+  var R = 3.0, MOVE = R + 0.3, DUR = 1.0;
+  tl.to('#knob', { x: 127, duration: 0.5, ease: 'power3.inOut' }, R);
+  tl.to('#tgS', { opacity: 0, duration: 0.3 }, R + 0.1);
+  tl.to('#tgR', { opacity: 1, duration: 0.3 }, R + 0.1);
+  tl.to('#imR', { opacity: 1, duration: 0.5 }, R + 0.1);
+  tl.to(['#ctS', '#csS'], { opacity: 0, duration: 0.25 }, R + 0.1);
+  tl.to(['#ctR', '#csR'], { opacity: 1, duration: 0.3 }, R + 0.35);
+  MODELS.forEach(function (m) {
+    tl.to(m.el, { y: (m.s1 - m.s0) * PITCH, duration: DUR, ease: 'power3.inOut' }, MOVE);
+    var v = m.el.querySelector('.v'), e0 = gsap.parseEase('power2.out'), e1 = gsap.parseEase('power2.inOut');
+    var t0 = 0.75 + m.s0 * 0.1;
+    o.at(function (t) {
+      var x = t < MOVE ? m.syn * e0(Math.min(1, Math.max(0, (t - t0) / 0.6)))
+                       : m.syn + (m.real - m.syn) * e1(Math.min(1, (t - MOVE) / DUR));
+      var s = x.toFixed(1);
+      if (v.textContent !== s) v.textContent = s;
+    });
+  });
+  tl.fromTo('.dl', { opacity: 0, scale: 0.6 }, { opacity: 1, scale: 1, duration: 0.35, stagger: 0.12, ease: 'back.out(2.4)' }, MOVE + DUR + 0.05);
+
+  // ---- beat 3: three questions about one rainy scene: hardest is not most safety-relevant ----
+  var Q = 5.9;
+  tl.to(['#rows', '#ranks', '#lbh', '#ctR', '#csR'], { opacity: 0, duration: 0.3 }, Q);
+  tl.to('#imQ', { opacity: 1, duration: 0.5 }, Q + 0.05);
+  tl.fromTo('#lv', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, Q + 0.25);
+  tl.fromTo('#lq', { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.35 }, Q + 0.3);
+  LEVELS.forEach(function (l, i) {
+    var t0 = Q + 0.45 + i * 0.75, g = lr[i];
+    tl.from(g, { opacity: 0, y: 6, duration: 0.3 }, t0);
+    tl.fromTo(g.querySelector('.fill.w'), { scaleX: 0 }, { scaleX: 1, duration: 0.5 }, t0 + 0.1);
+    tl.fromTo(g.querySelector('.fill.s'), { scaleX: 0 }, { scaleX: 1, duration: 0.5 }, t0 + 0.2);
+    o.count(g.querySelector('.mv.w'), 0, l.wrong, t0 + 0.1, 0.5, { decimals: 0, suffix: '%' });
+    o.count(g.querySelector('.mv.s'), 0, l.safe, t0 + 0.2, 0.5, { decimals: 0 });
+    if (i > 0) tl.to('#q' + (i - 1), { opacity: 0, duration: 0.15 }, t0 - 0.05);
+    tl.to('#q' + i, { opacity: 1, duration: 0.25 }, t0 + 0.05);
+  });
+  tl.fromTo('#lvhi', { opacity: 0, scale: 1.04 }, { opacity: 1, scale: 1, duration: 0.4, ease: 'back.out(2)' }, Q + 2.65);
+
+  // ---- beat 4: the benchmark in numbers -----------------------------------------------
+  var RES = 9.45;
+  tl.to(['#toggle', '#ph', '#lq', '#lv'], { opacity: 0, duration: 0.35 }, RES);
+  tl.fromTo('#res', { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: 0.4 }, RES + 0.25);
+  function commas(v) { return Math.round(v).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  function big(sel, v, t0, dur) {
+    var el = document.querySelector(sel), e = gsap.parseEase('power2.out');
+    o.at(function (t) {
+      var s = commas(v * e(Math.min(1, Math.max(0, (t - t0) / dur))));
+      if (el.textContent !== s) el.textContent = s;
+    });
+  }
+  big('#n1', 32523, RES + 0.4, 0.7);
+  big('#n2', 1716, RES + 0.55, 0.6);
+  tl.fromTo(['#c1', '#c2', '#c3'], { opacity: 0, scale: 0.7 }, { opacity: 1, scale: 1, duration: 0.4, stagger: 0.12, ease: 'back.out(2.2)' }, RES + 0.95);
+}, { duration: 12, poster: 5.3 });
+</script>
+</body></html>
