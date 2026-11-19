@@ -10,7 +10,6 @@
     'section > ul > li',
     '.edu-card',
     '.about-contact',
-    '.ri-typing',
     '.ri-axis',
     '.year-jump',
     '.publications h2.year',
