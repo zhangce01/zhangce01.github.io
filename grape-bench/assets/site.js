@@ -40,16 +40,27 @@
     nodes.forEach(function (n) { io.observe(n); });
   })();
 
-  // ---------- nav and contents rail: progress line and the section in view ----------
+  // ---------- nav island and contents rail: the section in view gets the dark pill; on phones the links fold into a menu ----------
   (function () {
-    var links = [].slice.call(D.querySelectorAll('#navlinks a')), rail = [].slice.call(D.querySelectorAll('#toc a')), secs = links.map(function (a) { return D.querySelector(a.getAttribute('href')); }), prog = $('prog'), busy = false;
-    function upd() {
-      busy = false; var cur = -1, max = root.scrollHeight - innerHeight;
-      for (var i = 0; i < secs.length; i++) if (secs[i].getBoundingClientRect().top < 130) cur = i;
-      links.forEach(function (a, i) { a.classList.toggle('cur', i === cur); }); rail.forEach(function (a, i) { a.classList.toggle('cur', i === cur); });
-      prog.style.transform = 'scaleX(' + (max > 0 ? clamp(scrollY / max) : 0).toFixed(4) + ')';
+    var nav = $('island'), menu = $('menu'), pill = $('pill'), links = [].slice.call(D.querySelectorAll('#navlinks a')), rail = [].slice.call(D.querySelectorAll('#toc a')), cur = -2, busy = false;
+    var secs = links.map(function (a) { return D.querySelector(a.getAttribute('href')); });
+    function place() {
+      var a = links[cur];
+      if (!a) { pill.style.opacity = '0'; return; }
+      pill.style.width = a.offsetWidth + 'px'; pill.style.transform = 'translateX(' + a.offsetLeft + 'px)'; pill.style.opacity = '1';
     }
-    addEventListener('scroll', function () { if (!busy) { busy = true; requestAnimationFrame(upd); } }, { passive: true }); upd();
+    function upd() {
+      busy = false; var c = -1;
+      for (var i = 0; i < secs.length; i++) if (secs[i].getBoundingClientRect().top < 150) c = i;
+      if (c !== cur) { cur = c; links.forEach(function (a, k) { a.classList.toggle('cur', k === c); }); rail.forEach(function (a, k) { a.classList.toggle('cur', k === c); }); place(); }
+    }
+    addEventListener('scroll', function () { if (!busy) { busy = true; requestAnimationFrame(upd); } }, { passive: true });
+    addEventListener('resize', place);
+    if (D.fonts && D.fonts.ready) D.fonts.ready.then(place);
+    upd();
+    function shut() { nav.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); }
+    menu.addEventListener('click', function () { var o = nav.classList.toggle('open'); menu.setAttribute('aria-expanded', o ? 'true' : 'false'); });
+    links.forEach(function (a) { a.addEventListener('click', shut); });
   })();
 
   // ---------- films: play while in view, click to pause ----------
@@ -75,20 +86,18 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { run(es[0].isIntersecting && getComputedStyle(box).display !== 'none'); }, { threshold: 0.05 }).observe(box); else run(true);
   }
 
-  // ---------- hero wall: real-world clips between a few cards, drifting slowly ----------
+  // ---------- hero wall: every local real-world clip, in four columns that drift slowly ----------
   (function () {
-    var plane = $('plane'), C = DATA.clips;
-    function V(i) { var d = h('div', 'tile m'); d.append(clip('assets/video/wall-' + ('0' + i).slice(-2) + '.mp4', 'assets/video/wall-' + ('0' + i).slice(-2) + '.jpg'), h('span', 'chip', C[i].src)); return d; }
-    function Q(lv, name, q) { var d = h('div', 'tile c'), k = h('div', 'k'), b = h('b', '', 'L' + lv); d.style.setProperty('--c', 'var(--l' + lv + ')'); k.append(b, D.createTextNode(name)); d.append(k, h('div', 't', q)); return d; }
-    function N(n, t) { var d = h('div', 'tile c n'); d.append(h('div', 't', n), h('div', 'f', t)); return d; }
-    var COLS = [
-      [V(0), Q(1, 'Fundamental judgment', 'Did the ego vehicle stop because of a red traffic light?'), V(4), N('12', 'corruption types'), V(8), V(10)],
-      [V(5), V(1), Q(2, 'Contextual reasoning', 'How does the electric two-wheeler move relative to its original lane?'), V(6), N('572', 'real-world driving videos'), V(11)],
-      [N('32,523', 'questions on synthetic corruptions'), V(2), V(7), Q(3, 'Reasoning stress test', 'How many vehicles initially queue on the left side of the intersection?'), V(3), V(9)]
-    ];
-    COLS.forEach(function (list, k) {
-      var col = h('div', 'wcol' + (k === 1 ? ' back' : '')); col.style.setProperty('--t', [130, 160, 145][k] + 's');
-      list.forEach(function (n) { col.append(n); }); list.forEach(function (n) { col.append(n.cloneNode(true)); });
+    var plane = $('plane'), C = DATA.clips, NC = 4, cols = [];
+    for (var k = 0; k < NC; k++) cols.push([]);
+    // interleave the two sources so each column mixes night / fog scenes with snow
+    var a = C.filter(function (c) { return c.src === 'BDD100K'; }), b = C.filter(function (c) { return c.src !== 'BDD100K'; }), order = [];
+    while (a.length || b.length) { if (b.length) order.push(b.shift()); if (b.length) order.push(b.shift()); if (a.length) order.push(a.shift()); }
+    order.forEach(function (c, i) { cols[i % NC].push(c); });
+    cols.forEach(function (list, k) {
+      var col = h('div', 'wcol' + (k % 2 ? ' back' : '')); col.style.setProperty('--t', [150, 185, 165, 200][k] + 's');
+      var tiles = list.map(function (c) { var id = ('0' + c.i).slice(-2), d = h('div', 'tile m'); d.append(clip('assets/video/wall-' + id + '.mp4', 'assets/video/wall-' + id + '.jpg'), h('span', 'chip', c.src)); return d; });
+      tiles.forEach(function (n) { col.append(n); }); tiles.forEach(function (n) { col.append(n.cloneNode(true)); });
       plane.append(col);
     });
     var vids = [].slice.call(plane.querySelectorAll('video')); vids.forEach(function (v) { v.muted = true; });
