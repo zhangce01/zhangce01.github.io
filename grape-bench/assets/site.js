@@ -86,22 +86,51 @@
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { run(es[0].isIntersecting && getComputedStyle(box).display !== 'none'); }, { threshold: 0.05 }).observe(box); else run(true);
   }
 
-  // ---------- hero wall: every local real-world clip, in four columns that drift slowly ----------
+  // ---------- hero wall: clips of the released sets fill the first screen; every tile has a still, and the ones on
+  // screen (up to a cap) play as video ----------
   (function () {
-    var plane = $('plane'), C = DATA.clips, NC = 4, cols = [];
-    for (var k = 0; k < NC; k++) cols.push([]);
-    // interleave the two sources so each column mixes night / fog scenes with snow
-    var a = C.filter(function (c) { return c.src === 'BDD100K'; }), b = C.filter(function (c) { return c.src !== 'BDD100K'; }), order = [];
-    while (a.length || b.length) { if (b.length) order.push(b.shift()); if (b.length) order.push(b.shift()); if (a.length) order.push(a.shift()); }
-    order.forEach(function (c, i) { cols[i % NC].push(c); });
-    cols.forEach(function (list, k) {
-      var col = h('div', 'wcol' + (k % 2 ? ' back' : '')); col.style.setProperty('--t', [150, 185, 165, 200][k] + 's');
-      var tiles = list.map(function (c) { var id = ('0' + c.i).slice(-2), d = h('div', 'tile m'); d.append(clip('assets/video/wall-' + id + '.mp4', 'assets/video/wall-' + id + '.jpg'), h('span', 'chip', c.src)); return d; });
-      tiles.forEach(function (n) { col.append(n); }); tiles.forEach(function (n) { col.append(n.cloneNode(true)); });
-      plane.append(col);
+    var wall = $('wall'), all = DATA.tiles.map(function (t) { return 'assets/video/t/' + t.f; }).concat(DATA.clips.map(function (c) { return 'assets/video/wall-' + ('0' + c.i).slice(-2); }));
+    var n = all.length, NC = innerWidth < 700 ? 4 : innerWidth < 1150 ? 7 : 9, PER = innerWidth < 700 ? 9 : 11, CAP = innerWidth < 700 ? 10 : 26, tiles = [];
+    for (var k = 0; k < NC; k++) {
+      var col = h('div', 'wcol' + (k % 2 ? ' back' : '')), half = [];
+      col.style.setProperty('--t', (190 + (k * 37) % 90) + 's');
+      for (var i = 0; i < PER; i++) {
+        var base = all[((k * PER + i) * 29 + k * 7) % n], d = h('div', 'tile'), im = new Image(), v = clip(base + '.mp4', '');
+        im.src = base + '.jpg'; im.alt = ''; im.decoding = 'async'; v.removeAttribute('poster'); d.append(im, v); half.push(d);
+      }
+      half.forEach(function (x) { col.append(x); }); half.forEach(function (x) { col.append(x.cloneNode(true)); });
+      wall.append(col);
+    }
+    if (RM || !('IntersectionObserver' in window)) return;
+    var seen = [], playing = [];
+    function sync() {
+      playing = playing.filter(function (t) { if (seen.indexOf(t) >= 0) return true; var v = t.lastChild; v.pause(); v.classList.remove('on'); return false; });
+      for (var i = 0; i < seen.length && playing.length < CAP; i++) {
+        var t = seen[i]; if (playing.indexOf(t) >= 0) continue;
+        var v = t.lastChild; v.muted = true; if (!v.getAttribute('src')) v.src = v.getAttribute('data-src');
+        var p = v.play(); if (p && p.catch) p.catch(function () {}); v.classList.add('on'); playing.push(t);
+      }
+    }
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { var k = seen.indexOf(e.target); if (e.isIntersecting && k < 0) seen.push(e.target); else if (!e.isIntersecting && k >= 0) seen.splice(k, 1); });
+      sync();
+    }, { threshold: 0.35 });
+    [].forEach.call(wall.querySelectorAll('.tile'), function (t) { io.observe(t); });
+  })();
+
+  // ---------- the download command of the first screen ----------
+  (function () {
+    var cmd = $('run-cmd'), tabsBox = $('run-tabs'), btn = $('run-copy'), cur = 'Realworld';
+    var SETS = [['Realworld', 'Real-world set · 572 videos'], ['Synthetic', 'Synthetic set · 10,841 videos, 187 GB']];
+    function text() { return 'hf download grape-lab/GRAPE-Bench-' + cur + ' --repo-type dataset --local-dir GRAPE-Bench-' + cur; }
+    function draw() { cmd.replaceChildren(D.createTextNode('hf download '), h('b', '', 'grape-lab/GRAPE-Bench-' + cur), D.createTextNode(' --repo-type dataset --local-dir GRAPE-Bench-' + cur)); cmd.setAttribute('aria-label', text()); }
+    SETS.forEach(function (s) {
+      var b = h('button', '', s[1]); b.type = 'button'; b.setAttribute('aria-pressed', s[0] === cur ? 'true' : 'false');
+      b.addEventListener('click', function () { cur = s[0]; [].forEach.call(tabsBox.children, function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); draw(); });
+      tabsBox.append(b);
     });
-    var vids = [].slice.call(plane.querySelectorAll('video')); vids.forEach(function (v) { v.muted = true; });
-    watch(plane.parentNode, vids);
+    btn.addEventListener('click', function () { if (navigator.clipboard) navigator.clipboard.writeText(text()).then(function () { btn.classList.add('ok'); setTimeout(function () { btn.classList.remove('ok'); }, 1400); }, function () {}); });
+    draw();
   })();
 
   // ---------- 01: rank on a synthetic driving condition against rank on the real-world one ----------
@@ -144,7 +173,8 @@
     C.forEach(function (c) { var d = h('div', '', c[1] >= 100 ? c[0] + ' ' + c[1] : String(c[1])); d.style.cssText = 'flex:' + c[1] + ' 0 0;background:' + c[2] + (c[0] === 'Night' ? ';color:var(--bg)' : ''); d.title = c[0] + ': ' + c[1] + ' videos'; box.append(d); });
   })();
   (function () {
-    var list = $('cx-list'), side = $('cx-side'), cur = 'Glass occlusion', btns = {};
+    var list = $('cx-list'), side = $('cx-side'), cur = 'Glass occlusion', btns = {}, vbox = h('div', 'cx-v'), vid = clip('', ''), vchip = h('span', 'chip');
+    vbox.append(vid, vchip); watch(vbox, [vid]);
     var TEXT = {
       'Rain': 'Procedural particle layers with temporally coherent trajectories, illumination change and haze, and approximate wet-road reflections.',
       'Snow': 'Procedural airborne flakes in several layers with illumination change and haze; no accumulated snow on the ground.',
@@ -167,7 +197,10 @@
       bar('Clean', c.clean, 100, 'var(--faint)', f1(c.clean) + '%').concat(bar('Corrupted', c.corr, 100, 'var(--grape)', f1(c.corr) + '%')).forEach(function (n) { acc.append(n); });
       big.append(h('b', '', sgn(c.d)), h('span', '', 'points on average; from ' + sgn(c.range[0]) + ' to ' + sgn(c.range[1]) + ' across models'));
       c.lv.forEach(function (v, k) { bar('L' + (k + 1), -v, 28, 'var(--l' + (k + 1) + ')', sgn(v)).forEach(function (n) { lv.append(n); }); });
-      side.replaceChildren(h('div', 'lab', (c.pool === 'driving' ? 'Driving video' : 'Daily-life video') + ' · ' + c.q.toLocaleString('en-US') + ' questions'), h('h4', '', name), h('p', '', TEXT[name]), acc, big, h('div', 'lab', 'Change by level (pp)'), lv);
+      var S = DATA.cx[name], base = 'assets/video/cx/' + S.f;
+      vid.poster = base + '.jpg'; vid.setAttribute('data-src', base + '.mp4'); vchip.textContent = 'sample · ' + S.src;
+      if (vid.getAttribute('src')) { vid.src = base + '.mp4'; var pp = vid.play(); if (pp && pp.catch) pp.catch(function () {}); }
+      side.replaceChildren(vbox, h('div', 'lab', (c.pool === 'driving' ? 'Driving video' : 'Daily-life video') + ' · ' + c.q.toLocaleString('en-US') + ' questions'), h('h4', '', name), h('p', '', TEXT[name]), acc, big, h('div', 'lab', 'Change by level (pp)'), lv);
       side.lastChild.previousSibling.style.marginTop = '14px';
     }
     [['driving', 'Driving video'], ['daily', 'Daily-life video']].forEach(function (g) {
@@ -179,13 +212,28 @@
     });
     show(cur);
   })();
-  (function () {
-    var box = $('clips'), vids = [];
-    DATA.clips.filter(function (c) { return c.gallery; }).forEach(function (c) {
-      var f = D.createElement('figure'), id = ('0' + c.i).slice(-2), v = clip('assets/video/clip-' + id + '.mp4', 'assets/video/clip-' + id + '.jpg');
-      v.setAttribute('aria-label', 'A real-world driving clip from ' + c.src); f.append(v, h('figcaption', '', c.src)); box.append(f); vids.push(v);
+  (function () {      // eight real-world videos with their three questions
+    var G = DATA.gallery, vbox = $('rw-video'), thumbs = $('rw-thumbs'), qbox = $('rw-q'), v = clip('', ''), chip = h('span', 'chip');
+    var LV = ['Fundamental judgment', 'Contextual reasoning', 'Reasoning stress test'];
+    vbox.append(v, chip);
+    function show(i) {
+      var g = G[i], base = 'assets/video/rw/' + g.f;
+      v.poster = base + '.jpg'; v.setAttribute('data-src', base + '.mp4'); v.setAttribute('aria-label', 'A real-world driving video recorded in ' + g.cond);
+      if (v.getAttribute('src')) { v.src = base + '.mp4'; var p = v.play(); if (p && p.catch) p.catch(function () {}); }
+      chip.textContent = g.cond + ' · ' + g.src;
+      [].forEach.call(thumbs.children, function (b, k) { b.setAttribute('aria-pressed', k === i ? 'true' : 'false'); });
+      qbox.replaceChildren.apply(qbox, g.q.map(function (q, k) {
+        var d = h('div', 'rq'), kk = h('div', 'k'), ul = h('ul'); d.style.setProperty('--c', 'var(--l' + (k + 1) + ')');
+        kk.append(h('b', '', 'L' + (k + 1)), h('strong', '', LV[k]));
+        q[1].forEach(function (o, m) { var L = 'ABCD'.charAt(m), li = h('li', L === q[2] ? 'ok' : ''); li.append(h('i', '', L), h('span', '', o)); ul.append(li); });
+        d.append(kk, h('p', '', q[0]), ul); return d;
+      }));
+    }
+    G.forEach(function (g, i) {
+      var b = h('button'), im = new Image(); b.type = 'button'; b.setAttribute('aria-label', 'Example ' + (i + 1) + ': ' + g.cond); im.src = 'assets/video/rw/' + g.f + '.jpg'; im.alt = ''; im.loading = 'lazy';
+      b.append(im); b.addEventListener('click', function () { show(i); }); thumbs.append(b);
     });
-    watch(box, vids);
+    watch(vbox, [v]); show(0);
   })();
 
   // ---------- 03: leaderboard ----------
@@ -308,7 +356,8 @@
     var dlg = $('zoom'), im = dlg.querySelector('img');
     D.addEventListener('click', function (e) { var t = e.target.closest('[data-zoom]'); if (!t || !dlg.showModal) return; e.preventDefault(); im.src = t.getAttribute('data-zoom') || t.src; im.alt = t.alt || ''; dlg.showModal(); });
     dlg.addEventListener('click', function () { dlg.close(); });
-    var b = $('copy'), bib = $('bib'), done = function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1600); };
-    b.addEventListener('click', function () { if (navigator.clipboard) navigator.clipboard.writeText(bib.textContent).then(done, function () {}); });
+    [].forEach.call(D.querySelectorAll('[data-copy]'), function (b) {
+      b.addEventListener('click', function () { if (navigator.clipboard) navigator.clipboard.writeText($(b.getAttribute('data-copy')).textContent).then(function () { b.textContent = 'Copied'; setTimeout(function () { b.textContent = 'Copy'; }, 1600); }, function () {}); });
+    });
   })();
 })();
