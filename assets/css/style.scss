@@ -180,9 +180,11 @@ body::after {
 /* the canvas draws the dots while it is active */
 html.fx-field-on body::before { display: none; }
 
-/* the pointer dot replaces the cursor only once the script is drawing it */
-html.fx-cursor,
-html.fx-cursor * { cursor: none !important; }
+/* the pointer dot replaces the cursor only once the script is drawing it, and
+   not over elements with a cursor of their own (links, the teasers' zoom-in,
+   the globe's grab), where the script sets .fx-native and hides the dot */
+html.fx-cursor:not(.fx-native),
+html.fx-cursor:not(.fx-native) * { cursor: none !important; }
 
 /* dark mode: no grid or wash (clean black); the trail's wake still surfaces
    warm dots out of the dark */

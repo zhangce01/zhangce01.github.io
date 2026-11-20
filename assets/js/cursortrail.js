@@ -11,6 +11,11 @@
 // trail are repainted, and the loop stops once the line has faded, so a
 // resting page costs nothing. Touch, reduced-motion, high-contrast and
 // no-canvas visitors keep the static CSS grid and their normal cursor.
+//
+// Over anything with a cursor of its own (links and buttons, the zoom-in
+// magnifier on the teasers, the zoom-out of the enlarged teaser, the grab hand
+// on the globe) the system cursor comes back (html.fx-native) and the dot
+// steps aside; the line keeps following it.
 (function () {
   if (!window.matchMedia || !window.requestAnimationFrame || !window.PointerEvent) return;
   if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
@@ -36,7 +41,9 @@
   var TAU = Math.PI * 2;
   var REACH2 = REACH * REACH, SPOT2 = SPOT * SPOT;
 
-  var HOT = 'a[href], button, summary, label, select, input, textarea, [role="button"], .teaser-lightbox, .vg-canvas';
+  // elements whose own cursor (pointer, zoom-in / zoom-out, grab, text) says what a click does
+  var NATIVE = 'a[href], button, summary, select, input, textarea, [role="button"], ' +
+    '.teaser-anim, .teaser-lightbox, .vg-canvas, .vg-tick, .vg-step, .back-to-top, .theme-toggle';
 
   // dot = resting grid dot, acc = lit dot / line / glow, core = the pointer dot
   // (centre, edge), rim = hairline that keeps the pointer visible on any content
@@ -69,9 +76,10 @@
   var cols = 0, rows = 0;
   var pal = null, isDark = null, styles = [], radii = [], buckets = [];
 
-  // pointer state: show / hot / press ease towards their targets every frame
+  // pointer state: show / nat / press ease towards their targets every frame
+  // (nat = how far the dot has stepped aside for the system cursor)
   var mx = 0, my = 0, inside = false, live = false, broken = false;
-  var show = 0, hot = 0, hotT = 0, press = 0, pressT = 0;
+  var show = 0, nat = 0, natT = 0, press = 0, pressT = 0;
 
   // raw samples of the path, oldest first
   var sx = [], sy = [], st = [];
@@ -343,7 +351,7 @@
       }
     }
 
-    if (show > 0.01) {
+    if (show * (1 - nat) > 0.01) {
       paintDot();
       if (mx < x0) x0 = mx;
       if (my < y0) y0 = my;
@@ -354,41 +362,23 @@
     prevTrail = x1 >= x0 ? [Math.floor(x0 - 24), Math.floor(y0 - 24), Math.ceil(x1 + 24), Math.ceil(y1 + 24)] : null;
   }
 
-  // The pointer: a small lit bead with a soft halo. Over anything clickable
-  // the halo opens into a ring; pressing squeezes it.
+  // The pointer: a small lit bead with a soft halo; pressing squeezes it. It
+  // fades out where the system cursor takes over.
   function paintDot() {
     var sq = 1 - 0.18 * press;
     var g;
-    tg.globalAlpha = show;
+    tg.globalAlpha = show * (1 - nat);
 
-    if (hot < 0.99) {
-      var hr = 13 * sq;
-      g = tg.createRadialGradient(mx, my, 0, mx, my, hr);
-      g.addColorStop(0, rgba(pal.acc, pal.haloA * (1 - hot)));
-      g.addColorStop(1, rgba(pal.acc, 0));
-      tg.fillStyle = g;
-      tg.beginPath();
-      tg.arc(mx, my, hr, 0, TAU);
-      tg.fill();
-    }
+    var hr = 13 * sq;
+    g = tg.createRadialGradient(mx, my, 0, mx, my, hr);
+    g.addColorStop(0, rgba(pal.acc, pal.haloA));
+    g.addColorStop(1, rgba(pal.acc, 0));
+    tg.fillStyle = g;
+    tg.beginPath();
+    tg.arc(mx, my, hr, 0, TAU);
+    tg.fill();
 
-    if (hot > 0.01) {
-      var rr = (5 + 9 * hot * (2 - hot)) * sq;
-      tg.beginPath();
-      tg.arc(mx, my, rr, 0, TAU);
-      tg.fillStyle = rgba(pal.acc, 0.12 * hot);
-      tg.fill();
-      tg.lineWidth = 3;
-      tg.strokeStyle = pal.rim;
-      tg.globalAlpha = show * hot * 0.5;
-      tg.stroke();
-      tg.globalAlpha = show;
-      tg.lineWidth = 1.5;
-      tg.strokeStyle = rgba(pal.line, 0.95 * hot);
-      tg.stroke();
-    }
-
-    var cr = (3.3 - 1.1 * hot) * (1 + 0.15 * press);
+    var cr = 3.3 * (1 + 0.15 * press);
     tg.beginPath();
     tg.arc(mx, my, cr + 1.1, 0, TAU);
     tg.fillStyle = pal.rim;
@@ -421,7 +411,8 @@
 
     var showT = inside ? 1 : 0;
     show = ease(show, showT, dt, inside ? 60 : 140);
-    hot = ease(hot, hotT, dt, 70);
+    // the system cursor appears at once, so the dot may fade; when it goes, the dot is back at once
+    nat = natT ? ease(nat, natT, dt, 50) : 0;
     press = ease(press, pressT, dt, 50);
 
     buildLine(now);
@@ -429,7 +420,7 @@
     paintField();
     paintTrail();
 
-    if (sx.length || show !== showT || hot !== hotT || press !== pressT) kick();
+    if (sx.length || show !== showT || nat !== natT || press !== pressT) kick();
     else lastT = 0;
   }
 
@@ -451,6 +442,7 @@
   function shutdown() {
     dead = true;
     root.classList.remove('fx-cursor');
+    root.classList.remove('fx-native');
     root.classList.remove('fx-field-on');
     if (field.parentNode) field.parentNode.removeChild(field);
     if (trail.parentNode) trail.parentNode.removeChild(trail);
@@ -494,6 +486,15 @@
     sx.push(x); sy.push(y); st.push(t);
   }
 
+  // show the system cursor (and let the dot step aside) over elements that have their own
+  function native(el) {
+    var on = el && el.closest && el.closest(NATIVE) ? 1 : 0;
+    if (on !== natT) {
+      natT = on;
+      root.classList.toggle('fx-native', !!on);
+    }
+  }
+
   function leave() {
     inside = false;
     broken = true;
@@ -521,8 +522,19 @@
     sample(x, y, stamp(e));
     mx = x; my = y;
     inside = true;
-    hotT = e.target && e.target.closest && e.target.closest(HOT) ? 1 : 0;
+    native(e.target);
     kick();
+  }, { passive: true });
+
+  // scrolling slides other elements under a resting pointer
+  var scrollRaf = 0;
+  window.addEventListener('scroll', function () {
+    if (dead || !inside || scrollRaf) return;
+    scrollRaf = requestAnimationFrame(function () {
+      scrollRaf = 0;
+      native(document.elementFromPoint(mx, my));
+      kick();
+    });
   }, { passive: true });
 
   window.addEventListener('pointerdown', function (e) {
