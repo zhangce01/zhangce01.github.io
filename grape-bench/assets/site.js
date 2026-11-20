@@ -220,7 +220,7 @@
       items.forEach(function (it) { var b = h('button', '', it[1]); b.type = 'button'; b.addEventListener('click', function () { on = {}; SETS[it[0]].forEach(function (n) { on[n] = true; }); if (pin && !on[pin]) pin = null; setBtns(it[0]); draw(); }); box.append(b); bs.push([it[0], b]); });
       setBtns = function (k) { bs.forEach(function (x) { x[1].setAttribute('aria-pressed', x[0] === k ? 'true' : 'false'); }); };
     })();
-    SETS.five.forEach(function (n) { on[n] = true; }); setBtns('five'); pin = 'Cosmos-Reason2 8B';
+    SETS.all.forEach(function (n) { on[n] = true; }); setBtns('all');          // all 23 models to begin with, none singled out (the read-out names the largest mover)
     draw(); addEventListener('resize', draw);
   })();
 
