@@ -19,6 +19,7 @@ main:
     authors: <strong>Ce Zhang</strong>, Junyi He, Tianshi Ming, Jinxi He, Jianshu Zhang, Xiyuan Yang, Jianuo Zhu, Yicheng Tao, Xiyu Luo, Minghao Fu, Jiahui Zhu, Kehan Guo, Yunzhong Xiao, Jingyang Lin, Wei Chow, Lingdong Kong, Katia Sycara, Yaqi Xie
     conference_short: Preprint
     conference: Preprint, 2026.
+    website: /grape-bench/
     teaser: grape-bench
     teaser_alt: "GRAPE-Bench: five video models ranked by accuracy on driving videos with synthetic rain (MiniCPM-V 4.5 first at 64.3, Cosmos-Reason2 third at 60.8) change order on footage captured in real rain, where Cosmos-Reason2 rises to first (74.2) and MiniCPM-V 4.5 drops to third (67.9); three questions about one rainy scene then show that the hardest one (L3, answered wrong by 90% of models) has the lowest safety relevance (38), while L1 and L2 score 85 and 82; the benchmark has 32,523 synthetic questions over 12 corruption types and 1,716 real-world questions on 572 driving videos"
 
