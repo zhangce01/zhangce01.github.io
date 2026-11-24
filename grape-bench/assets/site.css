@@ -271,7 +271,7 @@ tbody tr:hover td { background: color-mix(in srgb, var(--grape-soft) 40%, transp
 .st-bar em { grid-column: 2; font: 600 13px/1 var(--mono); font-style: normal; color: var(--ink); }
 
 pre { margin: 0; padding: 20px 22px; border: 1px solid var(--line); border-radius: 18px; background: var(--surface); box-shadow: var(--shadow); overflow-x: auto; font: 400 13px/1.6 var(--mono); color: var(--ink); white-space: pre-wrap; }
-.code { position: relative; } .code button { position: absolute; top: 14px; right: 14px; border: 1px solid var(--line); background: var(--bg); border-radius: 999px; padding: 7px 13px; font: 600 12.5px/1 var(--display); }
+#bib { white-space: pre; } .code { position: relative; } .code button { position: absolute; top: 14px; right: 14px; border: 1px solid var(--line); background: var(--bg); border-radius: 999px; padding: 7px 13px; font: 600 12.5px/1 var(--display); }
 footer { margin-top: 96px; border-top: 1px solid var(--line); padding: 26px 0 48px; font: 500 13px/1.5 var(--mono); letter-spacing: .04em; color: var(--faint); } footer .w { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 dialog#zoom { border: 0; padding: 0; background: #fff; border-radius: 12px; max-width: 96vw; max-height: 94vh; overflow: auto; box-shadow: 0 40px 100px -30px rgba(0, 0, 0, .7); }
 dialog#zoom::backdrop { background: rgba(10, 8, 22, .8); } dialog#zoom img { display: block; max-width: none; width: min(1700px, 94vw); cursor: zoom-out; }
