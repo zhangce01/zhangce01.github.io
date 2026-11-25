@@ -1471,9 +1471,8 @@ html.theme-dark .teaser-lightbox .tl-frame { background: #141311; }
 }
 
 /* ---------- collapsed / expanded publication cards ----------
-   Every card has a chevron in its top-right corner. Collapsed, a card keeps a
-   small still of its teaser with the venue badge, the title (two lines at
-   most), one line of authors and the link buttons (see publications.js). */
+   Every card has a chevron in its top-right corner. Collapsed, a card is one
+   row: the venue badge and the title (see publications.js). */
 
 .wrapper .publications ol.bibliography li { position: relative; }
 
@@ -1514,79 +1513,43 @@ html.theme-dark .teaser-lightbox .tl-frame { background: #141311; }
 
 .wrapper .publications ol.bibliography li.is-collapsed .pub-fold svg { transform: none; }
 
-/* the one-line author list only exists in the collapsed state */
-.wrapper .publications ol.bibliography li .author-short { display: none; }
-
 .wrapper .publications ol.bibliography li.is-collapsed {
   min-height: 0;
-  padding: 12px 14px;
-  margin-bottom: 0.6rem;
+  padding: 11px 14px;
+  margin-bottom: 0.5rem;
   cursor: pointer;
 }
 
+.wrapper .publications ol.bibliography li.is-collapsed .pub-fold { top: 50%; margin-top: -13px; }
+
+.wrapper .publications ol.bibliography li.is-collapsed .teaser,
 .wrapper .publications ol.bibliography li.is-collapsed .author,
 .wrapper .publications ol.bibliography li.is-collapsed .periodical,
 .wrapper .publications ol.bibliography li.is-collapsed .place,
-.wrapper .publications ol.bibliography li.is-collapsed .notes { display: none; }
+.wrapper .publications ol.bibliography li.is-collapsed .notes,
+.wrapper .publications ol.bibliography li.is-collapsed .links,
+.wrapper .publications ol.bibliography li.is-collapsed .abstract,
+.wrapper .publications ol.bibliography li.is-collapsed .bibtex { display: none; }
 
 .wrapper .publications ol.bibliography li.is-collapsed .pub-row { align-items: center; }
 
-.wrapper .publications ol.bibliography li.is-collapsed .pub-row .abbr { margin-bottom: 0; }
-
-/* the teaser shrinks to a still thumbnail; its video only runs in the open card */
-.wrapper .publications ol.bibliography li.is-collapsed .teaser {
-  width: 132px;
-  min-width: 132px;
-  max-width: 132px;
-  margin: 0 0 0 5px;
-  border-radius: 9px;
-  box-shadow: 0 5px 14px -8px rgba(15, 23, 42, 0.4);
+/* a fixed badge column, so the titles of neighbouring collapsed cards line up */
+.wrapper .publications ol.bibliography li.is-collapsed .pub-row .abbr {
+  box-sizing: border-box;
+  width: 146px;
+  margin-bottom: 0;
+  line-height: 1;
 }
 
-.wrapper .publications ol.bibliography li.is-collapsed:hover .teaser { transform: none; }
-
-.wrapper .publications ol.bibliography li.is-collapsed .teaser-anim { cursor: pointer; }
-
-.wrapper .publications ol.bibliography li.is-collapsed .teaser-anim video { display: none; }
-
-.wrapper .publications ol.bibliography li.is-collapsed .abbr abbr {
-  top: 6px;
-  left: 26px;
-  font-size: 9.5px;
-  padding: 0.3em 0.62em;
-}
+.wrapper .publications ol.bibliography li.is-collapsed .abbr abbr { position: static; }
 
 .wrapper .publications ol.bibliography li.is-collapsed .title {
   font-size: 0.97rem;
-  margin-bottom: 2px;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
+  margin-bottom: 0;
 }
-
-.wrapper .publications ol.bibliography li.is-collapsed .author-short {
-  display: block;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: var(--ink-soft);
-}
-
-.wrapper .publications ol.bibliography li.is-collapsed .author-short .eq-contrib { display: none; }
-
-.wrapper .publications ol.bibliography li.is-collapsed .author-short .etal { color: var(--ink-faint); font-style: italic; }
-
-.wrapper .publications ol.bibliography li.is-collapsed .links { margin-top: 7px; }
 
 @media screen and (max-width: 480px) {
-  .wrapper .publications ol.bibliography li.is-collapsed .pub-row { display: flex; align-items: flex-start; }
-  .wrapper .publications ol.bibliography li.is-collapsed .pub-row .abbr { padding-left: 4px !important; padding-right: 10px !important; }
-  .wrapper .publications ol.bibliography li.is-collapsed .teaser { width: 84px; min-width: 84px; max-width: 84px; margin: 2px 0 0; }
-  .wrapper .publications ol.bibliography li.is-collapsed .abbr abbr { top: 5px; left: 8px; font-size: 8.5px; }
-  .wrapper .publications ol.bibliography li.is-collapsed .pub-row .col-sm-9 { padding-left: 4px !important; }
+  .wrapper .publications ol.bibliography li.is-collapsed .pub-row .abbr { width: auto; margin-bottom: 7px; }
 }
 
 /* ---------- abstract / bibtex panels ---------- */
