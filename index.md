@@ -52,32 +52,39 @@ Hi there! I'm **Ce Zhang** <span class="wave" aria-hidden="true">👋</span> I a
 
 ## Research Interests
 
-{% assign p_morse = site.data.publications.main | where_exp: "p", "p.title contains 'MORSE:'" | first %}
-{% assign p_rsigame = site.data.publications.main | where_exp: "p", "p.title contains 'RSIGame:'" | first %}
-{% assign p_webaggregator = site.data.publications.main | where_exp: "p", "p.title contains 'WebAggregator:'" | first %}
-{% assign p_streamscout = site.data.publications.main | where_exp: "p", "p.title contains 'StreamScout:'" | first %}
-{% assign p_lens = site.data.publications.main | where_exp: "p", "p.title contains 'LENS:'" | first %}
-{% assign p_grapebench = site.data.publications.main | where_exp: "p", "p.title contains 'GRAPE-Bench:'" | first %}
-{% assign p_video2skill = site.data.publications.main | where_exp: "p", "p.title contains 'Video2Skill:'" | first %}
-{% assign p_pyspatial = site.data.publications.main | where_exp: "p", "p.title contains 'pySpatial:'" | first %}
-{% assign p_echosafe = site.data.publications.main | where_exp: "p", "p.title contains 'Evolving Contextual Safety'" | first %}
 {% assign p_degf = site.data.publications.main | where_exp: "p", "p.title contains 'Self-Correcting Decoding'" | first %}
 {% assign p_only = site.data.publications.main | where_exp: "p", "p.title contains 'ONLY:'" | first %}
 {% assign p_vscan = site.data.publications.main | where_exp: "p", "p.title contains 'VScan:'" | first %}
+{% assign p_pyspatial = site.data.publications.main | where_exp: "p", "p.title contains 'pySpatial:'" | first %}
+{% assign p_echosafe = site.data.publications.main | where_exp: "p", "p.title contains 'Evolving Contextual Safety'" | first %}
+{% assign p_webaggregator = site.data.publications.main | where_exp: "p", "p.title contains 'WebAggregator:'" | first %}
+{% assign p_lens = site.data.publications.main | where_exp: "p", "p.title contains 'LENS:'" | first %}
+{% assign p_streamscout = site.data.publications.main | where_exp: "p", "p.title contains 'StreamScout:'" | first %}
+{% assign p_rsigame = site.data.publications.main | where_exp: "p", "p.title contains 'RSIGame:'" | first %}
+{% assign p_video2skill = site.data.publications.main | where_exp: "p", "p.title contains 'Video2Skill:'" | first %}
+{% assign p_morse = site.data.publications.main | where_exp: "p", "p.title contains 'MORSE:'" | first %}
+{% assign p_grapebench = site.data.publications.main | where_exp: "p", "p.title contains 'GRAPE-Bench:'" | first %}
 
-<div class="ri-list">
-  <div class="ri-row ri-a">
-    <div class="ri-key">Auto-Research &amp; Self-Improving Agents</div>
-    <div class="ri-path"><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_morse.title | slugify }}">MORSE</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_rsigame.title | slugify }}">RSIGame</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_webaggregator.title | slugify }}">WebAggregator</a></div>
-  </div>
-  <div class="ri-row ri-b">
-    <div class="ri-key">Video Understanding &amp; Embodied AI</div>
-    <div class="ri-path"><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_streamscout.title | slugify }}">StreamScout</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_lens.title | slugify }}">LENS</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_grapebench.title | slugify }}">GRAPE-Bench</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_video2skill.title | slugify }}">Video2Skill</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_pyspatial.title | slugify }}">pySpatial</a></div>
-  </div>
-  <div class="ri-row ri-c">
-    <div class="ri-key">Responsible &amp; Efficient AI</div>
-    <div class="ri-path"><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_echosafe.title | slugify }}">EchoSafe</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_degf.title | slugify }}">DeGF</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_only.title | slugify }}">ONLY</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_vscan.title | slugify }}">VScan</a></div>
-  </div>
+<div class="ri-map" id="ri-map">
+  <ul class="ri-lines">
+    <li data-line="a">Auto-Research &amp; Self-Improving Agents</li>
+    <li data-line="b">Video Understanding &amp; Embodied AI</li>
+    <li data-line="c">Responsible &amp; Efficient AI</li>
+  </ul>
+  <ol class="ri-stops">
+    <li><a href="#pub-{{ p_degf.title | slugify }}" data-lines="c" data-year="2025" data-venue="{{ p_degf.conference_short | escape }}" data-title="{{ p_degf.title | escape }}">DeGF</a></li>
+    <li><a href="#pub-{{ p_only.title | slugify }}" data-lines="c" data-year="2025" data-venue="{{ p_only.conference_short | escape }}" data-title="{{ p_only.title | escape }}">ONLY</a></li>
+    <li><a href="#pub-{{ p_vscan.title | slugify }}" data-lines="c" data-year="2026" data-venue="{{ p_vscan.conference_short | escape }}" data-title="{{ p_vscan.title | escape }}">VScan</a></li>
+    <li><a href="#pub-{{ p_pyspatial.title | slugify }}" data-lines="b" data-year="2026" data-venue="{{ p_pyspatial.conference_short | escape }}" data-title="{{ p_pyspatial.title | escape }}">pySpatial</a></li>
+    <li><a href="#pub-{{ p_echosafe.title | slugify }}" data-lines="c" data-year="2026" data-venue="{{ p_echosafe.conference_short | escape }}" data-title="{{ p_echosafe.title | escape }}">EchoSafe</a></li>
+    <li><a href="#pub-{{ p_webaggregator.title | slugify }}" data-lines="a" data-year="2026" data-venue="{{ p_webaggregator.conference_short | escape }}" data-title="{{ p_webaggregator.title | escape }}">WebAggregator</a></li>
+    <li><a href="#pub-{{ p_lens.title | slugify }}" data-lines="b c" data-year="2026" data-venue="{{ p_lens.conference_short | escape }}" data-title="{{ p_lens.title | escape }}">LENS</a></li>
+    <li><a href="#pub-{{ p_streamscout.title | slugify }}" data-lines="b" data-year="2026" data-venue="{{ p_streamscout.conference_short | escape }}" data-title="{{ p_streamscout.title | escape }}">StreamScout</a></li>
+    <li><a href="#pub-{{ p_rsigame.title | slugify }}" data-lines="a" data-year="2026" data-venue="{{ p_rsigame.conference_short | escape }}" data-title="{{ p_rsigame.title | escape }}">RSIGame</a></li>
+    <li><a href="#pub-{{ p_video2skill.title | slugify }}" data-lines="b" data-year="2026" data-venue="{{ p_video2skill.conference_short | escape }}" data-title="{{ p_video2skill.title | escape }}">Video2Skill</a></li>
+    <li><a href="#pub-{{ p_morse.title | slugify }}" data-lines="a b" data-year="2026" data-venue="{{ p_morse.conference_short | escape }}" data-title="{{ p_morse.title | escape }}">MORSE</a></li>
+    <li><a href="#pub-{{ p_grapebench.title | slugify }}" data-lines="b c" data-year="2026" data-venue="{{ p_grapebench.conference_short | escape }}" data-title="{{ p_grapebench.title | escape }}">GRAPE-Bench</a></li>
+  </ol>
 </div>
 
 

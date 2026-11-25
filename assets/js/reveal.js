@@ -10,7 +10,7 @@
     'section > ul > li',
     '.edu-card',
     '.about-contact',
-    '.ri-list',
+    '.ri-map',
     '.year-jump',
     '.publications h2.year',
     '.publications ol.bibliography > li',

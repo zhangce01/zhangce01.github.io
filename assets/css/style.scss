@@ -1055,95 +1055,128 @@ html.theme-dark .edu-logo { border-color: #3a3733; }
   }
 }
 
-/* ---------- research interests: three keyword rows ----------
-   Each row is a keyword followed by its papers, written like a path. The
-   three areas are the one place on the page with their own hues. */
+/* ---------- research interests: a transit map ----------
+   Three lines (research areas), papers as stations in order of time, papers
+   in two areas as interchanges. Drawn by assets/js/researchmap.js from the
+   plain lists in index.md, which stay visible when the script does not run. */
 
-.ri-list {
-  container-type: inline-size;
+.ri-map {
   background: var(--card);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   box-shadow: var(--shadow);
-  padding: 4px 18px;
+  padding: 14px 18px 10px;
   margin: 0 0 22px;
 }
 
-.ri-row {
-  display: flex;
-  align-items: baseline;
-  gap: 4px 14px;
-  padding: 12px 0;
-  border-top: 1px solid var(--line);
+.ri-l-a { --ri: var(--acc); }
+.ri-l-b { --ri: var(--hue-teal); }
+.ri-l-c { --ri: var(--hue-indigo); }
+
+/* fallback lists */
+.ri-map .ri-lines, .ri-map .ri-stops { margin: 0; padding: 0 0 0 1.2em; }
+.ri-map .ri-lines li { font-weight: 600; }
+.ri-map.is-live .ri-lines, .ri-map.is-live .ri-stops { display: none; }
+
+.ri-stage { position: relative; }
+.ri-stage svg { display: block; overflow: visible; }
+
+.ri-track, .ri-tail, .ri-hit { fill: none; stroke-linecap: round; }
+.ri-track { stroke: var(--ri); stroke-width: 5; }
+.ri-tail { stroke-width: 5; }
+.ri-hit { stroke: transparent; stroke-width: 22; }
+.ri-area { fill: transparent; }
+.ri-fade-a { stop-color: var(--ri); stop-opacity: 1; }
+.ri-fade-b { stop-color: var(--ri); stop-opacity: 0; }
+
+.ri-name {
+  fill: var(--ri);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 13.5px;
+  font-weight: 650;
+  letter-spacing: 0.005em;
 }
 
-.ri-row:first-child { border-top: 0; }
-
-.ri-a { --ri: var(--acc); }
-.ri-b { --ri: var(--hue-teal); }
-.ri-c { --ri: var(--hue-indigo); }
-
-.ri-key {
-  flex: 0 0 20.6rem;
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  color: var(--ink);
+.ri-year {
+  fill: var(--ink-faint);
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 11.5px;
   font-weight: 600;
-  font-size: 1rem;
-  line-height: 1.4;
+  letter-spacing: 0.04em;
 }
 
-.ri-key::before {
-  content: "";
-  flex: 0 0 auto;
-  width: 8px;
-  height: 8px;
-  border-radius: 2.5px;
-  background: var(--ri);
-  transform: translateY(-1px);
+.ri-yearline { stroke: var(--line); stroke-width: 1.2; stroke-dasharray: 2 5; stroke-linecap: round; }
+
+.ri-dot { fill: var(--card); stroke: var(--ri); stroke-width: 3; transition: r .16s ease; }
+.ri-inter { fill: var(--card); stroke: var(--ink); stroke-width: 2.2; transition: stroke-width .16s ease; }
+.ri-pip { fill: var(--ri); }
+
+.ri-label {
+  fill: var(--ink);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 12.5px;
+  font-weight: 550;
 }
 
-.ri-path {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  row-gap: 2px;
-  font-family: 'JetBrains Mono', 'Ubuntu Mono', monospace;
+.ri-venue { fill: var(--ink-faint); font-size: 11.5px; font-weight: 450; }
+
+.ri-stop { cursor: pointer; text-decoration: none; }
+.ri-stop:hover .ri-dot, .ri-stop:focus .ri-dot { r: 8; }
+.ri-stop:hover .ri-inter, .ri-stop:focus .ri-inter { stroke-width: 3; }
+.ri-stop:hover .ri-label, .ri-stop:focus .ri-label { font-weight: 700; }
+.ri-stop:focus { outline: none; }
+.ri-stop:focus-visible .ri-label { text-decoration: underline; }
+
+.ri-line, .ri-stop, .ri-chip { transition: opacity .2s ease; }
+.ri-line.is-dim, .ri-stop.is-dim, .ri-chip.is-dim { opacity: 0.2; }
+
+/* the map draws itself once, the first time it scrolls into view */
+.ri-anim .ri-track { stroke-dasharray: calc(var(--len) * 1px); stroke-dashoffset: calc(var(--len) * 1px); }
+.ri-anim .ri-tail, .ri-anim .ri-name, .ri-anim .ri-stop, .ri-anim .ri-year, .ri-anim .ri-yearline { opacity: 0; }
+.ri-anim.is-in .ri-track { stroke-dashoffset: 0; transition: stroke-dashoffset 1.1s cubic-bezier(.6, 0, .2, 1); }
+.ri-anim.is-in .ri-name, .ri-anim.is-in .ri-year, .ri-anim.is-in .ri-yearline { opacity: 1; transition: opacity .5s ease .1s; }
+.ri-anim.is-in .ri-tail { opacity: 1; transition: opacity .4s ease 1s; }
+.ri-anim.is-in .ri-stop { opacity: 1; transition: opacity .3s ease calc(.25s + var(--i) * 70ms); }
+.ri-anim.is-in .ri-stop.is-dim, .ri-anim.is-in .ri-line.is-dim { opacity: 0.2; transition: opacity .2s ease; }
+
+.ri-tip {
+  position: absolute;
+  z-index: 3;
+  max-width: 320px;
+  padding: 8px 11px 9px;
+  border-radius: 10px;
+  background: var(--ink);
+  color: var(--card);
+  font-size: 0.8rem;
+  line-height: 1.35;
+  box-shadow: 0 10px 28px -10px rgba(17, 24, 39, 0.45);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity .14s ease, transform .14s ease;
+}
+
+.ri-tip.is-on { opacity: 1; transform: none; }
+.ri-tip-title { font-weight: 600; }
+.ri-tip-venue { margin-top: 2px; opacity: 0.7; font-size: 0.74rem; }
+
+/* narrow: the lines run downwards and their names move into a legend */
+.ri-legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 0 0 12px; }
+
+.ri-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--ri);
   font-size: 0.84rem;
-  line-height: 1.5;
+  font-weight: 650;
+  line-height: 1.3;
 }
 
-.ri-sep { color: var(--ink-faint); margin: 0 0.55em; }
-
-.ri-path .ri-sep:first-child { margin-left: 0; }
-
-.ri-path a {
-  color: var(--ri);
-  font-weight: 500;
-  text-decoration: none;
-}
-
-.ri-path a:hover {
-  color: var(--ri);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-/* not enough room for keyword and path side by side: the path goes underneath */
-@container (max-width: 800px) {
-  .ri-row { flex-direction: column; align-items: stretch; }
-  .ri-key { flex: 0 0 auto; }
-  .ri-path { padding-left: 18px; }
-}
+.ri-chip::before { content: ""; width: 16px; height: 5px; border-radius: 3px; background: var(--ri); }
 
 @media (max-width: 620px) {
-  .ri-list { padding: 2px 15px; }
-  .ri-row { flex-direction: column; align-items: stretch; }
-  .ri-key { flex: 0 0 auto; }
-  .ri-path { padding-left: 18px; }
+  .ri-map { padding: 13px 14px 6px; }
 }
 
 /* ---------- publications: glass cards ---------- */
@@ -1930,7 +1963,7 @@ html.theme-dark::-webkit-scrollbar-thumb, html.theme-dark ::-webkit-scrollbar-th
   header { margin-top: 1.2em; box-shadow: none; }
 
   /* flat cards, and keep each entry on one page */
-  .edu-card, .ri-list, .exp-card,
+  .edu-card, .ri-map, .exp-card,
   .wrapper .publications ol.bibliography li {
     box-shadow: none;
     break-inside: avoid;
