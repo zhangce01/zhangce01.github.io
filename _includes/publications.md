@@ -22,7 +22,13 @@
 <button class="pub-fold" type="button" aria-expanded="{% if link.collapsed %}false{% else %}true{% endif %}" aria-label="{% if link.collapsed %}Show details{% else %}Hide details{% endif %}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 <div class="pub-row">
   <div class="col-sm-3 abbr" style="position: relative;padding-right: 15px;padding-left: 15px;">
-    {% if link.teaser %}
+    {% if link.teaser_film %}
+    <div class="teaser teaser-anim teaser-film z-depth-1" data-src="./assets/teasers/{{ link.teaser_film }}.mp4"{% if link.teaser_hd %} data-hd="{{ link.teaser_hd }}"{% endif %}>
+      {% assign teaser_alt = link.title | split: ':' | first | prepend: 'Video overview of ' | escape %}
+      <img src="./assets/teasers/{{ link.teaser_film }}.webp" alt="{{ teaser_alt }}" width="960" height="540" loading="lazy" decoding="async">
+      <video muted loop playsinline disablepictureinpicture preload="none" aria-hidden="true" tabindex="-1"></video>
+    </div>
+    {% elsif link.teaser %}
     <div class="teaser teaser-anim z-depth-1" data-src="./assets/teasers/{{ link.teaser }}-{theme}.mp4">
       {% assign teaser_alt = link.teaser_alt | default: link.title | escape %}
       <img class="ta-light" src="./assets/teasers/{{ link.teaser }}-light.webp" alt="{{ teaser_alt }}" width="480" height="300" loading="lazy" decoding="async">

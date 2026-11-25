@@ -81,6 +81,8 @@
     Array.prototype.forEach.call(items, function (el) {
       var cur = el.getAttribute('data-theme');
       if (!cur || cur === t) return;
+      // a project video is one file for both themes: nothing to swap
+      if (el.getAttribute('data-src').indexOf('{theme}') < 0) { el.setAttribute('data-theme', t); return; }
       load(el, t, el.querySelector('video').currentTime);
     });
   }

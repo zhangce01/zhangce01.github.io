@@ -6,6 +6,8 @@ main:
     conference: arXiv preprint arXiv:2611.30011, 2026.
     website: https://zhangce01.github.io/morse/
     teaser: morse
+    teaser_film: morse-film
+    teaser_hd: /morse/assets/video/trailer.mp4
     teaser_alt: "MORSE: a 409-second Ego4D stream goes by once and the question 'What tool did I use to tighten the screw?' arrives at the end; the seed harness, holding 64 kept frames, answers 'using a wrench'; an editor then loops through diagnose, research, propose and validate for 25 rounds, reading 28 papers, and the evolved harness keeps a step log whose entry '2-16 s uses screwdriver on metal part' leads to the right answer, 'using a screwdriver'; on OVO-Bench with a frozen Qwen3-VL-8B, accuracy goes from 60.1 (VLM alone) and 67.4 (seed harness) to 75.1, answering in 0.30 s"
     pdf: https://arxiv.org/pdf/2611.30011
     bibtex: |
@@ -25,6 +27,8 @@ main:
     website: /grape-bench/
     badge: https://img.shields.io/github/stars/zhangce01/GRAPE-Bench?style=social&label=Code+Stars
     teaser: grape-bench
+    teaser_film: grape-bench-film
+    teaser_hd: /grape-bench/assets/video/overview.mp4
     teaser_alt: "GRAPE-Bench: five video models ranked by accuracy on driving videos with synthetic rain (MiniCPM-V 4.5 first at 64.3, Cosmos-Reason2 third at 60.8) change order on footage captured in real rain, where Cosmos-Reason2 rises to first (74.2) and MiniCPM-V 4.5 drops to third (67.9); three questions about one rainy scene then show that the hardest one (L3, answered wrong by 90% of models) has the lowest safety relevance (38), while L1 and L2 score 85 and 82; the benchmark has 32,523 synthetic questions over 12 corruption types and 1,716 real-world questions on 572 driving videos"
     pdf: https://arxiv.org/pdf/2611.33020
     bibtex: |
@@ -44,6 +48,7 @@ main:
     website: https://huggingface.co/spaces/RSIGame/rsigame-page
     badge: https://img.shields.io/github/stars/WenyiWU0111/RSIGame?style=social&label=Code+Stars
     teaser: rsigame
+    teaser_film: rsigame-film
     teaser_alt: "RSIGame: the generated Lawn Guardians build is playable but scores 61.7 with placeholder art, and naive Play2Code refinement peaks at 81.5 then falls back to 65.7; RSIGame's explore-diagnose-improve loop fills an evolving checklist (46 images barely drawn, 'actions did not register'), wires in sprites and hit feedback, and holds the best build R12 at 86.1 through later dips; with experience internalized, Qwen3.8-27B reaches 61.38 on Godot and 58.53 on Phaser, above GPT-5.5 one-shot (50.26 / 49.44), with 11x fewer generation tokens on Godot"
     pdf: https://arxiv.org/pdf/2609.39045
     abstract: |
@@ -63,6 +68,7 @@ main:
     conference: arXiv preprint arXiv:2609.36691, 2026.
     website: https://andyzworks.github.io/video2skill/
     teaser: video2skill
+    teaser_film: video2skill-film
     teaser_alt: "Video2Skill: a VLM watches a stream of three manipulation videos, locating each event in time and maintaining a shared skill library: Video 1 creates grasp, transfer and place, Video 2 reuses all three despite new objects and scene, and Video 3 reuses grasp and transfer but creates throw for a new transformation; on 40 HD-EPIC clips, Qwen3.5-4B with oracle-history SFT ends with only 21–22 skills versus 46 reference classes, across all three video orders"
     pdf: https://arxiv.org/pdf/2609.36691
     abstract: |

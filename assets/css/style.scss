@@ -1225,6 +1225,9 @@ html.theme-dark .wrapper .publications ol.bibliography li .teaser-anim { backgro
 html.theme-dark .teaser-anim .ta-light { display: none; }
 html.theme-dark .teaser-anim .ta-dark { display: block; }
 
+/* A card that shows its project page's own video: 16:9, one file for both themes */
+.wrapper .publications ol.bibliography li .teaser-anim.teaser-film { aspect-ratio: 16 / 9; }
+
 /* Click-to-enlarge lightbox for the animated teasers (assets/js/teaserzoom.js) */
 .wrapper .publications ol.bibliography li .teaser-anim { cursor: zoom-in; }
 .wrapper .publications ol.bibliography li .teaser-anim:focus-visible {
@@ -1261,6 +1264,12 @@ html.teaser-lightbox-lock body { overflow: hidden; }
   transition: transform .25s ease;
 }
 .teaser-lightbox.is-open .tl-frame { transform: none; }
+.teaser-lightbox.is-film .tl-frame {
+  width: min(92vw, 1180px, calc((100vh - 96px) * 1.7778));
+  width: min(92vw, 1180px, calc((100dvh - 96px) * 1.7778));
+  aspect-ratio: 16 / 9;
+  background: #000;
+}
 .teaser-lightbox video {
   display: block;
   width: 100%;

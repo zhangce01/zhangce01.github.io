@@ -44,11 +44,12 @@
     if (box) return;
     opener = el;
     var t = theme();
-    var poster = el.querySelector(t === 'dark' ? '.ta-dark' : '.ta-light');
+    var film = el.classList.contains('teaser-film');   // the project page's own video
+    var poster = el.querySelector(t === 'dark' ? '.ta-dark' : '.ta-light') || el.querySelector('img');
     var small = el.querySelector('video');
 
     box = document.createElement('div');
-    box.className = 'teaser-lightbox';
+    box.className = 'teaser-lightbox' + (film ? ' is-film' : '');
     box.setAttribute('role', 'dialog');
     box.setAttribute('aria-modal', 'true');
     box.setAttribute('aria-label', poster ? poster.alt : 'Enlarged animation');
@@ -59,10 +60,10 @@
     var v = box.querySelector('video');
     v.muted = true;
     if (poster) v.poster = poster.currentSrc || poster.src;
-    if (still) v.controls = true;
+    if (still || film) v.controls = true;       // a project video can be scrubbed and unmuted
     // the 1440x900 / 60 fps cut of the same animation; the small file if it is missing
     var base = el.getAttribute('data-src').replace('{theme}', t);
-    v.src = base.replace(/\.mp4$/, '-hd.mp4');
+    v.src = el.getAttribute('data-hd') || base.replace(/\.mp4$/, '-hd.mp4');
     v.addEventListener('error', function fallback() {
       v.removeEventListener('error', fallback);
       v.src = base;
@@ -70,7 +71,7 @@
     });
 
     // continue from the small teaser's playhead when it shows the same palette
-    var at = small && small.currentSrc && small.currentSrc.indexOf(t + '.mp4') > -1 ? small.currentTime : 0;
+    var at = small && small.currentSrc && (film || small.currentSrc.indexOf(t + '.mp4') > -1) ? small.currentTime : 0;
     if (at) {
       v.addEventListener('loadedmetadata', function seek() {
         v.removeEventListener('loadedmetadata', seek);
