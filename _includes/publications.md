@@ -39,6 +39,7 @@
   <div class="col-sm-9" style="position: relative;padding-right: 15px;padding-left: 20px;">
       {% assign title_href = link.pdf | default: link.website %}<div class="title">{% if title_href %}<a href="{{ title_href }}">{{ link.title }}</a>{% else %}{{ link.title }}{% endif %}</div>
       <div class="author">{{ link.authors }}</div>
+      <div class="author-short">{{ link.authors }}</div>
       <div class="periodical"><em>{{ link.conference }}</em></div>
       {% if link.conference2 %} 
       <div class="periodical"> Also at <em>{{ link.conference2 }}</em></div>

@@ -53,7 +53,9 @@
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       var el = e.target, v = el.querySelector('video');
-      if (e.isIntersecting) {
+      // a collapsed card shows a still thumbnail: treat it as out of view
+      var folded = el.closest && el.closest('li.is-collapsed');
+      if (e.isIntersecting && !folded) {
         el.classList.add('in-view');
         if (!el.getAttribute('data-theme')) load(el, theme());
         else play(el);
@@ -65,6 +67,14 @@
   }, { rootMargin: '200px 0px' });
 
   Array.prototype.forEach.call(items, function (el) { io.observe(el); });
+
+  // a card was folded or unfolded (publications.js): look at its teaser again
+  document.addEventListener('pubfold', function (e) {
+    var el = e.detail && e.detail.querySelector && e.detail.querySelector('.teaser-anim');
+    if (!el) return;
+    if (e.detail.classList.contains('is-collapsed')) { el.classList.remove('in-view', 'is-playing'); el.querySelector('video').pause(); }
+    io.unobserve(el); io.observe(el);
+  });
 
   function retheme() {
     var t = theme();
