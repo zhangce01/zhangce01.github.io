@@ -65,6 +65,8 @@ Hi there! I'm **Ce Zhang** <span class="wave" aria-hidden="true">👋</span> I a
 {% assign p_morse = site.data.publications.main | where_exp: "p", "p.title contains 'MORSE:'" | first %}
 {% assign p_grapebench = site.data.publications.main | where_exp: "p", "p.title contains 'GRAPE-Bench:'" | first %}
 
+My research interests lie in general multi-modal large language models and agents, spanning recursive self-improvement and pre- and post-training. Here is a timeline of my work:
+
 <div class="ri-map" id="ri-map">
   <ul class="ri-lines">
     <li data-line="a">Auto-Research &amp; Self-Improving Agents</li>
@@ -74,7 +76,7 @@ Hi there! I'm **Ce Zhang** <span class="wave" aria-hidden="true">👋</span> I a
   <ol class="ri-stops">
     <li><a href="#pub-{{ p_degf.title | slugify }}" data-lines="c" data-year="2025" data-venue="{{ p_degf.conference_short | escape }}" data-title="{{ p_degf.title | escape }}">DeGF</a></li>
     <li><a href="#pub-{{ p_only.title | slugify }}" data-lines="c" data-year="2025" data-venue="{{ p_only.conference_short | escape }}" data-title="{{ p_only.title | escape }}">ONLY</a></li>
-    <li><a href="#pub-{{ p_vscan.title | slugify }}" data-lines="c" data-year="2026" data-venue="{{ p_vscan.conference_short | escape }}" data-title="{{ p_vscan.title | escape }}">VScan</a></li>
+    <li><a href="#pub-{{ p_vscan.title | slugify }}" data-lines="b c" data-year="2026" data-venue="{{ p_vscan.conference_short | escape }}" data-title="{{ p_vscan.title | escape }}">VScan</a></li>
     <li><a href="#pub-{{ p_pyspatial.title | slugify }}" data-lines="b" data-year="2026" data-venue="{{ p_pyspatial.conference_short | escape }}" data-title="{{ p_pyspatial.title | escape }}">pySpatial</a></li>
     <li><a href="#pub-{{ p_echosafe.title | slugify }}" data-lines="c" data-year="2026" data-venue="{{ p_echosafe.conference_short | escape }}" data-title="{{ p_echosafe.title | escape }}">EchoSafe</a></li>
     <li><a href="#pub-{{ p_webaggregator.title | slugify }}" data-lines="a" data-year="2026" data-venue="{{ p_webaggregator.conference_short | escape }}" data-title="{{ p_webaggregator.title | escape }}">WebAggregator</a></li>

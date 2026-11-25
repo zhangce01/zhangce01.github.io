@@ -30,6 +30,7 @@
   root.appendChild(stage);
   root.classList.add('is-live');
 
+  var placeNames = function () {};
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   var animate = !reduce && 'IntersectionObserver' in window;
   var shown = !animate;
@@ -96,6 +97,8 @@
     var svg = el('svg', { width: W, height: H, viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': 'Research areas as three lines; each paper is a station on its line' }, null);
     var defs = el('defs', {}, svg);
 
+    var names = [], dividers = [];
+
     // years: a faint divider where a new year starts
     var seen = null;
     stops.forEach(function (s, i) {
@@ -104,6 +107,7 @@
         var m = along(i) - step / 2;
         var p1 = pt(m, vertical ? 4 : 20), p2 = pt(m, vertical ? W - 4 : H - 8);
         el('line', { x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1], 'class': 'ri-yearline' }, svg);
+        dividers.push(m);
       }
       seen = s.year;
       if (vertical) el('text', { x: W - 4, y: along(i) - 9, 'text-anchor': 'end', 'class': 'ri-year' }, svg, s.year);
@@ -124,7 +128,7 @@
       var track = el('path', { d: 'M' + s0 + 'L' + s1, 'class': 'ri-track' }, g);
       el('path', { d: 'M' + s1 + 'L' + s2, 'class': 'ri-tail', stroke: 'url(#' + id + ')' }, g);
       el('path', { d: 'M' + s0 + 'L' + s2, 'class': 'ri-hit' }, g);
-      if (!vertical) el('text', { x: s0[0] - 7, y: c - 15, 'class': 'ri-name' }, g, l.name);
+      if (!vertical) names.push({ node: el('text', { x: s0[0] - 7, y: c - 15, 'class': 'ri-name' }, g, l.name), row: i, x: s0[0] - 7 });
       var len = Math.ceil(Math.abs(vertical ? s1[1] - s0[1] : s1[0] - s0[0]));
       track.style.setProperty('--len', len);
       g.addEventListener('mouseenter', function () { focus([l.key]); });
@@ -170,6 +174,24 @@
 
     stage.appendChild(svg);
     stage.appendChild(tip);
+
+    // a line's name sits above the start of its line; it moves right past anything that
+    // crosses that row: an interchange coming down from the line above, or a year divider
+    placeNames = function () {
+      names.forEach(function (nm) {
+        var w = nm.node.getComputedTextLength(), x = nm.x;
+        var cross = dividers.slice();
+        stops.forEach(function (s, i) {
+          var rows = s.keys.map(function (k) { return row[k]; });
+          if (Math.min.apply(null, rows) < nm.row && Math.max.apply(null, rows) >= nm.row) cross.push(along(i));
+        });
+        cross.sort(function (p, q) { return p - q; }).forEach(function (o) {
+          if (x < o + 12 && x + w > o - 12) x = o + 15;
+        });
+        if (x + w <= W) nm.node.setAttribute('x', x);
+      });
+    };
+    placeNames();
     if (shown) root.classList.add('is-in');
   }
 
@@ -184,6 +206,7 @@
   }
 
   draw();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { placeNames(); });
   var timer, lastW = stage.clientWidth;
   window.addEventListener('resize', function () {
     clearTimeout(timer);
