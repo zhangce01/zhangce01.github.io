@@ -52,54 +52,31 @@ Hi there! I'm **Ce Zhang** <span class="wave" aria-hidden="true">👋</span> I a
 
 ## Research Interests
 
-I build multi-modal AI systems that are <span class="hl">efficient</span> and <span class="hl">reliable</span> enough for real-world use.
-
-<p class="ri-lead">Video is a demanding real-world testbed for MLLMs, exposing bottlenecks in long-context efficiency, grounded and context-aware generation, and structured reasoning. These challenges motivate three broader directions in my work:</p>
-
+{% assign p_morse = site.data.publications.main | where_exp: "p", "p.title contains 'MORSE:'" | first %}
+{% assign p_rsigame = site.data.publications.main | where_exp: "p", "p.title contains 'RSIGame:'" | first %}
+{% assign p_webaggregator = site.data.publications.main | where_exp: "p", "p.title contains 'WebAggregator:'" | first %}
+{% assign p_streamscout = site.data.publications.main | where_exp: "p", "p.title contains 'StreamScout:'" | first %}
 {% assign p_lens = site.data.publications.main | where_exp: "p", "p.title contains 'LENS:'" | first %}
-{% assign p_vscan = site.data.publications.main | where_exp: "p", "p.title contains 'VScan:'" | first %}
+{% assign p_grapebench = site.data.publications.main | where_exp: "p", "p.title contains 'GRAPE-Bench:'" | first %}
+{% assign p_video2skill = site.data.publications.main | where_exp: "p", "p.title contains 'Video2Skill:'" | first %}
+{% assign p_pyspatial = site.data.publications.main | where_exp: "p", "p.title contains 'pySpatial:'" | first %}
+{% assign p_echosafe = site.data.publications.main | where_exp: "p", "p.title contains 'Evolving Contextual Safety'" | first %}
 {% assign p_degf = site.data.publications.main | where_exp: "p", "p.title contains 'Self-Correcting Decoding'" | first %}
 {% assign p_only = site.data.publications.main | where_exp: "p", "p.title contains 'ONLY:'" | first %}
-{% assign p_echosafe = site.data.publications.main | where_exp: "p", "p.title contains 'Evolving Contextual Safety'" | first %}
-{% assign p_pyspatial = site.data.publications.main | where_exp: "p", "p.title contains 'pySpatial:'" | first %}
-{% assign p_webagg = site.data.publications.main | where_exp: "p", "p.title contains 'WebAggregator:'" | first %}
-{% assign p_hiker = site.data.publications.main | where_exp: "p", "p.title contains 'HiKER-SGG:'" | first %}
+{% assign p_vscan = site.data.publications.main | where_exp: "p", "p.title contains 'VScan:'" | first %}
 
-<div class="ri-axes">
-  <div class="ri-axis">
-    <span class="ri-num">01</span>
-    <div class="ri-axis-body">
-      <div class="ri-axis-title">Seeing more with less</div>
-      <div class="ri-axis-text">Which frames, regions, and tokens actually matter for a given query, and how cheaply can we get the answer?</div>
-      <div class="ri-papers">
-        <a class="ri-paper" href="#pub-{{ p_lens.title | slugify }}">LENS<span class="ri-venue">ECCV'26</span></a>
-        <a class="ri-paper" href="#pub-{{ p_vscan.title | slugify }}">VScan<span class="ri-venue">TMLR'26</span></a>
-      </div>
-    </div>
+<div class="ri-list">
+  <div class="ri-row ri-a">
+    <div class="ri-key">Auto-Research &amp; Self-Improving Agents</div>
+    <div class="ri-path"><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_morse.title | slugify }}">MORSE</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_rsigame.title | slugify }}">RSIGame</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_webaggregator.title | slugify }}">WebAggregator</a></div>
   </div>
-  <div class="ri-axis">
-    <span class="ri-num">02</span>
-    <div class="ri-axis-body">
-      <div class="ri-axis-title">Saying only what's grounded</div>
-      <div class="ri-axis-text">Keeping outputs faithful to the input and appropriate to the context, rather than fluent and wrong.</div>
-      <div class="ri-papers">
-        <a class="ri-paper" href="#pub-{{ p_degf.title | slugify }}">DeGF<span class="ri-venue">ICLR'25</span></a>
-        <a class="ri-paper" href="#pub-{{ p_only.title | slugify }}">ONLY<span class="ri-venue">ICCV'25</span></a>
-        <a class="ri-paper" href="#pub-{{ p_echosafe.title | slugify }}">EchoSafe<span class="ri-venue">CVPR'26</span></a>
-      </div>
-    </div>
+  <div class="ri-row ri-b">
+    <div class="ri-key">Video Understanding &amp; Embodied AI</div>
+    <div class="ri-path"><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_streamscout.title | slugify }}">StreamScout</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_lens.title | slugify }}">LENS</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_grapebench.title | slugify }}">GRAPE-Bench</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_video2skill.title | slugify }}">Video2Skill</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_pyspatial.title | slugify }}">pySpatial</a></div>
   </div>
-  <div class="ri-axis">
-    <span class="ri-num">03</span>
-    <div class="ri-axis-body">
-      <div class="ri-axis-title">Reasoning beyond the pixels</div>
-      <div class="ri-axis-text">Giving MLLMs explicit structure to reason over: 3D scenes, tools, knowledge graphs, aggregated evidence.</div>
-      <div class="ri-papers">
-        <a class="ri-paper" href="#pub-{{ p_pyspatial.title | slugify }}">pySpatial<span class="ri-venue">ICLR'26</span></a>
-        <a class="ri-paper" href="#pub-{{ p_hiker.title | slugify }}">HiKER-SGG<span class="ri-venue">CVPR'24</span></a>
-        <a class="ri-paper" href="#pub-{{ p_webagg.title | slugify }}">WebAggregator<span class="ri-venue">ACL'26</span></a>
-      </div>
-    </div>
+  <div class="ri-row ri-c">
+    <div class="ri-key">Responsible &amp; Efficient AI</div>
+    <div class="ri-path"><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_echosafe.title | slugify }}">EchoSafe</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_degf.title | slugify }}">DeGF</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_only.title | slugify }}">ONLY</a><span class="ri-sep" aria-hidden="true">/</span><a href="#pub-{{ p_vscan.title | slugify }}">VScan</a></div>
   </div>
 </div>
 

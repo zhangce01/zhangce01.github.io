@@ -33,7 +33,11 @@
     <img src="{{ link.image }}" alt="{{ link.title }}" class="teaser img-fluid z-depth-1" loading="lazy" decoding="async"{% if link.image_w %} width="{{ link.image_w }}" height="{{ link.image_h }}"{% endif %}>
     {% endif %}
     {% if link.conference_short %} 
-    <abbr class="badge">{{ link.conference_short }}</abbr>
+    {% assign vparts = link.conference_short | split: ' ' %}{% assign vrest = link.conference_short | remove_first: vparts[0] | strip %}
+    {% if vparts.size > 1 and vrest contains '20' %}<abbr class="badge venue"><span class="v-name">{{ vparts[0] }}</span><span class="v-year">{{ vrest }}</span></abbr>
+    {% elsif link.conference_short == 'Preprint' %}<abbr class="badge venue is-preprint"><span class="v-name">Preprint</span></abbr>
+    {% else %}<abbr class="badge venue"><span class="v-name">{{ link.conference_short }}</span></abbr>
+    {% endif %}
     {% endif %}
   </div>
   <div class="col-sm-9" style="position: relative;padding-right: 15px;padding-left: 20px;">

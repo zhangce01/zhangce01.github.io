@@ -17,6 +17,8 @@
   --line: #e5e7eb;
   --acc: #9a5b3c;
   --acc-2: #7c4527;
+  --hue-teal: #1f6f6a;
+  --hue-indigo: #4d5aa6;
   --grad: #9a5b3c;
   --glass: rgba(255, 255, 255, 0.85);
   --glass-border: #e5e7eb;
@@ -32,6 +34,8 @@
     --line: #2e2b27;
     --acc: #c89472;
     --acc-2: #d8a888;
+    --hue-teal: #6fbdb3;
+    --hue-indigo: #9ea9ea;
     --grad: #c89472;
     --glass: rgba(22, 21, 19, 0.85);
     --glass-border: #2e2b27;
@@ -45,6 +49,8 @@ html.theme-dark { --ink: #ededed;
     --line: #2e2b27;
     --acc: #c89472;
     --acc-2: #d8a888;
+    --hue-teal: #6fbdb3;
+    --hue-indigo: #9ea9ea;
     --grad: #c89472;
     --glass: rgba(22, 21, 19, 0.85);
     --glass-border: #2e2b27;
@@ -1049,143 +1055,95 @@ html.theme-dark .edu-logo { border-color: #3a3733; }
   }
 }
 
-/* ---------- research interests: three axes ---------- */
+/* ---------- research interests: three keyword rows ----------
+   Each row is a keyword followed by its papers, written like a path. The
+   three areas are the one place on the page with their own hues. */
 
-.ri-lead {
-  color: var(--ink-soft);
-  font-size: 0.98rem;
-  line-height: 1.65;
-  margin: 0 0 18px;
-}
-
-.ri-axes {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin: 0 0 22px;
-}
-
-.ri-axis {
-  display: flex;
-  align-items: flex-start;
-  gap: 15px;
+.ri-list {
+  container-type: inline-size;
   background: var(--card);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--glass-border);
   border-radius: 16px;
   box-shadow: var(--shadow);
-  padding: 15px 18px;
-  transition: transform .22s ease, box-shadow .22s ease;
+  padding: 4px 18px;
+  margin: 0 0 22px;
 }
 
-.ri-axis:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+.ri-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px 14px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
 }
 
-/* gradient step number; the solid accent is the fallback for browsers
-   without background-clip: text */
-.ri-num {
-  flex: 0 0 auto;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--acc);
-  opacity: 0.85;
-}
+.ri-row:first-child { border-top: 0; }
 
-@supports ((-webkit-background-clip: text) or (background-clip: text)) {
-  .ri-num {
-    background: var(--grad);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-}
+.ri-a { --ri: var(--acc); }
+.ri-b { --ri: var(--hue-teal); }
+.ri-c { --ri: var(--hue-indigo); }
 
-.ri-axis-body { min-width: 0; flex: 1; }
-
-/* Inter like the other card titles (exp-role, edu-degree, pub titles);
-   only headings and the big numerals carry Space Grotesk */
-.ri-axis-title {
+.ri-key {
+  flex: 0 0 20.6rem;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
   color: var(--ink);
   font-weight: 600;
-  font-size: 1.02rem;
-  line-height: 1.3;
+  font-size: 1rem;
+  line-height: 1.4;
 }
 
-.ri-axis-text {
-  color: var(--ink-soft);
-  font-size: 0.92rem;
-  line-height: 1.6;
-  margin-top: 3px;
+.ri-key::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 2.5px;
+  background: var(--ri);
+  transform: translateY(-1px);
 }
 
-.ri-papers {
+.ri-path {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 10px;
-}
-
-a.ri-paper {
-  display: inline-flex;
   align-items: baseline;
-  gap: 6px;
-  background: rgba(154, 91, 60, 0.07);
-  border: 1px solid rgba(154, 91, 60, 0.18);
-  border-radius: 999px;
-  padding: 2.5px 11px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--acc);
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background .18s ease, border-color .18s ease, transform .18s ease;
+  row-gap: 2px;
+  font-family: 'JetBrains Mono', 'Ubuntu Mono', monospace;
+  font-size: 0.84rem;
+  line-height: 1.5;
 }
 
-a.ri-paper:hover {
-  background: rgba(154, 91, 60, 0.13);
-  border-color: rgba(154, 91, 60, 0.40);
-  transform: translateY(-1px);
-  text-decoration: none;
-}
+.ri-sep { color: var(--ink-faint); margin: 0 0.55em; }
 
-.ri-venue {
-  font-size: 0.7rem;
+.ri-path .ri-sep:first-child { margin-left: 0; }
+
+.ri-path a {
+  color: var(--ri);
   font-weight: 500;
-  color: var(--ink-faint);
+  text-decoration: none;
 }
 
-a.ri-paper:hover .ri-venue { color: var(--ink-soft); }
+.ri-path a:hover {
+  color: var(--ri);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* not enough room for keyword and path side by side: the path goes underneath */
+@container (max-width: 800px) {
+  .ri-row { flex-direction: column; align-items: stretch; }
+  .ri-key { flex: 0 0 auto; }
+  .ri-path { padding-left: 18px; }
+}
 
 @media (max-width: 620px) {
-  .ri-axis { gap: 12px; padding: 14px 15px; }
-  .ri-num { font-size: 1.3rem; }
-}
-
-@media (prefers-color-scheme: dark) {
-  html:not(.theme-light) a.ri-paper {
-    background: rgba(200, 148, 114, 0.12);
-    border-color: rgba(200, 148, 114, 0.24);
-    color: #c89472;
-  }
-  html:not(.theme-light) a.ri-paper:hover {
-    background: rgba(200, 148, 114, 0.20);
-    border-color: rgba(200, 148, 114, 0.45);
-  }
-}
-html.theme-dark a.ri-paper {
-  background: rgba(200, 148, 114, 0.12);
-  border-color: rgba(200, 148, 114, 0.24);
-  color: #c89472;
-}
-html.theme-dark a.ri-paper:hover {
-  background: rgba(200, 148, 114, 0.20);
-  border-color: rgba(200, 148, 114, 0.45);
+  .ri-list { padding: 2px 15px; }
+  .ri-row { flex-direction: column; align-items: stretch; }
+  .ri-key { flex: 0 0 auto; }
+  .ri-path { padding-left: 18px; }
 }
 
 /* ---------- publications: glass cards ---------- */
@@ -1347,6 +1305,50 @@ html.theme-dark .teaser-lightbox .tl-frame { background: #141311; }
   letter-spacing: 0.01em;
   z-index: 1;
 }
+
+/* Venue tag: the venue on the accent, the year beside it on the card colour.
+   A preprint gets a quiet neutral tag, so published work stands out. */
+.wrapper .publications ol.bibliography li .abbr abbr.venue {
+  display: inline-flex;
+  align-items: stretch;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 7px;
+  background: var(--card);
+  box-shadow: 0 0 0 1px var(--acc), 0 6px 16px -6px rgba(17, 24, 39, 0.4);
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.wrapper .publications ol.bibliography li .abbr abbr.venue .v-name {
+  background: var(--acc);
+  color: var(--card);
+  padding: 0.42em 0.62em;
+}
+
+.wrapper .publications ol.bibliography li .abbr abbr.venue .v-year {
+  color: var(--acc);
+  padding: 0.42em 0.62em 0.42em 0.54em;
+  font-variant-numeric: tabular-nums;
+}
+
+.wrapper .publications ol.bibliography li .abbr abbr.venue.is-preprint {
+  box-shadow: 0 0 0 1px var(--line), 0 6px 16px -6px rgba(17, 24, 39, 0.4);
+}
+
+.wrapper .publications ol.bibliography li .abbr abbr.venue.is-preprint .v-name {
+  background: var(--card);
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+/* in a collapsed card the tag sits on the card itself: no drop shadow */
+.wrapper .publications ol.bibliography li.is-collapsed .abbr abbr.venue { box-shadow: 0 0 0 1px var(--acc); }
+.wrapper .publications ol.bibliography li.is-collapsed .abbr abbr.venue.is-preprint { box-shadow: 0 0 0 1px var(--line); }
 
 /* Breathing room between the rows of each entry */
 .wrapper .publications ol.bibliography li .title {
@@ -1919,7 +1921,7 @@ html.theme-dark::-webkit-scrollbar-thumb, html.theme-dark ::-webkit-scrollbar-th
   header { margin-top: 1.2em; box-shadow: none; }
 
   /* flat cards, and keep each entry on one page */
-  .edu-card, .ri-axis, .exp-card,
+  .edu-card, .ri-list, .exp-card,
   .wrapper .publications ol.bibliography li {
     box-shadow: none;
     break-inside: avoid;
