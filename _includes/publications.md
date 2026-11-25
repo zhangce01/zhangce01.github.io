@@ -18,7 +18,8 @@
 {% assign last_year = link.year %}
 {% endif %}
 
-<li id="pub-{{ link.title | slugify }}">
+<li id="pub-{{ link.title | slugify }}"{% if link.collapsed %} class="is-collapsed"{% endif %}>
+<button class="pub-fold" type="button" aria-expanded="{% if link.collapsed %}false{% else %}true{% endif %}" aria-label="{% if link.collapsed %}Show details{% else %}Hide details{% endif %}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 <div class="pub-row">
   <div class="col-sm-3 abbr" style="position: relative;padding-right: 15px;padding-left: 15px;">
     {% if link.teaser %}
@@ -86,7 +87,7 @@
 </div>
 </li>
 
-<br>
+{% unless link.collapsed %}<br>{% endunless %}
 
 {% endfor %}
 

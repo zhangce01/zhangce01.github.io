@@ -1470,6 +1470,91 @@ html.theme-dark .teaser-lightbox .tl-frame { background: #141311; }
   min-width: 0;
 }
 
+/* ---------- collapsed / expanded publication cards ----------
+   Every card has a chevron in its top-right corner. Collapsed, a card keeps
+   only the venue badge, the title and the authors (see publications.js). */
+
+.wrapper .publications ol.bibliography li { position: relative; }
+
+.wrapper .publications ol.bibliography li .pub-row .col-sm-9 { padding-right: 42px !important; }
+
+.wrapper .publications ol.bibliography li .pub-fold {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-faint);
+  cursor: pointer;
+  transition: color .18s ease, border-color .18s ease, background-color .18s ease;
+}
+
+.wrapper .publications ol.bibliography li .pub-fold:hover,
+.wrapper .publications ol.bibliography li.is-collapsed:hover .pub-fold {
+  color: var(--acc);
+  border-color: var(--acc);
+  background: rgba(154, 91, 60, 0.06);
+}
+
+.wrapper .publications ol.bibliography li .pub-fold svg {
+  width: 12px;
+  height: 12px;
+  transform: rotate(180deg);
+  transition: transform .22s ease;
+}
+
+.wrapper .publications ol.bibliography li.is-collapsed .pub-fold svg { transform: none; }
+
+.wrapper .publications ol.bibliography li.is-collapsed {
+  min-height: 0;
+  padding: 11px 14px;
+  margin-bottom: 0.6rem;
+  cursor: pointer;
+}
+
+.wrapper .publications ol.bibliography li.is-collapsed .teaser,
+.wrapper .publications ol.bibliography li.is-collapsed .periodical,
+.wrapper .publications ol.bibliography li.is-collapsed .place,
+.wrapper .publications ol.bibliography li.is-collapsed .notes,
+.wrapper .publications ol.bibliography li.is-collapsed .links,
+.wrapper .publications ol.bibliography li.is-collapsed .abstract,
+.wrapper .publications ol.bibliography li.is-collapsed .bibtex { display: none; }
+
+.wrapper .publications ol.bibliography li.is-collapsed .pub-row { align-items: flex-start; }
+
+/* a fixed badge column, so the titles of neighbouring collapsed cards line up */
+.wrapper .publications ol.bibliography li.is-collapsed .pub-row .abbr {
+  box-sizing: border-box;
+  width: 146px;
+  margin-bottom: 0;
+  padding-top: 1px;
+}
+
+.wrapper .publications ol.bibliography li.is-collapsed .abbr abbr { position: static; }
+
+.wrapper .publications ol.bibliography li.is-collapsed .title {
+  font-size: 0.97rem;
+  margin-bottom: 2px;
+}
+
+.wrapper .publications ol.bibliography li.is-collapsed .author {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-bottom: 0;
+}
+
+@media screen and (max-width: 480px) {
+  .wrapper .publications ol.bibliography li.is-collapsed .pub-row .abbr { width: auto; margin-bottom: 6px; }
+}
+
 /* ---------- abstract / bibtex panels ---------- */
 
 .publications ol.bibliography li .bibtex {

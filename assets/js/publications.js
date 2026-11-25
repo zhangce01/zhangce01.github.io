@@ -1,5 +1,43 @@
-// Toggle abstract / bibtex panels and copy bibtex to clipboard.
+// Toggle abstract / bibtex panels, copy bibtex to clipboard, and fold / unfold
+// the cards: a collapsed card shows only its venue badge, title and authors.
 (function () {
+  var cards = document.querySelectorAll('.publications ol.bibliography > li');
+
+  function setFold(li, collapsed) {
+    li.classList.toggle('is-collapsed', collapsed);
+    var b = li.querySelector('.pub-fold');
+    if (b) {
+      b.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      b.setAttribute('aria-label', collapsed ? 'Show details' : 'Hide details');
+    }
+  }
+
+  for (var c = 0; c < cards.length; c++) {
+    (function (li) {
+      var btn = li.querySelector('.pub-fold');
+      if (!btn) return;
+      btn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        setFold(li, !li.classList.contains('is-collapsed'));
+      });
+      // a collapsed card opens on a click anywhere that is not a link
+      li.addEventListener('click', function (e) {
+        if (!li.classList.contains('is-collapsed')) return;
+        if (e.target.closest && e.target.closest('a, button')) return;
+        setFold(li, false);
+      });
+    })(cards[c]);
+  }
+
+  // jumping to a collapsed card (a Research Interests pill, a shared link) opens it
+  function openTarget() {
+    var id = decodeURIComponent((location.hash || '').slice(1));
+    var li = id && document.getElementById(id);
+    if (li && li.classList && li.classList.contains('is-collapsed')) setFold(li, false);
+  }
+  window.addEventListener('hashchange', openTarget);
+  openTarget();
+
   var toggles = document.querySelectorAll('.toggle-pub');
   for (var i = 0; i < toggles.length; i++) {
     toggles[i].addEventListener('click', function () {
