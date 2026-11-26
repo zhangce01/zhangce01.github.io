@@ -4,7 +4,7 @@ layout: homepage
 
 ## About Me
 
-Hi there! I'm **Ce Zhang** <span class="wave" aria-hidden="true">👋</span> I am currently a fourth-year PhD candidate in the Robotics Institute at Carnegie Mellon University (CMU), with an expected graduation of 2028. I am looking for <span class="hl">Summer 2027 research internships</span>.
+Hi there! I'm **Ce Zhang** <span class="wave" aria-hidden="true">👋</span> I am currently a fourth-year PhD candidate in the Robotics Institute at Carnegie Mellon University (CMU), with an expected graduation of 2028.
 
 <div class="edu-cards">
   <div class="edu-card">
@@ -49,6 +49,14 @@ Hi there! I'm **Ce Zhang** <span class="wave" aria-hidden="true">👋</span> I a
 </div>
 
 <p class="about-contact">Feel free to <a class="contact-link" href="mailto:cezhang@cs.cmu.edu">reach out</a> if you're interested in my work or would like to discuss potential collaborations!</p>
+
+<div class="intern-box">
+  <span class="intern-dot" aria-hidden="true"></span>
+  <div class="intern-text">
+    <div class="intern-title">Looking for a Summer 2027 Research Internship</div>
+    <p>I'm seeking a research internship for Summer 2027. If you're interested, I'd love to hear from you: feel free to <a class="contact-link" href="mailto:cezhang@cs.cmu.edu">email me</a> or take a look at my <a class="contact-link" href="./{{ site.cv_link }}" target="_blank" rel="noopener">CV</a>.</p>
+  </div>
+</div>
 
 ## Research Interests
 

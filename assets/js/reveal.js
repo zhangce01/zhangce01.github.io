@@ -10,6 +10,7 @@
     'section > ul > li',
     '.edu-card',
     '.about-contact',
+    '.intern-box',
     '.ri-map',
     '.year-jump',
     '.publications h2.year',

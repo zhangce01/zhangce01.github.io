@@ -1019,6 +1019,78 @@ html.theme-dark .edu-logo { border-color: #3a3733; }
 
 .contact-link:hover::after { transform: scaleX(1); }
 
+/* internship box under the contact line: card with a faint accent wash and a pulsing "open" dot */
+.intern-box {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: -6px 0 26px;
+  padding: 14px 18px 15px;
+  background: var(--card);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.intern-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, var(--acc) 0%, transparent 70%);
+  opacity: .07;
+  pointer-events: none;
+}
+
+.intern-box::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--acc);
+}
+
+.intern-dot {
+  position: relative;
+  flex: none;
+  width: 9px;
+  height: 9px;
+  margin-top: 7px;
+  border-radius: 50%;
+  color: var(--hue-teal);
+  background: currentColor;
+  animation: intern-pulse 2.2s ease-out infinite;
+}
+
+@keyframes intern-pulse {
+  0%   { box-shadow: 0 0 0 0 currentColor; }
+  70%  { box-shadow: 0 0 0 8px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+
+.intern-text { position: relative; min-width: 0; }
+
+.intern-title {
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.intern-text p {
+  margin: 4px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intern-dot { animation: none; }
+}
+
 /* wave on load (and again on hover) */
 .wave {
   display: inline-block;
